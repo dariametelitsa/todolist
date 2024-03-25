@@ -7,7 +7,6 @@ function App() {
 		<div className="App">
 			<Todolist title="What to learn" tasks={tasks1} />
 			<Todolist title="What you are learning" tasks={tasks2} />
-			<Todolist title="What you have learned" tasks={tasks2} />
 		</div>
 		);
 }
@@ -19,6 +18,7 @@ const tasks1: Array<TaskType> = [
 	{id: 1, title: "CSS&HTML",	isDone: true},
 	{id: 2, title: "JS",	isDone: true},
 	{id: 3, title: "React",	isDone: false},
+	{id: 4, title: "Redux",	isDone: false},
 ];
 
 const tasks2: Array<TaskType> = [
