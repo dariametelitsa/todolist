@@ -1,4 +1,4 @@
-@use "components/todolist";
+//@use "components/todolist";
 
 .App {
   display: flex;
@@ -7,6 +7,11 @@
   height: 100vh;
 }
 
-.App > div {
-  margin-right: 50px;
+.App > div + div {
+  margin-left: 30px;
+}
+
+ul {
+  list-style-type: none;
+  padding-left: 10px;
 }

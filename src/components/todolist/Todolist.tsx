@@ -1,4 +1,6 @@
-import { FilterValuesType } from "../App";
+import { FilterValuesType } from "../../App";
+import './todolist.scss'
+import React from "react";
 
 
 export type TaskType = {
@@ -14,7 +16,7 @@ type TodolistPropsType = {
 	changeFilter: (value: FilterValuesType) => void,
 }
 
-function Todolist(props: TodolistPropsType) {
+const  Todolist:React.FC<TodolistPropsType> = (props: TodolistPropsType)  => {
 	return (
 		<div className={'todolist'}>
 			<h3>{props.title}</h3>
@@ -24,13 +26,15 @@ function Todolist(props: TodolistPropsType) {
 			</div>
 			<ul>
 				{props.tasks.map(el => {
-					return <li><input type={"checkbox"} checked={el.isDone} />
+					return (
+						<li><input type={"checkbox"} checked={el.isDone} />
 						<span>{el.title}</span>
 						<button
 							onClick={() => {props.removeTask(el.id)}}
 							className={'btnRemove'}
 						>x</button>
 					</li>
+					)
 				})}
 			</ul>
 			<div className={'tabs'}>
