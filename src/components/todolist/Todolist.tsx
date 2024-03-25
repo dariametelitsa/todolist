@@ -17,20 +17,21 @@ type TodolistPropsType = {
 }
 
 const  Todolist:React.FC<TodolistPropsType> = (props: TodolistPropsType)  => {
+	const {title, tasks, removeTask, changeFilter} = props;
 	return (
 		<div className={'todolist'}>
-			<h3>{props.title}</h3>
+			<h3>{title}</h3>
 			<div>
 				<input type="text" />
 				<button>+</button>
 			</div>
 			<ul>
-				{props.tasks.map(el => {
+				{tasks.map(el => {
 					return (
 						<li><input type={"checkbox"} checked={el.isDone} />
 						<span>{el.title}</span>
 						<button
-							onClick={() => {props.removeTask(el.id)}}
+							onClick={() => {removeTask(el.id)}}
 							className={'btnRemove'}
 						>x</button>
 					</li>
@@ -38,9 +39,9 @@ const  Todolist:React.FC<TodolistPropsType> = (props: TodolistPropsType)  => {
 				})}
 			</ul>
 			<div className={'tabs'}>
-				<button onClick={() => {props.changeFilter('all')}}>All</button>
-				<button onClick={() => {props.changeFilter('active')}}>Active</button>
-				<button onClick={() => {props.changeFilter('completed')}}>Completed</button>
+				<button onClick={() => {changeFilter('all')}}>All</button>
+				<button onClick={() => {changeFilter('active')}}>Active</button>
+				<button onClick={() => {changeFilter('completed')}}>Completed</button>
 			</div>
 		</div>
 	);

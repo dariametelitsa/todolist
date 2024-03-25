@@ -42,7 +42,7 @@ function App() {
 
 			<Todolist
 				title="What you are learning"
-				tasks={tasksForTodoList}
+				tasks={tasks2}
 				removeTask={removeTask}
 				changeFilter={changeFilter}
 			/>
