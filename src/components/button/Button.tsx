@@ -8,7 +8,6 @@ type ButtonPropsType = {
     className?: string,
 }
 export const Button: React.FC<ButtonPropsType> = ({title}: ButtonPropsType) => {
-    console.log(styles);
     return (
         <button className={styles.button}>
             {title}

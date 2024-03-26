@@ -1,21 +1,8 @@
-import { FilterValuesType } from "../../App";
 import styles from './Todolist.module.scss'
 import React from "react";
 import { Button } from "../button/Button";
+import { TodolistPropsType } from "../../data/dataPropsTypes";
 
-
-export type TaskType = {
-	id: number,
-	title: string,
-	isDone: boolean,
-}
-
-type TodolistPropsType = {
-	title: string,
-	tasks: Array<TaskType>,
-	removeTask: (id: number) => void,
-	changeFilter: (value: FilterValuesType) => void,
-}
 
 const  Todolist:React.FC<TodolistPropsType> = ({title, tasks, removeTask, changeFilter}: TodolistPropsType)  => {
 	return (
@@ -26,16 +13,16 @@ const  Todolist:React.FC<TodolistPropsType> = ({title, tasks, removeTask, change
 				<button className={styles.btnRemove}>+</button>
 			</div>
 			<ul>
-				{tasks.map(el => {
+				{tasks.map(task => {
 					return (
-						<li><input type={"checkbox"} checked={el.isDone}/>
-							<span>{el.title}</span>
+						<li><input type={"checkbox"} checked={task.isDone}/>
+							<span>{task.title}</span>
 							<Button
 								title={'x'}
 								onClick={() => {
-									removeTask(el.id)
+									console.log('click')
+									removeTask(task.id)
 								}}
-								// className={styles.btnRemove}
 							/>
 						</li>
 					)
