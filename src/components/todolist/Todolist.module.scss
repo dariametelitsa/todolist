@@ -1,3 +1,5 @@
+@use './../button/Button.module.scss';
+
 .todolist {
   padding: 30px;
   border: 1px solid tomato;
@@ -5,7 +7,9 @@
 }
 
 .btnRemove {
+  @extend .button;
   margin-left: 10px;
+  border: 3px solid black;
 }
 
 .tabs button+button {

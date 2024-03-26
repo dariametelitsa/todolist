@@ -1,6 +1,7 @@
 import { FilterValuesType } from "../../App";
-import './todolist.scss'
+import styles from './Todolist.module.scss'
 import React from "react";
+import { Button } from "../button/Button";
 
 
 export type TaskType = {
@@ -16,30 +17,33 @@ type TodolistPropsType = {
 	changeFilter: (value: FilterValuesType) => void,
 }
 
-const  Todolist:React.FC<TodolistPropsType> = (props: TodolistPropsType)  => {
-	const {title, tasks, removeTask, changeFilter} = props;
+const  Todolist:React.FC<TodolistPropsType> = ({title, tasks, removeTask, changeFilter}: TodolistPropsType)  => {
 	return (
 		<div className={'todolist'}>
 			<h3>{title}</h3>
 			<div>
 				<input type="text" />
-				<button>+</button>
+				<button className={styles.btnRemove}>+</button>
 			</div>
 			<ul>
 				{tasks.map(el => {
 					return (
-						<li><input type={"checkbox"} checked={el.isDone} />
-						<span>{el.title}</span>
-						<button
-							onClick={() => {removeTask(el.id)}}
-							className={'btnRemove'}
-						>x</button>
-					</li>
+						<li><input type={"checkbox"} checked={el.isDone}/>
+							<span>{el.title}</span>
+							<Button
+								title={'x'}
+								onClick={() => {
+									removeTask(el.id)
+								}}
+								// className={styles.btnRemove}
+							/>
+						</li>
 					)
 				})}
 			</ul>
 			<div className={'tabs'}>
-				<button onClick={() => {changeFilter('all')}}>All</button>
+				<button onClick={() => {
+					changeFilter('all')}}>All</button>
 				<button onClick={() => {changeFilter('active')}}>Active</button>
 				<button onClick={() => {changeFilter('completed')}}>Completed</button>
 			</div>
