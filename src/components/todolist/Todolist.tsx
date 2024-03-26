@@ -1,8 +1,6 @@
 import styles from './Todolist.module.scss'
 import React from "react";
 import { TodolistPropsType } from "../../data/dataPropsTypes";
-import { Button } from "../button/Button";
-
 
 const  Todolist:React.FC<TodolistPropsType> = ({title, tasks, removeTask, changeFilter}: TodolistPropsType)  => {
 	return (

@@ -1,41 +1,39 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './App.scss';
-import Todolist from './components/todolist/Todolist';
-import { FilterValuesType, TaskType } from "./data/dataPropsTypes";
 import { Tasks } from "./components/tasks/Tasks";
 import { data1, data2 } from "./data/Data";
 
 
 function App() {
 
-    let [tasks, setTasks] = useState<Array<TaskType>>([
-        {id: 1, title: "CSS&HTML", isDone: true},
-        {id: 2, title: "JS", isDone: true},
-        {id: 3, title: "React", isDone: false},
-        {id: 4, title: "Redux", isDone: false},
-    ]);
-
-    let [filter, setFilter] = useState<FilterValuesType>('all')
-
-    function removeTask(id: number) {
-        let filteredTasks = tasks.filter((t) => t.id !== id);
-        console.log('here');
-        setTasks(filteredTasks);
-    }
-
-    function changeFilter(value: FilterValuesType) {
-        setFilter(value);
-    }
-
-    let tasksForTodoList = tasks;
-
-    if (filter === 'completed') {
-        tasksForTodoList = tasks.filter(t => t.isDone)
-    }
-
-    if (filter === 'active') {
-        tasksForTodoList = tasks.filter(t => !t.isDone)
-    }
+    // let [tasks, setTasks] = useState<Array<TaskType>>([
+    //     {id: 1, title: "CSS&HTML", isDone: true},
+    //     {id: 2, title: "JS", isDone: true},
+    //     {id: 3, title: "React", isDone: false},
+    //     {id: 4, title: "Redux", isDone: false},
+    // ]);
+    //
+    // let [filter, setFilter] = useState<FilterValuesType>('all')
+    //
+    // function removeTask(id: number) {
+    //     let filteredTasks = tasks.filter((t) => t.id !== id);
+    //     console.log('here');
+    //     setTasks(filteredTasks);
+    // }
+    //
+    // function changeFilter(value: FilterValuesType) {
+    //     setFilter(value);
+    // }
+    //
+    // let tasksForTodoList = tasks;
+    //
+    // if (filter === 'completed') {
+    //     tasksForTodoList = tasks.filter(t => t.isDone)
+    // }
+    //
+    // if (filter === 'active') {
+    //     tasksForTodoList = tasks.filter(t => !t.isDone)
+    // }
 
 
     return (
