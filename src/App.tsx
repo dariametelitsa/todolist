@@ -46,7 +46,7 @@ function App() {
             {/*/>*/}
 
             <Tasks title={data1.title} tasks={data1.tasks} students={data1.students}/>
-            <Tasks title={data2.title} tasks={data1.tasks} students={data1.students}/>
+            <Tasks title={data2.title} tasks={data1.tasks} students={data2.students}/>
         </div>
     );
 }

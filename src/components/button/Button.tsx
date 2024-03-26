@@ -2,14 +2,19 @@ import React from 'react';
 import styles from './Button.module.scss';
 
 type ButtonPropsType = {
-    title: string,
-    onClick?: () => void,
+    name: string,
+    callBack: () => void,
     className?: string,
 }
-export const Button: React.FC<ButtonPropsType> = ({title}: ButtonPropsType) => {
+export const Button: React.FC<ButtonPropsType> = ({name, callBack}: ButtonPropsType) => {
+
+    const onClickHandler = () => {
+        callBack();
+    }
+
     return (
-        <button className={styles.button}>
-            {title}
+        <button className={styles.button} onClick={onClickHandler}>
+            {name}
         </button>
     );
 };
