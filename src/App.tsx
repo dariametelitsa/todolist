@@ -3,7 +3,7 @@ import './App.scss';
 import Todolist from './components/todolist/Todolist';
 import { FilterValuesType, TaskType } from "./data/dataPropsTypes";
 import { Tasks } from "./components/tasks/Tasks";
-import { data1 } from "./data/Data";
+import { data1, data2 } from "./data/Data";
 
 
 function App() {
@@ -19,7 +19,7 @@ function App() {
 
     function removeTask(id: number) {
         let filteredTasks = tasks.filter((t) => t.id !== id);
-        console.log('here')
+        console.log('here');
         setTasks(filteredTasks);
     }
 
@@ -40,14 +40,15 @@ function App() {
 
     return (
         <div className="App">
-            <Todolist
-                title="What to learn"
-                tasks={tasksForTodoList}
-                removeTask={removeTask}
-                changeFilter={changeFilter}
-            />
+            {/*<Todolist*/}
+            {/*    title="What to learn"*/}
+            {/*    tasks={tasksForTodoList}*/}
+            {/*    removeTask={removeTask}*/}
+            {/*    changeFilter={changeFilter}*/}
+            {/*/>*/}
 
-            {/*<Tasks title={data1.title} tasks={data1.tasks} students={data1.students}/>*/}
+            <Tasks title={data1.title} tasks={data1.tasks} students={data1.students}/>
+            <Tasks title={data2.title} tasks={data1.tasks} students={data1.students}/>
         </div>
     );
 }

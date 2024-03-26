@@ -3,8 +3,7 @@ import styles from './Button.module.scss';
 
 type ButtonPropsType = {
     title: string,
-    //children: never[];
-    onClick: () => void,
+    onClick?: () => void,
     className?: string,
 }
 export const Button: React.FC<ButtonPropsType> = ({title}: ButtonPropsType) => {

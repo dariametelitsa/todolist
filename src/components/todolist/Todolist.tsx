@@ -1,7 +1,7 @@
 import styles from './Todolist.module.scss'
 import React from "react";
-import { Button } from "../button/Button";
 import { TodolistPropsType } from "../../data/dataPropsTypes";
+import { Button } from "../button/Button";
 
 
 const  Todolist:React.FC<TodolistPropsType> = ({title, tasks, removeTask, changeFilter}: TodolistPropsType)  => {
@@ -17,13 +17,21 @@ const  Todolist:React.FC<TodolistPropsType> = ({title, tasks, removeTask, change
 					return (
 						<li><input type={"checkbox"} checked={task.isDone}/>
 							<span>{task.title}</span>
-							<Button
-								title={'x'}
+
+							{/*<Button*/}
+							{/*	title={'x'}*/}
+							{/*	onClick={() => {*/}
+							{/*		console.log('click')*/}
+							{/*		removeTask(task.id)*/}
+							{/*	}}*/}
+							{/*/>*/}
+
+							<button
 								onClick={() => {
-									console.log('click')
 									removeTask(task.id)
 								}}
-							/>
+								className={'btnRemove'}
+							>x</button>
 						</li>
 					)
 				})}
