@@ -34,9 +34,9 @@ export const Tasks: React.FC<TasksPropsType> = (props: TasksPropsType) => {
             <Todolist title={title} tasks={tasksForTodoList} removeTask={removeTask} changeFilter={changeFilter} />
             <ul>
                 {
-                    students.map(s => {
+                    students.map((s, index) => {
                         return (
-                            <li className={styles.listItem} key={crypto.randomUUID()}>{s}</li>
+                            <li className={styles.listItem} key={index}>{s}</li>
                         )
                     })
                 }
