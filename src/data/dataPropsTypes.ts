@@ -24,7 +24,5 @@ export type TodolistPropsType = {
     tasks: Array<TaskType>;
     removeTask: (id: number) => void;
     addTask: (id: number, taskTitle: string) => void;
-    changeFilter: (value: FilterValuesType) => void;
-
 }
 

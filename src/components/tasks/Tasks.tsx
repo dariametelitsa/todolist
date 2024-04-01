@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Todolist from "../todolist/Todolist";
-import { FilterValuesType, TasksPropsType, TaskType } from "../../data/dataPropsTypes";
+import { TasksPropsType, TaskType } from "../../data/dataPropsTypes";
 
 export const Tasks: React.FC<TasksPropsType> = (props) => {
     let {title, tasks, id} = props;
@@ -8,32 +8,12 @@ export const Tasks: React.FC<TasksPropsType> = (props) => {
     //global state
     let [tasksFiltered, setTasks] = useState<Array<TaskType>>(tasks);
 
-    //local state
-    let [filter, setFilter] = useState<FilterValuesType>('all')
 
-    function changeFilter(value: FilterValuesType) {
-        setFilter(value);
-    }
 
     function removeTask(id: number) {
         let filteredTasks = tasksFiltered.filter((t) => t.id !== id);
         setTasks(filteredTasks);
     }
-
-    const getTasksFotTodolist = (tasks: Array<TaskType>, filter: FilterValuesType) => {
-        switch (filter) {
-            case 'active':
-                return tasks.filter(t => !t.isDone);
-
-            case 'completed':
-                return tasks.filter(t => t.isDone);
-
-            default:
-                return tasks;
-        }
-    }
-
-    const tasksForTodoList = getTasksFotTodolist(tasksFiltered, filter);
 
 
     const addTask = (id: number, taskTitle: string) => {
@@ -43,7 +23,7 @@ export const Tasks: React.FC<TasksPropsType> = (props) => {
 
     return (
         <div>
-            <Todolist title={title} tasks={tasksForTodoList} removeTask={removeTask} changeFilter={changeFilter} id={id}
+            <Todolist title={title} tasks={tasksFiltered} removeTask={removeTask} id={id}
                       addTask={addTask}/>
         </div>
     );
