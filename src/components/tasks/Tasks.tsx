@@ -5,17 +5,19 @@ import { FilterValuesType, TasksPropsType, TaskType } from "../../data/dataProps
 export const Tasks: React.FC<TasksPropsType> = (props) => {
     let {title, tasks, id} = props;
 
+    //global state
     let [tasksFiltered, setTasks] = useState<Array<TaskType>>(tasks);
 
+    //local state
     let [filter, setFilter] = useState<FilterValuesType>('all')
+
+    function changeFilter(value: FilterValuesType) {
+        setFilter(value);
+    }
 
     function removeTask(id: number) {
         let filteredTasks = tasksFiltered.filter((t) => t.id !== id);
         setTasks(filteredTasks);
-    }
-
-    function changeFilter(value: FilterValuesType) {
-        setFilter(value);
     }
 
     const getTasksFotTodolist = (tasks: Array<TaskType>, filter: FilterValuesType) => {
@@ -30,6 +32,7 @@ export const Tasks: React.FC<TasksPropsType> = (props) => {
                 return tasks;
         }
     }
+
     const tasksForTodoList = getTasksFotTodolist(tasksFiltered, filter);
 
 

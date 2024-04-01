@@ -48,18 +48,9 @@ const Todolist: React.FC<TodolistPropsType> = ({
                 }
             </ul>
             <div className={'tabs'}>
-                <button onClick={() => {
-                    changeFilter('all')
-                }}>All
-                </button>
-                <button onClick={() => {
-                    changeFilter('active')
-                }}>Active
-                </button>
-                <button onClick={() => {
-                    changeFilter('completed')
-                }}>Completed
-                </button>
+                <Button name={'All'} callBack={() => changeFilter('all')}></Button>
+                <Button name={'Active'} callBack={() => changeFilter('active')}></Button>
+                <Button name={'Completed'} callBack={() => changeFilter('completed')}></Button>
             </div>
         </div>
     );
