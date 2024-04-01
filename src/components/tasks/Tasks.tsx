@@ -8,6 +8,7 @@ export const Tasks: React.FC<TasksPropsType> = (props) => {
     let [tasksFiltered, setTasks] = useState<Array<TaskType>>(tasks);
 
     let [filter, setFilter] = useState<FilterValuesType>('all')
+
     function removeTask(id: number) {
         let filteredTasks = tasksFiltered.filter((t) => t.id !== id);
         setTasks(filteredTasks);
@@ -17,23 +18,30 @@ export const Tasks: React.FC<TasksPropsType> = (props) => {
         setFilter(value);
     }
 
-    let tasksForTodoList = tasksFiltered;
-    if (filter === 'completed') {
-        tasksForTodoList = tasks.filter(t => t.isDone)
+    const getTasksFotTodolist = (tasks: Array<TaskType>, filter: FilterValuesType) => {
+        switch (filter) {
+            case 'active':
+                return tasks.filter(t => !t.isDone);
+
+            case 'completed':
+                return tasks.filter(t => t.isDone);
+
+            default:
+                return tasks;
+        }
     }
-    if (filter === 'active') {
-        tasksForTodoList = tasks.filter(t => !t.isDone)
-    }
+    const tasksForTodoList = getTasksFotTodolist(tasksFiltered, filter);
 
 
     const addTask = (id: number, taskTitle: string) => {
-        let newTask = {id: tasksFiltered.length+1, isDone:false, title: taskTitle};
+        let newTask = {id: tasksFiltered.length + 1, isDone: false, title: taskTitle};
         taskTitle && setTasks([newTask, ...tasksFiltered]);
     }
 
     return (
         <div>
-            <Todolist title={title} tasks={tasksForTodoList} removeTask={removeTask} changeFilter={changeFilter} id={id} addTask={addTask}/>
+            <Todolist title={title} tasks={tasksForTodoList} removeTask={removeTask} changeFilter={changeFilter} id={id}
+                      addTask={addTask}/>
         </div>
     );
 };

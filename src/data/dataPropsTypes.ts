@@ -1,7 +1,7 @@
 export type TaskType = {
     id: number;
     title: string;
-    isDone: boolean;
+    isDone?: boolean;
 }
 
 export type TasksPropsType = {

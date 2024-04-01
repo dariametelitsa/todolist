@@ -11,18 +11,18 @@ const Todolist: React.FC<TodolistPropsType> = ({
                                                    id,
                                                    addTask
                                                }: TodolistPropsType) => {
-    let [task, setTask] = useState('');
+    let [newTask, setNewTask] = useState('');
 
     const onClickButtonHandler = () => {
-        addTask(id, task);
-        setTask('');
+        addTask(id, newTask);
+        setNewTask('');
     }
 
     return (
         <div className={'todolist'}>
             <h3>{title}</h3>
             <div className={'addTask'}>
-                <Input changeTitle={setTask} title={task}/>
+                <Input changeTitle={setNewTask} title={newTask}/>
                 <Button name={'Add'} callBack={onClickButtonHandler}></Button>
             </div>
             <ul>
