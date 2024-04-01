@@ -1,12 +1,18 @@
-import React from 'react';
-import styles from "../todolist/Todolist.module.scss";
+import React, { ChangeEvent } from 'react';
 
-export const Input = () => {
+type InputProps = {
+    changeTitle: (title: string) =>void;
+    title: string;
+}
+
+    export const Input = ({changeTitle, title}: InputProps) => {
+
+    const onChangeInputHandler = (event:ChangeEvent<HTMLInputElement>) => {
+        changeTitle(event.currentTarget.value);
+    }
+
     return (
-        <div>
-            <input type="text"/>
-            <button className={styles.btnRemove}>+</button>
-        </div>
+        <input value={title} onChange={onChangeInputHandler} type="text"/>
     );
 };
 

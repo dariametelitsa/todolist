@@ -13,6 +13,11 @@ input[type='checkbox'] {
 
 }
 
+.addTask {
+  display: flex;
+  flex-direction: column;
+}
+
 //@use './../button/Button.module.scss';
 //.btnRemove {
 //  @extend .button;

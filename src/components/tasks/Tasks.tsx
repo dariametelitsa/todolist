@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import Todolist from "../todolist/Todolist";
 import { FilterValuesType, TasksPropsType, TaskType } from "../../data/dataPropsTypes";
-import styles from './Tasks.module.scss';
 
-export const Tasks: React.FC<TasksPropsType> = (props: TasksPropsType) => {
-    let {title, tasks, students} = props;
+export const Tasks: React.FC<TasksPropsType> = (props) => {
+    let {title, tasks, id} = props;
 
     let [tasksFiltered, setTasks] = useState<Array<TaskType>>(tasks);
 
@@ -19,28 +18,22 @@ export const Tasks: React.FC<TasksPropsType> = (props: TasksPropsType) => {
     }
 
     let tasksForTodoList = tasksFiltered;
-
     if (filter === 'completed') {
         tasksForTodoList = tasks.filter(t => t.isDone)
     }
-
     if (filter === 'active') {
         tasksForTodoList = tasks.filter(t => !t.isDone)
     }
 
 
+    const addTask = (id: number, taskTitle: string) => {
+        let newTask = {id: tasksFiltered.length+1, isDone:false, title: taskTitle};
+        taskTitle && setTasks([newTask, ...tasksFiltered]);
+    }
+
     return (
         <div>
-            <Todolist title={title} tasks={tasksForTodoList} removeTask={removeTask} changeFilter={changeFilter} />
-            <ul>
-                {
-                    students.map((s, index) => {
-                        return (
-                            <li className={styles.listItem} key={index}>{s}</li>
-                        )
-                    })
-                }
-            </ul>
+            <Todolist title={title} tasks={tasksForTodoList} removeTask={removeTask} changeFilter={changeFilter} id={id} addTask={addTask}/>
         </div>
     );
 };
