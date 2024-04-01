@@ -1,15 +1,8 @@
-@use './../button/Button.module.scss';
 
 .todolist {
   padding: 30px;
   border: 1px solid tomato;
   border-radius: 5px;
-}
-
-.btnRemove {
-  @extend .button;
-  margin-left: 10px;
-  border: 3px solid black;
 }
 
 .tabs button+button {
@@ -19,3 +12,10 @@
 input[type='checkbox'] {
 
 }
+
+//@use './../button/Button.module.scss';
+//.btnRemove {
+//  @extend .button;
+//  margin-left: 10px;
+//  border: 3px solid black;
+//}

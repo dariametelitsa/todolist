@@ -1,16 +1,13 @@
-import styles from './Todolist.module.scss'
 import React from "react";
 import { TodolistPropsType } from "../../data/dataPropsTypes";
 import { Button } from "../button/Button";
+import { Input } from "../input/Input";
 
 const  Todolist:React.FC<TodolistPropsType> = ({title, tasks, removeTask, changeFilter}: TodolistPropsType)  => {
 	return (
 		<div className={'todolist'}>
 			<h3>{title}</h3>
-			<div>
-				<input type="text" />
-				<button className={styles.btnRemove}>+</button>
-			</div>
+			<Input/>
 			<ul>
 				{
 					tasks.length === 0 ? (
