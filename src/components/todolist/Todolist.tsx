@@ -8,16 +8,12 @@ const Todolist: React.FC<TodolistPropsType> = ({
                                                    tasks,
                                                    removeTask,
                                                    id,
-                                                   addTask
+                                                   addTask,
                                                }: TodolistPropsType) => {
     let [newTaskTitle, setNewTaskTitle] = useState('');
 
     //local state
     let [filter, setFilter] = useState<FilterValuesType>('all')
-
-    const onClickHandlerCreator = (filter: FilterValuesType) => {
-        return () => setFilter(filter);
-    }
 
     const getTasksFotTodolist = (tasks: Array<TaskType>, filter: FilterValuesType) => {
         switch (filter) {
@@ -45,17 +41,29 @@ const Todolist: React.FC<TodolistPropsType> = ({
         setNewTaskTitle('');
     }
 
-    const isTitletoLong = newTaskTitle.length > 15;
+    const onClickHandlerCreator = (filter: FilterValuesType) => {
+        return () => setFilter(filter);
+    }
+
+    const onKeyDownHandler = (event: KeyboardEvent) => {
+        if(event.key === 'Enter' && !ifTaskCanAdded) {
+            addTask(newTaskTitle);
+            setNewTaskTitle('');
+        }
+    }
+
+    const isTitleToLong = newTaskTitle.length > 15;
+    const ifTaskCanAdded = newTaskTitle && !isTitleToLong;
 
     return (
         <div className={'todolist'}>
             <h3>{title}</h3>
             <div className={'addTask'}>
                 {/*<input ref={inputRef} type="text" title={'hey'}/>*/}
-                <Input changeTitle={setNewTaskTitle} title={newTaskTitle}/>
-                <Button name={'Add'} callBack={onClickButtonHandler} isDisabled={!newTaskTitle || isTitletoLong}></Button>
+                <Input changeTitle={setNewTaskTitle} title={newTaskTitle} onKeyDown={onKeyDownHandler}/>
+                <Button name={'Add'} callBack={onClickButtonHandler} isDisabled={!ifTaskCanAdded}></Button>
                 {
-                    isTitletoLong && <div>too long</div>
+                    isTitleToLong && <div>too long</div>
                 }
             </div>
             <ul>
@@ -82,6 +90,7 @@ const Todolist: React.FC<TodolistPropsType> = ({
                     )
                 }
             </ul>
+
             <div className={'tabs'}>
                 <Button name={'All'} callBack={onClickHandlerCreator('all')}></Button>
                 <Button name={'Active'} callBack={onClickHandlerCreator('active')}></Button>
