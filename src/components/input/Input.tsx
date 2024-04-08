@@ -3,10 +3,9 @@ import React, { ChangeEvent } from 'react';
 type InputProps = {
     changeTitle: (title: string) => void;
     title: string;
-    taskTitleInput: any
 }
 
-export const Input = ({changeTitle, title, taskTitleInput}: InputProps) => {
+export const Input = ({changeTitle, title}: InputProps) => {
 
     const onChangeInputHandler = (event: ChangeEvent<HTMLInputElement>) => {
         changeTitle(event.currentTarget.value);
@@ -15,8 +14,7 @@ export const Input = ({changeTitle, title, taskTitleInput}: InputProps) => {
     return (
         <input value={title}
                onChange={onChangeInputHandler}
-               type="text"
-               ref={taskTitleInput}/>
+               type="text"/>
     );
 };
 

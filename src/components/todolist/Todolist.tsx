@@ -34,25 +34,29 @@ const Todolist: React.FC<TodolistPropsType> = ({
 
     const tasksForTodoList = getTasksFotTodolist(tasks, filter);
 
-    const inputRef = React.useRef<HTMLInputElement>(null)
+    //const inputRef = React.useRef<HTMLInputElement>(null)
     const onClickButtonHandler = () => {
-        // addTask(newTaskTitle);
-        if(inputRef.current) {
-            const newTaskTitle = inputRef.current.value;
-            addTask(newTaskTitle);
-            inputRef.current.value = '';
-        }
-
-        //setNewTaskTitle('');
+        // if(inputRef.current) {
+        //     const newTaskTitle = inputRef.current.value;
+        //     addTask(newTaskTitle);
+        //     inputRef.current.value = '';
+        // }
+        addTask(newTaskTitle);
+        setNewTaskTitle('');
     }
+
+    const isTitletoLong = newTaskTitle.length > 15;
 
     return (
         <div className={'todolist'}>
             <h3>{title}</h3>
             <div className={'addTask'}>
-                <input ref={inputRef} type="text" title={'hey'}/>
-                {/*<Input changeTitle={setNewTaskTitle} title={newTaskTitle} taskTitleInput={taskTitleInput}/>*/}
-                <Button name={'Add'} callBack={onClickButtonHandler}></Button>
+                {/*<input ref={inputRef} type="text" title={'hey'}/>*/}
+                <Input changeTitle={setNewTaskTitle} title={newTaskTitle}/>
+                <Button name={'Add'} callBack={onClickButtonHandler} isDisabled={!newTaskTitle || isTitletoLong}></Button>
+                {
+                    isTitletoLong && <div>too long</div>
+                }
             </div>
             <ul>
                 {
