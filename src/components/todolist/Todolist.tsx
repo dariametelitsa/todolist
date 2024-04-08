@@ -10,7 +10,7 @@ const Todolist: React.FC<TodolistPropsType> = ({
                                                    id,
                                                    addTask
                                                }: TodolistPropsType) => {
-    let [newTask, setNewTask] = useState('');
+    let [newTaskTitle, setNewTaskTitle] = useState('');
 
     //local state
     let [filter, setFilter] = useState<FilterValuesType>('all')
@@ -30,15 +30,15 @@ const Todolist: React.FC<TodolistPropsType> = ({
 
     const tasksForTodoList = getTasksFotTodolist(tasks, filter);
     const onClickButtonHandler = () => {
-        addTask(id, newTask);
-        setNewTask('');
+        addTask(id, newTaskTitle);
+        setNewTaskTitle('');
     }
 
     return (
         <div className={'todolist'}>
             <h3>{title}</h3>
             <div className={'addTask'}>
-                <Input changeTitle={setNewTask} title={newTask}/>
+                <Input changeTitle={setNewTaskTitle} title={newTaskTitle}/>
                 <Button name={'Add'} callBack={onClickButtonHandler}></Button>
             </div>
             <ul>
@@ -47,15 +47,17 @@ const Todolist: React.FC<TodolistPropsType> = ({
                         <p>Задач нет</p>
                     ) : (
                         tasksForTodoList.map((task) => {
+                            const onRemoveHandler = () => {
+                                removeTask(task.id)
+                            }
+
                             return (
                                 <li key={id}><input type={"checkbox"} checked={task.isDone}/>
                                     <span>{task.title}</span>
 
                                     <Button
                                         name={'x'}
-                                        callBack={() => {
-                                            removeTask(task.id)
-                                        }}
+                                        callBack={onRemoveHandler}
                                     />
                                 </li>
                             )
