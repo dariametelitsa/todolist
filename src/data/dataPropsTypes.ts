@@ -1,17 +1,17 @@
 export type TaskType = {
-    id: number;
+    id: string;
     title: string;
     isDone?: boolean;
 }
 
 export type TasksPropsType = {
-    id: number;
+    id: string;
     title: string;
     tasks: Array<TaskType>;
 };
 
 export type TasksArrPropsType = {
-    id: number;
+    id: string;
     title: string;
     taskBlock: Array<TaskType>;
 };
@@ -19,10 +19,10 @@ export type TasksArrPropsType = {
 export type FilterValuesType = 'all' | 'completed' | 'active';
 
 export type TodolistPropsType = {
-    id: number;
+    id: string;
     title: string;
     tasks: Array<TaskType>;
-    removeTask: (id: number) => void;
-    addTask: (id: number, taskTitle: string) => void;
+    removeTask: (id: string) => void;
+    addTask: (id: string, taskTitle: string) => void;
 }
 

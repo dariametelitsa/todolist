@@ -1,23 +1,24 @@
 import { TasksArrPropsType } from "./dataPropsTypes";
+import { v1, v4 } from "uuid";
 
 export const tasksArr: Array<TasksArrPropsType> = [
     {
-        id: 1,
+        id: v4(),
         title: "What to learn",
         taskBlock: [
-            {id: 1, title: "XP", isDone: false},
-            {id: 2, title: "DDD", isDone: true},
-            {id: 3, title: "Scrum", isDone: false}
+            {id: v4(), title: "XP", isDone: false},
+            {id: v4(), title: "DDD", isDone: true},
+            {id: v4(), title: "Scrum", isDone: false}
         ]
     },
     {
-        id: 2,
+        id: v4(),
         title: "What to do",
         taskBlock: [
-            {id: 1, title: "CSS&HTML", isDone: true},
-            {id: 2, title: "JS", isDone: true},
-            {id: 3, title: "React", isDone: false},
-            {id: 4, title: "Redux", isDone: false}
+            {id: v4(), title: "CSS&HTML", isDone: true},
+            {id: v4(), title: "JS", isDone: true},
+            {id: v4(), title: "React", isDone: false},
+            {id: v4(), title: "Redux", isDone: false}
         ]
     }
 ];

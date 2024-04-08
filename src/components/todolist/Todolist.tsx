@@ -46,9 +46,9 @@ const Todolist: React.FC<TodolistPropsType> = ({
                     tasks.length === 0 ? (
                         <p>Задач нет</p>
                     ) : (
-                        tasksForTodoList.map((task, index) => {
+                        tasksForTodoList.map((task) => {
                             return (
-                                <li key={index}><input type={"checkbox"} checked={task.isDone}/>
+                                <li key={id}><input type={"checkbox"} checked={task.isDone}/>
                                     <span>{task.title}</span>
 
                                     <Button

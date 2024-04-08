@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Todolist from "../todolist/Todolist";
 import { TasksPropsType, TaskType } from "../../data/dataPropsTypes";
+import { v1 } from "uuid";
 
 export const Tasks: React.FC<TasksPropsType> = (props) => {
     let {title, tasks, id} = props;
@@ -8,16 +9,14 @@ export const Tasks: React.FC<TasksPropsType> = (props) => {
     //global state
     let [tasksFiltered, setTasks] = useState<Array<TaskType>>(tasks);
 
-
-
-    function removeTask(id: number) {
+    function removeTask(id: string) {
         let filteredTasks = tasksFiltered.filter((t) => t.id !== id);
         setTasks(filteredTasks);
     }
 
 
-    const addTask = (id: number, taskTitle: string) => {
-        let newTask = {id: tasksFiltered.length + 1, isDone: false, title: taskTitle};
+    const addTask = (id: string, taskTitle: string) => {
+        let newTask = {id: v1(), isDone: false, title: taskTitle};
         taskTitle && setTasks([newTask, ...tasksFiltered]);
     }
 
