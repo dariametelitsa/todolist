@@ -8,7 +8,6 @@ export const sum = (a: number, b: number): number => {
 }
 
 function App() {
-    console.log(tasksArr[0]);
     return (
         <div className="App">
             <Tasks title={tasksArr[0].title} tasks={tasksArr[0].taskBlock} id={tasksArr[0].id}/>

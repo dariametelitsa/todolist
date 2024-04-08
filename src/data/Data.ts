@@ -6,19 +6,19 @@ export const tasksArr: Array<TasksArrPropsType> = [
         id: v4(),
         title: "What to learn",
         taskBlock: [
-            {id: v4(), title: "XP", isDone: false},
-            {id: v4(), title: "DDD", isDone: true},
-            {id: v4(), title: "Scrum", isDone: false}
+            {id: v1(), title: "XP", isDone: false},
+            {id: v1(), title: "DDD", isDone: true},
+            {id: v1(), title: "Scrum", isDone: false}
         ]
     },
     {
         id: v4(),
         title: "What to do",
         taskBlock: [
-            {id: v4(), title: "CSS&HTML", isDone: true},
-            {id: v4(), title: "JS", isDone: true},
-            {id: v4(), title: "React", isDone: false},
-            {id: v4(), title: "Redux", isDone: false}
+            {id: v1(), title: "CSS&HTML", isDone: true},
+            {id: v1(), title: "JS", isDone: true},
+            {id: v1(), title: "React", isDone: false},
+            {id: v1(), title: "Redux", isDone: false}
         ]
     }
 ];
