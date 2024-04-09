@@ -45,8 +45,8 @@ const Todolist: React.FC<TodolistPropsType> = ({
         return () => setFilter(filter);
     }
 
-    const onKeyDownHandler = (event: KeyboardEvent) => {
-        if(event.key === 'Enter' && !ifTaskCanAdded) {
+    const onKeyDownHandler = () => {
+        if(ifTaskCanAdded) {
             addTask(newTaskTitle);
             setNewTaskTitle('');
         }

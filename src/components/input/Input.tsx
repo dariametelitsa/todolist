@@ -3,7 +3,7 @@ import React, { ChangeEvent } from 'react';
 type InputProps = {
     changeTitle: (title: string) => void;
     title: string;
-    onKeyDown: any;
+    onKeyDown: ()=>void;
 }
 
 export const Input = ({changeTitle, title, onKeyDown}: InputProps) => {
@@ -12,10 +12,16 @@ export const Input = ({changeTitle, title, onKeyDown}: InputProps) => {
         changeTitle(event.currentTarget.value);
     }
 
+    const onKeyDownHandler = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if(event.key === 'Enter') {
+            onKeyDown();
+        }
+    }
+
     return (
         <input value={title}
                onChange={onChangeInputHandler}
-               onKeyDown={onKeyDown}
+               onKeyDown={onKeyDownHandler}
                type="text"/>
     );
 };

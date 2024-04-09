@@ -14,7 +14,6 @@ export const Tasks: React.FC<TasksPropsType> = (props) => {
         setTasks(filteredTasks);
     }
 
-
     const addTask = (taskTitle: string) => {
         let newTask: TaskType = {id: v1(), isDone: false, title: taskTitle};
         taskTitle && setTasks([newTask, ...tasksFiltered]);

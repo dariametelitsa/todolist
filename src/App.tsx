@@ -11,7 +11,7 @@ function App() {
     return (
         <div className="App">
             <Tasks title={tasksArr[0].title} tasks={tasksArr[0].taskBlock} id={tasksArr[0].id}/>
-            {/*<Tasks title={tasksArr[1].title} tasks={tasksArr[0].taskBlock} id={tasksArr[1].id}/>*/}
+            <Tasks title={tasksArr[1].title} tasks={tasksArr[0].taskBlock} id={tasksArr[1].id}/>
         </div>
     );
 }
