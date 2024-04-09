@@ -2,12 +2,12 @@ import React from 'react';
 //import styles from './Button.module.scss';
 
 type ButtonPropsType = {
-    name: string;
+    title: string;
     callBack: () => void;
     className?: string;
     isDisabled?: boolean;
 }
-export const Button: React.FC<ButtonPropsType> = ({name, callBack, isDisabled}: ButtonPropsType) => {
+export const Button: React.FC<ButtonPropsType> = ({title, callBack, isDisabled}: ButtonPropsType) => {
 
     const onClickHandler = () => {
         callBack();
@@ -16,7 +16,7 @@ export const Button: React.FC<ButtonPropsType> = ({name, callBack, isDisabled}: 
     return (
         // <button className={styles.button} onClick={onClickHandler}>
         <button  onClick={onClickHandler} disabled={isDisabled}>
-            {name}
+            {title}
         </button>
     );
 };

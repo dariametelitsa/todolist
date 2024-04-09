@@ -46,7 +46,7 @@ const Todolist: React.FC<TodolistPropsType> = ({
     }
 
     const onKeyDownHandler = () => {
-        if(ifTaskCanAdded) {
+        if (ifTaskCanAdded) {
             addTask(newTaskTitle);
             setNewTaskTitle('');
         }
@@ -61,7 +61,7 @@ const Todolist: React.FC<TodolistPropsType> = ({
             <div className={'addTask'}>
                 {/*<input ref={inputRef} type="text" title={'hey'}/>*/}
                 <Input changeTitle={setNewTaskTitle} title={newTaskTitle} onKeyDown={onKeyDownHandler}/>
-                <Button name={'Add'} callBack={onClickButtonHandler} isDisabled={!ifTaskCanAdded}></Button>
+                <Button title={'Add'} callBack={onClickButtonHandler} isDisabled={!ifTaskCanAdded}></Button>
                 {
                     isTitleToLong && <div>too long</div>
                 }
@@ -72,18 +72,10 @@ const Todolist: React.FC<TodolistPropsType> = ({
                         <p>Задач нет</p>
                     ) : (
                         tasksForTodoList.map((task) => {
-                            const onRemoveHandler = () => {
-                                removeTask(task.id)
-                            }
-
                             return (
                                 <li key={id}><input type={"checkbox"} checked={task.isDone}/>
                                     <span>{task.title}</span>
-
-                                    <Button
-                                        name={'x'}
-                                        callBack={onRemoveHandler}
-                                    />
+                                    <Button title={'x'} callBack={() => removeTask(task.id)}/>
                                 </li>
                             )
                         })
@@ -92,9 +84,9 @@ const Todolist: React.FC<TodolistPropsType> = ({
             </ul>
 
             <div className={'tabs'}>
-                <Button name={'All'} callBack={onClickHandlerCreator('all')}></Button>
-                <Button name={'Active'} callBack={onClickHandlerCreator('active')}></Button>
-                <Button name={'Completed'} callBack={onClickHandlerCreator('completed')}></Button>
+                <Button title={'All'} callBack={onClickHandlerCreator('all')}></Button>
+                <Button title={'Active'} callBack={onClickHandlerCreator('active')}></Button>
+                <Button title={'Completed'} callBack={onClickHandlerCreator('completed')}></Button>
             </div>
         </div>
     );
