@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { FilterValuesType, TaskType, TodolistPropsType } from "../../data/dataPropsTypes";
 import { Button } from "../button/Button";
 import { Input } from "../input/Input";
+import S from './Todolist.module.scss';
 
 const Todolist: React.FC<TodolistPropsType> = ({
                                                    title,
@@ -56,9 +57,9 @@ const Todolist: React.FC<TodolistPropsType> = ({
     const ifTaskCanAdded = newTaskTitle && !isTitleToLong;
 
     return (
-        <div className={'todolist'}>
+        <div className={S.todolist}>
             <h3>{title}</h3>
-            <div className={'addTask'}>
+            <div className={S.addTask}>
                 {/*<input ref={inputRef} type="text" title={'hey'}/>*/}
                 <Input changeTitle={setNewTaskTitle} title={newTaskTitle} onKeyDown={onKeyDownHandler}/>
                 <Button title={'Add'} callBack={onClickButtonHandler} isDisabled={!ifTaskCanAdded}></Button>
