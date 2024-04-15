@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Todolist from "../todolist/Todolist";
-import { TasksPropsType, TaskType } from "../../data/dataPropsTypes";
+import { FilterValuesType, TasksPropsType, TaskType } from "../../data/dataPropsTypes";
 import { v1 } from "uuid";
 
 export const Tasks: React.FC<TasksPropsType> = (props) => {
@@ -8,6 +8,9 @@ export const Tasks: React.FC<TasksPropsType> = (props) => {
 
     //global state
     let [tasksFiltered, setTasks] = useState<Array<TaskType>>(tasks);
+
+    //local state
+    let [filter, setFilter] = useState<FilterValuesType>('all');
 
     function removeTask(taskId: string) {
         let filteredTasks = tasksFiltered.filter((t) => t.id !== taskId);
@@ -36,7 +39,8 @@ export const Tasks: React.FC<TasksPropsType> = (props) => {
     return (
         <div>
             <Todolist title={title} tasks={tasksFiltered} removeTask={removeTask} id={id}
-                      addTask={addTask} deleteAllTasks={deleteAllTasks} setNewTaskStatus={setNewTaskStatus}>
+                      addTask={addTask} deleteAllTasks={deleteAllTasks} setNewTaskStatus={setNewTaskStatus}
+                      filter={filter} setFilter={setFilter}>
                 {<div>Hey ho! I'm a child</div>}
             </Todolist>
         </div>

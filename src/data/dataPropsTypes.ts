@@ -21,6 +21,8 @@ export type FilterValuesType = 'all' | 'completed' | 'active';
 export type TodolistPropsType = {
     children?: any;
     id: string;
+    filter: FilterValuesType;
+    setFilter: (filter: FilterValuesType) => void;
     title: string;
     tasks: Array<TaskType>;
     removeTask: (id: string) => void;

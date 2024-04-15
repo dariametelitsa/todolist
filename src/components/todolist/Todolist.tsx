@@ -16,6 +16,8 @@ const Todolist: React.FC<TodolistPropsType> = ({
                                                    tasks,
                                                    removeTask,
                                                    id,
+                                                   filter,
+                                                   setFilter,
                                                    addTask,
                                                    deleteAllTasks,
                                                    setNewTaskStatus,
@@ -23,7 +25,6 @@ const Todolist: React.FC<TodolistPropsType> = ({
     let [TaskTitle, setNewTaskTitle] = useState('');
 
     //local state
-    let [filter, setFilter] = useState<FilterValuesType>('all')
     let [taskInputError, setTaskInputError] = useState<string | null>(null);
 
     const [listRef] = useAutoAnimate<HTMLUListElement>()
@@ -53,8 +54,7 @@ const Todolist: React.FC<TodolistPropsType> = ({
         if (trimmedTaskTitle) {
             addTask(TaskTitle.trim());
             setNewTaskTitle('');
-        }
-        else {
+        } else {
             setTaskInputError('Title is required');
             setNewTaskTitle('');
         }
