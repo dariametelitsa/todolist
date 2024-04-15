@@ -27,7 +27,9 @@ export const Tasks: React.FC<TasksPropsType> = (props) => {
     return (
         <div>
             <Todolist title={title} tasks={tasksFiltered} removeTask={removeTask} id={id}
-                      addTask={addTask} deleteAllTasks={deleteAllTasks} />
+                      addTask={addTask} deleteAllTasks={deleteAllTasks}>
+                {<div>Hey ho! I'm a child</div>}
+            </Todolist>
         </div>
     );
 };

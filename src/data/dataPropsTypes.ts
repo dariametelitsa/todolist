@@ -19,6 +19,7 @@ export type TasksArrPropsType = {
 export type FilterValuesType = 'all' | 'completed' | 'active';
 
 export type TodolistPropsType = {
+    children?: any;
     id: string;
     title: string;
     tasks: Array<TaskType>;
