@@ -1,9 +1,14 @@
-import React, { useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 import { FilterValuesType, TaskType, TodolistPropsType } from "../../data/dataPropsTypes";
 import { Button } from "../button/Button";
 import { Input } from "../input/Input";
 import S from './Todolist.module.scss';
 import { useAutoAnimate } from "@formkit/auto-animate/react";
+
+// Create
+// Read for list (filter, type, sort, research, pagination)
+// Update (status, title)
+// Delete
 
 const Todolist: React.FC<TodolistPropsType> = ({
                                                    children,
@@ -13,6 +18,7 @@ const Todolist: React.FC<TodolistPropsType> = ({
                                                    id,
                                                    addTask,
                                                    deleteAllTasks,
+                                                   setNewTaskStatus,
                                                }: TodolistPropsType) => {
     let [TaskTitle, setNewTaskTitle] = useState('');
 
@@ -42,8 +48,8 @@ const Todolist: React.FC<TodolistPropsType> = ({
         //     addTask(newTaskTitle);
         //     inputRef.current.value = '';
         // }
-        addTask(TaskTitle);
-        setNewTaskTitle('');
+            addTask(TaskTitle.trim());
+            setNewTaskTitle('');
     }
 
     const onClickHandlerCreator = (filter: FilterValuesType) => {
@@ -52,7 +58,7 @@ const Todolist: React.FC<TodolistPropsType> = ({
 
     const onKeyDownHandler = () => {
         if (ifTaskCanAdded) {
-            addTask(TaskTitle);
+            addTask(TaskTitle.trim());
             setNewTaskTitle('');
         }
     }
@@ -61,8 +67,9 @@ const Todolist: React.FC<TodolistPropsType> = ({
         deleteAllTasks();
     }
 
+
     const isTitleToLong = TaskTitle.length > 15;
-    const ifTaskCanAdded = TaskTitle && !isTitleToLong;
+    const ifTaskCanAdded = TaskTitle.trim() && !isTitleToLong;
 
     return (
         <div className={S.todolist}>
@@ -81,8 +88,10 @@ const Todolist: React.FC<TodolistPropsType> = ({
                         <p>Задач нет</p>
                     ) : (
                         tasksForTodoList.map((task) => {
+                            const onChangeSetTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => setNewTaskStatus(task.id, e.currentTarget.checked);
                             return (
-                                <li key={id}><input type={"checkbox"} checked={task.isDone}/>
+                                <li key={id}>
+                                    <input type={"checkbox"} checked={task.isDone} onChange={onChangeSetTaskStatusHandler}/>
                                     <span>{task.title}</span>
                                     <Button title={'x'} callBack={() => removeTask(task.id)}/>
                                 </li>

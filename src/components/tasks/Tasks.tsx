@@ -9,8 +9,8 @@ export const Tasks: React.FC<TasksPropsType> = (props) => {
     //global state
     let [tasksFiltered, setTasks] = useState<Array<TaskType>>(tasks);
 
-    function removeTask(id: string) {
-        let filteredTasks = tasksFiltered.filter((t) => t.id !== id);
+    function removeTask(taskId: string) {
+        let filteredTasks = tasksFiltered.filter((t) => t.id !== taskId);
         setTasks(filteredTasks);
     }
 
@@ -19,15 +19,24 @@ export const Tasks: React.FC<TasksPropsType> = (props) => {
         taskTitle && setTasks([newTask, ...tasksFiltered]);
     }
 
-
     const deleteAllTasks = () => {
         setTasks([]);
+    }
+
+    const setNewTaskStatus = (taskId: string, newIsDone: boolean) => {
+        // const task = tasksFiltered.find(t => t.id === taskId);
+        // if (task) {
+        //     task.isDone = newIsDone;
+        //     setTasks([...tasksFiltered]);
+        // }
+        const newState = tasksFiltered.map((t) => t.id === taskId ? {...t, isDone: newIsDone} : t);
+        setTasks(newState);
     }
 
     return (
         <div>
             <Todolist title={title} tasks={tasksFiltered} removeTask={removeTask} id={id}
-                      addTask={addTask} deleteAllTasks={deleteAllTasks}>
+                      addTask={addTask} deleteAllTasks={deleteAllTasks} setNewTaskStatus={setNewTaskStatus}>
                 {<div>Hey ho! I'm a child</div>}
             </Todolist>
         </div>
