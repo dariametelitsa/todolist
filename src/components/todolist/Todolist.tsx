@@ -10,8 +10,9 @@ const Todolist: React.FC<TodolistPropsType> = ({
                                                    removeTask,
                                                    id,
                                                    addTask,
+                                                   deleteAllTasks,
                                                }: TodolistPropsType) => {
-    let [newTaskTitle, setNewTaskTitle] = useState('');
+    let [TaskTitle, setNewTaskTitle] = useState('');
 
     //local state
     let [filter, setFilter] = useState<FilterValuesType>('all')
@@ -38,7 +39,7 @@ const Todolist: React.FC<TodolistPropsType> = ({
         //     addTask(newTaskTitle);
         //     inputRef.current.value = '';
         // }
-        addTask(newTaskTitle);
+        addTask(TaskTitle);
         setNewTaskTitle('');
     }
 
@@ -48,20 +49,24 @@ const Todolist: React.FC<TodolistPropsType> = ({
 
     const onKeyDownHandler = () => {
         if (ifTaskCanAdded) {
-            addTask(newTaskTitle);
+            addTask(TaskTitle);
             setNewTaskTitle('');
         }
     }
 
-    const isTitleToLong = newTaskTitle.length > 15;
-    const ifTaskCanAdded = newTaskTitle && !isTitleToLong;
+    const onClickHandlerDeleteAll = () => {
+        deleteAllTasks();
+    }
+
+    const isTitleToLong = TaskTitle.length > 15;
+    const ifTaskCanAdded = TaskTitle && !isTitleToLong;
 
     return (
         <div className={S.todolist}>
             <h3>{title}</h3>
             <div className={S.addTask}>
                 {/*<input ref={inputRef} type="text" title={'hey'}/>*/}
-                <Input changeTitle={setNewTaskTitle} title={newTaskTitle} onKeyDown={onKeyDownHandler}/>
+                <Input changeTitle={setNewTaskTitle} title={TaskTitle} onKeyDown={onKeyDownHandler}/>
                 <Button title={'Add'} callBack={onClickButtonHandler} isDisabled={!ifTaskCanAdded}></Button>
                 {
                     isTitleToLong && <div>too long</div>
@@ -83,7 +88,9 @@ const Todolist: React.FC<TodolistPropsType> = ({
                     )
                 }
             </ul>
-
+            <Button title={'Delete all tasks'}
+                    callBack={() => {onClickHandlerDeleteAll()}}
+                    isDisabled={tasks.length === 0}/>
             <div className={'tabs'}>
                 <Button title={'All'} callBack={onClickHandlerCreator('all')}></Button>
                 <Button title={'Active'} callBack={onClickHandlerCreator('active')}></Button>

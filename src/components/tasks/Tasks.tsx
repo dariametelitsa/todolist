@@ -19,10 +19,15 @@ export const Tasks: React.FC<TasksPropsType> = (props) => {
         taskTitle && setTasks([newTask, ...tasksFiltered]);
     }
 
+
+    const deleteAllTasks = () => {
+        setTasks([]);
+    }
+
     return (
         <div>
             <Todolist title={title} tasks={tasksFiltered} removeTask={removeTask} id={id}
-                      addTask={addTask}/>
+                      addTask={addTask} deleteAllTasks={deleteAllTasks} />
         </div>
     );
 };
