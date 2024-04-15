@@ -45,3 +45,12 @@ ul {
   border: 1px solid grey;
   background-color: green;
 }
+
+.taskInputError {
+  border: 2px solid tomato;
+  outline: none;
+}
+
+.taskInputErrorMessage {
+  color: tomato;
+}

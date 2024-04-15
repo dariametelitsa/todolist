@@ -43,14 +43,21 @@ const Todolist: React.FC<TodolistPropsType> = ({
     const tasksForTodoList = getTasksFotTodolist(tasks, filter);
 
     //const inputRef = React.useRef<HTMLInputElement>(null)
-    const onClickButtonHandler = () => {
+    const onClickAddTaskHandler = () => {
         // if(inputRef.current) {
         //     const newTaskTitle = inputRef.current.value;
         //     addTask(newTaskTitle);
         //     inputRef.current.value = '';
         // }
-        addTask(TaskTitle.trim());
-        setNewTaskTitle('');
+        const trimmedTaskTitle = TaskTitle.trim();
+        if (trimmedTaskTitle) {
+            addTask(TaskTitle.trim());
+            setNewTaskTitle('');
+        }
+        else {
+            setTaskInputError('Title is required');
+            setNewTaskTitle('');
+        }
     }
 
     const onClickHandlerCreator = (filter: FilterValuesType) => {
@@ -68,20 +75,27 @@ const Todolist: React.FC<TodolistPropsType> = ({
         deleteAllTasks();
     }
 
+    const onChangeSetTaskTitle = (title: string) => {
+        setNewTaskTitle(title);
+        setTaskInputError(null);
+    }
+
 
     const isTitleToLong = TaskTitle.length > 15;
-    const ifTaskCanAdded = TaskTitle.trim() && !isTitleToLong;
+    const ifTaskCanAdded = TaskTitle && !isTitleToLong;
 
     return (
         <div className={S.todolist}>
             <h3>{title}</h3>
             <div className={S.addTask}>
                 {/*<input ref={inputRef} type="text" title={'hey'}/>*/}
-                <Input changeTitle={setNewTaskTitle} title={TaskTitle} onKeyDown={onKeyDownHandler}/>
-                <Button title={'Add'} callBack={onClickButtonHandler} isDisabled={!ifTaskCanAdded}></Button>
-                {
-                    isTitleToLong && <div>too long</div>
-                }
+                <Input changeTitle={onChangeSetTaskTitle}
+                       title={TaskTitle}
+                       onKeyDown={onKeyDownHandler}
+                       className={taskInputError ? 'taskInputError' : ''}/>
+                <Button title={'Add'} callBack={onClickAddTaskHandler} isDisabled={!ifTaskCanAdded}></Button>
+                {isTitleToLong && <div>Too long</div>}
+                {taskInputError && <div className={'taskInputErrorMessage'}>{taskInputError}</div>}
             </div>
             <ul ref={listRef}>
                 {
