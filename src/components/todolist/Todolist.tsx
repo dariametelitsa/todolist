@@ -3,8 +3,10 @@ import { FilterValuesType, TaskType, TodolistPropsType } from "../../data/dataPr
 import { Button } from "../button/Button";
 import { Input } from "../input/Input";
 import S from './Todolist.module.scss';
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 const Todolist: React.FC<TodolistPropsType> = ({
+                                                   children,
                                                    title,
                                                    tasks,
                                                    removeTask,
@@ -17,6 +19,7 @@ const Todolist: React.FC<TodolistPropsType> = ({
     //local state
     let [filter, setFilter] = useState<FilterValuesType>('all')
 
+    const [listRef] = useAutoAnimate<HTMLUListElement>()
     const getTasksFotTodolist = (tasks: Array<TaskType>, filter: FilterValuesType) => {
         switch (filter) {
             case 'active':
@@ -72,7 +75,7 @@ const Todolist: React.FC<TodolistPropsType> = ({
                     isTitleToLong && <div>too long</div>
                 }
             </div>
-            <ul>
+            <ul ref={listRef}>
                 {
                     tasks.length === 0 ? (
                         <p>Задач нет</p>
@@ -89,13 +92,16 @@ const Todolist: React.FC<TodolistPropsType> = ({
                 }
             </ul>
             <Button title={'Delete all tasks'}
-                    callBack={() => {onClickHandlerDeleteAll()}}
+                    callBack={() => {
+                        onClickHandlerDeleteAll()
+                    }}
                     isDisabled={tasks.length === 0}/>
             <div className={'tabs'}>
                 <Button title={'All'} callBack={onClickHandlerCreator('all')}></Button>
                 <Button title={'Active'} callBack={onClickHandlerCreator('active')}></Button>
                 <Button title={'Completed'} callBack={onClickHandlerCreator('completed')}></Button>
             </div>
+            {children && children}
         </div>
     );
 }
