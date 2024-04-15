@@ -24,6 +24,7 @@ const Todolist: React.FC<TodolistPropsType> = ({
 
     //local state
     let [filter, setFilter] = useState<FilterValuesType>('all')
+    let [taskInputError, setTaskInputError] = useState<string | null>(null);
 
     const [listRef] = useAutoAnimate<HTMLUListElement>()
     const getTasksFotTodolist = (tasks: Array<TaskType>, filter: FilterValuesType) => {
@@ -48,8 +49,8 @@ const Todolist: React.FC<TodolistPropsType> = ({
         //     addTask(newTaskTitle);
         //     inputRef.current.value = '';
         // }
-            addTask(TaskTitle.trim());
-            setNewTaskTitle('');
+        addTask(TaskTitle.trim());
+        setNewTaskTitle('');
     }
 
     const onClickHandlerCreator = (filter: FilterValuesType) => {
@@ -91,8 +92,9 @@ const Todolist: React.FC<TodolistPropsType> = ({
                             const onChangeSetTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => setNewTaskStatus(task.id, e.currentTarget.checked);
                             return (
                                 <li key={id}>
-                                    <input type={"checkbox"} checked={task.isDone} onChange={onChangeSetTaskStatusHandler}/>
-                                    <span>{task.title}</span>
+                                    <input type={"checkbox"} checked={task.isDone}
+                                           onChange={onChangeSetTaskStatusHandler}/>
+                                    <span className={task.isDone ? 'taskDone' : 'task'}>{task.title}</span>
                                     <Button title={'x'} callBack={() => removeTask(task.id)}/>
                                 </li>
                             )
@@ -106,9 +108,12 @@ const Todolist: React.FC<TodolistPropsType> = ({
                     }}
                     isDisabled={tasks.length === 0}/>
             <div className={'tabs'}>
-                <Button title={'All'} callBack={onClickHandlerCreator('all')}></Button>
-                <Button title={'Active'} callBack={onClickHandlerCreator('active')}></Button>
-                <Button title={'Completed'} callBack={onClickHandlerCreator('completed')}></Button>
+                <Button className={filter === 'all' ? 'filterActive + button' : 'button'} title={'All'}
+                        callBack={onClickHandlerCreator('all')}></Button>
+                <Button className={filter === 'active' ? 'filterActive + button' : 'button'} title={'Active'}
+                        callBack={onClickHandlerCreator('active')}></Button>
+                <Button className={filter === 'completed' ? 'filterActive + button' : 'button'} title={'Completed'}
+                        callBack={onClickHandlerCreator('completed')}></Button>
             </div>
             {children && children}
         </div>
