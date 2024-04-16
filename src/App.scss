@@ -33,7 +33,12 @@ ul {
 
 
 .button {
+  border: 1px solid transparent;
   padding: 5px 10px;
+
+  & + button {
+    margin-left: 10px;
+  }
 }
 
 .filterBtn {

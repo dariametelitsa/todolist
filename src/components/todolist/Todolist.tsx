@@ -43,6 +43,19 @@ const Todolist: React.FC<TodolistPropsType> = ({
 
     const tasksForTodoList = getTasksFotTodolist(tasks, filter);
 
+    const addTaskWithCheck = () => {
+        const trimmedTaskTitle = TaskTitle.trim();
+        if (ifTaskCanAdded) {
+            if (trimmedTaskTitle) {
+                addTask(TaskTitle.trim());
+                setNewTaskTitle('');
+            } else {
+                setTaskInputError('Title is required');
+                setNewTaskTitle('');
+            }
+        }
+    }
+
     //const inputRef = React.useRef<HTMLInputElement>(null)
     const onClickAddTaskHandler = () => {
         // if(inputRef.current) {
@@ -50,25 +63,15 @@ const Todolist: React.FC<TodolistPropsType> = ({
         //     addTask(newTaskTitle);
         //     inputRef.current.value = '';
         // }
-        const trimmedTaskTitle = TaskTitle.trim();
-        if (trimmedTaskTitle) {
-            addTask(TaskTitle.trim());
-            setNewTaskTitle('');
-        } else {
-            setTaskInputError('Title is required');
-            setNewTaskTitle('');
-        }
+        addTaskWithCheck();
+    }
+
+    const onKeyDownHandler = () => {
+        addTaskWithCheck();
     }
 
     const onClickHandlerCreator = (filter: FilterValuesType) => {
         return () => setFilter(filter);
-    }
-
-    const onKeyDownHandler = () => {
-        if (ifTaskCanAdded) {
-            addTask(TaskTitle.trim());
-            setNewTaskTitle('');
-        }
     }
 
     const onClickHandlerDeleteAll = () => {
@@ -94,8 +97,10 @@ const Todolist: React.FC<TodolistPropsType> = ({
                        onKeyDown={onKeyDownHandler}
                        className={taskInputError ? 'taskInputError' : ''}/>
                 <Button title={'Add'} callBack={onClickAddTaskHandler} isDisabled={!ifTaskCanAdded}></Button>
+
                 {isTitleToLong && <div>Too long</div>}
                 {taskInputError && <div className={'taskInputErrorMessage'}>{taskInputError}</div>}
+
             </div>
             <ul ref={listRef}>
                 {
@@ -122,14 +127,14 @@ const Todolist: React.FC<TodolistPropsType> = ({
                     }}
                     isDisabled={tasks.length === 0}/>
             <div className={'tabs'}>
-                <Button className={filter === 'all' ? 'filterActive + button' : 'button'} title={'All'}
+                <Button className={filter === 'all' ? 'filterActive button' : 'button'} title={'All'}
                         callBack={onClickHandlerCreator('all')}></Button>
-                <Button className={filter === 'active' ? 'filterActive + button' : 'button'} title={'Active'}
+                <Button className={filter === 'active' ? 'filterActive button' : 'button'} title={'Active'}
                         callBack={onClickHandlerCreator('active')}></Button>
-                <Button className={filter === 'completed' ? 'filterActive + button' : 'button'} title={'Completed'}
+                <Button className={filter === 'completed' ? 'filterActive button' : 'button'} title={'Completed'}
                         callBack={onClickHandlerCreator('completed')}></Button>
             </div>
-            {children && children}
+            {children}
         </div>
     );
 }
