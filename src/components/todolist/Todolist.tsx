@@ -127,11 +127,11 @@ const Todolist: React.FC<TodolistPropsType> = ({
                     }}
                     isDisabled={tasks.length === 0}/>
             <div className={'tabs'}>
-                <Button className={filter === 'all' ? 'filterActive button' : 'button'} title={'All'}
+                <Button active={filter === 'all'} title={'All'}
                         callBack={onClickHandlerCreator('all')}></Button>
-                <Button className={filter === 'active' ? 'filterActive button' : 'button'} title={'Active'}
+                <Button active={filter === 'active'} title={'Active'}
                         callBack={onClickHandlerCreator('active')}></Button>
-                <Button className={filter === 'completed' ? 'filterActive button' : 'button'} title={'Completed'}
+                <Button active={filter === 'completed'} title={'Completed'}
                         callBack={onClickHandlerCreator('completed')}></Button>
             </div>
             {children}

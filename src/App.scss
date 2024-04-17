@@ -20,42 +20,42 @@ ul {
 //  color: darkred;
 //}
 
-.task {
-  font-weight: bold;
-}
+//.task {
+//  font-weight: bold;
+//}
+//
+//.taskDone {
+//  font-weight: bold;
+//  text-decoration: line-through;
+//  opacity: 0.6;
+//  transition: .2s ease-in-out;
+//}
+//
+//
+////.button {
+//  border: 1px solid transparent;
+//  padding: 5px 10px;
+//
+//  & + button {
+//    margin-left: 10px;
+//  }
+//}
 
-.taskDone {
-  font-weight: bold;
-  text-decoration: line-through;
-  opacity: 0.6;
-  transition: .2s ease-in-out;
-}
-
-
-.button {
-  border: 1px solid transparent;
-  padding: 5px 10px;
-
-  & + button {
-    margin-left: 10px;
-  }
-}
-
-.filterBtn {
-  border: 1px solid grey;
-}
-
-.filterActive {
-  color: white;
-  border: 1px solid grey;
-  background-color: green;
-}
-
-.taskInputError {
-  border: 2px solid tomato;
-  outline: none;
-}
-
-.taskInputErrorMessage {
-  color: tomato;
-}
+//.filterBtn {
+//  border: 1px solid grey;
+//}
+//
+//.filterActive {
+//  color: white;
+//  border: 1px solid grey;
+//  background-color: green;
+//}
+//
+//.taskInputError {
+//  border: 2px solid tomato;
+//  outline: none;
+//}
+//
+//.taskInputErrorMessage {
+//  color: tomato;
+//}
