@@ -7,21 +7,14 @@ type ButtonPropsType = {
     className?: string;
     isDisabled?: boolean;
     active?: boolean;
+    accent?:boolean
 } & ButtonHTMLAttributes<HTMLButtonElement>;
-export const Button: React.FC<ButtonPropsType> = ({title, callBack, isDisabled, active, ...restProps}: ButtonPropsType) => {
+export const Button: React.FC<ButtonPropsType> = ({title, callBack, isDisabled, active, accent, ...restProps}: ButtonPropsType) => {
 
-    // const finalClassName = s.button
-    //     + (disabled
-    //         ? ' ' + s.disabled
-    //         : color === 'red'
-    //             ? ' ' + s.red
-    //             : color === 'secondary'
-    //                 ? ' ' + s.secondary
-    //                 : ' ' + s.default);
-
-    // const finalClassName = s.button + ' ' + s.red;
-    // const finalClassName = `${s.button} ${s.red}`;
-    const finalClassName = `${s.button} ${active ? s.active : ''}`;
+    const finalClassName = `
+    ${s.button} 
+    ${active ? s.active : ''}
+    ${accent ? s.accent : ''}`;
     
     const onClickHandler = () => {
         callBack();

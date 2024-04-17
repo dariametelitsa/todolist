@@ -1,14 +1,22 @@
 @use '../../styles/colors' as v;
 
 .button {
-  padding: 4px 8px;
+  padding: 6px 12px;
   border: none;
-  border-radius: 3px;
+  border-radius: 2px;
   //background-color: $active;
-  background-color: v.$active;
-  color: white;
+  background-color: white;
+  color: v.$textColor;
+
+  & + button {
+    margin-left: 12px;
+  }
 }
 
 .active {
   background-color: tomato;
+}
+
+.accent {
+  background-color: v.$accent;
 }

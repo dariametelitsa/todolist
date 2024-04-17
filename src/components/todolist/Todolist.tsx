@@ -96,7 +96,7 @@ const Todolist: React.FC<TodolistPropsType> = ({
                        title={TaskTitle}
                        onKeyDown={onKeyDownHandler}
                        className={taskInputError ? 'taskInputError' : ''}/>
-                <Button title={'Add'} callBack={onClickAddTaskHandler} isDisabled={!ifTaskCanAdded}></Button>
+                <Button title={'Add'} callBack={onClickAddTaskHandler} isDisabled={!ifTaskCanAdded} accent></Button>
 
                 {isTitleToLong && <div>Too long</div>}
                 {taskInputError && <div className={'taskInputErrorMessage'}>{taskInputError}</div>}
