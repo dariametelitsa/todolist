@@ -26,7 +26,7 @@ function App() {
             {id: v1(), title: "React", isDone: false},
             {id: v1(), title: "Redux", isDone: false}
         ]
-    });
+    }); //how to type calculated property
 
     const changeFilter = (todolistId: string, filter: FilterValuesType) => {
         setTodoLists(todoLists.map(td => td.id !== todolistId ? td : {...td, filter}));
@@ -61,6 +61,12 @@ function App() {
         setTasks({...tasks, [todolistId]: tasks[todolistId].map((t) => t.id === taskId ? {...t, isDone: newIsDone} : t)});
     }
 
+    const removeTodolist = (todolistId: string) => {
+        setTodoLists([...todoLists.filter((t) => t.id !== todolistId)]);
+        delete tasks[todolistId]; //delete unnecessary tasks
+        setTasks({...tasks});
+    }
+
     return (
         <div className={'App'}>
             {todoLists.map(td => {
@@ -74,7 +80,8 @@ function App() {
                                  deleteAllTasks={deleteAllTasks}
                                  setNewTaskStatus={setNewTaskStatus}
                                  filter={td.filter}
-                                 changeFilter={changeFilter}>
+                                 changeFilter={changeFilter}
+                                 removeTodolist={removeTodolist}>
                     {<div>Just do it!</div>}
                 </Todolist>
             })

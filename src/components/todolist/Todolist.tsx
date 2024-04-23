@@ -21,6 +21,7 @@ const Todolist: React.FC<TodolistPropsType> = ({
                                                    addTask,
                                                    deleteAllTasks,
                                                    setNewTaskStatus,
+    removeTodolist,
                                                }: TodolistPropsType) => {
     //local state - not business tasks
     let [TaskTitle, setNewTaskTitle] = useState('');
@@ -68,13 +69,12 @@ const Todolist: React.FC<TodolistPropsType> = ({
         setTaskInputError(null);
     }
 
-
     const isTitleToLong = TaskTitle.length > 15;
     const ifTaskCanAdded = TaskTitle && !isTitleToLong;
 
     return (
         <div className={styles.todolist}>
-            <h3>{title}</h3>
+            <h3>{title} <Button title={'x'} callBack={() => removeTodolist(id)}/></h3>
             <div className={styles.addTask}>
                 {/*<input ref={inputRef} type="text" title={'hey'}/>*/}
                 <Input changeTitle={onChangeSetTaskTitle}
