@@ -2,7 +2,7 @@ import React, { ChangeEvent, useState } from "react";
 import { FilterValuesType, TaskType, TodolistPropsType } from "../../data/dataPropsTypes";
 import { Button } from "../button/Button";
 import { Input } from "../input/Input";
-import S from './Todolist.module.scss';
+import styles from './Todolist.module.scss';
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 // Create
@@ -32,7 +32,7 @@ const Todolist: React.FC<TodolistPropsType> = ({
         const trimmedTaskTitle = TaskTitle.trim();
         if (ifTaskCanAdded) {
             if (trimmedTaskTitle) {
-                addTask(TaskTitle.trim());
+                addTask(id ,TaskTitle.trim());
                 setNewTaskTitle('');
             } else {
                 setTaskInputError('Title is required');
@@ -60,7 +60,7 @@ const Todolist: React.FC<TodolistPropsType> = ({
     }
 
     const onClickHandlerDeleteAll = () => {
-        deleteAllTasks();
+        deleteAllTasks(id);
     }
 
     const onChangeSetTaskTitle = (title: string) => {
@@ -73,9 +73,9 @@ const Todolist: React.FC<TodolistPropsType> = ({
     const ifTaskCanAdded = TaskTitle && !isTitleToLong;
 
     return (
-        <div className={S.todolist}>
+        <div className={styles.todolist}>
             <h3>{title}</h3>
-            <div className={S.addTask}>
+            <div className={styles.addTask}>
                 {/*<input ref={inputRef} type="text" title={'hey'}/>*/}
                 <Input changeTitle={onChangeSetTaskTitle}
                        title={TaskTitle}
@@ -93,13 +93,13 @@ const Todolist: React.FC<TodolistPropsType> = ({
                         <p>Задач нет</p>
                     ) : (
                         tasks.map((task) => {
-                            const onChangeSetTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => setNewTaskStatus(task.id, e.currentTarget.checked);
+                            const onChangeSetTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => setNewTaskStatus(id, task.id, e.currentTarget.checked);
                             return (
                                 <li key={id}>
                                     <input type={"checkbox"} checked={task.isDone}
                                            onChange={onChangeSetTaskStatusHandler}/>
-                                    <span className={task.isDone ? 'taskDone' : 'task'}>{task.title}</span>
-                                    <Button title={'x'} callBack={() => removeTask(task.id)}/>
+                                    <span className={task.isDone ? styles.taskDone : styles.task}>{task.title}</span>
+                                    <Button title={'x'} callBack={() => removeTask(id, task.id)}/>
                                 </li>
                             )
                         })

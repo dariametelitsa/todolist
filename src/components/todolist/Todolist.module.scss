@@ -19,6 +19,15 @@ input[type='checkbox'] {
   flex-direction: column;
 }
 
+.task {
+
+}
+
+.taskDone {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
 //@use './../button/Button.module.scss';
 //.btnRemove {
 //  @extend .button;

@@ -18,9 +18,7 @@ export type TasksPropsType = {
 };
 
 export type TasksArrPropsType = {
-    id: string;
-    title: string;
-    taskBlock: Array<TaskType>;
+    [id: string]: Array<TaskType>;
 };
 
 export type FilterValuesType = 'all' | 'completed' | 'active';
@@ -32,9 +30,9 @@ export type TodolistPropsType = {
     changeFilter: (toListId: string, filter: FilterValuesType) => void;
     title: string;
     tasks: Array<TaskType>;
-    removeTask: (id: string) => void;
-    addTask: (taskTitle: string) => void;
-    deleteAllTasks: () => void;
-    setNewTaskStatus: (taskId: string, newIsDone: boolean) => void;
+    removeTask: (todolistId: string, id: string) => void;
+    addTask: (todolistId: string, taskTitle: string) => void;
+    deleteAllTasks: (todolistId: string) => void;
+    setNewTaskStatus: (todolistId: string, taskId: string, newIsDone: boolean) => void;
 }
 
