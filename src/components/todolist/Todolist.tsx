@@ -17,31 +17,16 @@ const Todolist: React.FC<TodolistPropsType> = ({
                                                    removeTask,
                                                    id,
                                                    filter,
-                                                   setFilter,
+                                                   changeFilter,
                                                    addTask,
                                                    deleteAllTasks,
                                                    setNewTaskStatus,
                                                }: TodolistPropsType) => {
+    //local state - not business tasks
     let [TaskTitle, setNewTaskTitle] = useState('');
-
-    //local state
     let [taskInputError, setTaskInputError] = useState<string | null>(null);
 
     const [listRef] = useAutoAnimate<HTMLUListElement>()
-    const getTasksFotTodolist = (tasks: Array<TaskType>, filter: FilterValuesType) => {
-        switch (filter) {
-            case 'active':
-                return tasks.filter(t => !t.isDone);
-
-            case 'completed':
-                return tasks.filter(t => t.isDone);
-
-            default:
-                return tasks;
-        }
-    }
-
-    const tasksForTodoList = getTasksFotTodolist(tasks, filter);
 
     const addTaskWithCheck = () => {
         const trimmedTaskTitle = TaskTitle.trim();
@@ -71,7 +56,7 @@ const Todolist: React.FC<TodolistPropsType> = ({
     }
 
     const onClickHandlerCreator = (filter: FilterValuesType) => {
-        return () => setFilter(filter);
+        return () => changeFilter(id, filter);
     }
 
     const onClickHandlerDeleteAll = () => {
@@ -107,7 +92,7 @@ const Todolist: React.FC<TodolistPropsType> = ({
                     tasks.length === 0 ? (
                         <p>Задач нет</p>
                     ) : (
-                        tasksForTodoList.map((task) => {
+                        tasks.map((task) => {
                             const onChangeSetTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => setNewTaskStatus(task.id, e.currentTarget.checked);
                             return (
                                 <li key={id}>

@@ -1,3 +1,9 @@
+export type todoListType = {
+    id: string;
+    title: string;
+    filter : FilterValuesType;
+}
+
 export type TaskType = {
     id: string;
     title: string;
@@ -8,6 +14,7 @@ export type TasksPropsType = {
     id: string;
     title: string;
     tasks: Array<TaskType>;
+    filter: FilterValuesType;
 };
 
 export type TasksArrPropsType = {
@@ -22,7 +29,7 @@ export type TodolistPropsType = {
     children?: any;
     id: string;
     filter: FilterValuesType;
-    setFilter: (filter: FilterValuesType) => void;
+    changeFilter: (toListId: string, filter: FilterValuesType) => void;
     title: string;
     tasks: Array<TaskType>;
     removeTask: (id: string) => void;
