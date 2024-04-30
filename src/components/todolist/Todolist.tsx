@@ -24,7 +24,7 @@ const Todolist: React.FC<TodolistPropsType> = ({
                                                    deleteAllTasks,
                                                    setNewTaskStatus,
                                                    removeTodolist,
-                                                   changeTodolistTitle
+                                                   updateTodolistTitle
                                                }: TodolistPropsType) => {
 
 
@@ -43,14 +43,19 @@ const Todolist: React.FC<TodolistPropsType> = ({
         addTask(id, newItem);
     }
 
-    const changeTodolistTitleHandler = (newTitle: string) => {
-        changeTodolistTitle(id, newTitle);
+    const changeTodolistTitleHandler = (idToChange: string, newTitle: string) => {
+        updateTodolistTitle(idToChange, newTitle);
+    }
+
+    const onChangeTitleTaskHandler = (idToChange: string, newTitle: string) => {
+        renameTaskTitle(id, idToChange, newTitle);
+        console.dir(tasks);
     }
 
     return (
         <div className={styles.todolist}>
             <h3>
-                <EditableSpan oldTitle={title} updateItem={changeTodolistTitleHandler}/>
+                <EditableSpan oldTitle={title} idToChange={id} updateItem={changeTodolistTitleHandler}/>
                 {/*{title} */}
                 <Button title={'x'} callBack={() => removeTodolist(id)}/>
             </h3>
@@ -63,15 +68,15 @@ const Todolist: React.FC<TodolistPropsType> = ({
                     ) : (
                         tasks.map((task) => {
                             const onChangeSetTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => setNewTaskStatus(id, task.id, e.currentTarget.checked);
-                            const onChangeTitleTaskHandler = (newTitle: string) => {
-                                renameTaskTitle(id, task.id, newTitle);
-                            }
+                            // const onChangeTitleTaskHandler = (newTitle: string) => {
+                            //     renameTaskTitle(id, task.id, newTitle);
+                            // }
                             return (
-                                <li key={id} className={task.isDone ? styles.taskDone : styles.task}>
+                                <li key={task.id} className={task.isDone ? styles.taskDone : styles.task}>
                                     <input type={"checkbox"} checked={task.isDone}
                                            onChange={onChangeSetTaskStatusHandler}/>
                                     {/*<span className={task.isDone ? styles.taskDone : styles.task}>{task.title}</span>*/}
-                                    <EditableSpan oldTitle={task.title} updateItem={onChangeTitleTaskHandler}/>
+                                    <EditableSpan oldTitle={task.title} idToChange={task.id} updateItem={onChangeTitleTaskHandler}/>
                                     <Button title={'x'} callBack={() => removeTask(id, task.id)}/>
                                 </li>
                             )

@@ -5,10 +5,11 @@ import { ChangeEvent, useState } from "react";
 
 export type EditableSpanProps = {
     oldTitle: string
-    updateItem: (newTitle: string) => void
+    idToChange: string
+    updateItem: (id: string, newTitle: string) => void
 };
 
-export const EditableSpan = ({oldTitle, updateItem}: EditableSpanProps) => {
+export const EditableSpan = ({idToChange, oldTitle, updateItem}: EditableSpanProps) => {
 
     const [editMode, setEditMode] = useState(false)
     const [newTitle, setNewTitle] = useState<string>(oldTitle);
@@ -16,12 +17,12 @@ export const EditableSpan = ({oldTitle, updateItem}: EditableSpanProps) => {
     const activateEditModeHandler = () => {
         setEditMode(!editMode);
         if(editMode) {
-            updateItem(newTitle);
+            updateItem(idToChange, newTitle);
         }
     }
 
     const onChangeTitleHandler = (event: ChangeEvent<HTMLInputElement>) => {
-        setNewTitle(event.currentTarget.value);
+        setNewTitle(event.target.value);
     }
 
     return (

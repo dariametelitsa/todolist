@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { useState } from "react";
-import { InputChange } from "../input/Input-change";
 import { Button } from "../button/Button";
 import s from './AddItem.module.scss'
+import { Input } from "../input/Input";
 
 type Props = {
     addItem: (name: string) => void
 };
-export const AddItem = (props: Props) => {
+export const AddItem = ({addItem}: Props) => {
 
     //local state - not business tasks
     let [itemTitle, setNewItemTitle] = useState('');
@@ -25,12 +25,11 @@ export const AddItem = (props: Props) => {
         addItemWithCheck();
     }
 
-
     const addItemWithCheck = () => {
         const trimmedTaskTitle = itemTitle.trim();
         if (ifTaskCanAdded) {
             if (trimmedTaskTitle) {
-                props.addItem(itemTitle.trim());
+                addItem(trimmedTaskTitle);
                 setNewItemTitle('');
             } else {
                 setItemInputError('Title is required');
@@ -39,6 +38,7 @@ export const AddItem = (props: Props) => {
         }
     }
 
+
     const onChangeSetItemTitle = (title: string) => {
         setNewItemTitle(title);
         setItemInputError(null);
@@ -46,7 +46,7 @@ export const AddItem = (props: Props) => {
 
     return (
         <div className={s.addItem}>
-            <InputChange changeTitle={onChangeSetItemTitle}
+            <Input changeTitle={onChangeSetItemTitle}
                          title={itemTitle}
                          onKeyDown={onKeyDownHandler}
                          className={itemInputError ? 'taskInputError' : ''}/>

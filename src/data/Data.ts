@@ -19,6 +19,6 @@ export const tasksArr: TasksType = {
 };
 
 export const todoListsData: todoListType[] = [
-    {id: todolistId1, title: "What to learn", filter: 'active'},
+    {id: todolistId1, title: "What to learn", filter: 'all'},
     {id: todolistId2, title: "What to do", filter: 'all'},
 ]

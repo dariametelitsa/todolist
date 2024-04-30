@@ -3,33 +3,35 @@ import React, { ChangeEvent, InputHTMLAttributes, useState } from 'react';
 type InputProps = {
     changeTitle: (title: string) => void;
     title: string;
-    onKeyDown: () => void;
 } & InputHTMLAttributes<HTMLInputElement>
 
-export const InputChange = ({changeTitle, title, onKeyDown, ...restProps}: InputProps) => {
+export const InputChange = ({changeTitle, title, ...restProps}: InputProps) => {
 
-    let [itemTitle, setNewItemTitle] = useState('');
+    let [itemTitle, setNewItemTitle] = useState(title);
 
     const addCheck = () => {
         const trimmedTaskTitle = itemTitle.trim();
         if(trimmedTaskTitle !== '')
         {
-            setNewItemTitle(trimmedTaskTitle);
+            changeTitle(trimmedTaskTitle);
         }
     }
 
     const onChangeInputHandler = (event: ChangeEvent<HTMLInputElement>) => {
-        changeTitle(event.currentTarget.value);
+        // changeTitle(event.currentTarget.value);
+        setNewItemTitle(event.currentTarget.value);
+        addCheck();
+
     }
 
     const onKeyDownHandler = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter') {
-            onKeyDown();
+            addCheck();
         }
     }
 
     return (
-        <input value={title}
+        <input value={itemTitle}
                onChange={onChangeInputHandler}
                onKeyDown={onKeyDownHandler}
                type="text"
