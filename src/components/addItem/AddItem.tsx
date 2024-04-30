@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useState } from "react";
-import { Input } from "../input/Input";
+import { InputChange } from "../input/Input-change";
 import { Button } from "../button/Button";
 import s from './AddItem.module.scss'
 
@@ -46,10 +46,10 @@ export const AddItem = (props: Props) => {
 
     return (
         <div className={s.addItem}>
-            <Input changeTitle={onChangeSetItemTitle}
-                   title={itemTitle}
-                   onKeyDown={onKeyDownHandler}
-                   className={itemInputError ? 'taskInputError' : ''}/>
+            <InputChange changeTitle={onChangeSetItemTitle}
+                         title={itemTitle}
+                         onKeyDown={onKeyDownHandler}
+                         className={itemInputError ? 'taskInputError' : ''}/>
             <Button title={'Add'} callBack={onClickAddItemHandler} isDisabled={!ifTaskCanAdded} accent></Button>
 
             {isTitleToLong && <div className={s.taskInputErrorMessage}>Too long</div>}

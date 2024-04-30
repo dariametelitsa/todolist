@@ -4,6 +4,7 @@ import { Button } from "../button/Button";
 import styles from './Todolist.module.scss';
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { AddItem } from "../addItem/AddItem";
+import { EditableSpan } from "../editableSpan/EditableSpan";
 
 // Create
 // Read for list (filter, type, sort, research, pagination)
@@ -17,11 +18,13 @@ const Todolist: React.FC<TodolistPropsType> = ({
                                                    removeTask,
                                                    id,
                                                    filter,
+                                                   renameTaskTitle,
                                                    changeFilter,
                                                    addTask,
                                                    deleteAllTasks,
                                                    setNewTaskStatus,
                                                    removeTodolist,
+                                                   changeTodolistTitle
                                                }: TodolistPropsType) => {
 
 
@@ -40,9 +43,17 @@ const Todolist: React.FC<TodolistPropsType> = ({
         addTask(id, newItem);
     }
 
+    const changeTodolistTitleHandler = (newTitle: string) => {
+        changeTodolistTitle(id, newTitle);
+    }
+
     return (
         <div className={styles.todolist}>
-            <h3>{title} <Button title={'x'} callBack={() => removeTodolist(id)}/></h3>
+            <h3>
+                <EditableSpan oldTitle={title} updateItem={changeTodolistTitleHandler}/>
+                {/*{title} */}
+                <Button title={'x'} callBack={() => removeTodolist(id)}/>
+            </h3>
 
             <AddItem addItem={addItemHandler}/>
             <ul ref={listRef}>
@@ -52,11 +63,15 @@ const Todolist: React.FC<TodolistPropsType> = ({
                     ) : (
                         tasks.map((task) => {
                             const onChangeSetTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => setNewTaskStatus(id, task.id, e.currentTarget.checked);
+                            const onChangeTitleTaskHandler = (newTitle: string) => {
+                                renameTaskTitle(id, task.id, newTitle);
+                            }
                             return (
-                                <li key={id}>
+                                <li key={id} className={task.isDone ? styles.taskDone : styles.task}>
                                     <input type={"checkbox"} checked={task.isDone}
                                            onChange={onChangeSetTaskStatusHandler}/>
-                                    <span className={task.isDone ? styles.taskDone : styles.task}>{task.title}</span>
+                                    {/*<span className={task.isDone ? styles.taskDone : styles.task}>{task.title}</span>*/}
+                                    <EditableSpan oldTitle={task.title} updateItem={onChangeTitleTaskHandler}/>
                                     <Button title={'x'} callBack={() => removeTask(id, task.id)}/>
                                 </li>
                             )

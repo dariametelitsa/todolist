@@ -1,20 +1,32 @@
 // @flow 
 import * as React from 'react';
 import { ChangeEvent, useState } from "react";
-import { Input } from "../input/Input";
 
-type EditableSpanProps = {
+
+export type EditableSpanProps = {
     oldTitle: string
+    updateItem: (newTitle: string) => void
 };
-export const EditableSpan = ({oldTitle}: EditableSpanProps) => {
 
+export const EditableSpan = ({oldTitle, updateItem}: EditableSpanProps) => {
+
+    const [editMode, setEditMode] = useState(false)
     const [newTitle, setNewTitle] = useState<string>(oldTitle);
 
-    const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    const activateEditModeHandler = () => {
+        setEditMode(!editMode);
+        if(editMode) {
+            updateItem(newTitle);
+        }
+    }
+
+    const onChangeTitleHandler = (event: ChangeEvent<HTMLInputElement>) => {
         setNewTitle(event.currentTarget.value);
     }
 
     return (
-        <input value={newTitle} onChange={onChangeHandler} />
+        editMode
+            ? <input value={newTitle} onChange={onChangeTitleHandler} onBlur={activateEditModeHandler} autoFocus/>
+            : <span onDoubleClick={activateEditModeHandler}>{oldTitle}</span>
     );
 };
