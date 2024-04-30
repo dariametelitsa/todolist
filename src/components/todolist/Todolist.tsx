@@ -1,9 +1,9 @@
-import React, { ChangeEvent, useState } from "react";
-import { FilterValuesType, TaskType, TodolistPropsType } from "../../data/dataPropsTypes";
+import React, { ChangeEvent } from "react";
+import { FilterValuesType, TodolistPropsType } from "../../data/dataPropsTypes";
 import { Button } from "../button/Button";
-import { Input } from "../input/Input";
 import styles from './Todolist.module.scss';
 import { useAutoAnimate } from "@formkit/auto-animate/react";
+import { AddItem } from "../addItem/AddItem";
 
 // Create
 // Read for list (filter, type, sort, research, pagination)
@@ -21,40 +21,12 @@ const Todolist: React.FC<TodolistPropsType> = ({
                                                    addTask,
                                                    deleteAllTasks,
                                                    setNewTaskStatus,
-    removeTodolist,
+                                                   removeTodolist,
                                                }: TodolistPropsType) => {
-    //local state - not business tasks
-    let [TaskTitle, setNewTaskTitle] = useState('');
-    let [taskInputError, setTaskInputError] = useState<string | null>(null);
+
 
     const [listRef] = useAutoAnimate<HTMLUListElement>()
 
-    const addTaskWithCheck = () => {
-        const trimmedTaskTitle = TaskTitle.trim();
-        if (ifTaskCanAdded) {
-            if (trimmedTaskTitle) {
-                addTask(id ,TaskTitle.trim());
-                setNewTaskTitle('');
-            } else {
-                setTaskInputError('Title is required');
-                setNewTaskTitle('');
-            }
-        }
-    }
-
-    //const inputRef = React.useRef<HTMLInputElement>(null)
-    const onClickAddTaskHandler = () => {
-        // if(inputRef.current) {
-        //     const newTaskTitle = inputRef.current.value;
-        //     addTask(newTaskTitle);
-        //     inputRef.current.value = '';
-        // }
-        addTaskWithCheck();
-    }
-
-    const onKeyDownHandler = () => {
-        addTaskWithCheck();
-    }
 
     const onClickHandlerCreator = (filter: FilterValuesType) => {
         return () => changeFilter(id, filter);
@@ -64,29 +36,15 @@ const Todolist: React.FC<TodolistPropsType> = ({
         deleteAllTasks(id);
     }
 
-    const onChangeSetTaskTitle = (title: string) => {
-        setNewTaskTitle(title);
-        setTaskInputError(null);
+    const addItemHandler = (newItem: string) => {
+        addTask(id, newItem);
     }
-
-    const isTitleToLong = TaskTitle.length > 15;
-    const ifTaskCanAdded = TaskTitle && !isTitleToLong;
 
     return (
         <div className={styles.todolist}>
             <h3>{title} <Button title={'x'} callBack={() => removeTodolist(id)}/></h3>
-            <div className={styles.addTask}>
-                {/*<input ref={inputRef} type="text" title={'hey'}/>*/}
-                <Input changeTitle={onChangeSetTaskTitle}
-                       title={TaskTitle}
-                       onKeyDown={onKeyDownHandler}
-                       className={taskInputError ? 'taskInputError' : ''}/>
-                <Button title={'Add'} callBack={onClickAddTaskHandler} isDisabled={!ifTaskCanAdded} accent></Button>
 
-                {isTitleToLong && <div>Too long</div>}
-                {taskInputError && <div className={'taskInputErrorMessage'}>{taskInputError}</div>}
-
-            </div>
+            <AddItem addItem={addItemHandler}/>
             <ul ref={listRef}>
                 {
                     tasks.length === 0 ? (

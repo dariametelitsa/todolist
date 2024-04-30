@@ -1,10 +1,10 @@
-import { todoListType } from "./dataPropsTypes";
+import { TasksType, todoListType } from "./dataPropsTypes";
 import { v1, v4 } from "uuid";
 
 export const todolistId1 = v4();
 export const todolistId2 = v4();
 
-export const tasksArr: Object = {
+export const tasksArr: TasksType = {
     [todolistId1]: [
         {id: v1(), title: "XP", isDone: false},
         {id: v1(), title: "DDD", isDone: true},
@@ -16,7 +16,7 @@ export const tasksArr: Object = {
         {id: v1(), title: "React", isDone: false},
         {id: v1(), title: "Redux", isDone: false}
     ]
-}
+};
 
 export const todoListsData: todoListType[] = [
     {id: todolistId1, title: "What to learn", filter: 'active'},

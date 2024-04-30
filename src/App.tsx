@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { FilterValuesType, TaskType, todoListType } from "./data/dataPropsTypes";
+import { FilterValuesType, TasksType, TaskType, todoListType } from "./data/dataPropsTypes";
 import { v1 } from "uuid";
 import Todolist from "./components/todolist/Todolist";
-import { tasksArr, todolistId1, todolistId2, todoListsData } from "./data/Data";
+import { tasksArr, todoListsData } from "./data/Data";
 import './App.scss'
+import { AddItem } from "./components/addItem/AddItem";
 
 export const sum = (a: number, b: number): number => {
     return a + b;
@@ -11,22 +12,9 @@ export const sum = (a: number, b: number): number => {
 
 function App() {
 
-    //global state
-    //const [tasks, setTasks] = useState<Array<TaskType>>(tasksArr[0].taskBlock);
+
     const [todoLists, setTodoLists] = useState<Array<todoListType>>(todoListsData);
-    const [tasks, setTasks] = useState({
-        [todolistId1]: [
-            {id: v1(), title: "XP", isDone: false},
-            {id: v1(), title: "DDD", isDone: true},
-            {id: v1(), title: "Scrum", isDone: false}
-        ],
-        [todolistId2]: [
-            {id: v1(), title: "CSS&HTML", isDone: true},
-            {id: v1(), title: "JS", isDone: true},
-            {id: v1(), title: "React", isDone: false},
-            {id: v1(), title: "Redux", isDone: false}
-        ]
-    }); //how to type calculated property
+    const [tasks, setTasks] = useState<TasksType>(tasksArr); //how to type calculated property
 
     const changeFilter = (todolistId: string, filter: FilterValuesType) => {
         setTodoLists(todoLists.map(td => td.id !== todolistId ? td : {...td, filter}));
@@ -67,8 +55,16 @@ function App() {
         setTasks({...tasks});
     }
 
+    const addTodolist = (title: string) => {
+        const newTodolistId = v1();
+        const newTodolist: todoListType =  {id: newTodolistId, title, filter: 'all'};
+        setTodoLists([newTodolist, ...todoLists]);
+        setTasks({...tasks, [newTodolistId]: []});
+    }
+
     return (
         <div className={'App'}>
+            <AddItem addItem={addTodolist}></AddItem>
             {todoLists.map(td => {
                 let tasksFiltered = filterTasks(td.id, tasks[td.id], td.filter);
                 return <Todolist key={td.id}

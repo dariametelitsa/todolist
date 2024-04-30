@@ -4,6 +4,10 @@ export type todoListType = {
     filter : FilterValuesType;
 }
 
+export type TasksType = {
+    [key: string]: TaskType[];
+}
+
 export type TaskType = {
     id: string;
     title: string;

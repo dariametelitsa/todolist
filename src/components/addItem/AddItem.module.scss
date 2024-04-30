@@ -1,0 +1,13 @@
+.addItem {
+  display: flex;
+  flex-direction: column;
+}
+
+.taskInputError {
+  border: 2px solid tomato;
+  outline: none;
+}
+
+.taskInputErrorMessage {
+  color: tomato;
+}
