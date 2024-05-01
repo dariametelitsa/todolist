@@ -38,7 +38,6 @@ function App() {
 
     const addTask = (todolistId: string,  taskTitle: string) => {
         let newTask = {id: v1(), isDone: false, title: taskTitle};
-        // console.dir(tasks);
         setTasks({...tasks, [todolistId]: [newTask, ...tasks[todolistId]]})
     }
 

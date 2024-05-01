@@ -49,14 +49,12 @@ const Todolist: React.FC<TodolistPropsType> = ({
 
     const onChangeTitleTaskHandler = (idToChange: string, newTitle: string) => {
         renameTaskTitle(id, idToChange, newTitle);
-        console.dir(tasks);
     }
 
     return (
         <div className={styles.todolist}>
             <h3>
                 <EditableSpan oldTitle={title} idToChange={id} updateItem={changeTodolistTitleHandler}/>
-                {/*{title} */}
                 <Button title={'x'} callBack={() => removeTodolist(id)}/>
             </h3>
 
@@ -68,9 +66,7 @@ const Todolist: React.FC<TodolistPropsType> = ({
                     ) : (
                         tasks.map((task) => {
                             const onChangeSetTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => setNewTaskStatus(id, task.id, e.currentTarget.checked);
-                            // const onChangeTitleTaskHandler = (newTitle: string) => {
-                            //     renameTaskTitle(id, task.id, newTitle);
-                            // }
+                           // onChangeTitleTaskHandler(id, task.id, title);
                             return (
                                 <li key={task.id} className={task.isDone ? styles.taskDone : styles.task}>
                                     <input type={"checkbox"} checked={task.isDone}
