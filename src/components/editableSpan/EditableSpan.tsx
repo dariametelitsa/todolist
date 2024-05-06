@@ -25,9 +25,15 @@ export const EditableSpan = ({idToChange, oldTitle, updateItem}: EditableSpanPro
         setNewTitle(event.target.value);
     }
 
+    const onKeyDownHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Escape') {
+            setEditMode(!editMode);
+        }
+    }
+
     return (
         editMode
-            ? <input value={newTitle} onChange={onChangeTitleHandler} onBlur={activateEditModeHandler} autoFocus/>
+            ? <input value={newTitle} onChange={onChangeTitleHandler} onKeyDown={onKeyDownHandler} onBlur={activateEditModeHandler} autoFocus/>
             : <span onDoubleClick={activateEditModeHandler}>{oldTitle}</span>
     );
 };

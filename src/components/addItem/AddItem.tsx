@@ -38,7 +38,6 @@ export const AddItem = ({addItem}: Props) => {
         }
     }
 
-
     const onChangeSetItemTitle = (title: string) => {
         setNewItemTitle(title);
         setItemInputError(null);
