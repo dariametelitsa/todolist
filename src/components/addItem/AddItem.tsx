@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { useState } from "react";
-import { Button } from "../button/Button";
+import { useState } from 'react';
 import s from './AddItem.module.scss'
 import { Input } from "../input/Input";
+import Button from '@mui/material/Button';
 
 type Props = {
     addItem: (name: string) => void
@@ -43,13 +43,26 @@ export const AddItem = ({addItem}: Props) => {
         setItemInputError(null);
     }
 
+    const buttonStyles = {
+        maxWidth: '100%',
+        maxHeight: '30px',
+        minWidth: '30px',
+        minHeight: '30px',
+        backgroundColor: '#874CCC'
+    }
+
     return (
         <div className={s.addItem}>
             <Input changeTitle={onChangeSetItemTitle}
-                         title={itemTitle}
-                         onKeyDown={onKeyDownHandler}
-                         className={itemInputError ? 'taskInputError' : ''}/>
-            <Button title={'Add'} callBack={onClickAddItemHandler} isDisabled={!ifTaskCanAdded} accent></Button>
+                   title={itemTitle}
+                   onKeyDown={onKeyDownHandler}
+                   className={itemInputError ? 'taskInputError' : ''}/>
+            <Button variant="contained"
+                    onClick={onClickAddItemHandler}
+                    disabled={!ifTaskCanAdded}
+                    // style={buttonStyles}
+                    size={'small'}>Add</Button>
+            {/*<Button title={'Add'} callBack={onClickAddItemHandler} isDisabled={!ifTaskCanAdded} accent></Button>*/}
 
             {isTitleToLong && <div className={s.taskInputErrorMessage}>Too long</div>}
             {itemInputError && <div className={s.taskInputErrorMessage}>{itemInputError}</div>}

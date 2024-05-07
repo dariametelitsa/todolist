@@ -1,4 +1,5 @@
 import React, { ChangeEvent, InputHTMLAttributes } from 'react';
+import TextField from "@mui/material/TextField";
 
 type InputProps = {
     changeTitle: (title: string) => void;
@@ -19,11 +20,18 @@ export const Input = ({changeTitle, title, onKeyDown, ...restProps}: InputProps)
     }
 
     return (
-        <input value={title}
-               onChange={onChangeInputHandler}
-               onKeyDown={onKeyDownHandler}
-               type="text"
-               {...restProps}/>
+        <TextField id="outlined-basic"
+                   onChange={onChangeInputHandler}
+                   onKeyDown={onKeyDownHandler}
+                   label={'Название группы'}
+                   variant="outlined"
+                   value={title}
+                   size='small'/>
+        // <input value={title}
+        //        onChange={onChangeInputHandler}
+        //        onKeyDown={onKeyDownHandler}
+        //        type="text"
+        //        {...restProps}/>
     );
 };
 
