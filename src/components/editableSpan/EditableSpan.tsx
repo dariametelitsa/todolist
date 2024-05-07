@@ -13,13 +13,16 @@ export type EditableSpanProps = {
 export const EditableSpan = ({idToChange, oldTitle, updateItem, maxLength = 25}: EditableSpanProps) => {
 
     const [editMode, setEditMode] = useState(false)
-    const [newTitle, setNewTitle] = useState<string>(oldTitle);
+    const [newTitle, setNewTitle] = useState<string>('');
 
     const activateEditModeHandler = () => {
-        setEditMode(!editMode);
-        if (editMode) {
-            newTitle ? updateItem(idToChange, newTitle) : updateItem(idToChange, oldTitle);
-        }
+        setEditMode(true);
+        setNewTitle(oldTitle)
+    }
+    const activateViewMode = () => {
+        setEditMode(false);
+        newTitle.length !== 0 ? updateItem(idToChange, newTitle) : updateItem(idToChange, oldTitle);
+        newTitle.length !== 0 ? setNewTitle(newTitle) : setNewTitle(oldTitle);
     }
 
     const onChangeTitleHandler = (event: ChangeEvent<HTMLInputElement>) => {
@@ -29,9 +32,10 @@ export const EditableSpan = ({idToChange, oldTitle, updateItem, maxLength = 25}:
     const onKeyDownHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Escape') {
             setEditMode(!editMode);
+            setNewTitle(oldTitle);
         }
         if (e.key === 'Enter') {
-            activateEditModeHandler();
+            activateViewMode();
         }
     }
 
@@ -40,7 +44,7 @@ export const EditableSpan = ({idToChange, oldTitle, updateItem, maxLength = 25}:
             ? <input value={newTitle}
                      onChange={onChangeTitleHandler}
                      onKeyDown={onKeyDownHandler}
-                     onBlur={activateEditModeHandler}
+                     onBlur={activateViewMode}
                      maxLength={maxLength} autoFocus/>
             : <span onDoubleClick={activateEditModeHandler}>{oldTitle}</span>
     );
