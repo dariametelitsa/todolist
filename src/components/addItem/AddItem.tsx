@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import s from './AddItem.module.scss'
-import { Input } from "../input/Input";
 import Button from '@mui/material/Button';
+import TextField from "@mui/material/TextField";
 
 type Props = {
     addItem: (name: string) => void
@@ -21,8 +21,11 @@ export const AddItem = ({addItem}: Props) => {
         addItemWithCheck();
     }
 
-    const onKeyDownHandler = () => {
-        addItemWithCheck();
+    const onKeyDownHandler = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === 'Enter') {
+            addItemWithCheck();
+        }
+
     }
 
     const addItemWithCheck = () => {
@@ -51,21 +54,38 @@ export const AddItem = ({addItem}: Props) => {
         backgroundColor: '#874CCC'
     }
 
+    const onChangeInputHandler = (event: ChangeEvent<HTMLInputElement>) => {
+        onChangeSetItemTitle(event.currentTarget.value);
+        isTitleToLong ? setItemInputError('Too long') :  setItemInputError(null);
+    }
+
     return (
         <div className={s.addItem}>
-            <Input changeTitle={onChangeSetItemTitle}
-                   title={itemTitle}
-                   onKeyDown={onKeyDownHandler}
-                   className={itemInputError ? 'taskInputError' : ''}/>
+            {/*<Input changeTitle={onChangeSetItemTitle}*/}
+            {/*       title={itemTitle}*/}
+            {/*       onKeyDown={onKeyDownHandler}*/}
+            {/*       error={itemInputError ? "Title can't be empty" : itemInputError ? 'Too long' : ''}*/}
+            {/*       className={itemInputError ? 'taskInputError' : ''}/>*/}
+
+            <TextField id="outlined-basic"
+                       onChange={onChangeInputHandler}
+                       onKeyDown={onKeyDownHandler}
+                       label={'Название группы'}
+                       variant="outlined"
+                       value={itemTitle}
+                       error={!!itemInputError}
+                       helperText={!!itemInputError ? `${itemInputError}` : ''}
+                       size='small'/>
+
             <Button variant="contained"
                     onClick={onClickAddItemHandler}
                     disabled={!ifTaskCanAdded}
-                    // style={buttonStyles}
+                // style={buttonStyles}
                     size={'small'}>Add</Button>
             {/*<Button title={'Add'} callBack={onClickAddItemHandler} isDisabled={!ifTaskCanAdded} accent></Button>*/}
 
-            {isTitleToLong && <div className={s.taskInputErrorMessage}>Too long</div>}
-            {itemInputError && <div className={s.taskInputErrorMessage}>{itemInputError}</div>}
+            {/*{isTitleToLong && <div className={s.taskInputErrorMessage}>Too long</div>}*/}
+            {/*{itemInputError && <div className={s.taskInputErrorMessage}>{itemInputError}</div>}*/}
         </div>
     );
 };

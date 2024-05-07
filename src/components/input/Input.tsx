@@ -4,7 +4,8 @@ import TextField from "@mui/material/TextField";
 type InputProps = {
     changeTitle: (title: string) => void;
     title: string;
-    onKeyDown: () => void;
+    onKeyDown: () => void
+    error?: string
 } & InputHTMLAttributes<HTMLInputElement>
 
 export const Input = ({changeTitle, title, onKeyDown, ...restProps}: InputProps) => {
@@ -18,7 +19,6 @@ export const Input = ({changeTitle, title, onKeyDown, ...restProps}: InputProps)
             onKeyDown();
         }
     }
-
     return (
         <TextField id="outlined-basic"
                    onChange={onChangeInputHandler}
@@ -26,7 +26,10 @@ export const Input = ({changeTitle, title, onKeyDown, ...restProps}: InputProps)
                    label={'Название группы'}
                    variant="outlined"
                    value={title}
+                   error={!!restProps.error}
+                   helperText={restProps.error ? "Title can't be empty" : ''}
                    size='small'/>
+
         // <input value={title}
         //        onChange={onChangeInputHandler}
         //        onKeyDown={onKeyDownHandler}

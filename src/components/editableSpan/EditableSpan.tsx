@@ -1,6 +1,7 @@
 // @flow
 import * as React from 'react';
 import { ChangeEvent, useState } from 'react';
+import TextField from "@mui/material/TextField";
 
 
 export type EditableSpanProps = {
@@ -41,11 +42,20 @@ export const EditableSpan = ({idToChange, oldTitle, updateItem, maxLength = 25}:
 
     return (
         editMode
-            ? <input value={newTitle}
-                     onChange={onChangeTitleHandler}
-                     onKeyDown={onKeyDownHandler}
-                     onBlur={activateViewMode}
-                     maxLength={maxLength} autoFocus/>
+            // ? <input value={newTitle}
+            //          onChange={onChangeTitleHandler}
+            //          onKeyDown={onKeyDownHandler}
+            //          onBlur={activateViewMode}
+            //          maxLength={maxLength} autoFocus/>
+           ? <TextField id="outlined-basic"
+                       onChange={onChangeTitleHandler}
+                       onKeyDown={onKeyDownHandler}
+                       label={'Название группы'}
+                       variant="outlined"
+                        onBlur={activateViewMode}
+                        autoFocus
+                       value={newTitle}
+                       size='small'/>
             : <span onDoubleClick={activateEditModeHandler}>{oldTitle}</span>
     );
 };

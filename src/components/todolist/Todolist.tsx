@@ -8,6 +8,10 @@ import IconButton from '@mui/material/IconButton';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import Button from '@mui/material/Button';
 import DeleteIcon from '@mui/icons-material/Delete';
+import Checkbox from '@mui/material/Checkbox';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+
 
 // Create
 // Read for list (filter, type, sort, research, pagination)
@@ -64,7 +68,7 @@ const Todolist: React.FC<TodolistPropsType> = ({
             </h3>
 
             <AddItem addItem={addItemHandler}/>
-            <ul ref={listRef}>
+            <List ref={listRef}>
                 {
                     tasks.length === 0 ? (
                         <p>Задач нет</p>
@@ -72,21 +76,22 @@ const Todolist: React.FC<TodolistPropsType> = ({
                         tasks.map((task) => {
                             const onChangeSetTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => setNewTaskStatus(id, task.id, e.currentTarget.checked);
                             return (
-                                <li key={task.id} className={task.isDone ? styles.taskDone : styles.task}>
-                                    <input type={"checkbox"} checked={task.isDone}
-                                           onChange={onChangeSetTaskStatusHandler}/>
+                                <ListItem key={task.id} className={task.isDone ? styles.taskDone : styles.task}>
+                                    {/*<input type={"checkbox"} checked={task.isDone}*/}
+                                    {/*       onChange={onChangeSetTaskStatusHandler}/>*/}
+                                    <Checkbox checked={task.isDone} onChange={onChangeSetTaskStatusHandler} defaultChecked />
                                     {/*<span className={task.isDone ? styles.taskDone : styles.task}>{task.title}</span>*/}
                                     <EditableSpan oldTitle={task.title} idToChange={task.id} updateItem={onChangeTitleTaskHandler}/>
                                     <IconButton aria-label="delete" onClick={() => removeTask(id, task.id)}>
                                         <DeleteOutlineIcon />
                                     </IconButton>
                                     {/*<Button title={'x'} callBack={() => removeTask(id, task.id)}/>*/}
-                                </li>
+                                </ListItem>
                             )
                         })
                     )
                 }
-            </ul>
+            </List>
             {/*todo*/}
             {/*<Button title={'Delete all tasks'}*/}
             {/*        callBack={() => {*/}
