@@ -3,6 +3,8 @@ import { ChangeEvent, useState } from 'react';
 import s from './AddItem.module.scss'
 import Button from '@mui/material/Button';
 import TextField from "@mui/material/TextField";
+import IconButton from "@mui/material/IconButton";
+import AddBoxIcon from '@mui/icons-material/AddBox';
 
 type Props = {
     addItem: (name: string) => void
@@ -70,18 +72,21 @@ export const AddItem = ({addItem}: Props) => {
             <TextField id="outlined-basic"
                        onChange={onChangeInputHandler}
                        onKeyDown={onKeyDownHandler}
-                       label={'Название группы'}
+                       label={'Введите заголовок'}
                        variant="outlined"
                        value={itemTitle}
                        error={!!itemInputError}
                        helperText={!!itemInputError ? `${itemInputError}` : ''}
                        size='small'/>
 
-            <Button variant="contained"
-                    onClick={onClickAddItemHandler}
-                    disabled={!ifTaskCanAdded}
-                // style={buttonStyles}
-                    size={'small'}>Add</Button>
+            {/*<Button variant="contained"*/}
+            {/*        onClick={onClickAddItemHandler}*/}
+            {/*        disabled={!ifTaskCanAdded}*/}
+            {/*    // style={buttonStyles}*/}
+            {/*        size={'small'}>Add</Button>*/}
+            <IconButton onClick={onClickAddItemHandler} color={'primary'}>
+                <AddBoxIcon/>
+            </IconButton>
             {/*<Button title={'Add'} callBack={onClickAddItemHandler} isDisabled={!ifTaskCanAdded} accent></Button>*/}
 
             {/*{isTitleToLong && <div className={s.taskInputErrorMessage}>Too long</div>}*/}

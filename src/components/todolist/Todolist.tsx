@@ -11,6 +11,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import Checkbox from '@mui/material/Checkbox';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
+import Box from '@mui/material/Box';
 
 
 // Create
@@ -76,12 +77,18 @@ const Todolist: React.FC<TodolistPropsType> = ({
                         tasks.map((task) => {
                             const onChangeSetTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => setNewTaskStatus(id, task.id, e.currentTarget.checked);
                             return (
-                                <ListItem key={task.id} className={task.isDone ? styles.taskDone : styles.task}>
+                                <ListItem key={task.id}
+                                          sx={{p:0,
+                                          justifyContent: 'space-between'}}
+                                          className={task.isDone ? styles.taskDone : styles.task}>
                                     {/*<input type={"checkbox"} checked={task.isDone}*/}
                                     {/*       onChange={onChangeSetTaskStatusHandler}/>*/}
-                                    <Checkbox checked={task.isDone} onChange={onChangeSetTaskStatusHandler} defaultChecked />
                                     {/*<span className={task.isDone ? styles.taskDone : styles.task}>{task.title}</span>*/}
-                                    <EditableSpan oldTitle={task.title} idToChange={task.id} updateItem={onChangeTitleTaskHandler}/>
+                                    <div>
+                                        <Checkbox checked={task.isDone} onChange={onChangeSetTaskStatusHandler} defaultChecked />
+                                        <EditableSpan oldTitle={task.title} idToChange={task.id} updateItem={onChangeTitleTaskHandler}/>
+                                    </div>
+
                                     <IconButton aria-label="delete" onClick={() => removeTask(id, task.id)}>
                                         <DeleteOutlineIcon />
                                     </IconButton>
@@ -102,18 +109,21 @@ const Todolist: React.FC<TodolistPropsType> = ({
                 Delete
             </Button>
 
-            <div className={'tabs'}>
+            {/*<div className={'tabs'}>*/}
                 {/*<Button active={filter === 'all'} title={'All'}*/}
                 {/*        callBack={onClickHandlerCreator('all')}></Button>*/}
                 {/*<Button active={filter === 'active'} title={'Active'}*/}
                 {/*        callBack={onClickHandlerCreator('active')}></Button>*/}
                 {/*<Button active={filter === 'completed'} title={'Completed'}*/}
                 {/*        callBack={onClickHandlerCreator('completed')}></Button>*/}
-
+            {/*</div>*/}
+            <Box sx={{display: 'flex', justifyContent: 'space-between', mt: 2}}>
                 <Button color={'secondary'} variant={filter === 'all' ? "contained" : 'outlined'} onClick={onClickHandlerCreator('all')}>All</Button>
                 <Button color='primary' variant={filter === 'active' ? "contained" : 'outlined'} onClick={onClickHandlerCreator('active')}>Active</Button>
                 <Button color='success' variant={filter === 'completed' ? "contained" : 'outlined'} onClick={onClickHandlerCreator('completed')}>completed</Button>
-            </div>
+            </Box>
+
+
             {children}
         </div>
     );
