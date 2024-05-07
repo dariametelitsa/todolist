@@ -11,7 +11,9 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import Checkbox from '@mui/material/Checkbox';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
+
 import Box from '@mui/material/Box';
+import { filterButtonsContainerSx, getListItemSx } from "./Todolist.styles";
 
 
 // Create
@@ -64,7 +66,7 @@ const Todolist: React.FC<TodolistPropsType> = ({
             <h3>
                 <EditableSpan oldTitle={title} idToChange={id} updateItem={changeTodolistTitleHandler}/>
                 <IconButton aria-label="delete" onClick={() => removeTodolist(id)}>
-                    <DeleteOutlineIcon />
+                    <DeleteOutlineIcon/>
                 </IconButton>
             </h3>
 
@@ -78,19 +80,19 @@ const Todolist: React.FC<TodolistPropsType> = ({
                             const onChangeSetTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => setNewTaskStatus(id, task.id, e.currentTarget.checked);
                             return (
                                 <ListItem key={task.id}
-                                          sx={{p:0,
-                                          justifyContent: 'space-between'}}
-                                          className={task.isDone ? styles.taskDone : styles.task}>
+                                          sx={getListItemSx(task.isDone)}>
+
                                     {/*<input type={"checkbox"} checked={task.isDone}*/}
                                     {/*       onChange={onChangeSetTaskStatusHandler}/>*/}
                                     {/*<span className={task.isDone ? styles.taskDone : styles.task}>{task.title}</span>*/}
                                     <div>
-                                        <Checkbox checked={task.isDone} onChange={onChangeSetTaskStatusHandler} defaultChecked />
-                                        <EditableSpan oldTitle={task.title} idToChange={task.id} updateItem={onChangeTitleTaskHandler}/>
+                                        <Checkbox checked={task.isDone} onChange={onChangeSetTaskStatusHandler}/>
+                                        <EditableSpan oldTitle={task.title} idToChange={task.id}
+                                                      updateItem={onChangeTitleTaskHandler}/>
                                     </div>
 
                                     <IconButton aria-label="delete" onClick={() => removeTask(id, task.id)}>
-                                        <DeleteOutlineIcon />
+                                        <DeleteOutlineIcon/>
                                     </IconButton>
                                     {/*<Button title={'x'} callBack={() => removeTask(id, task.id)}/>*/}
                                 </ListItem>
@@ -105,22 +107,27 @@ const Todolist: React.FC<TodolistPropsType> = ({
             {/*            onClickHandlerDeleteAll()*/}
             {/*        }}*/}
             {/*        isDisabled={tasks.length === 0}/>*/}
-            <Button onClick={() => {onClickHandlerDeleteAll()}} variant="contained" color='info' startIcon={<DeleteIcon />}>
+            <Button onClick={() => {
+                onClickHandlerDeleteAll()
+            }} variant="contained" color='info' startIcon={<DeleteIcon/>}>
                 Delete
             </Button>
 
             {/*<div className={'tabs'}>*/}
-                {/*<Button active={filter === 'all'} title={'All'}*/}
-                {/*        callBack={onClickHandlerCreator('all')}></Button>*/}
-                {/*<Button active={filter === 'active'} title={'Active'}*/}
-                {/*        callBack={onClickHandlerCreator('active')}></Button>*/}
-                {/*<Button active={filter === 'completed'} title={'Completed'}*/}
-                {/*        callBack={onClickHandlerCreator('completed')}></Button>*/}
+            {/*<Button active={filter === 'all'} title={'All'}*/}
+            {/*        callBack={onClickHandlerCreator('all')}></Button>*/}
+            {/*<Button active={filter === 'active'} title={'Active'}*/}
+            {/*        callBack={onClickHandlerCreator('active')}></Button>*/}
+            {/*<Button active={filter === 'completed'} title={'Completed'}*/}
+            {/*        callBack={onClickHandlerCreator('completed')}></Button>*/}
             {/*</div>*/}
-            <Box sx={{display: 'flex', justifyContent: 'space-between', mt: 2}}>
-                <Button color={'secondary'} variant={filter === 'all' ? "contained" : 'outlined'} onClick={onClickHandlerCreator('all')}>All</Button>
-                <Button color='primary' variant={filter === 'active' ? "contained" : 'outlined'} onClick={onClickHandlerCreator('active')}>Active</Button>
-                <Button color='success' variant={filter === 'completed' ? "contained" : 'outlined'} onClick={onClickHandlerCreator('completed')}>completed</Button>
+            <Box sx={filterButtonsContainerSx}>
+                <Button color={'secondary'} variant={filter === 'all' ? "contained" : 'outlined'}
+                        onClick={onClickHandlerCreator('all')}>All</Button>
+                <Button color='primary' variant={filter === 'active' ? "contained" : 'outlined'}
+                        onClick={onClickHandlerCreator('active')}>Active</Button>
+                <Button color='success' variant={filter === 'completed' ? "contained" : 'outlined'}
+                        onClick={onClickHandlerCreator('completed')}>completed</Button>
             </Box>
 
 

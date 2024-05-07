@@ -6,23 +6,24 @@ import { tasksArr, todoListsData } from "./data/Data";
 import './App.scss'
 import { AddItem } from "./components/addItem/AddItem";
 
-import AppBar from '@mui/material/AppBar';
+
 import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Unstable_Grid2';
 import Paper from '@mui/material/Paper';
+// import { createTheme, ThemeProvider } from "@mui/material";
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline'
+import { HeaderMenu } from "./components/headerMenu/HeaderMenu";
+
 
 export const sum = (a: number, b: number): number => {
     return a + b;
 }
+type ThemeMode = 'dark' | 'light';
+
 
 function App() {
-
 
     const [todoLists, setTodoLists] = useState<Array<todoListType>>(todoListsData);
     const [tasks, setTasks] = useState<TasksType>(tasksArr); //how to type calculated property
@@ -87,65 +88,76 @@ function App() {
         setTodoLists(todoLists.map(td => td.id === todolistId ? {...td, title: newTitle} : td));
     }
 
+
+    const [themeMode, setThemeMode] = useState<ThemeMode>('light')
+    const changeModeHandler = () => {
+        setThemeMode(themeMode === 'light' ? 'dark' : 'light')
+    }
+    const theme = createTheme({
+        palette: {
+            mode: themeMode==='light' ? 'light' : 'dark',
+            primary: {
+                main: '#4aee08',
+                contrastText: 'white',
+            },
+            secondary: {
+                light: '#757ce8',
+                main: '#3f50b5',
+                dark: '#002884',
+                contrastText: '#fff',
+            },
+        },
+    })
+
+
     return (
         <div className={'App'}>
 
-            <Box sx={{flexGrow: 1, mb: 12}}>
-                <AppBar position="fixed">
-                    <Toolbar>
-                        <IconButton
-                            size="large"
-                            edge="start"
-                            color="inherit"
-                            aria-label="menu"
-                            sx={{mr: 2}}
-                        >
-                            <MenuIcon/>
-                        </IconButton>
-                        <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
-                            News
-                        </Typography>
-                        <Button color="inherit">Login</Button>
-                    </Toolbar>
-                </AppBar>
-            </Box>
+            <ThemeProvider theme={theme}>
+                <CssBaseline />
+                <Box sx={{flexGrow: 1, mb: 12}}>
+                    <HeaderMenu changeModeHandler={changeModeHandler}/>
+                </Box>
 
+                <Container fixed>
+                    <Grid container spacing={2} sx={{m: 0, mb: 5}}>
+                        <AddItem addItem={addTodolist}></AddItem>
+                    </Grid>
 
-            <Container fixed>
+                    <Grid container spacing={2}>
+                        {todoLists.map(td => {
+                            let tasksFiltered = filterTasks(td.id, tasks[td.id], td.filter);
+                            return (
+                                <Grid xs={6} key={td.id}>
+                                    <Paper sx={{p: 2}}>
+                                        <Todolist key={td.id}
+                                                  id={td.id}
+                                                  title={td.title}
+                                                  tasks={tasksFiltered}
+                                                  removeTask={removeTask}
+                                                  addTask={addTask}
+                                                  renameTaskTitle={renameTaskTitle}
+                                                  deleteAllTasks={deleteAllTasks}
+                                                  setNewTaskStatus={setNewTaskStatus}
+                                                  filter={td.filter}
+                                                  changeFilter={changeFilter}
+                                                  removeTodolist={removeTodolist}
+                                                  updateTodolistTitle={updateTodolistTitle}>
+                                            {<div>Just do it!</div>}
+                                        </Todolist>
+                                    </Paper>
+                                </Grid>
+                            )
+                        })
+                        }
+                    </Grid>
+                </Container>
+            </ThemeProvider>
 
-                <Grid container spacing={2} sx={{m: 0, mb:5}}>
-                    <AddItem addItem={addTodolist}></AddItem>
-                </Grid>
-
-                <Grid container spacing={2}>
-                    {todoLists.map(td => {
-                        let tasksFiltered = filterTasks(td.id, tasks[td.id], td.filter);
-                        return(
-                            <Grid xs={6}>
-                                <Paper sx={{p: 2}}>
-                                <Todolist key={td.id}
-                                          id={td.id}
-                                          title={td.title}
-                                          tasks={tasksFiltered}
-                                          removeTask={removeTask}
-                                          addTask={addTask}
-                                          renameTaskTitle={renameTaskTitle}
-                                          deleteAllTasks={deleteAllTasks}
-                                          setNewTaskStatus={setNewTaskStatus}
-                                          filter={td.filter}
-                                          changeFilter={changeFilter}
-                                          removeTodolist={removeTodolist}
-                                          updateTodolistTitle={updateTodolistTitle}>
-                                    {<div>Just do it!</div>}
-                                </Todolist>
-                                </Paper>
-                            </Grid>
-                        )
-                    })
-                    }
-                </Grid>
-            </Container>
-
+            {/*<ThemeProvider theme={customTheme}>*/}
+            {/*    <div>Styled div with theme</div>*/}
+            {/*    <MenuButton color="inherit">Faq</MenuButton>*/}
+            {/*</ThemeProvider>*/}
         </div>
     );
 }
