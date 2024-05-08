@@ -4,27 +4,53 @@ import Button from '@mui/material/Button'
 type MenuButtonProps = {  background?: string}
 
 export const MenuButton = styled(Button)<MenuButtonProps>( ({background, theme}) =>(
-    {  minWidth: '110px',
-        fontWeight: 'bold',
-        boxShadow: `0 0 0 2px ${theme.palette.primary.dark}, 4px 4px 0 0 #054B62`,
-        borderRadius: '2px',
-        textTransform: 'capitalize',
-        margin: '0 10px',
-        padding: '8px 24px',
-        color: theme.palette.primary.contrastText,
-        background: background || theme.palette.primary.main,
-}))
+    {
+        display: 'inline-block',
+        padding: '.75rem 1.25rem',
+        color: '#fff',
+        textTransform: 'uppercase',
+        fontSize: '1rem',
+        letterSpacing: '.15rem',
+        transition: 'all .3s',
+        position: 'relative',
+        overflow: 'hidden',
+        zIndex: '1',
+            '&::before': {
+                    content: '""',
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    bottom: '0',
+                    width: '100%',
+                    height: '0%',
+                    backgroundColor: background || theme.palette.primary.light,
+                    zIndex: -1,
+                    transition: 'all .3s',
+            },
+            '&:hover': {
+                    color: '#fff',
+                    '&::before': {
+                            height: '100%',
+                    }
+            }
 
-//////////////////////////////
 
-// export const MenuButton = styled(Button)(
-//     {  minWidth: '110px',
-//         fontWeight: 'bold',
-//         boxShadow: '0 0 0 2px #054B62, 4px 4px 0 0 #054B62',
-//         borderRadius: '2px',
-//         textTransform: 'capitalize',
-//         margin: '0 10px',
-//         padding: '8px 24px',
-//         color: '#ffffff',
-//         background: '#1565c0',
-//     })
+// &:before {
+//         content: '';
+//         position: absolute;
+//         bottom: 0;
+//         left: 0;
+//         width: 0%;
+//         height: 100%;
+//         background-color: darken($color, 15%);
+//         transition: all .3s;
+//         border-radius: 10rem;
+//         z-index: -1;
+// }
+// &:hover {
+//         color: #fff;
+// &:before {
+//                 width: 100%;
+//         }
+// }
+}));

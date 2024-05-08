@@ -47,15 +47,14 @@ export const EditableSpan = ({idToChange, oldTitle, updateItem, maxLength = 25}:
             //          onKeyDown={onKeyDownHandler}
             //          onBlur={activateViewMode}
             //          maxLength={maxLength} autoFocus/>
-           ? <TextField id="outlined-basic"
-                       onChange={onChangeTitleHandler}
-                       onKeyDown={onKeyDownHandler}
-                       label={'Название группы'}
-                       variant="outlined"
-                        onBlur={activateViewMode}
-                        autoFocus
-                       value={newTitle}
-                       size='small'/>
+            ? <TextField id="outlined-basic"
+                         onChange={onChangeTitleHandler}
+                         onKeyDown={onKeyDownHandler}
+                         variant="outlined"
+                         onBlur={activateViewMode}
+                         autoFocus
+                         value={newTitle}
+                         size='small'/>
             : <span onDoubleClick={activateEditModeHandler}>{oldTitle}</span>
     );
 };

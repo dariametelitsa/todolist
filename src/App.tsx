@@ -11,7 +11,7 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Unstable_Grid2';
 import Paper from '@mui/material/Paper';
-// import { createTheme, ThemeProvider } from "@mui/material";
+import { cyan } from '@mui/material/colors';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline'
 import { HeaderMenu } from "./components/headerMenu/HeaderMenu";
@@ -93,19 +93,25 @@ function App() {
     const changeModeHandler = () => {
         setThemeMode(themeMode === 'light' ? 'dark' : 'light')
     }
+    // const theme = createTheme({
+    //     palette: {
+    //         mode: themeMode==='light' ? 'light' : 'dark',
+    //         primary: {
+    //             main: '#4aee08',
+    //             contrastText: 'white',
+    //         },
+    //         secondary: {
+    //             light: '#757ce8',
+    //             main: '#3f50b5',
+    //             dark: '#002884',
+    //             contrastText: '#fff',
+    //         },
+    //     },
+    // })
     const theme = createTheme({
         palette: {
             mode: themeMode==='light' ? 'light' : 'dark',
-            primary: {
-                main: '#4aee08',
-                contrastText: 'white',
-            },
-            secondary: {
-                light: '#757ce8',
-                main: '#3f50b5',
-                dark: '#002884',
-                contrastText: '#fff',
-            },
+            primary: cyan,
         },
     })
 
