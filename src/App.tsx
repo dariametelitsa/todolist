@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useReducer, useState } from 'react';
 import { FilterValuesType, TasksType, TaskType, todoListType } from "./data/dataPropsTypes";
 import { v1 } from "uuid";
 import Todolist from "./components/todolist/Todolist";
@@ -15,6 +15,12 @@ import { cyan } from '@mui/material/colors';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline'
 import { HeaderMenu } from "./components/headerMenu/HeaderMenu";
+import {
+    addedTodolistAC,
+    changedTodolistFilterAC, changeTodolistTitleAC,
+    removeTodolistAC,
+    todolistsReducer
+} from "./model/todolists-reducer";
 
 
 export const sum = (a: number, b: number): number => {
@@ -25,11 +31,11 @@ type ThemeMode = 'dark' | 'light';
 
 function App() {
 
-    const [todoLists, setTodoLists] = useState<Array<todoListType>>(todoListsData);
+    const [todoLists, dispatchTodoLists] = useReducer(todolistsReducer, todoListsData);
     const [tasks, setTasks] = useState<TasksType>(tasksArr); //how to type calculated property
 
     const changeFilter = (todolistId: string, filter: FilterValuesType) => {
-        setTodoLists(todoLists.map(td => td.id !== todolistId ? td : {...td, filter}));
+        dispatchTodoLists(changedTodolistFilterAC(todolistId, filter));
     }
 
     const filterTasks = (todolistId: string, tasks: TaskType[], filter: FilterValuesType) => {
@@ -72,20 +78,19 @@ function App() {
     }
 
     const removeTodolist = (todolistId: string) => {
-        setTodoLists([...todoLists.filter((t) => t.id !== todolistId)]);
+        dispatchTodoLists(removeTodolistAC(todolistId));
         delete tasks[todolistId]; //delete unnecessary tasks
         setTasks({...tasks});
     }
 
     const addTodolist = (title: string) => {
         const newTodolistId = v1();
-        const newTodolist: todoListType = {id: newTodolistId, title, filter: 'all'};
-        setTodoLists([newTodolist, ...todoLists]);
+        dispatchTodoLists(addedTodolistAC(title));
         setTasks({...tasks, [newTodolistId]: []});
     }
 
     const updateTodolistTitle = (todolistId: string, newTitle: string) => {
-        setTodoLists(todoLists.map(td => td.id === todolistId ? {...td, title: newTitle} : td));
+        dispatchTodoLists(changeTodolistTitleAC(todolistId, newTitle));
     }
 
 

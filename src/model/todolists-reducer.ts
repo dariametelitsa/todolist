@@ -50,7 +50,8 @@ const initialState: todoListType[] = [
         id: todolistID2,
         title: 'What to buy',
         filter: 'all'
-    },]
+    },
+];
 
 export const todolistsReducer = (state: todoListType[] = initialState, action: ActionsNewType): todoListType[] => {
     switch (action.type) {
@@ -95,7 +96,7 @@ export const addedTodolistAC = (title: string): AddTodolistActionType => {
     return {
         type: 'ADD-TODOLIST',
         payload: {
-            title: 'New Todolist',
+            title,
         },
     }
 };
