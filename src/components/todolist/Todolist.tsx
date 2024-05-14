@@ -45,7 +45,7 @@ const Todolist: React.FC<TodolistPropsType> = ({
         return () => changeFilter(id, filter);
     }
 
-    const onClickHandlerDeleteAll = () => {
+    const onClickHandlerDeleteAllTasks = () => {
         deleteAllTasks(id);
     }
 
@@ -108,7 +108,7 @@ const Todolist: React.FC<TodolistPropsType> = ({
             {/*        }}*/}
             {/*        isDisabled={tasks.length === 0}/>*/}
             <Button onClick={() => {
-                onClickHandlerDeleteAll()
+                onClickHandlerDeleteAllTasks()
             }} variant="contained" color='info' startIcon={<DeleteIcon/>}>
                 Delete
             </Button>

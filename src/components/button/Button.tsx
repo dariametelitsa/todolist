@@ -9,7 +9,7 @@ type ButtonPropsType = {
     active?: boolean;
     accent?:boolean
 } & ButtonHTMLAttributes<HTMLButtonElement>;
-export const Button: React.FC<ButtonPropsType> = ({title, callBack, isDisabled, active, accent, ...restProps}: ButtonPropsType) => {
+export const Button: React.FC<ButtonPropsType> = ({title, callBack, isDisabled, active, accent, ...restProps}) => {
 
     const finalClassName = `
     ${s.button} 
