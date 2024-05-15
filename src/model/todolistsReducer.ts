@@ -6,7 +6,7 @@ export type RemoveTodoAction = ReturnType<typeof removeTodolistAC>;
 export type AddTodoAction = ReturnType<typeof addedTodolistAC>;
 type ChangeTodoTitleAction = ReturnType<typeof changeTodolistTitleAC>;
 type ChangeTodoFilterAction = ReturnType<typeof changedTodolistFilterAC>;
-type ActionsNewType =  | RemoveTodoAction  | AddTodoAction  | ChangeTodoTitleAction  | ChangeTodoFilterAction;
+type ActionsType =  | RemoveTodoAction  | AddTodoAction  | ChangeTodoTitleAction  | ChangeTodoFilterAction;
 
 //code
 let todolistID1 = v1();
@@ -24,7 +24,7 @@ const initialState: TodoListType[] = [
     },
 ];
 
-export const todolistsReducer = (state: TodoListType[] = initialState, action: ActionsNewType): TodoListType[] => {
+export const todolistsReducer = (state: TodoListType[] = initialState, action: ActionsType): TodoListType[] => {
     switch (action.type) {
         case 'REMOVE_TODOLIST': {
             return state.filter(tl => tl.id !== action.payload.id);

@@ -84,9 +84,7 @@ function App() {
     const addTodolist = (title: string) => {
         const action  = addedTodolistAC(title);
         dispatchTodoLists(action);
-        //dispatchTodoLists(addedTodolistAC( title));
         dispatchTasks(action);
-        //dispatchTasks(cleanTasksListAC(todoLists[0].id));
     };
 
     const updateTodolistTitle = (todolistId: string, newTitle: string) => {
