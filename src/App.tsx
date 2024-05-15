@@ -20,6 +20,13 @@ import {
     removeTodolistAC,
     todolistsReducer
 } from "./model/todolistsReducer";
+import {
+    addTaskAC, cleanTasksListAC, createTasksListAC, deleteTasksListAC,
+    removeTaskAC,
+    renameTaskTitleAC,
+    setNewTaskStatusAC,
+    tasksReduser
+} from "./model/tasksReduser";
 
 
 export const sum = (a: number, b: number): number => {
@@ -31,11 +38,11 @@ type ThemeMode = 'dark' | 'light';
 function App() {
 
     const [todoLists, dispatchTodoLists] = useReducer(todolistsReducer, todoListsData);
-    const [tasks, setTasks] = useState<TasksType>(tasksArr); //how to type calculated property
+    const [tasks, dispatchTasks] = useReducer(tasksReduser, tasksArr); //how to type calculated property
 
     const changeFilter = (todolistId: string, filter: FilterValuesType) => {
         dispatchTodoLists(changedTodolistFilterAC(todolistId, filter));
-    }
+    };
 
     const filterTasks = (todolistId: string, tasks: TaskType[], filter: FilterValuesType) => {
         let tasksFiltered = tasks;
@@ -47,56 +54,49 @@ function App() {
             tasksFiltered = tasks.filter((t) => t.isDone);
         }
         return tasksFiltered;
-    }
+    };
 
     function removeTask(todolistId: string, taskId: string) {
-        setTasks({...tasks, [todolistId]: tasks[todolistId].filter(t => t.id !== taskId)});
-    }
+        dispatchTasks(removeTaskAC(todolistId, taskId));
+    };
 
     const addTask = (todolistId: string, taskTitle: string) => {
-        let newTask = {id: v1(), isDone: false, title: taskTitle};
-        setTasks({...tasks, [todolistId]: [newTask, ...tasks[todolistId]]});
-    }
+        dispatchTasks(addTaskAC(todolistId, taskTitle));
+    };
 
     const renameTaskTitle = (todolistId: string, taskId: string, newTaskTitle: string) => {
-        setTasks({
-            ...tasks,
-            [todolistId]: tasks[todolistId].map(t => t.id === taskId ? {...t, title: newTaskTitle} : t)
-        });
-    }
+        dispatchTasks(renameTaskTitleAC(todolistId, taskId, newTaskTitle));
+    };
 
     const deleteAllTasks = (todolistId: string) => {
-        setTasks({...tasks, [todolistId]: []});
-    }
+        dispatchTasks(cleanTasksListAC(todolistId));
+    };
 
     const setNewTaskStatus = (todolistId: string, taskId: string, newIsDone: boolean) => {
-        setTasks({
-            ...tasks,
-            [todolistId]: tasks[todolistId].map((t) => t.id === taskId ? {...t, isDone: newIsDone} : t)
-        });
-    }
+        dispatchTasks(setNewTaskStatusAC(todolistId, taskId, newIsDone));
+    };
 
     const removeTodolist = (todolistId: string) => {
         dispatchTodoLists(removeTodolistAC(todolistId));
-        delete tasks[todolistId]; //delete unnecessary tasks
-        setTasks({...tasks});
-    }
+        dispatchTasks(deleteTasksListAC(todolistId));
+
+    };
 
     const addTodolist = (title: string) => {
         const newTodolistId = v1();
-        dispatchTodoLists(addedTodolistAC(title));
-        setTasks({...tasks, [newTodolistId]: []});
-    }
+        dispatchTodoLists(addedTodolistAC(newTodolistId, title));
+        dispatchTasks(createTasksListAC(newTodolistId));
+        //dispatchTasks(cleanTasksListAC(todoLists[0].id));
+    };
 
     const updateTodolistTitle = (todolistId: string, newTitle: string) => {
         dispatchTodoLists(changeTodolistTitleAC(todolistId, newTitle));
-    }
-
+    };
 
     const [themeMode, setThemeMode] = useState<ThemeMode>('light')
     const changeModeHandler = () => {
         setThemeMode(themeMode === 'light' ? 'dark' : 'light')
-    }
+    };
     // const theme = createTheme({
     //     palette: {
     //         mode: themeMode==='light' ? 'light' : 'dark',
@@ -114,10 +114,10 @@ function App() {
     // })
     const theme = createTheme({
         palette: {
-            mode: themeMode==='light' ? 'light' : 'dark',
+            mode: themeMode === 'light' ? 'light' : 'dark',
             primary: cyan,
         },
-    })
+    });
 
 
     return (

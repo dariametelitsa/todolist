@@ -1,8 +1,8 @@
-import { v1, v4 } from "uuid";
+import { v4 } from "uuid";
 import { TasksType } from "../data/dataPropsTypes";
 import {
     addTaskAC,
-    deleteAllTasksAC,
+    cleanTasksListAC, createTasksListAC, deleteTasksListAC,
     removeTaskAC,
     renameTaskTitleAC,
     setNewTaskStatusAC,
@@ -65,8 +65,8 @@ test('correct rename task title', () => {
     expect(endState[todolistId2][0].title).toBe("CSS&HTML");
 });
 
-test('delete ass tasks from correct todolist', () => {
-    const endState = tasksReduser(state, deleteAllTasksAC(todolistId2));
+test('clean all tasks list from correct todolist', () => {
+    const endState = tasksReduser(state, cleanTasksListAC(todolistId2));
 
     expect(Object.keys(endState).length).toBe(2);
     expect(endState[todolistId1].length).toBe(3);
@@ -86,4 +86,26 @@ test('task status should be changed correctly', () => {
     const endState2 = tasksReduser(state, setNewTaskStatusAC(todolistId1, '1', newStatus));
     expect(endState2[todolistId1][0].isDone).toBe(newStatus);
     expect(endState[todolistId2][0].isDone).toBe(true);
+});
+
+test('delete all tasks from todolist', () => {
+    const endState = tasksReduser(state, deleteTasksListAC(todolistId1));
+
+    expect(Object.keys(endState).length).toBe(1);
+    expect(Object.keys(endState)[0]).toBe(todolistId2);
+});
+
+test('create new tasks list to correct todolist', () => {
+    const todolistId3 = v4();
+    const endState = tasksReduser(state, createTasksListAC(todolistId3));
+
+    expect(Object.keys(endState).length).toBe(3);
+    expect(Object.keys(endState)[2]).toBe(todolistId2);
+    expect(Object.keys(endState)[0]).toBe(todolistId3);
+    expect(endState[todolistId3].length).toBe(0);
+
+    //if rewrite arr;
+    const endState2 = tasksReduser(state, createTasksListAC(todolistId1));
+    expect(Object.keys(endState2).length).toBe(2);
+    expect(Object.keys(endState2)[0]).toBe(todolistId1);
 });

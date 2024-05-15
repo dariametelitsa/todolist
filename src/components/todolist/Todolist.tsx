@@ -85,11 +85,11 @@ const Todolist: React.FC<TodolistPropsType> = ({
                                     {/*<input type={"checkbox"} checked={task.isDone}*/}
                                     {/*       onChange={onChangeSetTaskStatusHandler}/>*/}
                                     {/*<span className={task.isDone ? styles.taskDone : styles.task}>{task.title}</span>*/}
-                                    <div>
+                                    <label className={styles.label}>
                                         <Checkbox checked={task.isDone} onChange={onChangeSetTaskStatusHandler}/>
                                         <EditableSpan oldTitle={task.title} idToChange={task.id}
                                                       updateItem={onChangeTitleTaskHandler}/>
-                                    </div>
+                                    </label>
 
                                     <IconButton aria-label="delete" onClick={() => removeTask(id, task.id)}>
                                         <DeleteOutlineIcon/>
