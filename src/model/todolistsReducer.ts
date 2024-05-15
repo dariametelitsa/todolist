@@ -1,5 +1,5 @@
 import { v1 } from "uuid";
-import { FilterValuesType, todoListType } from "../data/dataPropsTypes";
+import { FilterValuesType, TodoListType } from "../data/dataPropsTypes";
 
 
 //types
@@ -40,7 +40,7 @@ type ActionsNewType =  | RemoveTodoAction  | AddTodoAction  | ChangeTodoTitleAct
 //code
 let todolistID1 = v1();
 let todolistID2 = v1();
-const initialState: todoListType[] = [
+const initialState: TodoListType[] = [
     {
         id: todolistID1,
         title: 'What to learn',
@@ -53,14 +53,14 @@ const initialState: todoListType[] = [
     },
 ];
 
-export const todolistsReducer = (state: todoListType[] = initialState, action: ActionsNewType): todoListType[] => {
+export const todolistsReducer = (state: TodoListType[] = initialState, action: ActionsNewType): TodoListType[] => {
     switch (action.type) {
         case 'REMOVE-TODOLIST': {
             return state.filter(tl => tl.id !== action.payload.id);
         }
         case 'ADD-TODOLIST': {
             const newTodolistId = v1();
-            const newTodolist: todoListType = {id: newTodolistId, title: action.payload.title, filter: 'all'};
+            const newTodolist: TodoListType = {id: newTodolistId, title: action.payload.title, filter: 'all'};
             return [newTodolist, ...state];
         }
         case 'CHANGE-TODOLIST-TITLE': {

@@ -1,11 +1,10 @@
 import React, { useReducer, useState } from 'react';
-import { FilterValuesType, TasksType, TaskType, todoListType } from "./data/dataPropsTypes";
+import { FilterValuesType, TasksType, TaskType } from "./data/dataPropsTypes";
 import { v1 } from "uuid";
 import Todolist from "./components/todolist/Todolist";
 import { tasksArr, todoListsData } from "./data/Data";
 import './App.scss'
 import { AddItem } from "./components/addItem/AddItem";
-
 
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
@@ -20,7 +19,7 @@ import {
     changedTodolistFilterAC, changeTodolistTitleAC,
     removeTodolistAC,
     todolistsReducer
-} from "./model/todolists-reducer";
+} from "./model/todolistsReducer";
 
 
 export const sum = (a: number, b: number): number => {
@@ -56,7 +55,7 @@ function App() {
 
     const addTask = (todolistId: string, taskTitle: string) => {
         let newTask = {id: v1(), isDone: false, title: taskTitle};
-        setTasks({...tasks, [todolistId]: [newTask, ...tasks[todolistId]]})
+        setTasks({...tasks, [todolistId]: [newTask, ...tasks[todolistId]]});
     }
 
     const renameTaskTitle = (todolistId: string, taskId: string, newTaskTitle: string) => {
