@@ -2,12 +2,13 @@ import { v4 } from "uuid";
 import { TasksType } from "../data/dataPropsTypes";
 import {
     addTaskAC,
-    cleanTasksListAC, createTasksListAC, deleteTasksListAC,
+    cleanTasksListAC,
     removeTaskAC,
     renameTaskTitleAC,
     setNewTaskStatusAC,
     tasksReduser
 } from "./tasksReduser";
+import { addedTodolistAC } from "./todolistsReducer";
 
 const todolistId1 = v4();
 const todolistId2 = v4();
@@ -88,24 +89,21 @@ test('task status should be changed correctly', () => {
     expect(endState[todolistId2][0].isDone).toBe(true);
 });
 
-test('delete all tasks from todolist', () => {
-    const endState = tasksReduser(state, deleteTasksListAC(todolistId1));
+test('clean all tasks from todolist, todolist should be empty', () => {
+    const endState = tasksReduser(state, cleanTasksListAC(todolistId1));
 
     expect(Object.keys(endState).length).toBe(1);
     expect(Object.keys(endState)[0]).toBe(todolistId2);
 });
 
 test('create new tasks list to correct todolist', () => {
-    const todolistId3 = v4();
-    const endState = tasksReduser(state, createTasksListAC(todolistId3));
+    const endState = tasksReduser(state, addedTodolistAC('new todo'));
 
+    const {[todolistId1]: first, todolistId2: second, ...newTasks} = endState;
     expect(Object.keys(endState).length).toBe(3);
     expect(Object.keys(endState)[2]).toBe(todolistId2);
-    expect(Object.keys(endState)[0]).toBe(todolistId3);
-    expect(endState[todolistId3].length).toBe(0);
 
-    //if rewrite arr;
-    const endState2 = tasksReduser(state, createTasksListAC(todolistId1));
-    expect(Object.keys(endState2).length).toBe(2);
-    expect(Object.keys(endState2)[0]).toBe(todolistId1);
+    const keyId = Object.keys(newTasks)[0];
+    expect(newTasks[keyId].length).toBe(0);
+
 });

@@ -1,6 +1,7 @@
 import { TasksType } from "../data/dataPropsTypes";
 import { v1 } from "uuid";
 import { todolistId1, todolistId2 } from "../data/Data";
+import { AddTodoAction, RemoveTodoAction } from "./todolistsReducer";
 
 export const initialState: TasksType = {
     [todolistId1]: [
@@ -19,11 +20,10 @@ export const initialState: TasksType = {
 type RemoveTaskAction = ReturnType<typeof removeTaskAC>
 type AddTaskAction = ReturnType<typeof addTaskAC>
 type RenameTaskTitleAction = ReturnType<typeof renameTaskTitleAC>
-type DeleteAllTasksAction = ReturnType<typeof cleanTasksListAC>
+type CleanAllTasksAction = ReturnType<typeof cleanTasksListAC>
 type SetNewTaskStatusAction = ReturnType<typeof setNewTaskStatusAC>
-type DeleteTasksList = ReturnType<typeof deleteTasksListAC>
-type CreateTasksList = ReturnType<typeof createTasksListAC>
-type ActionType = RemoveTaskAction | AddTaskAction | RenameTaskTitleAction | DeleteAllTasksAction | SetNewTaskStatusAction | DeleteTasksList | CreateTasksList;
+
+type ActionType = RemoveTaskAction | AddTaskAction | RenameTaskTitleAction | CleanAllTasksAction | SetNewTaskStatusAction | AddTodoAction | RemoveTodoAction;
 
 export const tasksReduser = (state: TasksType = initialState, action: ActionType): TasksType => {
     switch (action.type) {
@@ -38,10 +38,10 @@ export const tasksReduser = (state: TasksType = initialState, action: ActionType
             return {...state, [action.payload.todolistId]: []};
         case 'SET_NEW_TASK_STATUS':
             return {...state, [action.payload.todolistId]: state[action.payload.todolistId].map(t => t.id === action.payload.taskId ? {...t, isDone: action.payload.isDone} : t)};
-        case 'CREATE_TASKS_LIST':
-            return {[action.payload.todolistId]: [], ...state};
-        case 'DELETE_TASKS_LIST':
-            const {[action.payload.todolistId]: deletedValue, ...rest} = state;
+        case 'ADD_TODOLIST':
+            return {[action.payload.id]: [], ...state};
+        case 'REMOVE_TODOLIST':
+            const {[action.payload.id]: deletedValue, ...rest} = state;
             return rest;
         default:
             return state;
@@ -96,24 +96,6 @@ export const setNewTaskStatusAC = (todolistId: string, taskId: string, isDone: b
             todolistId,
             taskId,
             isDone
-        }
-    } as const;
-};
-
-export const createTasksListAC = (todolistId: string) => {
-    return {
-        type: 'CREATE_TASKS_LIST',
-        payload: {
-            todolistId,
-        }
-    } as const;
-};
-
-export const deleteTasksListAC = (todolistId: string) => {
-    return {
-        type: 'DELETE_TASKS_LIST',
-        payload: {
-            todolistId,
         }
     } as const;
 };

@@ -1,6 +1,5 @@
 import React, { useReducer, useState } from 'react';
-import { FilterValuesType, TasksType, TaskType } from "./data/dataPropsTypes";
-import { v1 } from "uuid";
+import { FilterValuesType, TaskType } from "./data/dataPropsTypes";
 import Todolist from "./components/todolist/Todolist";
 import { tasksArr, todoListsData } from "./data/Data";
 import './App.scss'
@@ -21,7 +20,7 @@ import {
     todolistsReducer
 } from "./model/todolistsReducer";
 import {
-    addTaskAC, cleanTasksListAC, createTasksListAC, deleteTasksListAC,
+    addTaskAC, cleanTasksListAC,
     removeTaskAC,
     renameTaskTitleAC,
     setNewTaskStatusAC,
@@ -44,7 +43,7 @@ function App() {
         dispatchTodoLists(changedTodolistFilterAC(todolistId, filter));
     };
 
-    const filterTasks = (todolistId: string, tasks: TaskType[], filter: FilterValuesType) => {
+    const filterTasks = (todolistId: string, tasks: TaskType[]) => {
         let tasksFiltered = tasks;
         let todolist = todoLists.find(td => td.id === todolistId);
         if (todolist && todolist.filter === 'active') {
@@ -58,7 +57,7 @@ function App() {
 
     function removeTask(todolistId: string, taskId: string) {
         dispatchTasks(removeTaskAC(todolistId, taskId));
-    };
+    }
 
     const addTask = (todolistId: string, taskTitle: string) => {
         dispatchTasks(addTaskAC(todolistId, taskTitle));
@@ -77,15 +76,16 @@ function App() {
     };
 
     const removeTodolist = (todolistId: string) => {
-        dispatchTodoLists(removeTodolistAC(todolistId));
-        dispatchTasks(deleteTasksListAC(todolistId));
-
+        const action = removeTodolistAC(todolistId);
+        dispatchTodoLists(action);
+        dispatchTasks(action);
     };
 
     const addTodolist = (title: string) => {
-        const newTodolistId = v1();
-        dispatchTodoLists(addedTodolistAC(newTodolistId, title));
-        dispatchTasks(createTasksListAC(newTodolistId));
+        const action  = addedTodolistAC(title);
+        dispatchTodoLists(action);
+        //dispatchTodoLists(addedTodolistAC( title));
+        dispatchTasks(action);
         //dispatchTasks(cleanTasksListAC(todoLists[0].id));
     };
 
@@ -93,7 +93,7 @@ function App() {
         dispatchTodoLists(changeTodolistTitleAC(todolistId, newTitle));
     };
 
-    const [themeMode, setThemeMode] = useState<ThemeMode>('light')
+    const [themeMode, setThemeMode] = useState<ThemeMode>('light');
     const changeModeHandler = () => {
         setThemeMode(themeMode === 'light' ? 'dark' : 'light')
     };
@@ -136,7 +136,7 @@ function App() {
 
                     <Grid container spacing={2}>
                         {todoLists.map(td => {
-                            let tasksFiltered = filterTasks(td.id, tasks[td.id], td.filter);
+                            let tasksFiltered = filterTasks(td.id, tasks[td.id]);
                             return (
                                 <Grid xs={6} key={td.id}>
                                     <Paper sx={{p: 2}}>
