@@ -14,7 +14,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline'
 import { HeaderMenu } from "./components/headerMenu/HeaderMenu";
 import {
-    addedTodolistAC,
+    addedTodolistAC, changedTodolistCoverAC,
     changedTodolistFilterAC, changeTodolistTitleAC,
     removeTodolistAC,
     todolistsReducer
@@ -26,7 +26,6 @@ import {
     setNewTaskStatusAC,
     tasksReduser
 } from "./model/tasksReduser";
-
 
 export const sum = (a: number, b: number): number => {
     return a + b;
@@ -41,6 +40,11 @@ function App() {
 
     const changeFilter = (todolistId: string, filter: FilterValuesType) => {
         dispatchTodoLists(changedTodolistFilterAC(todolistId, filter));
+    };
+
+    const changeTodoCover = (todolistId: string, coverImage: string) => {
+        dispatchTodoLists(changedTodolistCoverAC(todolistId, coverImage));
+        console.log(todoLists);
     };
 
     const filterTasks = (todolistId: string, tasks: TaskType[]) => {
@@ -114,6 +118,9 @@ function App() {
         palette: {
             mode: themeMode === 'light' ? 'light' : 'dark',
             primary: cyan,
+            background: {
+                default: "#ececec"
+            }
         },
     });
 
@@ -132,16 +139,17 @@ function App() {
                         <AddItem addItem={addTodolist}></AddItem>
                     </Grid>
 
-                    <Grid container spacing={2}>
+                    <Grid container spacing={3}>
                         {todoLists.map(td => {
                             let tasksFiltered = filterTasks(td.id, tasks[td.id]);
                             return (
-                                <Grid xs={6} key={td.id}>
+                                <Grid xs={4} key={td.id}>
                                     <Paper sx={{p: 2}}>
                                         <Todolist key={td.id}
                                                   id={td.id}
                                                   title={td.title}
                                                   tasks={tasksFiltered}
+                                                  coverImage={td.coverImage}
                                                   removeTask={removeTask}
                                                   addTask={addTask}
                                                   renameTaskTitle={renameTaskTitle}
@@ -150,7 +158,8 @@ function App() {
                                                   filter={td.filter}
                                                   changeFilter={changeFilter}
                                                   removeTodolist={removeTodolist}
-                                                  updateTodolistTitle={updateTodolistTitle}>
+                                                  updateTodolistTitle={updateTodolistTitle}
+                                                  changeTodoCover={changeTodoCover}>
                                             {<div>Just do it!</div>}
                                         </Todolist>
                                     </Paper>

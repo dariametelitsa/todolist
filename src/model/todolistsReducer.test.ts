@@ -1,6 +1,6 @@
 import { v1 } from 'uuid'
 import {
-    addedTodolistAC,
+    addedTodolistAC, changedTodolistCoverAC,
     changedTodolistFilterAC,
     changeTodolistTitleAC,
     removeTodolistAC,
@@ -79,4 +79,25 @@ test('correct filter of todolist should be changed', () => {
     const endState = todolistsReducer(startState, changedTodolistFilterAC(todolistId2, 'completed'));
     expect(endState[0].filter).toBe('all');
     expect(endState[1].filter).toBe('completed');
+});
+
+test('correct todolist cover changed', () => {
+
+    let todolistId1 = v1();
+    let todolistId2 = v1();
+    let todolistId3 = v1();
+    const startState: TodoListType[] = [
+        { id: todolistId1, title: 'What to learn', filter: 'all' },
+        { id: todolistId2, title: 'What to buy', filter: 'all' },
+        { id: todolistId3, title: 'What', filter: 'all' },];
+
+    const endState = todolistsReducer(startState, changedTodolistCoverAC(todolistId2, 'newImg'));
+    expect(endState[0].coverImage).toBe(undefined);
+    expect(endState[1].coverImage).toBe('newImg');
+    expect(endState[2].coverImage).toBe(undefined);
+
+    const endState2 = todolistsReducer(endState, changedTodolistCoverAC(todolistId3, 'newImg'));
+    expect(endState2[0].coverImage).toBe(undefined);
+    expect(endState2[1].coverImage).toBe('newImg');
+    expect(endState2[2].coverImage).toBe('newImg');
 });

@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { ChangeEvent, useState } from 'react';
 import s from './AddItem.module.scss'
-import Button from '@mui/material/Button';
 import TextField from "@mui/material/TextField";
 import IconButton from "@mui/material/IconButton";
 import AddBoxIcon from '@mui/icons-material/AddBox';
@@ -48,21 +47,21 @@ export const AddItem = ({addItem}: Props) => {
         setItemInputError(null);
     }
 
-    const buttonStyles = {
-        maxWidth: '100%',
-        maxHeight: '30px',
-        minWidth: '30px',
-        minHeight: '30px',
-        backgroundColor: '#874CCC'
-    }
+    // const buttonStyles = {
+    //     maxWidth: '100%',
+    //     maxHeight: '30px',
+    //     minWidth: '30px',
+    //     minHeight: '30px',
+    //     backgroundColor: '#874CCC'
+    // }
 
     const onChangeInputHandler = (event: ChangeEvent<HTMLInputElement>) => {
         onChangeSetItemTitle(event.currentTarget.value);
-        isTitleToLong ? setItemInputError('Too long') :  setItemInputError(null);
+        isTitleToLong ? setItemInputError('Too long') : setItemInputError(null);
     }
 
     return (
-        <div className={s.addItem}>
+        <div className={s.addItemBox}>
             {/*<Input changeTitle={onChangeSetItemTitle}*/}
             {/*       title={itemTitle}*/}
             {/*       onKeyDown={onKeyDownHandler}*/}
@@ -76,8 +75,9 @@ export const AddItem = ({addItem}: Props) => {
                        variant="outlined"
                        value={itemTitle}
                        error={!!itemInputError}
-                       helperText={!!itemInputError ? `${itemInputError}` : ''}
-                       size='small'/>
+                       helperText={!!itemInputError ? `${itemInputError}` : ' '}
+                       size='small'
+                       />
 
             {/*<Button variant="contained"*/}
             {/*        onClick={onClickAddItemHandler}*/}

@@ -14,6 +14,7 @@ import ListItem from '@mui/material/ListItem';
 
 import Box from '@mui/material/Box';
 import { filterButtonsContainerSx, getListItemSx } from "./Todolist.styles";
+import { CoverImage } from "../coverImage/CoverImage";
 
 
 // Create
@@ -34,7 +35,9 @@ const Todolist: React.FC<TodolistPropsType> = ({
                                                    deleteAllTasks,
                                                    setNewTaskStatus,
                                                    removeTodolist,
-                                                   updateTodolistTitle
+                                                   updateTodolistTitle,
+                                                   coverImage,
+                                                   changeTodoCover
                                                }: TodolistPropsType) => {
 
 
@@ -53,6 +56,10 @@ const Todolist: React.FC<TodolistPropsType> = ({
         addTask(id, newItem);
     }
 
+    const onChangeCoverHandler = (image: string) => {
+        changeTodoCover(id, image);
+    }
+
     const changeTodolistTitleHandler = (idToChange: string, newTitle: string) => {
         updateTodolistTitle(idToChange, newTitle);
     }
@@ -63,6 +70,7 @@ const Todolist: React.FC<TodolistPropsType> = ({
 
     return (
         <div className={styles.todolist}>
+            <CoverImage image={coverImage && coverImage} updateImage={onChangeCoverHandler}/>
             <h3>
                 <EditableSpan oldTitle={title} idToChange={id} updateItem={changeTodolistTitleHandler}/>
                 <IconButton aria-label="delete" onClick={() => removeTodolist(id)}>
