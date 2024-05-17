@@ -1,5 +1,5 @@
 import React, { useReducer, useState } from 'react';
-import { FilterValuesType, TaskType } from "./data/dataPropsTypes";
+import { FilterValuesType, TaskType, todoCoversArr, TodoListType } from "./data/dataPropsTypes";
 import Todolist from "./components/todolist/Todolist";
 import { tasksArr, todoListsData } from "./data/Data";
 import './App.scss'
@@ -34,7 +34,6 @@ type ThemeMode = 'dark' | 'light';
 
 
 function App() {
-
     const [todoLists, dispatchTodoLists] = useReducer(todolistsReducer, todoListsData);
     const [tasks, dispatchTasks] = useReducer(tasksReduser, tasksArr); //how to type calculated property
 
@@ -44,7 +43,6 @@ function App() {
 
     const changeTodoCover = (todolistId: string, coverImage: string) => {
         dispatchTodoLists(changedTodolistCoverAC(todolistId, coverImage));
-        console.log(todoLists);
     };
 
     const filterTasks = (todolistId: string, tasks: TaskType[]) => {
@@ -117,10 +115,10 @@ function App() {
     const theme = createTheme({
         palette: {
             mode: themeMode === 'light' ? 'light' : 'dark',
+            ...(themeMode === 'light'
+                ? { background: { default: "#ececec" } } // light mode background color
+                : { background: { default: "#424242" } }), // dark mode background color
             primary: cyan,
-            background: {
-                default: "#ececec"
-            }
         },
     });
 

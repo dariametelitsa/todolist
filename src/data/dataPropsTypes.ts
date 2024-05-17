@@ -51,3 +51,7 @@ export type CoverImageProps = {
     updateImage: (coverImage: string) => void
 };
 
+export type todoCoversArr = {
+    todolistId: string,
+    coverImage: string,
+}
