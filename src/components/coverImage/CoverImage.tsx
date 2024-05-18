@@ -1,16 +1,14 @@
 // @flow
 import * as React from 'react';
+import { ChangeEvent } from 'react';
 import defaultBg from "../../assets/vp2jc2_ec8e6b23a8162cceecc47903db29a202cdff4366.jpg";
 import styles from "./CoverImage.module.scss"
 import IconButton from '@mui/material/IconButton';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import { CoverImageProps } from "../../data/dataPropsTypes";
-import { ChangeEvent, useRef } from "react";
 
 
 export const CoverImage = ({image, updateImage}: CoverImageProps) => {
-
-    const fileInput = useRef<HTMLInputElement>(null);
 
     const handleFileInput = (e: ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files ? e.target.files[0] : null;
@@ -29,7 +27,6 @@ export const CoverImage = ({image, updateImage}: CoverImageProps) => {
                         accept="image/*"
                         style={{display: 'none'}}
                         type="file"
-                        ref={fileInput}
                         onChange={handleFileInput}
                     />
                     <IconButton

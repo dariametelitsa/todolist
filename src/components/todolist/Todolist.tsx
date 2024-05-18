@@ -7,7 +7,6 @@ import { EditableSpan } from "../editableSpan/EditableSpan";
 import IconButton from '@mui/material/IconButton';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import Button from '@mui/material/Button';
-import DeleteIcon from '@mui/icons-material/Delete';
 import Checkbox from '@mui/material/Checkbox';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -15,6 +14,7 @@ import ListItem from '@mui/material/ListItem';
 import Box from '@mui/material/Box';
 import { filterButtonsContainerSx, getListItemSx } from "./Todolist.styles";
 import { CoverImage } from "../coverImage/CoverImage";
+import Grid from "@mui/material/Unstable_Grid2";
 
 
 // Create
@@ -23,7 +23,6 @@ import { CoverImage } from "../coverImage/CoverImage";
 // Delete
 
 const Todolist: React.FC<TodolistPropsType> = ({
-                                                   children,
                                                    title,
                                                    tasks,
                                                    removeTask,
@@ -42,7 +41,6 @@ const Todolist: React.FC<TodolistPropsType> = ({
 
 
     const [listRef] = useAutoAnimate<HTMLUListElement>()
-
 
     const onClickHandlerCreator = (filter: FilterValuesType) => {
         return () => changeFilter(id, filter);
@@ -79,7 +77,7 @@ const Todolist: React.FC<TodolistPropsType> = ({
             </h3>
 
             <AddItem addItem={addItemHandler}/>
-            <List ref={listRef}>
+            <List ref={listRef} sx={{width: '100%', height: 200, overflow: 'auto'}}>
                 {
                     tasks.length === 0 ? (
                         <p>Задач нет</p>
@@ -109,17 +107,21 @@ const Todolist: React.FC<TodolistPropsType> = ({
                     )
                 }
             </List>
-            {/*todo*/}
             {/*<Button title={'Delete all tasks'}*/}
             {/*        callBack={() => {*/}
             {/*            onClickHandlerDeleteAll()*/}
             {/*        }}*/}
             {/*        isDisabled={tasks.length === 0}/>*/}
-            <Button onClick={() => {
-                onClickHandlerDeleteAllTasks()
-            }} variant="contained" color='info' startIcon={<DeleteIcon/>}>
-                Delete
-            </Button>
+            {/*<Button onClick={() => {*/}
+            {/*    onClickHandlerDeleteAllTasks()*/}
+            {/*}} variant="contained" color='info' startIcon={<DeleteIcon/>}>*/}
+            {/*    Delete*/}
+            {/*</Button>*/}
+            <Grid container justifyContent="center">
+                <Button size="small" onClick={() => {
+                    onClickHandlerDeleteAllTasks()
+                }}>Delete all</Button>
+            </Grid>
 
             {/*<div className={'tabs'}>*/}
             {/*<Button active={filter === 'all'} title={'All'}*/}
@@ -137,9 +139,6 @@ const Todolist: React.FC<TodolistPropsType> = ({
                 <Button color='success' variant={filter === 'completed' ? "contained" : 'outlined'}
                         onClick={onClickHandlerCreator('completed')}>completed</Button>
             </Box>
-
-
-            {children}
         </div>
     );
 }

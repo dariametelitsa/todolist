@@ -1,5 +1,5 @@
 import React, { useReducer, useState } from 'react';
-import { FilterValuesType, TaskType, todoCoversArr, TodoListType } from "./data/dataPropsTypes";
+import { FilterValuesType, TaskType } from "./data/dataPropsTypes";
 import Todolist from "./components/todolist/Todolist";
 import { tasksArr, todoListsData } from "./data/Data";
 import './App.scss'
@@ -14,13 +14,16 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline'
 import { HeaderMenu } from "./components/headerMenu/HeaderMenu";
 import {
-    addedTodolistAC, changedTodolistCoverAC,
-    changedTodolistFilterAC, changeTodolistTitleAC,
+    addedTodolistAC,
+    changedTodolistCoverAC,
+    changedTodolistFilterAC,
+    changeTodolistTitleAC,
     removeTodolistAC,
     todolistsReducer
 } from "./model/todolistsReducer";
 import {
-    addTaskAC, cleanTasksListAC,
+    addTaskAC,
+    cleanTasksListAC,
     removeTaskAC,
     renameTaskTitleAC,
     setNewTaskStatusAC,
@@ -56,6 +59,10 @@ function App() {
         }
         return tasksFiltered;
     };
+
+    const sorterTasks = (todolistId: string, tasks: TaskType[]) => {
+        return tasks.sort((t) => t.isDone ? 1 : -1);
+    }
 
     function removeTask(todolistId: string, taskId: string) {
         dispatchTasks(removeTaskAC(todolistId, taskId));
@@ -93,7 +100,7 @@ function App() {
         dispatchTodoLists(changeTodolistTitleAC(todolistId, newTitle));
     };
 
-    const [themeMode, setThemeMode] = useState<ThemeMode>('light');
+    const [themeMode, setThemeMode] = useState<ThemeMode>('dark');
     const changeModeHandler = () => {
         setThemeMode(themeMode === 'light' ? 'dark' : 'light')
     };
@@ -139,14 +146,15 @@ function App() {
 
                     <Grid container spacing={3}>
                         {todoLists.map(td => {
-                            let tasksFiltered = filterTasks(td.id, tasks[td.id]);
+                            //let tasksFiltered = filterTasks(td.id, tasks[td.id]);
+                            let tasksFilteredSorted = sorterTasks(td.id, filterTasks(td.id, tasks[td.id]));
                             return (
                                 <Grid xs={4} key={td.id}>
                                     <Paper sx={{p: 2}}>
                                         <Todolist key={td.id}
                                                   id={td.id}
                                                   title={td.title}
-                                                  tasks={tasksFiltered}
+                                                  tasks={tasksFilteredSorted}
                                                   coverImage={td.coverImage}
                                                   removeTask={removeTask}
                                                   addTask={addTask}
@@ -158,7 +166,6 @@ function App() {
                                                   removeTodolist={removeTodolist}
                                                   updateTodolistTitle={updateTodolistTitle}
                                                   changeTodoCover={changeTodoCover}>
-                                            {<div>Just do it!</div>}
                                         </Todolist>
                                     </Paper>
                                 </Grid>
