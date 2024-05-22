@@ -27,7 +27,7 @@ import {
     removeTaskAC,
     renameTaskTitleAC,
     setNewTaskStatusAC,
-    tasksReduser
+    tasksReducer
 } from "./model/tasksReduser";
 
 export const sum = (a: number, b: number): number => {
@@ -38,7 +38,7 @@ type ThemeMode = 'dark' | 'light';
 
 function App() {
     const [todoLists, dispatchTodoLists] = useReducer(todolistsReducer, todoListsData);
-    const [tasks, dispatchTasks] = useReducer(tasksReduser, tasksArr); //how to type calculated property
+    const [tasks, dispatchTasks] = useReducer(tasksReducer, tasksArr); //how to type calculated property
 
     const changeFilter = (todolistId: string, filter: FilterValuesType) => {
         dispatchTodoLists(changedTodolistFilterAC(todolistId, filter));
@@ -61,7 +61,7 @@ function App() {
     };
 
     const sorterTasks = (todolistId: string, tasks: TaskType[]) => {
-        return tasks.sort((t) => t.isDone ? 1 : -1);
+         return tasks.sort((t) => t.isDone ? 1 : -1);
     }
 
     function removeTask(todolistId: string, taskId: string) {
@@ -146,15 +146,15 @@ function App() {
 
                     <Grid container spacing={3}>
                         {todoLists.map(td => {
-                            //let tasksFiltered = filterTasks(td.id, tasks[td.id]);
-                            let tasksFilteredSorted = sorterTasks(td.id, filterTasks(td.id, tasks[td.id]));
+                            let tasksFiltered = filterTasks(td.id, tasks[td.id]);
+                            //let tasksFilteredSorted = sorterTasks(td.id, filterTasks(td.id, tasks[td.id]));
                             return (
                                 <Grid xs={4} key={td.id}>
                                     <Paper sx={{p: 2}}>
                                         <Todolist key={td.id}
                                                   id={td.id}
                                                   title={td.title}
-                                                  tasks={tasksFilteredSorted}
+                                                  tasks={tasksFiltered}
                                                   coverImage={td.coverImage}
                                                   removeTask={removeTask}
                                                   addTask={addTask}

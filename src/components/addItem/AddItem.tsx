@@ -68,7 +68,7 @@ export const AddItem = ({addItem}: Props) => {
             {/*       error={itemInputError ? "Title can't be empty" : itemInputError ? 'Too long' : ''}*/}
             {/*       className={itemInputError ? 'taskInputError' : ''}/>*/}
 
-            <TextField id="outlined-basic"
+            <TextField
                        onChange={onChangeInputHandler}
                        onKeyDown={onKeyDownHandler}
                        label={'Введите заголовок'}

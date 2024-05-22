@@ -6,7 +6,7 @@ import {
     removeTaskAC,
     renameTaskTitleAC,
     setNewTaskStatusAC,
-    tasksReduser
+    tasksReducer
 } from "./tasksReduser";
 import { addedTodolistAC } from "./todolistsReducer";
 
@@ -30,7 +30,7 @@ beforeEach(() => {
 });
 
 test('correct task should be removed', () => {
-    const endState = tasksReduser(state, removeTaskAC(todolistId1, '1'));
+    const endState = tasksReducer(state, removeTaskAC(todolistId1, '1'));
 
     expect(endState[todolistId1].length).toBe(2);
     expect(endState[todolistId1][0].title).toBe("DDD");
@@ -40,7 +40,7 @@ test('correct task should be removed', () => {
 
 test('task should be add correct', () => {
     const newTask = 'I\'m new here!';
-    const endState = tasksReduser(state, addTaskAC(todolistId1, newTask));
+    const endState = tasksReducer(state, addTaskAC(todolistId1, newTask));
 
     expect(endState[todolistId1].length).toBe(4);
     expect(endState[todolistId1][0].title).toBe(newTask);
@@ -50,14 +50,14 @@ test('task should be add correct', () => {
     expect(endState[todolistId2].length).toBe(2);
     expect(endState[todolistId2][0].title).toBe("CSS&HTML");
 
-    const endState2 = tasksReduser(state, addTaskAC(todolistId2, newTask));
+    const endState2 = tasksReducer(state, addTaskAC(todolistId2, newTask));
     expect(endState2[todolistId2].length).toBe(3);
     expect(endState2[todolistId2][0].title).toBe(newTask);
 });
 
 test('correct rename task title', () => {
     const newTask = 'I\'m was changed';
-    const endState = tasksReduser(state, renameTaskTitleAC(todolistId1, '1', newTask));
+    const endState = tasksReducer(state, renameTaskTitleAC(todolistId1, '1', newTask));
 
     expect(endState[todolistId1].length).toBe(3);
     expect(endState[todolistId1][0].title).toBe(newTask);
@@ -67,7 +67,7 @@ test('correct rename task title', () => {
 });
 
 test('clean all tasks list from correct todolist', () => {
-    const endState = tasksReduser(state, cleanTasksListAC(todolistId2));
+    const endState = tasksReducer(state, cleanTasksListAC(todolistId2));
 
     expect(Object.keys(endState).length).toBe(2);
     expect(endState[todolistId1].length).toBe(3);
@@ -76,7 +76,7 @@ test('clean all tasks list from correct todolist', () => {
 
 test('task status should be changed correctly', () => {
     let newStatus = true;
-    const endState = tasksReduser(state, setNewTaskStatusAC(todolistId1, '1', newStatus));
+    const endState = tasksReducer(state, setNewTaskStatusAC(todolistId1, '1', newStatus));
 
     expect(endState[todolistId1].length).toBe(3);
     expect(endState[todolistId1][0].isDone).toBe(newStatus);
@@ -84,20 +84,20 @@ test('task status should be changed correctly', () => {
     expect(endState[todolistId2][0].isDone).toBe(true);
 
     newStatus = false;
-    const endState2 = tasksReduser(state, setNewTaskStatusAC(todolistId1, '1', newStatus));
+    const endState2 = tasksReducer(state, setNewTaskStatusAC(todolistId1, '1', newStatus));
     expect(endState2[todolistId1][0].isDone).toBe(newStatus);
     expect(endState[todolistId2][0].isDone).toBe(true);
 });
 
 test('clean all tasks from todolist, todolist should be empty', () => {
-    const endState = tasksReduser(state, cleanTasksListAC(todolistId1));
+    const endState = tasksReducer(state, cleanTasksListAC(todolistId1));
 
     expect(Object.keys(endState).length).toBe(1);
     expect(Object.keys(endState)[0]).toBe(todolistId2);
 });
 
 test('create new tasks list to correct todolist', () => {
-    const endState = tasksReduser(state, addedTodolistAC('new todo'));
+    const endState = tasksReducer(state, addedTodolistAC('new todo'));
 
     const {[todolistId1]: first, todolistId2: second, ...newTasks} = endState;
     expect(Object.keys(endState).length).toBe(3);
@@ -105,5 +105,16 @@ test('create new tasks list to correct todolist', () => {
 
     const keyId = Object.keys(newTasks)[0];
     expect(newTasks[keyId].length).toBe(0);
-
 });
+
+test('correct task should be added to correct array', () => {
+
+    const action = addTaskAC(todolistId2, "juice");
+    const endState = tasksReducer(state, action)
+
+    expect(endState[todolistId1].length).toBe(3);
+    expect(endState[todolistId2].length).toBe(4);
+    expect(endState[todolistId2][0].id).toBeDefined();
+    expect(endState[todolistId2][0].title).toBe('juice');
+    expect(endState[todolistId2][0].isDone).toBe(false);
+})
