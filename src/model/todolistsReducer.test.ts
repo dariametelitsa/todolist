@@ -7,7 +7,6 @@ import {
     todolistsReducer
 } from "./todolistsReducer";
 import { TodoListType } from "../data/dataPropsTypes";
-import { tasksReducer } from "./tasksReduser";
 
 test('correct todolist should be removed', () => {
     let todolistId1 = v1();
