@@ -15,7 +15,7 @@ export const tasksArr: TasksType = {
         {id: v1(), title: "JS", isDone: true},
         {id: v1(), title: "React", isDone: false},
         {id: v1(), title: "Redux", isDone: false}
-    ]
+    ],
 };
 
 export const todoListsData: TodoListType[] = [
