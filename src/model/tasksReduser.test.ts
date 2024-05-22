@@ -117,4 +117,19 @@ test('correct task should be added to correct array', () => {
     expect(endState[todolistId2][0].id).toBeDefined();
     expect(endState[todolistId2][0].title).toBe('juice');
     expect(endState[todolistId2][0].isDone).toBe(false);
-})
+});
+
+test('new array should be added when new todolist is added', () => {
+
+    const action = addedTodolistAC('new todolist');
+    const endState = tasksReducer(state, action);
+
+    const keys = Object.keys(endState);
+    const newKey = keys.find(k => k !== todolistId1 && k !== todolistId2);
+    if (!newKey) {
+        throw Error('new key should be added');
+    }
+
+    expect(keys.length).toBe(3);
+    expect(endState[newKey]).toEqual([]);
+});

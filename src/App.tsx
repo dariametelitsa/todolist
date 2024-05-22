@@ -60,9 +60,9 @@ function App() {
         return tasksFiltered;
     };
 
-    const sorterTasks = (todolistId: string, tasks: TaskType[]) => {
-         return tasks.sort((t) => t.isDone ? 1 : -1);
-    }
+    // const sorterTasks = (todolistId: string, tasks: TaskType[]) => {
+    //      return tasks.sort((t) => t.isDone ? 1 : -1);
+    // }
 
     function removeTask(todolistId: string, taskId: string) {
         dispatchTasks(removeTaskAC(todolistId, taskId));

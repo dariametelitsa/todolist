@@ -7,6 +7,7 @@ import {
     todolistsReducer
 } from "./todolistsReducer";
 import { TodoListType } from "../data/dataPropsTypes";
+import { tasksReducer } from "./tasksReduser";
 
 test('correct todolist should be removed', () => {
     let todolistId1 = v1();
@@ -101,3 +102,4 @@ test('correct todolist cover changed', () => {
     expect(endState2[1].coverImage).toBe('newImg');
     expect(endState2[2].coverImage).toBe('newImg');
 });
+
