@@ -2,6 +2,9 @@
 import * as React from 'react';
 import { ChangeEvent, useState } from 'react';
 import TextField from "@mui/material/TextField";
+import EditIcon from '@mui/icons-material/Edit';
+import IconButton from "@mui/material/IconButton";
+import DoneIcon from '@mui/icons-material/Done';
 
 
 export type EditableSpanProps = {
@@ -47,14 +50,24 @@ export const EditableSpan = ({idToChange, oldTitle, updateItem, maxLength = 25}:
             //          onKeyDown={onKeyDownHandler}
             //          onBlur={activateViewMode}
             //          maxLength={maxLength} autoFocus/>
-            ? <TextField id="outlined-basic"
-                         onChange={onChangeTitleHandler}
-                         onKeyDown={onKeyDownHandler}
-                         variant="outlined"
-                         onBlur={activateViewMode}
-                         autoFocus
-                         value={newTitle}
-                         size='small'/>
-            : <span onDoubleClick={activateEditModeHandler}>{oldTitle}</span>
+            ? <>
+                <TextField id="outlined-basic"
+                           onChange={onChangeTitleHandler}
+                           onKeyDown={onKeyDownHandler}
+                           variant="outlined"
+                           onBlur={activateViewMode}
+                           autoFocus
+                           value={newTitle}
+                           size='small'/>
+                <IconButton onClick={()=>{setEditMode(true)}} color={'primary'} size={'small'} >
+                    <DoneIcon/>
+                </IconButton>
+            </>
+            : <>
+                <span onDoubleClick={activateEditModeHandler} style={{flexGrow: 1}}>{oldTitle}</span>
+                <IconButton onClick={()=>{setEditMode(true)}} color={'primary'} size={'small'} >
+                    <EditIcon/>
+                </IconButton>
+            </>
     );
 };

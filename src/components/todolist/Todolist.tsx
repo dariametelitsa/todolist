@@ -15,6 +15,7 @@ import Box from '@mui/material/Box';
 import { filterButtonsContainerSx, getListItemSx } from "./Todolist.styles";
 import { CoverImage } from "../coverImage/CoverImage";
 import Grid from "@mui/material/Unstable_Grid2";
+import EditIcon from "@mui/icons-material/Edit";
 
 
 // Create
@@ -91,12 +92,12 @@ const Todolist: React.FC<TodolistPropsType> = ({
                                     {/*<input type={"checkbox"} checked={task.isDone}*/}
                                     {/*       onChange={onChangeSetTaskStatusHandler}/>*/}
                                     {/*<span className={task.isDone ? styles.taskDone : styles.task}>{task.title}</span>*/}
-                                    <label className={styles.label}>
+
+                                    {/*<label className={styles.label}>*/}
                                         <Checkbox checked={task.isDone} onChange={onChangeSetTaskStatusHandler}/>
                                         <EditableSpan oldTitle={task.title} idToChange={task.id}
                                                       updateItem={onChangeTitleTaskHandler}/>
-                                    </label>
-
+                                    {/*</label>*/}
                                     <IconButton aria-label="delete" onClick={() => removeTask(id, task.id)}>
                                         <DeleteOutlineIcon/>
                                     </IconButton>
