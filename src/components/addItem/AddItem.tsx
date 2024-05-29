@@ -17,17 +17,15 @@ export const AddItem = ({addItem}: Props) => {
     const isTitleToLong = itemTitle.length > 20;
     const ifTaskCanAdded = itemTitle && !isTitleToLong;
 
-    //const inputRef = React.useRef<HTMLInputElement>(null)
     const onClickAddItemHandler = () => {
         addItemWithCheck();
-    }
+    };
 
     const onKeyDownHandler = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter') {
             addItemWithCheck();
         }
-
-    }
+    };
 
     const addItemWithCheck = () => {
         const trimmedTaskTitle = itemTitle.trim();
@@ -40,25 +38,17 @@ export const AddItem = ({addItem}: Props) => {
                 setNewItemTitle('');
             }
         }
-    }
+    };
 
     const onChangeSetItemTitle = (title: string) => {
         setNewItemTitle(title);
         setItemInputError(null);
-    }
-
-    // const buttonStyles = {
-    //     maxWidth: '100%',
-    //     maxHeight: '30px',
-    //     minWidth: '30px',
-    //     minHeight: '30px',
-    //     backgroundColor: '#874CCC'
-    // }
+    };
 
     const onChangeInputHandler = (event: ChangeEvent<HTMLInputElement>) => {
         onChangeSetItemTitle(event.currentTarget.value);
         isTitleToLong ? setItemInputError('Too long') : setItemInputError(null);
-    }
+    };
 
     return (
         <div className={s.addItemBox}>

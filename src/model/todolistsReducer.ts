@@ -10,21 +10,7 @@ type ChangeTodoCoverAction = ReturnType<typeof changedTodolistCoverAC>;
 
 type ActionsType =  | RemoveTodoAction  | AddTodoAction  | ChangeTodoTitleAction  | ChangeTodoFilterAction | ChangeTodoCoverAction;
 
-//code
-let todolistID1 = v1();
-let todolistID2 = v1();
-const initialState: TodoListType[] = [
-    {
-        id: todolistID1,
-        title: 'What to learn',
-        filter: 'all'
-    },
-    {
-        id: todolistID2,
-        title: 'What to buy',
-        filter: 'all'
-    },
-];
+const initialState: TodoListType[] = [];
 
 export const todolistsReducer = (state: TodoListType[] = initialState, action: ActionsType): TodoListType[] => {
     switch (action.type) {

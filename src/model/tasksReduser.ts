@@ -1,27 +1,14 @@
 import { TasksType } from "../data/dataPropsTypes";
 import { v1 } from "uuid";
-import { todolistId1, todolistId2 } from "../data/Data";
 import { AddTodoAction, RemoveTodoAction } from "./todolistsReducer";
 
-export const initialState: TasksType = {
-    [todolistId1]: [
-        {id: v1(), title: "XP", isDone: false},
-        {id: v1(), title: "DDD", isDone: true},
-        {id: v1(), title: "Scrum", isDone: false}
-    ],
-    [todolistId2]: [
-        {id: v1(), title: "CSS&HTML", isDone: true},
-        {id: v1(), title: "JS", isDone: true},
-        {id: v1(), title: "React", isDone: false},
-        {id: v1(), title: "Redux", isDone: false}
-    ]
-};
+export const initialState: TasksType = {};
 
-type RemoveTaskAction = ReturnType<typeof removeTaskAC>
-type AddTaskAction = ReturnType<typeof addTaskAC>
-type RenameTaskTitleAction = ReturnType<typeof renameTaskTitleAC>
-type CleanAllTasksAction = ReturnType<typeof cleanTasksListAC>
-type SetNewTaskStatusAction = ReturnType<typeof setNewTaskStatusAC>
+type RemoveTaskAction = ReturnType<typeof removeTaskAC>;
+type AddTaskAction = ReturnType<typeof addTaskAC>;
+type RenameTaskTitleAction = ReturnType<typeof renameTaskTitleAC>;
+type CleanAllTasksAction = ReturnType<typeof cleanTasksListAC>;
+type SetNewTaskStatusAction = ReturnType<typeof setNewTaskStatusAC>;
 
 type ActionsType = RemoveTaskAction | AddTaskAction | RenameTaskTitleAction | CleanAllTasksAction | SetNewTaskStatusAction | AddTodoAction | RemoveTodoAction;
 
