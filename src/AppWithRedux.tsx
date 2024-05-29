@@ -1,5 +1,5 @@
-import React, { useReducer, useState } from 'react';
-import { FilterValuesType, TasksArrPropsType, TasksType, TaskType, TodoListType } from "./data/dataPropsTypes";
+import React, { useState } from 'react';
+import { FilterValuesType, TasksType, TaskType, TodoListType } from "./data/dataPropsTypes";
 import Todolist from "./components/todolist/Todolist";
 import './App.scss'
 import { AddItem } from "./components/addItem/AddItem";
@@ -17,17 +17,9 @@ import {
     changedTodolistCoverAC,
     changedTodolistFilterAC,
     changeTodolistTitleAC,
-    removeTodolistAC,
-    todolistsReducer
+    removeTodolistAC
 } from "./model/todolistsReducer";
-import {
-    addTaskAC,
-    cleanTasksListAC,
-    removeTaskAC,
-    renameTaskTitleAC,
-    setNewTaskStatusAC,
-    tasksReducer
-} from "./model/tasksReduser";
+import { addTaskAC, cleanTasksListAC, removeTaskAC, renameTaskTitleAC, setNewTaskStatusAC } from "./model/tasksReduser";
 import { useDispatch, useSelector } from "react-redux";
 import { AppRootState } from "./model/store";
 
