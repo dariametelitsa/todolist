@@ -31,18 +31,12 @@ export type FilterValuesType = 'all' | 'completed' | 'active';
 export type TodolistPropsType = {
     children?: any
     id: string
+    title: string
     filter: FilterValuesType
     changeFilter: (toListId: string, filter: FilterValuesType) => void
-    title: string
-    tasks: Array<TaskType>
-    coverImage?: string
-    removeTask: (todolistId: string, id: string) => void
-    addTask: (todolistId: string, taskTitle: string) => void
-    deleteAllTasks: (todolistId: string) => void
-    setNewTaskStatus: (todolistId: string, taskId: string, newIsDone: boolean) => void
     removeTodolist: (todolistId: string) => void
-    renameTaskTitle: (todolistId: string, taskId: string, newTitle: string) => void
     updateTodolistTitle: (todolistId: string, newTitle: string) => void
+    coverImage?: string
     changeTodoCover: (todolistId: string, coverImage: string) => void
 };
 

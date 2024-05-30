@@ -10,9 +10,9 @@ type RenameTaskTitleAction = ReturnType<typeof renameTaskTitleAC>;
 type CleanAllTasksAction = ReturnType<typeof cleanTasksListAC>;
 type SetNewTaskStatusAction = ReturnType<typeof setNewTaskStatusAC>;
 
-type ActionsType = RemoveTaskAction | AddTaskAction | RenameTaskTitleAction | CleanAllTasksAction | SetNewTaskStatusAction | AddTodoAction | RemoveTodoAction;
+type TasksActionsType = RemoveTaskAction | AddTaskAction | RenameTaskTitleAction | CleanAllTasksAction | SetNewTaskStatusAction | AddTodoAction | RemoveTodoAction;
 
-export const tasksReducer = (state: TasksType = initialState, action: ActionsType): TasksType => {
+export const tasksReducer = (state: TasksType = initialState, action: TasksActionsType): TasksType => {
     switch (action.type) {
         case 'REMOVE_TASK':
             return {...state, [action.payload.todolistId]: state[action.payload.todolistId].filter(t => t.id !== action.payload.taskId)};
