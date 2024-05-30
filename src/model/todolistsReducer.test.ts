@@ -1,6 +1,7 @@
 import { v1 } from 'uuid'
 import {
-    addedTodolistAC, changedTodolistCoverAC,
+    addedTodolistAC,
+    changedTodolistCoverAC,
     changedTodolistFilterAC,
     changeTodolistTitleAC,
     removeTodolistAC,
@@ -8,43 +9,32 @@ import {
 } from "./todolistsReducer";
 import { TodoListType } from "../data/dataPropsTypes";
 
+//test data
+let todolistId1: string;
+let todolistId2: string;
+let startState: TodoListType[] = [];
+
+//initialization
+beforeEach(() => {
+    todolistId1 = v1();
+    todolistId2 = v1();
+    startState = [
+        {id: todolistId1, title: 'What to learn', filter: 'all'},
+        {id: todolistId2, title: 'What to buy', filter: 'all'},
+    ];
+});
+
+
 test('correct todolist should be removed', () => {
-    let todolistId1 = v1();
-    let todolistId2 = v1();
-
-    // 1. Стартовый state
-    const startState: TodoListType[] = [{id: todolistId1, title: 'What to learn', filter: 'all'}, {
-        id: todolistId2,
-        title: 'What to buy',
-        filter: 'all'
-    },];
-
-    // 2. Действие
-    // const action = {
-    //     type: 'REMOVE-TODOLIST',
-    //     payload: {
-    //         id: todolistId1,
-    //     },
-    // } as const; //action прикрыть as const
-
-    //const endState = todolistsReducer(startState, action);
     const endState = todolistsReducer(startState, removeTodolistAC(todolistId1));
 
-    // 3. Проверяем, что наши действия (изменения state) соответствуют ожиданию в массиве останется один тудулист
     expect(endState.length).toBe(1);
     // удалится нужный тудулист, а не любой
     expect(endState[0].id).toBe(todolistId2);
 });
 
 
-
 test('correct todolist should be added', () => {
-    let todolistId1 = v1();
-    let todolistId2 = v1();
-    const startState: TodoListType[] = [
-        { id: todolistId1, title: 'What to learn', filter: 'all'},
-        { id: todolistId2, title: 'What to buy', filter: 'all' },
-    ]
     const newTitle = 'New Todolist';
     const endState = todolistsReducer(startState, addedTodolistAC(newTitle));
 
@@ -54,12 +44,6 @@ test('correct todolist should be added', () => {
 
 
 test('correct todolist should change its name', () => {
-    let todolistId1 = v1();
-    let todolistId2 = v1();
-    const startState: TodoListType[] = [
-        { id: todolistId1, title: 'What to learn', filter: 'all' },
-        { id: todolistId2, title: 'What to buy', filter: 'all' },
-    ];
     const changedTitle = 'New Todolist';
 
     const endState = todolistsReducer(startState, changeTodolistTitleAC(todolistId2, changedTitle));
@@ -69,36 +53,18 @@ test('correct todolist should change its name', () => {
 
 
 test('correct filter of todolist should be changed', () => {
-
-    let todolistId1 = v1();
-    let todolistId2 = v1();
-    const startState: TodoListType[] = [
-        { id: todolistId1, title: 'What to learn', filter: 'all' },
-        { id: todolistId2, title: 'What to buy', filter: 'all' }, ];
-
     const endState = todolistsReducer(startState, changedTodolistFilterAC(todolistId2, 'completed'));
     expect(endState[0].filter).toBe('all');
     expect(endState[1].filter).toBe('completed');
 });
 
 test('correct todolist cover changed', () => {
-
-    let todolistId1 = v1();
-    let todolistId2 = v1();
-    let todolistId3 = v1();
-    const startState: TodoListType[] = [
-        { id: todolistId1, title: 'What to learn', filter: 'all' },
-        { id: todolistId2, title: 'What to buy', filter: 'all' },
-        { id: todolistId3, title: 'What', filter: 'all' },];
-
     const endState = todolistsReducer(startState, changedTodolistCoverAC(todolistId2, 'newImg'));
     expect(endState[0].coverImage).toBe(undefined);
     expect(endState[1].coverImage).toBe('newImg');
-    expect(endState[2].coverImage).toBe(undefined);
 
-    const endState2 = todolistsReducer(endState, changedTodolistCoverAC(todolistId3, 'newImg'));
-    expect(endState2[0].coverImage).toBe(undefined);
+    const endState2 = todolistsReducer(endState, changedTodolistCoverAC(todolistId1, 'newImg'));
+    expect(endState2[0].coverImage).toBe('newImg');
     expect(endState2[1].coverImage).toBe('newImg');
-    expect(endState2[2].coverImage).toBe('newImg');
 });
 
