@@ -1,5 +1,5 @@
-import React from "react";
-import { FilterValuesType, TasksType, TaskType, TodolistPropsType } from "../../data/dataPropsTypes";
+import React, { ChangeEvent } from "react";
+import { FilterValuesType, TodolistPropsType } from "../../data/dataPropsTypes";
 import styles from './Todolist.module.scss';
 import { AddItem } from "../addItem/AddItem";
 import { EditableSpan } from "../editableSpan/EditableSpan";
@@ -14,15 +14,6 @@ import Box from '@mui/material/Box';
 import { filterButtonsContainerSx, getListItemSx } from "./Todolist.styles";
 import { CoverImage } from "../coverImage/CoverImage";
 import Grid from "@mui/material/Unstable_Grid2";
-import { useDispatch, useSelector } from "react-redux";
-import { AppRootState } from "../../model/store";
-import {
-    addTaskAC,
-    cleanTasksListAC,
-    removeTaskAC,
-    renameTaskTitleAC,
-    setNewTaskStatusAC
-} from "../../model/tasksReduser";
 
 
 // Create
@@ -31,42 +22,33 @@ import {
 // Delete
 
 const Todolist: React.FC<TodolistPropsType> = ({
-                                                   id,
                                                    title,
+                                                   tasks,
+                                                   removeTask,
+                                                   id,
                                                    filter,
+                                                   renameTaskTitle,
                                                    changeFilter,
+                                                   addTask,
+                                                   deleteAllTasks,
+                                                   setNewTaskStatus,
                                                    removeTodolist,
                                                    updateTodolistTitle,
                                                    coverImage,
                                                    changeTodoCover
                                                }: TodolistPropsType) => {
 
-    const dispatch = useDispatch();
-    const tasks = useSelector<AppRootState, TaskType[]>(store => store.tasks[id]);
-
-    const filterTasks = (tasks: TaskType[]): TaskType[] => {
-        let tasksFiltered = tasks;
-        if (filter === 'active') {
-            tasksFiltered = tasks.filter((t) => !t.isDone);
-        }
-        if (filter === 'completed') {
-            tasksFiltered = tasks.filter((t) => t.isDone);
-        }
-        return tasksFiltered;
-    };
-
-    let filteredTasks: TaskType[] = filterTasks(tasks);
 
     const onClickHandlerCreator = (filter: FilterValuesType) => {
         return () => changeFilter(id, filter);
     }
 
     const onClickHandlerDeleteAllTasks = () => {
-        dispatch(cleanTasksListAC(id));
+        deleteAllTasks(id);
     }
 
-    const addItemHandler = (taskTitle: string) => {
-        dispatch(addTaskAC(id, taskTitle));
+    const addItemHandler = (newItem: string) => {
+        addTask(id, newItem);
     }
 
     const onChangeCoverHandler = (image: string) => {
@@ -77,12 +59,8 @@ const Todolist: React.FC<TodolistPropsType> = ({
         updateTodolistTitle(idToChange, newTitle);
     }
 
-    const onChangeTitleTaskHandler = (taskId: string, newTitle: string) => {
-        dispatch(renameTaskTitleAC(id, taskId, newTitle));
-    }
-
-    const onChangeSetTaskStatusHandler = (taskId: string, newIsDone: boolean) => {
-        dispatch(setNewTaskStatusAC(id, taskId, newIsDone));
+    const onChangeTitleTaskHandler = (idToChange: string, newTitle: string) => {
+        renameTaskTitle(id, idToChange, newTitle);
     }
 
     return (
@@ -98,36 +76,58 @@ const Todolist: React.FC<TodolistPropsType> = ({
             <AddItem addItem={addItemHandler}/>
             <List sx={{width: '100%', height: 200, overflow: 'auto'}}>
                 {
-                    filteredTasks.length === 0 ? (
+                    tasks.length === 0 ? (
                         <p>Задач нет</p>
                     ) : (
-                        filteredTasks.map((task) => {
+                        tasks.map((task) => {
+                            const onChangeSetTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => setNewTaskStatus(id, task.id, e.currentTarget.checked);
                             return (
                                 <ListItem key={task.id}
                                           sx={getListItemSx(task.isDone)}>
 
+                                    {/*<input type={"checkbox"} checked={task.isDone}*/}
+                                    {/*       onChange={onChangeSetTaskStatusHandler}/>*/}
+                                    {/*<span className={task.isDone ? styles.taskDone : styles.task}>{task.title}</span>*/}
+
                                     <label className={styles.label}>
-                                        <Checkbox checked={task.isDone}
-                                                  onChange={(e) => onChangeSetTaskStatusHandler(task.id, e.currentTarget.checked)}/>
+                                        <Checkbox checked={task.isDone} onChange={onChangeSetTaskStatusHandler}/>
                                         <EditableSpan oldTitle={task.title} idToChange={task.id}
                                                       updateItem={onChangeTitleTaskHandler}/>
                                     </label>
-                                    <IconButton aria-label="delete" onClick={() => dispatch(removeTaskAC(id, task.id))}>
+                                    <IconButton aria-label="delete" onClick={() => removeTask(id, task.id)}>
                                         <DeleteOutlineIcon/>
                                     </IconButton>
+                                    {/*<Button title={'x'} callBack={() => removeTask(id, task.id)}/>*/}
                                 </ListItem>
                             )
                         })
                     )
                 }
             </List>
-
+            {/*<Button title={'Delete all tasks'}*/}
+            {/*        callBack={() => {*/}
+            {/*            onClickHandlerDeleteAll()*/}
+            {/*        }}*/}
+            {/*        isDisabled={tasks.length === 0}/>*/}
+            {/*<Button onClick={() => {*/}
+            {/*    onClickHandlerDeleteAllTasks()*/}
+            {/*}} variant="contained" color='info' startIcon={<DeleteIcon/>}>*/}
+            {/*    Delete*/}
+            {/*</Button>*/}
             <Grid container justifyContent="center">
                 <Button size="small" onClick={() => {
                     onClickHandlerDeleteAllTasks()
                 }}>Delete all</Button>
             </Grid>
 
+            {/*<div className={'tabs'}>*/}
+            {/*<Button active={filter === 'all'} title={'All'}*/}
+            {/*        callBack={onClickHandlerCreator('all')}></Button>*/}
+            {/*<Button active={filter === 'active'} title={'Active'}*/}
+            {/*        callBack={onClickHandlerCreator('active')}></Button>*/}
+            {/*<Button active={filter === 'completed'} title={'Completed'}*/}
+            {/*        callBack={onClickHandlerCreator('completed')}></Button>*/}
+            {/*</div>*/}
             <Box sx={filterButtonsContainerSx}>
                 <Button color={'secondary'} variant={filter === 'all' ? "contained" : 'outlined'}
                         onClick={onClickHandlerCreator('all')}>All</Button>
