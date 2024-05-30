@@ -1,5 +1,5 @@
-import React, { Reducer, useReducer, useState } from 'react';
-import { FilterValuesType, TaskType, TodoListType } from "./data/dataPropsTypes";
+import React, { useReducer, useState } from 'react';
+import { FilterValuesType, TaskType } from "./data/dataPropsTypes";
 import Todolist from "./components/todolist/Todolist";
 import { tasksArr, todoListsData } from "./data/Data";
 import './App.scss'
@@ -18,7 +18,7 @@ import {
     changedTodolistCoverAC,
     changedTodolistFilterAC,
     changeTodolistTitleAC,
-    removeTodolistAC, TodolistActionsType,
+    removeTodolistAC,
     todolistsReducer
 } from "./model/todolistsReducer";
 import {
@@ -35,26 +35,17 @@ export const sum = (a: number, b: number): number => {
 }
 type ThemeMode = 'dark' | 'light';
 
-//3rd param for useReducer
-function createTodo(todoListsData: TodoListType[]): TodoListType[] {
-    return todoListsData;
-}
 
 function App() {
-
-    ////with 3rd argument
-    // const [todoLists, dispatchToTodoLists] = useReducer(todolistsReducer, todoListsData, createTodo);
-
-    ////with useReducer type
-    const [todoLists, dispatchToTodoLists] = useReducer<Reducer<TodoListType[], TodolistActionsType>>(todolistsReducer, todoListsData);
-    const [tasks, dispatchToTasks] = useReducer(tasksReducer, tasksArr);
+    const [todoLists, dispatchTodoLists] = useReducer(todolistsReducer, todoListsData);
+    const [tasks, dispatchTasks] = useReducer(tasksReducer, tasksArr);
 
     const changeFilter = (todolistId: string, filter: FilterValuesType) => {
-        dispatchToTodoLists(changedTodolistFilterAC(todolistId, filter));
+        dispatchTodoLists(changedTodolistFilterAC(todolistId, filter));
     };
 
     const changeTodoCover = (todolistId: string, coverImage: string) => {
-        dispatchToTodoLists(changedTodolistCoverAC(todolistId, coverImage));
+        dispatchTodoLists(changedTodolistCoverAC(todolistId, coverImage));
     };
 
     const filterTasks = (todolistId: string, tasks: TaskType[]) => {
@@ -74,39 +65,39 @@ function App() {
     // }
 
     function removeTask(todolistId: string, taskId: string) {
-        dispatchToTasks(removeTaskAC(todolistId, taskId));
+        dispatchTasks(removeTaskAC(todolistId, taskId));
     }
 
     const addTask = (todolistId: string, taskTitle: string) => {
-        dispatchToTasks(addTaskAC(todolistId, taskTitle));
+        dispatchTasks(addTaskAC(todolistId, taskTitle));
     };
 
     const renameTaskTitle = (todolistId: string, taskId: string, newTaskTitle: string) => {
-        dispatchToTasks(renameTaskTitleAC(todolistId, taskId, newTaskTitle));
+        dispatchTasks(renameTaskTitleAC(todolistId, taskId, newTaskTitle));
     };
 
     const deleteAllTasks = (todolistId: string) => {
-        dispatchToTasks(cleanTasksListAC(todolistId));
+        dispatchTasks(cleanTasksListAC(todolistId));
     };
 
     const setNewTaskStatus = (todolistId: string, taskId: string, newIsDone: boolean) => {
-        dispatchToTasks(setNewTaskStatusAC(todolistId, taskId, newIsDone));
+        dispatchTasks(setNewTaskStatusAC(todolistId, taskId, newIsDone));
     };
 
     const removeTodolist = (todolistId: string) => {
         const action = removeTodolistAC(todolistId);
-        dispatchToTodoLists(action);
-        dispatchToTasks(action);
+        dispatchTodoLists(action);
+        dispatchTasks(action);
     };
 
     const addTodolist = (title: string) => {
         const action  = addedTodolistAC(title);
-        dispatchToTodoLists(action);
-        dispatchToTasks(action);
+        dispatchTodoLists(action);
+        dispatchTasks(action);
     };
 
     const updateTodolistTitle = (todolistId: string, newTitle: string) => {
-        dispatchToTodoLists(changeTodolistTitleAC(todolistId, newTitle));
+        dispatchTodoLists(changeTodolistTitleAC(todolistId, newTitle));
     };
 
     const [themeMode, setThemeMode] = useState<ThemeMode>('dark');
