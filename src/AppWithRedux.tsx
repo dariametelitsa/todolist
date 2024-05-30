@@ -32,10 +32,6 @@ type ThemeMode = 'dark' | 'light';
 function AppWithRedux() {
     const dispatch = useDispatch();
     const todoLists = useSelector<AppRootState, Array<TodoListType>>(state => state.todolists);
-    const tasks = useSelector<AppRootState, TasksType>(state => state.tasks);
-
-    //const [todoLists, dispatchTodoLists] = useReducer(todolistsReducer, todoListsData);
-    //const [tasks, dispatchTasks] = useReducer(tasksReducer, tasksArr);
 
     const changeFilter = (todolistId: string, filter: FilterValuesType) => {
         dispatch(changedTodolistFilterAC(todolistId, filter));
@@ -43,38 +39,6 @@ function AppWithRedux() {
 
     const changeTodoCover = (todolistId: string, coverImage: string) => {
         dispatch(changedTodolistCoverAC(todolistId, coverImage));
-    };
-
-    const filterTasks = (todolistId: string, tasks: TaskType[]) => {
-        let tasksFiltered = tasks;
-        let todolist = todoLists.find(td => td.id === todolistId);
-        if (todolist && todolist.filter === 'active') {
-            tasksFiltered = tasks.filter((t) => !t.isDone);
-        }
-        if (todolist && todolist.filter === 'completed') {
-            tasksFiltered = tasks.filter((t) => t.isDone);
-        }
-        return tasksFiltered;
-    };
-
-    function removeTask(todolistId: string, taskId: string) {
-        dispatch(removeTaskAC(todolistId, taskId));
-    }
-
-    const addTask = (todolistId: string, taskTitle: string) => {
-        dispatch(addTaskAC(todolistId, taskTitle));
-    };
-
-    const renameTaskTitle = (todolistId: string, taskId: string, newTaskTitle: string) => {
-        dispatch(renameTaskTitleAC(todolistId, taskId, newTaskTitle));
-    };
-
-    const deleteAllTasks = (todolistId: string) => {
-        dispatch(cleanTasksListAC(todolistId));
-    };
-
-    const setNewTaskStatus = (todolistId: string, taskId: string, newIsDone: boolean) => {
-        dispatch(setNewTaskStatusAC(todolistId, taskId, newIsDone));
     };
 
     const removeTodolist = (todolistId: string) => {
@@ -123,24 +87,17 @@ function AppWithRedux() {
 
                     <Grid container spacing={3}>
                         {todoLists.map(td => {
-                            let tasksFiltered = filterTasks(td.id, tasks[td.id]);
                             return (
                                 <Grid xs={4} key={td.id}>
                                     <Paper sx={{p: 2}}>
                                         <Todolist key={td.id}
                                                   id={td.id}
                                                   title={td.title}
-                                                  tasks={tasksFiltered}
-                                                  coverImage={td.coverImage}
-                                                  removeTask={removeTask}
-                                                  addTask={addTask}
-                                                  renameTaskTitle={renameTaskTitle}
-                                                  deleteAllTasks={deleteAllTasks}
-                                                  setNewTaskStatus={setNewTaskStatus}
                                                   filter={td.filter}
                                                   changeFilter={changeFilter}
                                                   removeTodolist={removeTodolist}
                                                   updateTodolistTitle={updateTodolistTitle}
+                                                  coverImage={td.coverImage}
                                                   changeTodoCover={changeTodoCover}>
                                         </Todolist>
                                     </Paper>
@@ -151,11 +108,6 @@ function AppWithRedux() {
                     </Grid>
                 </Container>
             </ThemeProvider>
-
-            {/*<ThemeProvider theme={customTheme}>*/}
-            {/*    <div>Styled div with theme</div>*/}
-            {/*    <MenuButton color="inherit">Faq</MenuButton>*/}
-            {/*</ThemeProvider>*/}
         </div>
     );
 }
