@@ -59,13 +59,15 @@ export const EditableSpan = ({idToChange, oldTitle, updateItem, maxLength = 25}:
                            autoFocus
                            value={newTitle}
                            size='small'/>
-                <IconButton onClick={()=>{setEditMode(true)}} color={'primary'} size={'small'} >
+                <IconButton onClick={()=>{setEditMode(true)}} color={'inherit'} size={'small'} >
                     <DoneIcon/>
                 </IconButton>
             </>
             : <>
                 <span onDoubleClick={activateEditModeHandler} style={{flexGrow: 1}}>{oldTitle}</span>
-                <IconButton onClick={()=>{setEditMode(true)}} color={'primary'} size={'small'} >
+                <IconButton onClick={(e)=>{
+                    e.preventDefault();
+                    setEditMode(true)}} color={'inherit'} size={'small'} >
                     <EditIcon/>
                 </IconButton>
             </>

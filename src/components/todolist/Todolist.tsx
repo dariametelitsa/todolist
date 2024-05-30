@@ -1,7 +1,6 @@
 import React, { ChangeEvent } from "react";
 import { FilterValuesType, TodolistPropsType } from "../../data/dataPropsTypes";
 import styles from './Todolist.module.scss';
-import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { AddItem } from "../addItem/AddItem";
 import { EditableSpan } from "../editableSpan/EditableSpan";
 import IconButton from '@mui/material/IconButton';
@@ -15,7 +14,6 @@ import Box from '@mui/material/Box';
 import { filterButtonsContainerSx, getListItemSx } from "./Todolist.styles";
 import { CoverImage } from "../coverImage/CoverImage";
 import Grid from "@mui/material/Unstable_Grid2";
-import EditIcon from "@mui/icons-material/Edit";
 
 
 // Create
@@ -40,8 +38,6 @@ const Todolist: React.FC<TodolistPropsType> = ({
                                                    changeTodoCover
                                                }: TodolistPropsType) => {
 
-
-    const [listRef] = useAutoAnimate<HTMLUListElement>()
 
     const onClickHandlerCreator = (filter: FilterValuesType) => {
         return () => changeFilter(id, filter);
@@ -78,7 +74,7 @@ const Todolist: React.FC<TodolistPropsType> = ({
             </h3>
 
             <AddItem addItem={addItemHandler}/>
-            <List ref={listRef} sx={{width: '100%', height: 200, overflow: 'auto'}}>
+            <List sx={{width: '100%', height: 200, overflow: 'auto'}}>
                 {
                     tasks.length === 0 ? (
                         <p>Задач нет</p>
@@ -93,11 +89,11 @@ const Todolist: React.FC<TodolistPropsType> = ({
                                     {/*       onChange={onChangeSetTaskStatusHandler}/>*/}
                                     {/*<span className={task.isDone ? styles.taskDone : styles.task}>{task.title}</span>*/}
 
-                                    {/*<label className={styles.label}>*/}
+                                    <label className={styles.label}>
                                         <Checkbox checked={task.isDone} onChange={onChangeSetTaskStatusHandler}/>
                                         <EditableSpan oldTitle={task.title} idToChange={task.id}
                                                       updateItem={onChangeTitleTaskHandler}/>
-                                    {/*</label>*/}
+                                    </label>
                                     <IconButton aria-label="delete" onClick={() => removeTask(id, task.id)}>
                                         <DeleteOutlineIcon/>
                                     </IconButton>
