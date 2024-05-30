@@ -8,11 +8,11 @@ type ChangeTodoTitleAction = ReturnType<typeof changeTodolistTitleAC>;
 type ChangeTodoFilterAction = ReturnType<typeof changedTodolistFilterAC>;
 type ChangeTodoCoverAction = ReturnType<typeof changedTodolistCoverAC>;
 
-type ActionsType =  | RemoveTodoAction  | AddTodoAction  | ChangeTodoTitleAction  | ChangeTodoFilterAction | ChangeTodoCoverAction;
+export type TodolistActionsType =  | RemoveTodoAction  | AddTodoAction  | ChangeTodoTitleAction  | ChangeTodoFilterAction | ChangeTodoCoverAction;
 
 const initialState: TodoListType[] = [];
 
-export const todolistsReducer = (state: TodoListType[] = initialState, action: ActionsType): TodoListType[] => {
+export const todolistsReducer = (state: TodoListType[] = initialState, action: TodolistActionsType): TodoListType[] => {
     switch (action.type) {
         case 'REMOVE_TODOLIST': {
             return state.filter(tl => tl.id !== action.payload.id);
