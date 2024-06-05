@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useCallback } from "react";
+import React, { ChangeEvent, useCallback, useMemo } from "react";
 import { FilterValuesType, TaskType, TodolistPropsType, TodoListType } from "../../data/dataPropsTypes";
 import styles from './Todolist.module.scss';
 import { AddItem } from "../addItem/AddItem";
@@ -14,6 +14,7 @@ import Box from '@mui/material/Box';
 import { filterButtonsContainerSx, getListItemSx } from "./Todolist.styles";
 import { CoverImage } from "../coverImage/CoverImage";
 import Grid from "@mui/material/Unstable_Grid2";
+import Paper from '@mui/material/Paper';
 import { useDispatch, useSelector } from "react-redux";
 import { AppRootState } from "../../model/store";
 import {
@@ -30,6 +31,7 @@ import {
     removeTodolistAC
 } from "../../model/todolistsReducer";
 import { ButtonMemo } from "../button/ButtonMemo";
+import { Tasks } from "../tasks/Tasks";
 
 
 // Create
@@ -42,7 +44,6 @@ type Props = {
 const TodolistWithRedux = React.memo(({todolist}: Props) => {
     const {id, title, filter, coverImage} = todolist;
 
-    console.log('tasks rerender: ', id);
     const tasks = useSelector<AppRootState, Array<TaskType>>(state => state.tasks[id]);
     const dispatch = useDispatch();
 
@@ -56,7 +57,18 @@ const TodolistWithRedux = React.memo(({todolist}: Props) => {
         }
         return tasksFiltered;
     };
-    const filteredTasks = filterTasks(tasks);
+
+    const filteredTasks = useMemo(() => filterTasks(tasks),[tasks, filter]);
+    //const filteredTasks = filterTasks(tasks);
+    // const filteredTasks = useMemo(() => {
+    //     if (filter === 'active') {
+    //         return tasks.filter((t) => !t.isDone);
+    //     }
+    //     if (filter === 'completed') {
+    //         return tasks.filter((t) => t.isDone);
+    //     }
+    //     return tasks;
+    // }, [tasks, filter]);
 
     const onClickFilterHandlerCreator = useCallback((filter: FilterValuesType) => {
         return () => dispatch(changedTodolistFilterAC(id, filter));
@@ -82,7 +94,18 @@ const TodolistWithRedux = React.memo(({todolist}: Props) => {
         dispatch(renameTaskTitleAC(id, taskId, newTitle));
     }, [dispatch]);
 
+    const onChangeSetTaskStatusHandler = useCallback((taskId: string, newStatus: boolean) => {
+        dispatch(setNewTaskStatusAC(id, taskId, newStatus));
+    }, [dispatch]);
+
+    const deleteTaskHandler = useCallback((taskId: string) => {
+        dispatch(removeTaskAC(id, taskId));
+    }, [dispatch]);
+
+
     return (
+        <Grid xs={12} md={6} lg={4}>
+            <Paper sx={{p: 2}}>
         <div className={styles.todolist}>
             <CoverImage image={coverImage && coverImage} updateImage={onChangeCoverHandler}/>
             <h3>
@@ -99,21 +122,27 @@ const TodolistWithRedux = React.memo(({todolist}: Props) => {
                         <p>Задач нет</p>
                     ) : (
                         filteredTasks.map((task) => {
-                            const onChangeSetTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => dispatch(setNewTaskStatusAC(id, task.id, e.currentTarget.checked));
+                            //const onChangeSetTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => dispatch(setNewTaskStatusAC(id, task.id, e.currentTarget.checked));
                             return (
-                                <ListItem key={task.id}
-                                          sx={getListItemSx(task.isDone)}>
-
-
-                                    <label className={styles.label}>
-                                        <Checkbox checked={task.isDone} onChange={onChangeSetTaskStatusHandler}/>
-                                        <EditableSpan oldTitle={task.title} idToChange={task.id}
-                                                      updateItem={onChangeTitleTaskHandler}/>
-                                    </label>
-                                    <IconButton aria-label="delete" onClick={() => dispatch(removeTaskAC(id, task.id))}>
-                                        <DeleteOutlineIcon/>
-                                    </IconButton>
-                                </ListItem>
+                                <Tasks key={task.id}
+                                       task={task}
+                                       changeTaskStatus={onChangeSetTaskStatusHandler}
+                                       changeTaskTitle={onChangeTitleTaskHandler}
+                                       removeTask={deleteTaskHandler}
+                                       todolistId={id} />
+                                // <ListItem key={task.id}
+                                //           sx={getListItemSx(task.isDone)}>
+                                //
+                                //
+                                //     <label className={styles.label}>
+                                //         <Checkbox checked={task.isDone} onChange={(e) => onChangeSetTaskStatusHandler(task.id, e.currentTarget.checked)}/>
+                                //         <EditableSpan oldTitle={task.title} idToChange={task.id}
+                                //                       updateItem={onChangeTitleTaskHandler}/>
+                                //     </label>
+                                //     <IconButton aria-label="delete" onClick={() => dispatch(removeTaskAC(id, task.id))}>
+                                //         <DeleteOutlineIcon/>
+                                //     </IconButton>
+                                // </ListItem>
                             )
                         })
                     )
@@ -135,6 +164,8 @@ const TodolistWithRedux = React.memo(({todolist}: Props) => {
                         onClick={onClickFilterHandlerCreator('completed')}>completed</ButtonMemo>
             </Box>
         </div>
+            </Paper>
+        </Grid>
     );
 });
 

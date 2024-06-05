@@ -123,28 +123,29 @@ function AppWithRedux() {
                         {todoLists.map(td => {
                             // let tasksFiltered = filterTasks(td.id, tasks[td.id]);
                             return (
-                                <Grid xs={12} md={6} lg={4} key={td.id}>
-                                    <Paper sx={{p: 2}}>
-                                        {/*<Todolist key={td.id}*/}
-                                        {/*          id={td.id}*/}
-                                        {/*          title={td.title}*/}
-                                        {/*          tasks={tasksFiltered}*/}
-                                        {/*          coverImage={td.coverImage}*/}
-                                        {/*          removeTask={removeTask}*/}
-                                        {/*          addTask={addTask}*/}
-                                        {/*          renameTaskTitle={renameTaskTitle}*/}
-                                        {/*          deleteAllTasks={deleteAllTasks}*/}
-                                        {/*          setNewTaskStatus={setNewTaskStatus}*/}
-                                        {/*          filter={td.filter}*/}
-                                        {/*          changeFilter={changeFilter}*/}
-                                        {/*          removeTodolist={removeTodolist}*/}
-                                        {/*          updateTodolistTitle={updateTodolistTitle}*/}
-                                        {/*          changeTodoCover={changeTodoCover}>*/}
-                                        {/*</Todolist>*/}
-
-                                        <TodolistWithRedux todolist={td}/>
-                                    </Paper>
-                                </Grid>
+                                <TodolistWithRedux todolist={td} key={td.id}/>
+                                // <Grid xs={12} md={6} lg={4} key={td.id}>
+                                //     <Paper sx={{p: 2}}>
+                                //         {/*<Todolist key={td.id}*/}
+                                //         {/*          id={td.id}*/}
+                                //         {/*          title={td.title}*/}
+                                //         {/*          tasks={tasksFiltered}*/}
+                                //         {/*          coverImage={td.coverImage}*/}
+                                //         {/*          removeTask={removeTask}*/}
+                                //         {/*          addTask={addTask}*/}
+                                //         {/*          renameTaskTitle={renameTaskTitle}*/}
+                                //         {/*          deleteAllTasks={deleteAllTasks}*/}
+                                //         {/*          setNewTaskStatus={setNewTaskStatus}*/}
+                                //         {/*          filter={td.filter}*/}
+                                //         {/*          changeFilter={changeFilter}*/}
+                                //         {/*          removeTodolist={removeTodolist}*/}
+                                //         {/*          updateTodolistTitle={updateTodolistTitle}*/}
+                                //         {/*          changeTodoCover={changeTodoCover}>*/}
+                                //         {/*</Todolist>*/}
+                                //
+                                //         <TodolistWithRedux todolist={td} key={td.id}/>
+                                //     </Paper>
+                                // </Grid>
                             )
                         })
                         }

@@ -44,4 +44,40 @@
 //     );
 // };
 
-export const temp = 0;
+// @flow
+import * as React from 'react';
+import { TaskType } from "../../data/dataPropsTypes";
+import { getListItemSx } from "../todolist/Todolist.styles";
+import styles from "../todolist/Todolist.module.scss";
+import Checkbox from "@mui/material/Checkbox";
+import { EditableSpan } from "../editableSpan/EditableSpan";
+import IconButton from "@mui/material/IconButton";
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import ListItem from "@mui/material/ListItem";
+
+type TasksProps = {
+    task: TaskType
+    todolistId: string
+    removeTask: (taskId: string) => void
+    changeTaskStatus: (taskId: string, newStatus: boolean) => void
+    changeTaskTitle: (taskId: string, newTitle: string) => void
+};
+export const Tasks = React.memo(({task, todolistId, removeTask, changeTaskStatus, changeTaskTitle}: TasksProps) => {
+
+
+    return (
+        <ListItem key={task.id}
+                  sx={getListItemSx(task.isDone)}>
+
+
+            <label className={styles.label}>
+                <Checkbox checked={task.isDone} onChange={(e) => changeTaskStatus(task.id, e.currentTarget.checked)}/>
+                <EditableSpan oldTitle={task.title} idToChange={task.id}
+                              updateItem={changeTaskTitle}/>
+            </label>
+            <IconButton aria-label="delete" onClick={() => removeTask(task.id)}>
+                <DeleteOutlineIcon/>
+            </IconButton>
+        </ListItem>
+    );
+});

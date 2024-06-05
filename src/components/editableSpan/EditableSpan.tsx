@@ -14,7 +14,7 @@ export type EditableSpanProps = {
     maxLength?: number
 };
 
-export const EditableSpan = ({idToChange, oldTitle, updateItem, maxLength = 25}: EditableSpanProps) => {
+export const EditableSpan = React.memo(({idToChange, oldTitle, updateItem, maxLength = 25}: EditableSpanProps) => {
 
     const [editMode, setEditMode] = useState(false)
     const [newTitle, setNewTitle] = useState<string>('');
@@ -25,6 +25,7 @@ export const EditableSpan = ({idToChange, oldTitle, updateItem, maxLength = 25}:
     }
     const activateViewMode = () => {
         setEditMode(false);
+        debugger
         newTitle.length !== 0 ? updateItem(idToChange, newTitle) : updateItem(idToChange, oldTitle);
         newTitle.length !== 0 ? setNewTitle(newTitle) : setNewTitle(oldTitle);
     }
@@ -41,6 +42,7 @@ export const EditableSpan = ({idToChange, oldTitle, updateItem, maxLength = 25}:
         if (e.key === 'Enter') {
             activateViewMode();
         }
+
     }
 
     return (
@@ -72,4 +74,4 @@ export const EditableSpan = ({idToChange, oldTitle, updateItem, maxLength = 25}:
                 </IconButton>
             </>
     );
-};
+});

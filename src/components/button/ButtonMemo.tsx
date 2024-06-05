@@ -6,7 +6,7 @@ interface ButtonMemoProps extends ButtonProps {}
 
 export const ButtonMemo = React.memo((props: ButtonMemoProps) => {
         return (<Button color={props.color} variant={props.variant}
-                        onClick={props.onClick}>{props.title}</Button>)
+                        onClick={props.onClick}>{props.children}</Button>)
     }
 );
 
