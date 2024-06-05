@@ -88,17 +88,17 @@ const TodolistWithRedux = React.memo(({todolist}: Props) => {
         dispatch(changeTodolistTitleAC(todolistId, newTitle));
     },[dispatch]);
 
-    const onChangeTitleTaskHandler = useCallback((taskId: string, newTitle: string) => {
-        dispatch(renameTaskTitleAC(id, taskId, newTitle));
-    }, [dispatch, id]);
-
-    const onChangeSetTaskStatusHandler = useCallback((taskId: string, newStatus: boolean) => {
-        dispatch(setNewTaskStatusAC(id, taskId, newStatus));
-    }, [dispatch, id]);
-
-    const deleteTaskHandler = useCallback((taskId: string) => {
-        dispatch(removeTaskAC(id, taskId));
-    }, [dispatch, id]);
+    // const onChangeTitleTaskHandler = useCallback((taskId: string, newTitle: string) => {
+    //     dispatch(renameTaskTitleAC(id, taskId, newTitle));
+    // }, [dispatch, id]);
+    //
+    // const onChangeSetTaskStatusHandler = useCallback((taskId: string, newStatus: boolean) => {
+    //     dispatch(setNewTaskStatusAC(id, taskId, newStatus));
+    // }, [dispatch, id]);
+    //
+    // const deleteTaskHandler = useCallback((taskId: string) => {
+    //     dispatch(removeTaskAC(id, taskId));
+    // }, [dispatch, id]);
 
 
     return (
@@ -122,11 +122,12 @@ const TodolistWithRedux = React.memo(({todolist}: Props) => {
                         filteredTasks.map((task) => {
                             return (
                                 <Tasks key={task.id}
+                                       todolistId={id}
                                        task={task}
-                                       changeTaskStatus={onChangeSetTaskStatusHandler}
-                                       changeTaskTitle={onChangeTitleTaskHandler}
-                                       removeTask={deleteTaskHandler}
-                                       todolistId={id} />
+                                       // changeTaskStatus={onChangeSetTaskStatusHandler}
+                                       // changeTaskTitle={onChangeTitleTaskHandler}
+                                       // removeTask={deleteTaskHandler}
+                                        />
                             )
                         })
                     )
