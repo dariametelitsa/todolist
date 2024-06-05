@@ -1,17 +1,15 @@
-import React, { ChangeEvent, useCallback, useMemo } from "react";
-import { FilterValuesType, TaskType, TodolistPropsType, TodoListType } from "../../data/dataPropsTypes";
+import React, { useCallback, useMemo } from "react";
+import { FilterValuesType, TaskType, TodoListType } from "../../data/dataPropsTypes";
 import styles from './Todolist.module.scss';
 import { AddItem } from "../addItem/AddItem";
 import { EditableSpan } from "../editableSpan/EditableSpan";
 import IconButton from '@mui/material/IconButton';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import Button from '@mui/material/Button';
-import Checkbox from '@mui/material/Checkbox';
 import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
 
 import Box from '@mui/material/Box';
-import { filterButtonsContainerSx, getListItemSx } from "./Todolist.styles";
+import { filterButtonsContainerSx } from "./Todolist.styles";
 import { CoverImage } from "../coverImage/CoverImage";
 import Grid from "@mui/material/Unstable_Grid2";
 import Paper from '@mui/material/Paper';
@@ -47,28 +45,28 @@ const TodolistWithRedux = React.memo(({todolist}: Props) => {
     const tasks = useSelector<AppRootState, Array<TaskType>>(state => state.tasks[id]);
     const dispatch = useDispatch();
 
-    const filterTasks = (tasks: TaskType[]) => {
-        let tasksFiltered = tasks;
-        if (filter === 'active') {
-            tasksFiltered = tasks.filter((t) => !t.isDone);
-        }
-        if (filter === 'completed') {
-            tasksFiltered = tasks.filter((t) => t.isDone);
-        }
-        return tasksFiltered;
-    };
-
-    const filteredTasks = useMemo(() => filterTasks(tasks),[tasks, filter]);
-    //const filteredTasks = filterTasks(tasks);
-    // const filteredTasks = useMemo(() => {
+    // const filterTasks = (tasks: TaskType[]) => {
+    //     let tasksFiltered = tasks;
     //     if (filter === 'active') {
-    //         return tasks.filter((t) => !t.isDone);
+    //         tasksFiltered = tasks.filter((t) => !t.isDone);
     //     }
     //     if (filter === 'completed') {
-    //         return tasks.filter((t) => t.isDone);
+    //         tasksFiltered = tasks.filter((t) => t.isDone);
     //     }
-    //     return tasks;
-    // }, [tasks, filter]);
+    //     return tasksFiltered;
+    // };
+    //
+    // const filteredTasks = useMemo(() => filterTasks(tasks),[tasks, filter]);
+    // //const filteredTasks = filterTasks(tasks);
+    const filteredTasks = useMemo(() => {
+        if (filter === 'active') {
+            return tasks.filter((t) => !t.isDone);
+        }
+        if (filter === 'completed') {
+            return tasks.filter((t) => t.isDone);
+        }
+        return tasks;
+    }, [tasks, filter]);
 
     const onClickFilterHandlerCreator = useCallback((filter: FilterValuesType) => {
         return () => dispatch(changedTodolistFilterAC(id, filter));
@@ -86,8 +84,8 @@ const TodolistWithRedux = React.memo(({todolist}: Props) => {
         dispatch(changedTodolistCoverAC(id, image));
     },[dispatch]);
 
-    const changeTodolistTitleHandler = useCallback((newTitle: string) => {
-        dispatch(changeTodolistTitleAC(id, newTitle));
+    const changeTodolistTitleHandler = useCallback((todolistId: string, newTitle: string) => {
+        dispatch(changeTodolistTitleAC(todolistId, newTitle));
     },[dispatch]);
 
     const onChangeTitleTaskHandler = useCallback((taskId: string, newTitle: string) => {
@@ -108,7 +106,7 @@ const TodolistWithRedux = React.memo(({todolist}: Props) => {
             <Paper sx={{p: 2}}>
         <div className={styles.todolist}>
             <CoverImage image={coverImage && coverImage} updateImage={onChangeCoverHandler}/>
-            <h3>
+            <h3 style={{display: "flex", justifyContent: 'space-between'}}>
                 <EditableSpan oldTitle={title} idToChange={id} updateItem={changeTodolistTitleHandler}/>
                 <IconButton aria-label="delete" onClick={() => dispatch(removeTodolistAC(id))}>
                     <DeleteOutlineIcon/>
@@ -122,7 +120,6 @@ const TodolistWithRedux = React.memo(({todolist}: Props) => {
                         <p>Задач нет</p>
                     ) : (
                         filteredTasks.map((task) => {
-                            //const onChangeSetTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => dispatch(setNewTaskStatusAC(id, task.id, e.currentTarget.checked));
                             return (
                                 <Tasks key={task.id}
                                        task={task}

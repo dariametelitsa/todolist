@@ -25,7 +25,6 @@ export const EditableSpan = React.memo(({idToChange, oldTitle, updateItem, maxLe
     }
     const activateViewMode = () => {
         setEditMode(false);
-        debugger
         newTitle.length !== 0 ? updateItem(idToChange, newTitle) : updateItem(idToChange, oldTitle);
         newTitle.length !== 0 ? setNewTitle(newTitle) : setNewTitle(oldTitle);
     }
@@ -47,11 +46,6 @@ export const EditableSpan = React.memo(({idToChange, oldTitle, updateItem, maxLe
 
     return (
         editMode
-            // ? <input value={newTitle}
-            //          onChange={onChangeTitleHandler}
-            //          onKeyDown={onKeyDownHandler}
-            //          onBlur={activateViewMode}
-            //          maxLength={maxLength} autoFocus/>
             ? <>
                 <TextField id="outlined-basic"
                            onChange={onChangeTitleHandler}
@@ -60,6 +54,7 @@ export const EditableSpan = React.memo(({idToChange, oldTitle, updateItem, maxLe
                            onBlur={activateViewMode}
                            autoFocus
                            value={newTitle}
+                           style={{flexGrow: 1}}
                            size='small'/>
                 <IconButton onClick={()=>{setEditMode(true)}} color={'inherit'} size={'small'} >
                     <DoneIcon/>
