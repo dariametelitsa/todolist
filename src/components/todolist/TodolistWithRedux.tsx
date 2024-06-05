@@ -18,9 +18,6 @@ import { AppRootState } from "../../model/store";
 import {
     addTaskAC,
     cleanTasksListAC,
-    removeTaskAC,
-    renameTaskTitleAC,
-    setNewTaskStatusAC
 } from "../../model/tasksReduser";
 import {
     changedTodolistCoverAC,
