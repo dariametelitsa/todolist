@@ -41,6 +41,7 @@ export const AddItem = ({addItem}: Props) => {
     };
 
     const onChangeSetItemTitle = (title: string) => {
+        console.log('re-render here');
         setNewItemTitle(title);
         setItemInputError(null);
     };

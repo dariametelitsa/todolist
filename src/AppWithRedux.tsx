@@ -22,6 +22,7 @@ import {
 import { addTaskAC, cleanTasksListAC, removeTaskAC, renameTaskTitleAC, setNewTaskStatusAC } from "./model/tasksReduser";
 import { useDispatch, useSelector } from "react-redux";
 import { AppRootState } from "./model/store";
+import TodolistWithRedux from "./components/todolist/TodolistWithRedux";
 
 export const sum = (a: number, b: number): number => {
     return a + b;
@@ -125,24 +126,26 @@ function AppWithRedux() {
                         {todoLists.map(td => {
                             let tasksFiltered = filterTasks(td.id, tasks[td.id]);
                             return (
-                                <Grid xs={4} key={td.id}>
+                                <Grid xs={12} md={6} lg={4} key={td.id}>
                                     <Paper sx={{p: 2}}>
-                                        <Todolist key={td.id}
-                                                  id={td.id}
-                                                  title={td.title}
-                                                  tasks={tasksFiltered}
-                                                  coverImage={td.coverImage}
-                                                  removeTask={removeTask}
-                                                  addTask={addTask}
-                                                  renameTaskTitle={renameTaskTitle}
-                                                  deleteAllTasks={deleteAllTasks}
-                                                  setNewTaskStatus={setNewTaskStatus}
-                                                  filter={td.filter}
-                                                  changeFilter={changeFilter}
-                                                  removeTodolist={removeTodolist}
-                                                  updateTodolistTitle={updateTodolistTitle}
-                                                  changeTodoCover={changeTodoCover}>
-                                        </Todolist>
+                                        {/*<Todolist key={td.id}*/}
+                                        {/*          id={td.id}*/}
+                                        {/*          title={td.title}*/}
+                                        {/*          tasks={tasksFiltered}*/}
+                                        {/*          coverImage={td.coverImage}*/}
+                                        {/*          removeTask={removeTask}*/}
+                                        {/*          addTask={addTask}*/}
+                                        {/*          renameTaskTitle={renameTaskTitle}*/}
+                                        {/*          deleteAllTasks={deleteAllTasks}*/}
+                                        {/*          setNewTaskStatus={setNewTaskStatus}*/}
+                                        {/*          filter={td.filter}*/}
+                                        {/*          changeFilter={changeFilter}*/}
+                                        {/*          removeTodolist={removeTodolist}*/}
+                                        {/*          updateTodolistTitle={updateTodolistTitle}*/}
+                                        {/*          changeTodoCover={changeTodoCover}>*/}
+                                        {/*</Todolist>*/}
+
+                                        <TodolistWithRedux todolist={td}/>
                                     </Paper>
                                 </Grid>
                             )
