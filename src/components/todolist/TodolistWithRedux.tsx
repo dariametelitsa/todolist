@@ -70,19 +70,19 @@ const TodolistWithRedux = React.memo(({todolist}: Props) => {
 
     const onClickFilterHandlerCreator = useCallback((filter: FilterValuesType) => {
         return () => dispatch(changedTodolistFilterAC(id, filter));
-    }, [dispatch]);
+    }, [dispatch, id]);
 
     const onClickHandlerDeleteAllTasks = useCallback(() => {
         dispatch(cleanTasksListAC(id))
-    }, [dispatch]);
+    }, [dispatch, id]);
 
     const addItemHandler = useCallback((title: string) => {
         dispatch(addTaskAC(id, title));
-    }, [dispatch]);
+    }, [dispatch, id]);
 
     const onChangeCoverHandler = useCallback((image: string) => {
         dispatch(changedTodolistCoverAC(id, image));
-    },[dispatch]);
+    },[dispatch, id]);
 
     const changeTodolistTitleHandler = useCallback((todolistId: string, newTitle: string) => {
         dispatch(changeTodolistTitleAC(todolistId, newTitle));
@@ -90,15 +90,15 @@ const TodolistWithRedux = React.memo(({todolist}: Props) => {
 
     const onChangeTitleTaskHandler = useCallback((taskId: string, newTitle: string) => {
         dispatch(renameTaskTitleAC(id, taskId, newTitle));
-    }, [dispatch]);
+    }, [dispatch, id]);
 
     const onChangeSetTaskStatusHandler = useCallback((taskId: string, newStatus: boolean) => {
         dispatch(setNewTaskStatusAC(id, taskId, newStatus));
-    }, [dispatch]);
+    }, [dispatch, id]);
 
     const deleteTaskHandler = useCallback((taskId: string) => {
         dispatch(removeTaskAC(id, taskId));
-    }, [dispatch]);
+    }, [dispatch, id]);
 
 
     return (
@@ -127,19 +127,6 @@ const TodolistWithRedux = React.memo(({todolist}: Props) => {
                                        changeTaskTitle={onChangeTitleTaskHandler}
                                        removeTask={deleteTaskHandler}
                                        todolistId={id} />
-                                // <ListItem key={task.id}
-                                //           sx={getListItemSx(task.isDone)}>
-                                //
-                                //
-                                //     <label className={styles.label}>
-                                //         <Checkbox checked={task.isDone} onChange={(e) => onChangeSetTaskStatusHandler(task.id, e.currentTarget.checked)}/>
-                                //         <EditableSpan oldTitle={task.title} idToChange={task.id}
-                                //                       updateItem={onChangeTitleTaskHandler}/>
-                                //     </label>
-                                //     <IconButton aria-label="delete" onClick={() => dispatch(removeTaskAC(id, task.id))}>
-                                //         <DeleteOutlineIcon/>
-                                //     </IconButton>
-                                // </ListItem>
                             )
                         })
                     )

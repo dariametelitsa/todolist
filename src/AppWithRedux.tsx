@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { TasksType, TodoListType } from "./data/dataPropsTypes";
+import { TodoListType } from "./data/dataPropsTypes";
 import './App.scss'
 import { AddItem } from "./components/addItem/AddItem";
 
