@@ -8,7 +8,7 @@ import AddBoxIcon from '@mui/icons-material/AddBox';
 type Props = {
     addItem: (name: string) => void
 };
-export const AddItem = ({addItem}: Props) => {
+export const AddItem = React.memo(({addItem}: Props) => {
 
     //local state - not business tasks
     let [itemTitle, setNewItemTitle] = useState('');
@@ -26,7 +26,6 @@ export const AddItem = ({addItem}: Props) => {
             addItemWithCheck();
         }
     };
-
     const addItemWithCheck = () => {
         const trimmedTaskTitle = itemTitle.trim();
         if (ifTaskCanAdded) {
@@ -41,7 +40,6 @@ export const AddItem = ({addItem}: Props) => {
     };
 
     const onChangeSetItemTitle = (title: string) => {
-        console.log('re-render here');
         setNewItemTitle(title);
         setItemInputError(null);
     };
@@ -84,7 +82,7 @@ export const AddItem = ({addItem}: Props) => {
             {/*{itemInputError && <div className={s.taskInputErrorMessage}>{itemInputError}</div>}*/}
         </div>
     );
-};
+});
 
 
 

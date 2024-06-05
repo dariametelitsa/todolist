@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from "react";
+import React, { ChangeEvent, useCallback } from "react";
 import { FilterValuesType, TaskType, TodolistPropsType, TodoListType } from "../../data/dataPropsTypes";
 import styles from './Todolist.module.scss';
 import { AddItem } from "../addItem/AddItem";
@@ -29,6 +29,7 @@ import {
     changeTodolistTitleAC,
     removeTodolistAC
 } from "../../model/todolistsReducer";
+import { ButtonMemo } from "../button/ButtonMemo";
 
 
 // Create
@@ -38,9 +39,10 @@ import {
 type Props = {
     todolist: TodoListType
 }
-const TodolistWithRedux = ({todolist}: Props) => {
+const TodolistWithRedux = React.memo(({todolist}: Props) => {
     const {id, title, filter, coverImage} = todolist;
 
+    console.log('tasks rerender: ', id);
     const tasks = useSelector<AppRootState, Array<TaskType>>(state => state.tasks[id]);
     const dispatch = useDispatch();
 
@@ -56,29 +58,29 @@ const TodolistWithRedux = ({todolist}: Props) => {
     };
     const filteredTasks = filterTasks(tasks);
 
-    const onClickHandlerCreator = (filter: FilterValuesType) => {
+    const onClickFilterHandlerCreator = useCallback((filter: FilterValuesType) => {
         return () => dispatch(changedTodolistFilterAC(id, filter));
-    }
+    }, [dispatch]);
 
-    const onClickHandlerDeleteAllTasks = () => {
+    const onClickHandlerDeleteAllTasks = useCallback(() => {
         dispatch(cleanTasksListAC(id))
-    }
+    }, [dispatch]);
 
-    const addItemHandler = (title: string) => {
+    const addItemHandler = useCallback((title: string) => {
         dispatch(addTaskAC(id, title));
-    }
+    }, [dispatch]);
 
-    const onChangeCoverHandler = (image: string) => {
+    const onChangeCoverHandler = useCallback((image: string) => {
         dispatch(changedTodolistCoverAC(id, image));
-    }
+    },[dispatch]);
 
-    const changeTodolistTitleHandler = (idToChange: string, newTitle: string) => {
+    const changeTodolistTitleHandler = useCallback((newTitle: string) => {
         dispatch(changeTodolistTitleAC(id, newTitle));
-    }
+    },[dispatch]);
 
-    const onChangeTitleTaskHandler = (taskId: string, newTitle: string) => {
+    const onChangeTitleTaskHandler = useCallback((taskId: string, newTitle: string) => {
         dispatch(renameTaskTitleAC(id, taskId, newTitle));
-    }
+    }, [dispatch]);
 
     return (
         <div className={styles.todolist}>
@@ -125,16 +127,16 @@ const TodolistWithRedux = ({todolist}: Props) => {
             </Grid>
 
             <Box sx={filterButtonsContainerSx}>
-                <Button color={'secondary'} variant={filter === 'all' ? "contained" : 'outlined'}
-                        onClick={onClickHandlerCreator('all')}>All</Button>
-                <Button color='primary' variant={filter === 'active' ? "contained" : 'outlined'}
-                        onClick={onClickHandlerCreator('active')}>Active</Button>
-                <Button color='success' variant={filter === 'completed' ? "contained" : 'outlined'}
-                        onClick={onClickHandlerCreator('completed')}>completed</Button>
+                <ButtonMemo color={'secondary'} variant={filter === 'all' ? "contained" : 'outlined'}
+                        onClick={onClickFilterHandlerCreator('all')}>All</ButtonMemo>
+                <ButtonMemo color='primary' variant={filter === 'active' ? "contained" : 'outlined'}
+                        onClick={onClickFilterHandlerCreator('active')}>Active</ButtonMemo>
+                <ButtonMemo color='success' variant={filter === 'completed' ? "contained" : 'outlined'}
+                        onClick={onClickFilterHandlerCreator('completed')}>completed</ButtonMemo>
             </Box>
         </div>
     );
-}
+});
 
 
 export default TodolistWithRedux;
