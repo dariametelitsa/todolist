@@ -18,7 +18,7 @@ type TasksProps = {
     // changeTaskStatus: (taskId: string, newStatus: boolean) => void
     // changeTaskTitle: (taskId: string, newTitle: string) => void
 };
-export const Tasks = React.memo(({todolistId, task}: TasksProps) => {
+export const Task = React.memo(({todolistId, task}: TasksProps) => {
 
     const dispatch = useDispatch();
 

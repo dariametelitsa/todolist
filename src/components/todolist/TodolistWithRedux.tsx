@@ -26,7 +26,7 @@ import {
     removeTodolistAC
 } from "../../model/todolistsReducer";
 import { ButtonMemo } from "../button/ButtonMemo";
-import { Tasks } from "../tasks/Tasks";
+import { Task } from "../task/Task";
 
 
 // Create
@@ -118,9 +118,9 @@ const TodolistWithRedux = React.memo(({todolist}: Props) => {
                     ) : (
                         filteredTasks.map((task) => {
                             return (
-                                <Tasks key={task.id}
-                                       todolistId={id}
-                                       task={task}
+                                <Task key={task.id}
+                                      todolistId={id}
+                                      task={task}
                                        // changeTaskStatus={onChangeSetTaskStatusHandler}
                                        // changeTaskTitle={onChangeTitleTaskHandler}
                                        // removeTask={deleteTaskHandler}
