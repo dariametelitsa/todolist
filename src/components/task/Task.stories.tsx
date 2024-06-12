@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
 import { Task } from "./Task";
-import { TaskType } from "../../data/dataPropsTypes";
 import { useState } from "react";
 import { action } from "@storybook/addon-actions";
 import * as React from "react";
