@@ -2,7 +2,9 @@ import { TasksType } from "../data/dataPropsTypes";
 import { v1 } from "uuid";
 import { AddTodoAction, RemoveTodoAction } from "./todolistsReducer";
 
-export const initialState: TasksType = {};
+export const initialState: TasksType = {
+    count: []
+};
 
 type RemoveTaskAction = ReturnType<typeof removeTaskAC>;
 type AddTaskAction = ReturnType<typeof addTaskAC>;
@@ -12,7 +14,7 @@ type SetNewTaskStatusAction = ReturnType<typeof setNewTaskStatusAC>;
 
 type ActionsType = RemoveTaskAction | AddTaskAction | RenameTaskTitleAction | CleanAllTasksAction | SetNewTaskStatusAction | AddTodoAction | RemoveTodoAction;
 
-export const tasksReducer = (state: TasksType = initialState, action: ActionsType): TasksType => {
+export const tasksReducer = (state = initialState, action: ActionsType): TasksType => {
     switch (action.type) {
         case 'REMOVE_TASK':
             return {...state, [action.payload.todolistId]: state[action.payload.todolistId].filter(t => t.id !== action.payload.taskId)};

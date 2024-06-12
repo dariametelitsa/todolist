@@ -1,9 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
-import { useState } from "react";
-import { action } from "@storybook/addon-actions";
-import * as React from "react";
-import { ReactStoreProviderDecorator } from "../../stories/ReduxStoreProviderDecorator";
 import { EditableSpan } from "./EditableSpan";
 
 const meta: Meta<typeof EditableSpan> = {
