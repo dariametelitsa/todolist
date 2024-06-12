@@ -5,10 +5,10 @@ import TextField from "@mui/material/TextField";
 import IconButton from "@mui/material/IconButton";
 import AddBoxIcon from '@mui/icons-material/AddBox';
 
-type Props = {
+export type AddItemProps = {
     addItem: (name: string) => void
 };
-export const AddItem = React.memo(({addItem}: Props) => {
+export const AddItem = React.memo(({addItem}: AddItemProps) => {
 
     //local state - not business tasks
     let [itemTitle, setNewItemTitle] = useState('');
@@ -67,7 +67,6 @@ export const AddItem = React.memo(({addItem}: Props) => {
                        helperText={!!itemInputError ? `${itemInputError}` : ' '}
                        size='small'
                        />
-
             {/*<Button variant="contained"*/}
             {/*        onClick={onClickAddItemHandler}*/}
             {/*        disabled={!ifTaskCanAdded}*/}
