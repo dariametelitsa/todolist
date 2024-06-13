@@ -4,20 +4,19 @@ import { combineReducers, legacy_createStore } from "redux";
 import { todolistsReducer } from "../model/todolistsReducer";
 import { tasksReducer } from "../model/tasksReduser";
 import React from "react";
-import { TasksType, TodoListType } from "../data/dataPropsTypes";
+import { TodoListType } from "../data/dataPropsTypes";
 
-export type RootStateT = {
-    tasks: TasksType;
-    todolists: TodoListType[];
-}
 
 const rootReducer = combineReducers({
     todolists: todolistsReducer as unknown as TodoListType,
+    // todolists: todolistsReducer,
     tasks: tasksReducer,
 });
 
+type returnReducerType = ReturnType<typeof rootReducer>
 
-const initialGlobalState: RootStateT = {
+
+const initialGlobalState = {
     tasks: {
         'todolistId1': [
             {id: v1(), title: "XP", isDone: false},
@@ -35,7 +34,7 @@ const initialGlobalState: RootStateT = {
         {id: 'todolistId1', title: "What to learn", filter: 'all'},
         {id: 'todolistId2', title: "What to do", filter: 'all'},
     ]
-};
+} as returnReducerType;
 
 export const storybookStore = legacy_createStore(rootReducer, initialGlobalState);
 
