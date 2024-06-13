@@ -8,11 +8,11 @@ type ChangeTodoTitleAction = ReturnType<typeof changeTodolistTitleAC>;
 type ChangeTodoFilterAction = ReturnType<typeof changedTodolistFilterAC>;
 type ChangeTodoCoverAction = ReturnType<typeof changedTodolistCoverAC>;
 
-type ActionsType =  | RemoveTodoAction  | AddTodoAction  | ChangeTodoTitleAction  | ChangeTodoFilterAction | ChangeTodoCoverAction;
+export type TodolistActionsType =  | RemoveTodoAction  | AddTodoAction  | ChangeTodoTitleAction  | ChangeTodoFilterAction | ChangeTodoCoverAction;
 
 const initialState: TodoListType[] = [];
 
-export const todolistsReducer = (state = initialState, action: ActionsType): TodoListType[] => {
+export const todolistsReducer = (state: Array<TodoListType> = [], action: TodolistActionsType): Array<TodoListType> => {
     switch (action.type) {
         case 'REMOVE_TODOLIST': {
             return state.filter(tl => tl.id !== action.payload.id);
@@ -31,7 +31,7 @@ export const todolistsReducer = (state = initialState, action: ActionsType): Tod
             return state.map(tl => tl.id === action.payload.id ? {...tl, coverImage: action.payload.coverImage} : tl);
         }
         default:
-            return state;
+            return state as TodoListType[];
     }
 };
 
@@ -73,5 +73,5 @@ export const changedTodolistCoverAC = (id: string, coverImage: string) => {
     return {
         type: 'CHANGE_TODOLIST_COVER' as 'CHANGE_TODOLIST_COVER',
         payload: { id, coverImage},
-    }
+    } as const;
 };

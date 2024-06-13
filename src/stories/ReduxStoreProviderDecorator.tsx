@@ -1,24 +1,34 @@
 import { Provider } from "react-redux";
-import { AppRootState } from "../model/store";
-import { v1, v4 } from "uuid";
-import { combineReducers, createStore, legacy_createStore } from "redux";
-import { todolistsReducer } from "../model/todolistsReducer";
-import { tasksReducer } from "../model/tasksReduser";
+import { v1 } from "uuid";
+import { Action, combineReducers, legacy_createStore, Reducer } from "redux";
+import { TodolistActionsType, todolistsReducer } from "../model/todolistsReducer";
+import { TaskActionsType, tasksReducer } from "../model/tasksReduser";
 import React from "react";
+import { TasksType, TaskType, TodoListType } from "../data/dataPropsTypes";
+
+export type RootStateT = {
+    tasks: TasksType;
+    todolists: TodoListType[];
+}
 
 const rootReducer = combineReducers({
-    todolists: todolistsReducer,
+    todolists: todolistsReducer as unknown as TodoListType,
     tasks: tasksReducer,
 });
 
-const initialGlobalState: AppRootState | undefined = {
+
+export type RootStateTypeNew = ReturnType<typeof rootReducer>
+
+type rootReducerT = Reducer<RootStateTypeNew, Action<string>>
+
+const initialGlobalState: RootStateT = {
     tasks: {
-        ['todolistId1']: [
+        'todolistId1': [
             {id: v1(), title: "XP", isDone: false},
             {id: v1(), title: "DDD", isDone: true},
             {id: v1(), title: "Scrum", isDone: false}
         ],
-        ['todolistId2']: [
+        'todolistId2': [
             {id: v1(), title: "CSS&HTML", isDone: true},
             {id: v1(), title: "JS", isDone: true},
             {id: v1(), title: "React", isDone: false},
@@ -31,7 +41,8 @@ const initialGlobalState: AppRootState | undefined = {
     ]
 };
 
-// export const storybookStore = legacy_createStore(rootReducer, initialGlobalState);
+type ActionType = TaskActionsType & TodolistActionsType;
+
 export const storybookStore = legacy_createStore(rootReducer, initialGlobalState);
 
 
