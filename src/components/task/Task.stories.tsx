@@ -1,20 +1,19 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Task } from "./Task";
 import * as React from "react";
+import { useLayoutEffect } from "react";
 import { ReduxStoreProviderDecorator } from "../../stories/ReduxStoreProviderDecorator";
 import { useDispatch, useSelector } from "react-redux";
 import { AppRootState } from "../../model/store";
 import { TaskType } from "../../data/dataPropsTypes";
-import { v1 } from "uuid";
 import { addTaskAC } from "../../model/tasksReduser";
-import { useEffect, useLayoutEffect } from "react";
+import { flushSync } from "react-dom";
 
 const meta: Meta<typeof Task> = {
     title: 'Todolist/Task',
     component: Task,
     decorators: [ReduxStoreProviderDecorator],
     parameters: {
-
         layout: 'centered',
     },
     tags: ['autodocs'],
@@ -73,7 +72,6 @@ const TaskWithRedux = () => {
             dispatch(addTaskAC('todolistId1', 'DEFAULT'));
         }
     }, [task]);
-
 
     return <Task task={task} todolistId={'todolistId1'}/>
 }

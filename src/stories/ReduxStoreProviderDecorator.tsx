@@ -8,8 +8,8 @@ import { TodoListType } from "../data/dataPropsTypes";
 
 
 const rootReducer = combineReducers({
-    todolists: todolistsReducer as unknown as TodoListType,
     // todolists: todolistsReducer,
+    todolists: todolistsReducer as unknown as TodoListType,
     tasks: tasksReducer,
 });
 
@@ -34,9 +34,9 @@ const initialGlobalState = {
         {id: 'todolistId1', title: "What to learn", filter: 'all'},
         {id: 'todolistId2', title: "What to do", filter: 'all'},
     ]
-} as returnReducerType;
+};
 
-export const storybookStore = legacy_createStore(rootReducer, initialGlobalState);
+export const storybookStore = legacy_createStore(rootReducer, initialGlobalState as returnReducerType );
 
 
 export const ReduxStoreProviderDecorator = (storyFn: () => React.ReactNode) => {
