@@ -24,3 +24,5 @@
 //     });
 //     expect(container.textContent).toBe("Hey, stranger");
 // });
+
+export {}

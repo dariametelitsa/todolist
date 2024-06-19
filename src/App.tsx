@@ -60,9 +60,14 @@ function App() {
         return tasksFiltered;
     };
 
-    // const sorterTasks = (todolistId: string, tasks: TaskType[]) => {
-    //      return tasks.sort((t) => t.isDone ? 1 : -1);
-    // }
+    const sorterTasks = (todolistId: string, tasks: TaskType[]) => {
+        return tasks.sort((prev, next) => {
+            // if(next.isDone && prev.isDone || !next.isDone && !prev.isDone) return 0;
+            if (next.isDone && !prev.isDone) return 1;
+            if (!next.isDone && prev.isDone) return -1;
+            return 0;
+        })
+    }
 
     function removeTask(todolistId: string, taskId: string) {
         dispatchTasks(removeTaskAC(todolistId, taskId));
@@ -91,7 +96,7 @@ function App() {
     };
 
     const addTodolist = (title: string) => {
-        const action  = addedTodolistAC(title);
+        const action = addedTodolistAC(title);
         dispatchTodoLists(action);
         dispatchTasks(action);
     };
@@ -123,8 +128,8 @@ function App() {
         palette: {
             mode: themeMode === 'light' ? 'light' : 'dark',
             ...(themeMode === 'light'
-                ? { background: { default: "#ececec" } } // light mode background color
-                : { background: { default: "#424242" } }), // dark mode background color
+                ? {background: {default: "#ececec"}} // light mode background color
+                : {background: {default: "#424242"}}), // dark mode background color
             primary: cyan,
         },
     });
@@ -134,7 +139,7 @@ function App() {
         <div className={'App'}>
 
             <ThemeProvider theme={theme}>
-                <CssBaseline />
+                <CssBaseline/>
                 <Box sx={{flexGrow: 1, mb: 12}}>
                     <HeaderMenu changeModeHandler={changeModeHandler}/>
                 </Box>
