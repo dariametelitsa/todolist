@@ -12,7 +12,7 @@ export type EditableSpanProps = {
     maxLength?: number
 };
 
-export const EditableSpan = React.memo(({idToChange, oldTitle, updateItem, maxLength = 25}: EditableSpanProps) => {
+export const EditableSpan = React.memo(({idToChange, oldTitle, updateItem, maxLength = 30}: EditableSpanProps) => {
 
     const [editMode, setEditMode] = useState(false)
     const [newTitle, setNewTitle] = useState<string>(oldTitle);
@@ -52,13 +52,15 @@ export const EditableSpan = React.memo(({idToChange, oldTitle, updateItem, maxLe
                            autoFocus
                            value={newTitle}
                            style={{flexGrow: 1}}
-                           size='small'/>
+                           size='small'
+                           inputProps={{ maxLength: maxLength }}
+                />
                 <IconButton onClick={()=>{setEditMode(true)}} color={'inherit'} size={'small'} >
                     <DoneIcon/>
                 </IconButton>
             </>
             : <>
-                <span onDoubleClick={activateEditModeHandler} style={{flexGrow: 1}}>{oldTitle}</span>
+                <span onDoubleClick={activateEditModeHandler} style={{flexGrow: 1, whiteSpace: 'normal'}}>{oldTitle}</span>
                 <IconButton onClick={(e)=>{
                     e.preventDefault();
                     setEditMode(true)}} color={'inherit'} size={'small'} >
