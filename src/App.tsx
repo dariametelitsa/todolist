@@ -60,15 +60,6 @@ function App() {
         return tasksFiltered;
     };
 
-    const sorterTasks = (todolistId: string, tasks: TaskType[]) => {
-        return tasks.sort((prev, next) => {
-            // if(next.isDone && prev.isDone || !next.isDone && !prev.isDone) return 0;
-            if (next.isDone && !prev.isDone) return 1;
-            if (!next.isDone && prev.isDone) return -1;
-            return 0;
-        })
-    }
-
     function removeTask(todolistId: string, taskId: string) {
         dispatchTasks(removeTaskAC(todolistId, taskId));
     }
