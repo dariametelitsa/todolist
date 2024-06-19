@@ -7,7 +7,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppRootState } from "../../model/store";
 import { TaskType } from "../../data/dataPropsTypes";
 import { addTaskAC } from "../../model/tasksReduser";
-import { flushSync } from "react-dom";
 
 const meta: Meta<typeof Task> = {
     title: 'Todolist/Task',
@@ -63,7 +62,6 @@ type Story = StoryObj<typeof Task>;
 const TaskWithRedux = () => {
     let task = useSelector<AppRootState, TaskType>(state => state.tasks['todolistId1'][0]);
     const dispatch = useDispatch();
-    let checkTask = false;
 
     if(!task) task = {id: 'fake', title: 'test', isDone: false};
     useLayoutEffect(() => {
@@ -71,7 +69,7 @@ const TaskWithRedux = () => {
         if(task.id === 'fake') {
             dispatch(addTaskAC('todolistId1', 'DEFAULT'));
         }
-    }, [task]);
+    }, [task,dispatch]);
 
     return <Task task={task} todolistId={'todolistId1'}/>
 }
