@@ -1,11 +1,9 @@
-// @flow
 import * as React from 'react';
 import { ChangeEvent, useState } from 'react';
 import TextField from "@mui/material/TextField";
 import EditIcon from '@mui/icons-material/Edit';
 import IconButton from "@mui/material/IconButton";
 import DoneIcon from '@mui/icons-material/Done';
-
 
 export type EditableSpanProps = {
     oldTitle: string
@@ -17,7 +15,7 @@ export type EditableSpanProps = {
 export const EditableSpan = React.memo(({idToChange, oldTitle, updateItem, maxLength = 25}: EditableSpanProps) => {
 
     const [editMode, setEditMode] = useState(false)
-    const [newTitle, setNewTitle] = useState<string>('');
+    const [newTitle, setNewTitle] = useState<string>(oldTitle);
 
     const activateEditModeHandler = () => {
         setEditMode(true);
@@ -41,7 +39,6 @@ export const EditableSpan = React.memo(({idToChange, oldTitle, updateItem, maxLe
         if (e.key === 'Enter') {
             activateViewMode();
         }
-
     }
 
     return (
