@@ -1,9 +1,9 @@
 import React, { useReducer, useState } from 'react';
-import { FilterValuesType, TaskType } from "./data/dataPropsTypes";
-import Todolist from "./components/todolist/Todolist";
-import { tasksArr, todoListsData } from "./data/Data";
-import './App.scss'
-import { AddItem } from "./components/addItem/AddItem";
+import { FilterValuesType, TaskType } from "../data/dataPropsTypes";
+import Todolist from "../components/todolist/Todolist";
+import { tasksArr, todoListsData } from "../data/Data";
+import '../App.scss'
+import { AddItem } from "../components/addItem/AddItem";
 
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
@@ -12,7 +12,7 @@ import Paper from '@mui/material/Paper';
 import { cyan } from '@mui/material/colors';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline'
-import { HeaderMenu } from "./components/headerMenu/HeaderMenu";
+import { HeaderMenu } from "../components/headerMenu/HeaderMenu";
 import {
     addedTodolistAC,
     changedTodolistCoverAC,
@@ -20,7 +20,7 @@ import {
     changeTodolistTitleAC,
     removeTodolistAC,
     todolistsReducer
-} from "./model/todolistsReducer";
+} from "../model/todolistsReducer";
 import {
     addTaskAC,
     cleanTasksListAC,
@@ -28,7 +28,7 @@ import {
     renameTaskTitleAC,
     setNewTaskStatusAC,
     tasksReducer
-} from "./model/tasksReduser";
+} from "../model/tasksReduser";
 
 export const sum = (a: number, b: number): number => {
     return a + b;
