@@ -5,11 +5,11 @@ import IconButton from "@mui/material/IconButton";
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import { useItemForm } from "./hooks/useAddItem";
 
-type Props = {
+export type AddItemProps = {
     addItem: (name: string) => void
 };
 
-export const AddItem = React.memo(({addItem}: Props) => {
+export const AddItem = React.memo(({addItem}: AddItemProps) => {
     const {itemTitle,
         onChangeInputHandler,
         onKeyDownHandler,

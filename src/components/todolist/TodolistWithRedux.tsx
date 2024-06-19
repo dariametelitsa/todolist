@@ -26,7 +26,7 @@ import {
     removeTodolistAC
 } from "../../model/todolistsReducer";
 import { ButtonMemo } from "../button/ButtonMemo";
-import { Tasks } from "../tasks/Tasks";
+import { Task } from "../task/Task";
 
 
 // Create
@@ -55,6 +55,7 @@ const TodolistWithRedux = React.memo(({todolist}: Props) => {
     //
     // const filteredTasks = useMemo(() => filterTasks(tasks),[tasks, filter]);
     // //const filteredTasks = filterTasks(tasks);
+
     const filteredTasks = useMemo(() => {
         if (filter === 'active') {
             return tasks.filter((t) => !t.isDone);
@@ -64,6 +65,14 @@ const TodolistWithRedux = React.memo(({todolist}: Props) => {
         }
         return tasks;
     }, [tasks, filter]);
+
+    const sorterTasks = useMemo(() => {
+        return filteredTasks.sort((prev, next) => {
+            if (next.isDone && !prev.isDone) return -1;
+            if (!next.isDone && prev.isDone) return 1;
+            return 0;
+        })
+    }, [filteredTasks]);
 
     const onClickFilterHandlerCreator = useCallback((filter: FilterValuesType) => {
         return () => dispatch(changedTodolistFilterAC(id, filter));
@@ -97,7 +106,6 @@ const TodolistWithRedux = React.memo(({todolist}: Props) => {
     //     dispatch(removeTaskAC(id, taskId));
     // }, [dispatch, id]);
 
-
     return (
         <Grid xs={12} md={6} lg={4}>
             <Paper sx={{p: 2}}>
@@ -113,14 +121,14 @@ const TodolistWithRedux = React.memo(({todolist}: Props) => {
             <AddItem addItem={addItemHandler}/>
             <List sx={{width: '100%', height: 200, overflow: 'auto'}}>
                 {
-                    filteredTasks.length === 0 ? (
+                    sorterTasks.length === 0 ? (
                         <p>Задач нет</p>
                     ) : (
-                        filteredTasks.map((task) => {
+                        sorterTasks.map((task) => {
                             return (
-                                <Tasks key={task.id}
-                                       todolistId={id}
-                                       task={task}
+                                <Task key={task.id}
+                                      todolistId={id}
+                                      task={task}
                                        // changeTaskStatus={onChangeSetTaskStatusHandler}
                                        // changeTaskTitle={onChangeTitleTaskHandler}
                                        // removeTask={deleteTaskHandler}
