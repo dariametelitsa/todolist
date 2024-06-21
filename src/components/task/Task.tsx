@@ -1,6 +1,5 @@
 // @flow
 import * as React from 'react';
-import { TaskType } from "../../data/dataPropsTypes";
 import { getListItemSx } from "../todolist/Todolist.styles";
 import styles from "../todolist/Todolist.module.scss";
 import Checkbox from "@mui/material/Checkbox";
@@ -10,6 +9,7 @@ import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import ListItem from "@mui/material/ListItem";
 import { useDispatch } from "react-redux";
 import { removeTaskAC, renameTaskTitleAC, setNewTaskStatusAC } from "../../model/tasksReduser";
+import { TaskType } from "../../api/todolist-api";
 
 type TasksProps = {
     task: TaskType
@@ -36,10 +36,10 @@ export const Task = React.memo(({todolistId, task}: TasksProps) => {
 
     return (
         <ListItem key={task.id}
-                  sx={getListItemSx(task.isDone)}>
+                  sx={getListItemSx(task.completed)}>
 
             <label className={styles.label}>
-                <Checkbox checked={task.isDone} onChange={(e) => changeTaskStatusHandler(task.id, e.currentTarget.checked)}/>
+                <Checkbox checked={task.completed} onChange={(e) => changeTaskStatusHandler(task.id, e.currentTarget.checked)}/>
                 <EditableSpan oldTitle={task.title} idToChange={task.id}
                               updateItem={changeTaskTitleHandler}/>
             </label>

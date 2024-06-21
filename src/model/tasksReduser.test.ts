@@ -8,7 +8,8 @@ import {
     setNewTaskStatusAC,
     tasksReducer
 } from "./tasksReduser";
-import { addedTodolistAC, RemoveTodoAction, removeTodolistAC } from "./todolistsReducer";
+import { addedTodolistAC, removeTodolistAC } from "./todolistsReducer";
+import { TaskStatuses, TodoTaskPriorities } from "../api/todolist-api";
 
 const todolistId1 = v4();
 const todolistId2 = v4();
@@ -18,13 +19,13 @@ let state: TasksType = {};
 beforeEach(() => {
     state = {
         [todolistId1]: [
-            {id: '1', title: "XP", isDone: false},
-            {id: '2', title: "DDD", isDone: true},
-            {id: '3', title: "Scrum", isDone: false}
+            {id: '1', status: TaskStatuses.New, title: 'XP', todoListId: todolistId1, description: '', priority: TodoTaskPriorities.Low, order: 0, addedDate: '', completed: false, startDate: '', deadline: ''},
+            {id: '2', status: TaskStatuses.Completed, title: 'DDD', todoListId: todolistId1, description: '', priority: TodoTaskPriorities.Low, order: 0, addedDate: '', completed: true, startDate: '', deadline: ''},
+            {id: '3', status: TaskStatuses.New, title: 'Scrum', todoListId: todolistId1, description: '', priority: TodoTaskPriorities.Low, order: 0, addedDate: '', completed: false, startDate: '', deadline: ''},
         ],
         [todolistId2]: [
-            {id: '1', title: "CSS&HTML", isDone: true},
-            {id: '2', title: "JS", isDone: true},
+            {id: '1', status: TaskStatuses.Completed, title: 'CSS&HTML', todoListId: todolistId2, description: '', priority: TodoTaskPriorities.Low, order: 0, addedDate: '', completed: true, startDate: '', deadline: ''},
+            {id: '2', status: TaskStatuses.Completed, title: 'JS', todoListId: todolistId2, description: '', priority: TodoTaskPriorities.Low, order: 0, addedDate: '', completed: true, startDate: '', deadline: ''},
         ]
     };
 });
@@ -44,7 +45,7 @@ test('task should be add correct', () => {
 
     expect(endState[todolistId1].length).toBe(4);
     expect(endState[todolistId1][0].title).toBe(newTask);
-    expect(endState[todolistId1][0].isDone).toBe(false);
+    expect(endState[todolistId1][0].completed).toBe(false);
     expect(Object.keys(endState).length).toBe(2);
 
     expect(endState[todolistId2].length).toBe(2);
@@ -79,21 +80,21 @@ test('task status should be changed correctly', () => {
     const endState = tasksReducer(state, setNewTaskStatusAC(todolistId1, '1', newStatus));
 
     expect(endState[todolistId1].length).toBe(3);
-    expect(endState[todolistId1][0].isDone).toBe(newStatus);
+    expect(endState[todolistId1][0].completed).toBe(newStatus);
     expect(Object.keys(endState).length).toBe(2);
-    expect(endState[todolistId2][0].isDone).toBe(true);
+    expect(endState[todolistId2][0].completed).toBe(true);
 
     newStatus = false;
     const endState2 = tasksReducer(state, setNewTaskStatusAC(todolistId1, '1', newStatus));
-    expect(endState2[todolistId1][0].isDone).toBe(newStatus);
-    expect(endState[todolistId2][0].isDone).toBe(true);
+    expect(endState2[todolistId1][0].completed).toBe(newStatus);
+    expect(endState[todolistId2][0].completed).toBe(true);
 });
 
 test('clean all tasks from todolist, todolist should be empty', () => {
     const endState = tasksReducer(state, cleanTasksListAC(todolistId1));
 
-    expect(Object.keys(endState).length).toBe(1);
-    expect(Object.keys(endState)[0]).toBe(todolistId2);
+    expect(Object.keys(endState).length).toBe(2);
+    expect(endState[Object.keys(endState)[0]].length).toBe(0);
 });
 
 test('create new tasks list to correct todolist', () => {
@@ -113,10 +114,10 @@ test('correct task should be added to correct array', () => {
     const endState = tasksReducer(state, action)
 
     expect(endState[todolistId1].length).toBe(3);
-    expect(endState[todolistId2].length).toBe(4);
+    expect(endState[todolistId2].length).toBe(3);
     expect(endState[todolistId2][0].id).toBeDefined();
     expect(endState[todolistId2][0].title).toBe('juice');
-    expect(endState[todolistId2][0].isDone).toBe(false);
+    expect(endState[todolistId2][0].completed).toBe(false);
 });
 
 test('new array should be added when new todolist is added', () => {

@@ -5,8 +5,8 @@ import { useLayoutEffect } from "react";
 import { ReduxStoreProviderDecorator } from "../../stories/ReduxStoreProviderDecorator";
 import { useDispatch, useSelector } from "react-redux";
 import { AppRootState } from "../../model/store";
-import { TaskType } from "../../data/dataPropsTypes";
 import { addTaskAC } from "../../model/tasksReduser";
+import { TaskStatuses, TaskType, TodoTaskPriorities } from "../../api/todolist-api";
 
 const meta: Meta<typeof Task> = {
     title: 'Todolist/Task',
@@ -63,7 +63,7 @@ const TaskWithRedux = () => {
     let task = useSelector<AppRootState, TaskType>(state => state.tasks['todolistId1'][0]);
     const dispatch = useDispatch();
 
-    if(!task) task = {id: 'fake', title: 'test', isDone: false};
+    if(!task) task =  {id: '1', status: TaskStatuses.New, title: 'XP', todoListId: 'todolistId1', description: '', priority: TodoTaskPriorities.Low, order: 0, addedDate: '', completed: false, startDate: '', deadline: ''};
     useLayoutEffect(() => {
         console.log(task)
         if(task.id === 'fake') {

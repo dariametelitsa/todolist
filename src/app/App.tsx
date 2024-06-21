@@ -1,5 +1,5 @@
 import React, { useReducer, useState } from 'react';
-import { FilterValuesType, TaskType } from "../data/dataPropsTypes";
+import { FilterValuesType } from "../data/dataPropsTypes";
 import Todolist from "../components/todolist/Todolist";
 import { tasksArr, todoListsData } from "../data/Data";
 import '../App.scss'
@@ -29,6 +29,7 @@ import {
     setNewTaskStatusAC,
     tasksReducer
 } from "../model/tasksReduser";
+import { TaskType } from "../api/todolist-api";
 
 export const sum = (a: number, b: number): number => {
     return a + b;
@@ -52,10 +53,10 @@ function App() {
         let tasksFiltered = tasks;
         let todolist = todoLists.find(td => td.id === todolistId);
         if (todolist && todolist.filter === 'active') {
-            tasksFiltered = tasks.filter((t) => !t.isDone);
+            tasksFiltered = tasks.filter((t) => !t.completed);
         }
         if (todolist && todolist.filter === 'completed') {
-            tasksFiltered = tasks.filter((t) => t.isDone);
+            tasksFiltered = tasks.filter((t) => t.completed);
         }
         return tasksFiltered;
     };

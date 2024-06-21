@@ -1,6 +1,7 @@
 import { TasksType } from "../data/dataPropsTypes";
 import { v1 } from "uuid";
 import { AddTodoAction, RemoveTodoAction } from "./todolistsReducer";
+import { TaskStatuses, TaskType, TodoTaskPriorities } from "../api/todolist-api";
 
 type RemoveTaskAction = ReturnType<typeof removeTaskAC>;
 type AddTaskAction = ReturnType<typeof addTaskAC>;
@@ -27,7 +28,8 @@ export const tasksReducer = (state: TasksType = {}, action: TaskActionsType): Ta
                 [action.payload.todolistId]: state[action.payload.todolistId].filter(t => t.id !== action.payload.taskId)
             };
         case 'ADD_TASK':
-            const newTask = {id: v1(), isDone: false, title: action.payload.title};
+            const newTask: TaskType  = {id: v1(), status: TaskStatuses.New, title: action.payload.title, todoListId: action.payload.todolistId, description: '', priority: TodoTaskPriorities.Low, order: 0, addedDate: '', completed: false, startDate: '', deadline: ''};
+
             return {...state, [action.payload.todolistId]: [newTask, ...state[action.payload.todolistId]]};
         case 'RENAME_TASK_TITLE':
             return {
@@ -44,7 +46,7 @@ export const tasksReducer = (state: TasksType = {}, action: TaskActionsType): Ta
                 ...state,
                 [action.payload.todolistId]: state[action.payload.todolistId].map(t => t.id === action.payload.taskId ? {
                     ...t,
-                    isDone: action.payload.isDone
+                    completed: action.payload.isDone
                 } : t)
             };
         case 'ADD_TODOLIST':

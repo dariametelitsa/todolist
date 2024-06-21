@@ -83,14 +83,14 @@ const Todolist: React.FC<TodolistPropsType> = ({
                             const onChangeSetTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => setNewTaskStatus(id, task.id, e.currentTarget.checked);
                             return (
                                 <ListItem key={task.id}
-                                          sx={getListItemSx(task.isDone)}>
+                                          sx={getListItemSx(task.completed)}>
 
                                     {/*<input type={"checkbox"} checked={task.isDone}*/}
                                     {/*       onChange={onChangeSetTaskStatusHandler}/>*/}
                                     {/*<span className={task.isDone ? styles.taskDone : styles.task}>{task.title}</span>*/}
 
                                     <label className={styles.label}>
-                                        <Checkbox checked={task.isDone} onChange={onChangeSetTaskStatusHandler}/>
+                                        <Checkbox checked={task.completed} onChange={onChangeSetTaskStatusHandler}/>
                                         <EditableSpan oldTitle={task.title} idToChange={task.id}
                                                       updateItem={onChangeTitleTaskHandler}/>
                                     </label>

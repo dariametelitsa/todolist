@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo } from "react";
-import { FilterValuesType, TaskType, TodoListDomainType } from "../../data/dataPropsTypes";
+import { FilterValuesType, TodoListDomainType } from "../../data/dataPropsTypes";
 import styles from './Todolist.module.scss';
 import { AddItem } from "../addItem/AddItem";
 import { EditableSpan } from "../editableSpan/EditableSpan";
@@ -27,6 +27,7 @@ import {
 } from "../../model/todolistsReducer";
 import { ButtonMemo } from "../button/ButtonMemo";
 import { Task } from "../task/Task";
+import { TaskType } from "../../api/todolist-api";
 
 
 // Create
@@ -58,18 +59,18 @@ const TodolistWithRedux = React.memo(({todolist}: Props) => {
 
     const filteredTasks = useMemo(() => {
         if (filter === 'active') {
-            return tasks.filter((t) => !t.isDone);
+            return tasks.filter((t) => !t.completed);
         }
         if (filter === 'completed') {
-            return tasks.filter((t) => t.isDone);
+            return tasks.filter((t) => t.completed);
         }
         return tasks;
     }, [tasks, filter]);
 
     const sorterTasks = useMemo(() => {
         return filteredTasks.sort((prev, next) => {
-            if (next.isDone && !prev.isDone) return -1;
-            if (!next.isDone && prev.isDone) return 1;
+            if (next.completed && !prev.completed) return -1;
+            if (!next.completed && prev.completed) return 1;
             return 0;
         })
     }, [filteredTasks]);

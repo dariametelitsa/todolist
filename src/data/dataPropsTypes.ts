@@ -4,8 +4,12 @@
 //     filter : FilterValuesType
 //     coverImage?: string
 // }
-
-import { TodolistType } from "../api/todolist-api";
+// export type TaskType = {
+//     id: string
+//     title: string
+//     isDone?: boolean
+// }
+import { TaskType, TodolistType } from "../api/todolist-api";
 
 export type FilterValuesType = 'all' | 'completed' | 'active';
 
@@ -16,12 +20,6 @@ export type TodoListDomainType = TodolistType & {
 
 export type TasksType = {
     [key: string]: TaskType[]
-}
-
-export type TaskType = {
-    id: string
-    title: string
-    isDone?: boolean
 }
 
 export type TasksPropsType = {

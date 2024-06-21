@@ -1,20 +1,21 @@
 import { TasksType, TodoListDomainType } from "./dataPropsTypes";
 import { v1, v4 } from "uuid";
+import { TaskStatuses, TodoTaskPriorities } from "../api/todolist-api";
 
 export const todolistId1 = v4();
 export const todolistId2 = v4();
 
 export const tasksArr: TasksType = {
     [todolistId1]: [
-        {id: v1(), title: "XP", isDone: false},
-        {id: v1(), title: "DDD", isDone: true},
-        {id: v1(), title: "Scrum", isDone: false}
+        {id: v1(), title: "XP", status: TaskStatuses.New, todoListId: todolistId1, description: '', priority: TodoTaskPriorities.Low, order: 0, addedDate: '', completed: false, startDate: '', deadline: ''},
+        {id: v1(), title: "DDD", status: TaskStatuses.New, todoListId: todolistId1, description: '', priority: TodoTaskPriorities.Low, order: 0, addedDate: '', completed: true, startDate: '', deadline: ''},
+        {id: v1(), title: "Scrum", status: TaskStatuses.New, todoListId: todolistId1, description: '', priority: TodoTaskPriorities.Low, order: 0, addedDate: '', completed: false, startDate: '', deadline: ''}
     ],
     [todolistId2]: [
-        {id: v1(), title: "CSS&HTML", isDone: true},
-        {id: v1(), title: "JS", isDone: true},
-        {id: v1(), title: "React", isDone: false},
-        {id: v1(), title: "Redux", isDone: false}
+        {id: v1(), title: "CSS&HTML", status: TaskStatuses.New, todoListId: todolistId2, description: '', priority: TodoTaskPriorities.Low, order: 0, addedDate: '', completed: false, startDate: '', deadline: ''},
+        {id: v1(), title: "JS", status: TaskStatuses.New, todoListId: todolistId2, description: '', priority: TodoTaskPriorities.Low, order: 0, addedDate: '', completed: false, startDate: '', deadline: ''},
+        {id: v1(), title: "React", status: TaskStatuses.New, todoListId: todolistId2, description: '', priority: TodoTaskPriorities.Low, order: 0, addedDate: '', completed: false, startDate: '', deadline: ''},
+        {id: v1(), title: "Redux", status: TaskStatuses.New, todoListId: todolistId2, description: '', priority: TodoTaskPriorities.Low, order: 0, addedDate: '', completed: false, startDate: '', deadline: ''}
     ],
 };
 
