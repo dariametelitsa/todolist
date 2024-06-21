@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { todolistAPI } from "../api/api";
+import { todolistAPI } from "../api/todolist-api";
 
 export default {
     title: 'API',
@@ -121,8 +121,6 @@ export const CreateTaskForTodolist = () => {
                 setState(res.data);
         })
     }
-    //fee254ae-3d15-4d96-8c84-fbbeb554608c
-    //181c8020-5928-482a-bb12-3565aacb9498
     return (
         <div>
             <input placeholder={'ID todo'} value={todoId} onChange={(e) => setTodoId(e.target.value)}/>

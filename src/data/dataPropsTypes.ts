@@ -1,6 +1,15 @@
-export type TodoListType = {
-    id: string
-    title: string
+// export type TodoListType = {
+//     id: string
+//     title: string
+//     filter : FilterValuesType
+//     coverImage?: string
+// }
+
+import { TodolistType } from "../api/todolist-api";
+
+export type FilterValuesType = 'all' | 'completed' | 'active';
+
+export type TodoListDomainType = TodolistType & {
     filter : FilterValuesType
     coverImage?: string
 }
@@ -25,8 +34,6 @@ export type TasksPropsType = {
 export type TasksArrPropsType = {
     [id: string]: Array<TaskType>
 };
-
-export type FilterValuesType = 'all' | 'completed' | 'active';
 
 export type TodolistPropsType = {
     children?: any

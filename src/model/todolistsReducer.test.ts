@@ -7,20 +7,20 @@ import {
     removeTodolistAC,
     todolistsReducer
 } from "./todolistsReducer";
-import { TodoListType } from "../data/dataPropsTypes";
+import { TodoListDomainType } from "../data/dataPropsTypes";
 
 //test data
 let todolistId1: string;
 let todolistId2: string;
-let startState: TodoListType[] = [];
+let startState: TodoListDomainType[] = [];
 
 //initialization
 beforeEach(() => {
     todolistId1 = v1();
     todolistId2 = v1();
     startState = [
-        {id: todolistId1, title: 'What to learn', filter: 'all'},
-        {id: todolistId2, title: 'What to buy', filter: 'all'},
+        {id: todolistId1, title: 'What to learn', filter: 'all', addedDate: Date(), order: 0},
+        {id: todolistId2, title: 'What to buy', filter: 'all', addedDate: Date(), order: 0},
     ];
 });
 

@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { AppRootState } from "../../model/store";
-import { TodoListType } from "../../data/dataPropsTypes";
+import { TodoListDomainType } from "../../data/dataPropsTypes";
 import { useCallback, useState } from "react";
 import { addedTodolistAC } from "../../model/todolistsReducer";
 import { createTheme } from "@mui/material/styles";
@@ -10,7 +10,7 @@ type ThemeMode = 'dark' | 'light';
 
 export const useAppWithRedux = () => {
     const dispatch = useDispatch();
-    const todoLists = useSelector<AppRootState, Array<TodoListType>>(state => state.todolists);
+    const todoLists = useSelector<AppRootState, Array<TodoListDomainType>>(state => state.todolists);
 
     const addTodolist = useCallback((title: string) => {
         const action  = addedTodolistAC(title);

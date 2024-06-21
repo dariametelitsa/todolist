@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo } from "react";
-import { FilterValuesType, TaskType, TodoListType } from "../../data/dataPropsTypes";
+import { FilterValuesType, TaskType, TodoListDomainType } from "../../data/dataPropsTypes";
 import styles from './Todolist.module.scss';
 import { AddItem } from "../addItem/AddItem";
 import { EditableSpan } from "../editableSpan/EditableSpan";
@@ -34,7 +34,7 @@ import { Task } from "../task/Task";
 // Update (status, title)
 // Delete
 type Props = {
-    todolist: TodoListType
+    todolist: TodoListDomainType
 }
 const TodolistWithRedux = React.memo(({todolist}: Props) => {
     const {id, title, filter, coverImage} = todolist;

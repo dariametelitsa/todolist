@@ -43,7 +43,7 @@ export const todolistAPI = {
 };
 
 
-type TodolistType = {
+export type TodolistType = {
     addedDate: string
     id: string
     order: number
@@ -61,7 +61,7 @@ type CreateTodoType = {
     "item": TodolistType
 }
 
-type TaskType = {
+export type TaskType = {
     description: string
     title: string
     completed: boolean

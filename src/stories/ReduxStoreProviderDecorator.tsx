@@ -4,12 +4,12 @@ import { combineReducers, legacy_createStore } from "redux";
 import { todolistsReducer } from "../model/todolistsReducer";
 import { tasksReducer } from "../model/tasksReduser";
 import React from "react";
-import { TodoListType } from "../data/dataPropsTypes";
+import { TodoListDomainType } from "../data/dataPropsTypes";
 
 
 const rootReducer = combineReducers({
     // todolists: todolistsReducer,
-    todolists: todolistsReducer as unknown as TodoListType,
+    todolists: todolistsReducer as unknown as TodoListDomainType,
     tasks: tasksReducer,
 });
 
@@ -31,8 +31,8 @@ const initialGlobalState = {
         ],
     },
     todolists: [
-        {id: 'todolistId1', title: "What to learn", filter: 'all'},
-        {id: 'todolistId2', title: "What to do", filter: 'all'},
+        {id: 'todolistId1', title: "What to learn", filter: 'all', addedDate: Date(), order: 0},
+        {id: 'todolistId2', title: "What to do", filter: 'all', addedDate: Date(), order: 0},
     ]
 };
 

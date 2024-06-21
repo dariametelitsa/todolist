@@ -1,5 +1,5 @@
 import { v1 } from "uuid";
-import { FilterValuesType, TodoListType } from "../data/dataPropsTypes";
+import { FilterValuesType, TodoListDomainType } from "../data/dataPropsTypes";
 
 //action types
 export type RemoveTodoAction = ReturnType<typeof removeTodolistAC>;
@@ -10,15 +10,15 @@ type ChangeTodoCoverAction = ReturnType<typeof changedTodolistCoverAC>;
 
 export type TodolistActionsType =  | RemoveTodoAction  | AddTodoAction  | ChangeTodoTitleAction  | ChangeTodoFilterAction | ChangeTodoCoverAction;
 
-const initialState: TodoListType[] = [];
+const initialState: TodoListDomainType[] = [];
 
-export const todolistsReducer = (state: Array<TodoListType> = [], action: TodolistActionsType): Array<TodoListType> => {
+export const todolistsReducer = (state: Array<TodoListDomainType> = [], action: TodolistActionsType): Array<TodoListDomainType> => {
     switch (action.type) {
         case 'REMOVE_TODOLIST': {
             return state.filter(tl => tl.id !== action.payload.id);
         }
         case 'ADD_TODOLIST': {
-            const newTodolist: TodoListType = {id: action.payload.id, title: action.payload.title, filter: 'all'};
+            const newTodolist: TodoListDomainType = {id: action.payload.id, title: action.payload.title, filter: 'all', addedDate: Date(), order: 0};
             return [newTodolist, ...state];
         }
         case 'CHANGE_TODOLIST_TITLE': {
@@ -31,7 +31,7 @@ export const todolistsReducer = (state: Array<TodoListType> = [], action: Todoli
             return state.map(tl => tl.id === action.payload.id ? {...tl, coverImage: action.payload.coverImage} : tl);
         }
         default:
-            return state as TodoListType[];
+            return state as TodoListDomainType[];
     }
 };
 
