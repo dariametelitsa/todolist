@@ -1,14 +1,23 @@
 import { v1 } from "uuid";
 import { FilterValuesType, TodoListDomainType } from "../data/dataPropsTypes";
+import { todolistAPI, TodolistType } from "../api/todolist-api";
+import { Dispatch } from "redux";
 
 //action types
-export type RemoveTodoAction = ReturnType<typeof removeTodolistAC>;
-export type AddTodoAction = ReturnType<typeof addedTodolistAC>;
-type ChangeTodoTitleAction = ReturnType<typeof changeTodolistTitleAC>;
-type ChangeTodoFilterAction = ReturnType<typeof changedTodolistFilterAC>;
-type ChangeTodoCoverAction = ReturnType<typeof changedTodolistCoverAC>;
+export type RemoveTodoActionType = ReturnType<typeof removeTodolistAC>;
+export type AddTodoActionType = ReturnType<typeof addedTodolistAC>;
+type ChangeTodoTitleActionType = ReturnType<typeof changeTodolistTitleAC>;
+type ChangeTodoFilterActionType = ReturnType<typeof changedTodolistFilterAC>;
+type ChangeTodoCoverActionType = ReturnType<typeof changedTodolistCoverAC>;
+export type SetTodolistsActionType = ReturnType<typeof setTodolistsAC>
 
-export type TodolistActionsType =  | RemoveTodoAction  | AddTodoAction  | ChangeTodoTitleAction  | ChangeTodoFilterAction | ChangeTodoCoverAction;
+export type TodolistActionsType =
+    | RemoveTodoActionType
+    | AddTodoActionType
+    | ChangeTodoTitleActionType
+    | ChangeTodoFilterActionType
+    | ChangeTodoCoverActionType
+    | SetTodolistsActionType;
 
 const initialState: TodoListDomainType[] = [];
 
@@ -18,7 +27,13 @@ export const todolistsReducer = (state: Array<TodoListDomainType> = [], action: 
             return state.filter(tl => tl.id !== action.payload.id);
         }
         case 'ADD_TODOLIST': {
-            const newTodolist: TodoListDomainType = {id: action.payload.id, title: action.payload.title, filter: 'all', addedDate: Date(), order: 0};
+            const newTodolist: TodoListDomainType = {
+                id: action.payload.id,
+                title: action.payload.title,
+                filter: 'all',
+                addedDate: Date(),
+                order: 0
+            };
             return [newTodolist, ...state];
         }
         case 'CHANGE_TODOLIST_TITLE': {
@@ -29,6 +44,11 @@ export const todolistsReducer = (state: Array<TodoListDomainType> = [], action: 
         }
         case 'CHANGE_TODOLIST_COVER': {
             return state.map(tl => tl.id === action.payload.id ? {...tl, coverImage: action.payload.coverImage} : tl);
+        }
+        case 'SET_TODOLISTS': {
+            return action.payload.todolists.map(tl => {
+                return {...tl, filter: 'all'}
+            });
         }
         default:
             return state as TodoListDomainType[];
@@ -45,7 +65,7 @@ export const removeTodolistAC = (id: string) => {
     } as const;
 };
 
-export const addedTodolistAC = ( title: string) => {
+export const addedTodolistAC = (title: string) => {
     return {
         type: 'ADD_TODOLIST',
         payload: {
@@ -58,20 +78,42 @@ export const addedTodolistAC = ( title: string) => {
 export const changeTodolistTitleAC = (id: string, title: string) => {
     return {
         type: 'CHANGE_TODOLIST_TITLE',
-        payload: { id, title},
+        payload: {id, title},
     } as const;
 };
 
 export const changedTodolistFilterAC = (id: string, filter: FilterValuesType) => {
     return {
         type: 'CHANGE_TODOLIST_FILTER',
-        payload: { id, filter},
+        payload: {id, filter},
     } as const;
 };
 
 export const changedTodolistCoverAC = (id: string, coverImage: string) => {
     return {
         type: 'CHANGE_TODOLIST_COVER' as 'CHANGE_TODOLIST_COVER',
-        payload: { id, coverImage},
+        payload: {id, coverImage},
     } as const;
 };
+
+export const setTodolistsAC = (todolists: TodolistType[]) => {
+    return {
+        type: 'SET_TODOLISTS',
+        payload: {todolists},
+    } as const;
+};
+
+
+
+export const fetchTodolistsTC = () => {
+    return (dispatch: Dispatch<TodolistActionsType>) => {
+        todolistAPI.getTodolist()
+            .then(res => {
+                dispatch(setTodolistsAC(res.data));
+            })
+            .catch(err => {
+                console.log(err);
+                dispatch(setTodolistsAC([]));
+            })
+    }
+}

@@ -14,7 +14,7 @@ import { CoverImage } from "../coverImage/CoverImage";
 import Grid from "@mui/material/Unstable_Grid2";
 import Paper from '@mui/material/Paper';
 import { useDispatch, useSelector } from "react-redux";
-import { AppRootState } from "../../model/store";
+import { AppRootStateType } from "../../model/store";
 import {
     addTaskAC,
     cleanTasksListAC,
@@ -40,7 +40,7 @@ type Props = {
 const TodolistWithRedux = React.memo(({todolist}: Props) => {
     const {id, title, filter, coverImage} = todolist;
 
-    const tasks = useSelector<AppRootState, Array<TaskType>>(state => state.tasks[id]);
+    const tasks = useSelector<AppRootStateType, Array<TaskType>>(state => state.tasks[id]);
     const dispatch = useDispatch();
 
     // const filterTasks = (tasks: TaskType[]) => {

@@ -4,7 +4,7 @@ import {
     changedTodolistCoverAC,
     changedTodolistFilterAC,
     changeTodolistTitleAC,
-    removeTodolistAC,
+    removeTodolistAC, setTodolistsAC,
     todolistsReducer
 } from "./todolistsReducer";
 import { TodoListDomainType } from "../data/dataPropsTypes";
@@ -66,5 +66,12 @@ test('correct todolist cover changed', () => {
     const endState2 = todolistsReducer(endState, changedTodolistCoverAC(todolistId1, 'newImg'));
     expect(endState2[0].coverImage).toBe('newImg');
     expect(endState2[1].coverImage).toBe('newImg');
+});
+
+test('todolists should br set to the state', () => {
+    const endState = todolistsReducer([], setTodolistsAC(startState));
+
+    expect(endState.length).toBe(2);
+
 });
 

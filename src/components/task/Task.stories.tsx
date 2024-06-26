@@ -4,7 +4,7 @@ import * as React from "react";
 import { useLayoutEffect } from "react";
 import { ReduxStoreProviderDecorator } from "../../stories/ReduxStoreProviderDecorator";
 import { useDispatch, useSelector } from "react-redux";
-import { AppRootState } from "../../model/store";
+import { AppRootStateType } from "../../model/store";
 import { addTaskAC } from "../../model/tasksReduser";
 import { TaskStatuses, TaskType, TodoTaskPriorities } from "../../api/todolist-api";
 
@@ -60,7 +60,7 @@ type Story = StoryObj<typeof Task>;
 // };
 
 const TaskWithRedux = () => {
-    let task = useSelector<AppRootState, TaskType>(state => state.tasks['todolistId1'][0]);
+    let task = useSelector<AppRootStateType, TaskType>(state => state.tasks['todolistId1'][0]);
     const dispatch = useDispatch();
 
     if(!task) task =  {id: '1', status: TaskStatuses.New, title: 'XP', todoListId: 'todolistId1', description: '', priority: TodoTaskPriorities.Low, order: 0, addedDate: '', completed: false, startDate: '', deadline: ''};

@@ -1,22 +1,23 @@
 import { TasksType } from "../data/dataPropsTypes";
 import { v1 } from "uuid";
-import { AddTodoAction, RemoveTodoAction } from "./todolistsReducer";
+import { AddTodoActionType, RemoveTodoActionType, SetTodolistsActionType } from "./todolistsReducer";
 import { TaskStatuses, TaskType, TodoTaskPriorities } from "../api/todolist-api";
 
-type RemoveTaskAction = ReturnType<typeof removeTaskAC>;
-type AddTaskAction = ReturnType<typeof addTaskAC>;
-type RenameTaskTitleAction = ReturnType<typeof renameTaskTitleAC>;
-type CleanAllTasksAction = ReturnType<typeof cleanTasksListAC>;
-type SetNewTaskStatusAction = ReturnType<typeof setNewTaskStatusAC>;
+type RemoveTaskActionType = ReturnType<typeof removeTaskAC>;
+type AddTaskActionType = ReturnType<typeof addTaskAC>;
+type RenameTaskTitleActionType = ReturnType<typeof renameTaskTitleAC>;
+type CleanAllTasksActionType = ReturnType<typeof cleanTasksListAC>;
+type SetNewTaskStatusActionType = ReturnType<typeof setNewTaskStatusAC>;
 
 export type TaskActionsType =
-    RemoveTaskAction
-    | AddTaskAction
-    | RenameTaskTitleAction
-    | CleanAllTasksAction
-    | SetNewTaskStatusAction
-    | AddTodoAction
-    | RemoveTodoAction;
+    RemoveTaskActionType
+    | AddTaskActionType
+    | RenameTaskTitleActionType
+    | CleanAllTasksActionType
+    | SetNewTaskStatusActionType
+    | AddTodoActionType
+    | RemoveTodoActionType
+    | SetTodolistsActionType;
 
 export const initialState: TasksType = {};
 
@@ -54,6 +55,12 @@ export const tasksReducer = (state: TasksType = {}, action: TaskActionsType): Ta
         case 'REMOVE_TODOLIST':
             const {[action.payload.id]: deletedValue, ...rest} = state;
             return rest;
+        case 'SET_TODOLISTS':
+            const newState = {...state};
+            action.payload.todolists.forEach(tl => {
+                newState[tl.id] = [];
+            })
+            return newState;
         default:
             return state;
     }

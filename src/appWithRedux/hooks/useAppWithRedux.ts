@@ -1,16 +1,28 @@
-import { useDispatch, useSelector } from "react-redux";
-import { AppRootState } from "../../model/store";
+import { useSelector } from "react-redux";
+import { AppRootStateType, useAppDispatch } from "../../model/store";
 import { TodoListDomainType } from "../../data/dataPropsTypes";
-import { useCallback, useState } from "react";
-import { addedTodolistAC } from "../../model/todolistsReducer";
+import { useCallback, useEffect, useState } from "react";
+import { addedTodolistAC, fetchTodolistsTC } from "../../model/todolistsReducer";
 import { createTheme } from "@mui/material/styles";
 import { cyan } from "@mui/material/colors";
 
 type ThemeMode = 'dark' | 'light';
 
 export const useAppWithRedux = () => {
-    const dispatch = useDispatch();
-    const todoLists = useSelector<AppRootState, Array<TodoListDomainType>>(state => state.todolists);
+    const dispatch = useAppDispatch();
+    const todoLists = useSelector<AppRootStateType, Array<TodoListDomainType>>(state => state.todolists);
+
+
+    useEffect(()=>{
+        dispatch(fetchTodolistsTC());
+        //// it's wrong to do like this. Dialog with API not from view
+        // todolistAPI.getTodolist()
+        //     .then(res => {
+        //         dispatch(setTodolistsAC(res.data));
+        //         debugger
+        //     })
+        //     .catch((err) => {console.log('some error ' + err)})
+    }, [dispatch])
 
     const addTodolist = useCallback((title: string) => {
         const action  = addedTodolistAC(title);
