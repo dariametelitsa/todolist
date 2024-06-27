@@ -1,4 +1,4 @@
-import { applyMiddleware, combineReducers, compose, createStore, AnyAction } from "redux";
+import { AnyAction, applyMiddleware, combineReducers, compose, createStore } from "redux";
 import { TodolistActionsType, todolistsReducer } from "./todolistsReducer";
 import { TaskActionsType, tasksReducer } from "./tasksReduser";
 import { thunk, ThunkAction, ThunkDispatch } from "redux-thunk";
@@ -16,10 +16,10 @@ const rootReducer = combineReducers({
 });
 
 export type AppRootStateType = ReturnType<typeof rootReducer>;
-type RootActionsType= TodolistActionsType | TaskActionsType
+//type RootActionsType= TodolistActionsType | TaskActionsType
 
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+//const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 export const store = createStore(rootReducer, {}, applyMiddleware(thunk))
 export type AppDispatch = typeof store.dispatch

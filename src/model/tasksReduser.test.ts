@@ -1,13 +1,6 @@
 import { v4 } from "uuid";
 import { TasksType } from "../data/dataPropsTypes";
-import {
-    addTaskAC,
-    cleanTasksListAC,
-    removeTaskAC,
-    renameTaskTitleAC,
-    setNewTaskStatusAC,
-    tasksReducer
-} from "./tasksReduser";
+import { addTaskAC, cleanTasksListAC, removeTaskAC, renameTaskTitleAC, tasksReducer } from "./tasksReduser";
 import { addedTodolistAC, removeTodolistAC, setTodolistsAC } from "./todolistsReducer";
 import { TaskStatuses, TodoTaskPriorities } from "../api/todolist-api";
 

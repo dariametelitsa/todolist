@@ -3,9 +3,9 @@ import { Task } from "./Task";
 import * as React from "react";
 import { useLayoutEffect } from "react";
 import { ReduxStoreProviderDecorator } from "../../stories/ReduxStoreProviderDecorator";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { AppRootStateType, useAppDispatch } from "../../model/store";
-import { addTaskAC, addTaskTC } from "../../model/tasksReduser";
+import { addTaskTC } from "../../model/tasksReduser";
 import { TaskStatuses, TaskType, TodoTaskPriorities } from "../../api/todolist-api";
 
 const meta: Meta<typeof Task> = {
