@@ -1,3 +1,5 @@
+// trouble with reducer (task add)
+
 import React, { useReducer, useState } from 'react';
 import { FilterValuesType } from "../data/dataPropsTypes";
 import Todolist from "../components/todolist/Todolist";
@@ -22,14 +24,13 @@ import {
     todolistsReducer
 } from "../model/todolistsReducer";
 import {
-    addTaskAC,
     cleanTasksListAC,
     removeTaskAC,
     renameTaskTitleAC,
     setNewTaskStatusAC,
     tasksReducer
 } from "../model/tasksReduser";
-import { TaskType } from "../api/todolist-api";
+import { TaskStatuses, TaskType } from "../api/todolist-api";
 
 export const sum = (a: number, b: number): number => {
     return a + b;
@@ -53,10 +54,10 @@ function App() {
         let tasksFiltered = tasks;
         let todolist = todoLists.find(td => td.id === todolistId);
         if (todolist && todolist.filter === 'active') {
-            tasksFiltered = tasks.filter((t) => !t.completed);
+            tasksFiltered = tasks.filter((t) => t.status !== TaskStatuses.Completed);
         }
         if (todolist && todolist.filter === 'completed') {
-            tasksFiltered = tasks.filter((t) => t.completed);
+            tasksFiltered = tasks.filter((t) => t.status === TaskStatuses.Completed);
         }
         return tasksFiltered;
     };
@@ -66,7 +67,7 @@ function App() {
     }
 
     const addTask = (todolistId: string, taskTitle: string) => {
-        dispatchTasks(addTaskAC(todolistId, taskTitle));
+        //dispatchTasks(addTaskAC(todolistId, taskTitle));
     };
 
     const renameTaskTitle = (todolistId: string, taskId: string, newTaskTitle: string) => {

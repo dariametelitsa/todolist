@@ -27,12 +27,13 @@ export type AppDispatch = typeof store.dispatch
 // export const store = createStore(rootReducer, applyMiddleware(thunk), composeEnhancers())
 
 //создаем тип для thunk
-export type AppThunkType = ThunkAction<void, AppRootStateType, unknown, RootActionsType>
+export type AppThunkType = ThunkAction<void, AppRootStateType, unknown, AnyAction>
 
 
 // создаем тип диспатча который принимает как AC так и TC
-export type AppThunkDispatch = ThunkDispatch<AppRootStateType, any, RootActionsType>
-export const useAppDispatch = () => useDispatch<AppThunkDispatch>();
+export type AppThunkDispatch = ThunkDispatch<AppRootStateType, any, AnyAction>
+export const useAppDispatch = () => useDispatch<AppThunkDispatch>(); //каррирование
+// export const useAppDispatch =  useDispatch<AppThunkDispatch>; // так тоже работает
 
 // @ts-ignore
 window.store = store;

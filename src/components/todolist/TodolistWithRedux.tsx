@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 import { FilterValuesType, TodoListDomainType } from "../../data/dataPropsTypes";
 import styles from './Todolist.module.scss';
 import { AddItem } from "../addItem/AddItem";
@@ -13,12 +13,9 @@ import { filterButtonsContainerSx } from "./Todolist.styles";
 import { CoverImage } from "../coverImage/CoverImage";
 import Grid from "@mui/material/Unstable_Grid2";
 import Paper from '@mui/material/Paper';
-import { useDispatch, useSelector } from "react-redux";
-import { AppRootStateType } from "../../model/store";
-import {
-    addTaskAC,
-    cleanTasksListAC,
-} from "../../model/tasksReduser";
+import { useSelector } from "react-redux";
+import { AppRootStateType, useAppDispatch } from "../../model/store";
+import { addTaskTC, cleanTasksListAC, getTasksTC, } from "../../model/tasksReduser";
 import {
     changedTodolistCoverAC,
     changedTodolistFilterAC,
@@ -27,7 +24,7 @@ import {
 } from "../../model/todolistsReducer";
 import { ButtonMemo } from "../button/ButtonMemo";
 import { Task } from "../task/Task";
-import { TaskType } from "../../api/todolist-api";
+import { TaskStatuses, TaskType } from "../../api/todolist-api";
 
 
 // Create
@@ -41,7 +38,11 @@ const TodolistWithRedux = React.memo(({todolist}: Props) => {
     const {id, title, filter, coverImage} = todolist;
 
     const tasks = useSelector<AppRootStateType, Array<TaskType>>(state => state.tasks[id]);
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
+
+    useEffect(() => {
+        dispatch(getTasksTC(id))
+    }, [dispatch, id]);
 
     // const filterTasks = (tasks: TaskType[]) => {
     //     let tasksFiltered = tasks;
@@ -59,18 +60,18 @@ const TodolistWithRedux = React.memo(({todolist}: Props) => {
 
     const filteredTasks = useMemo(() => {
         if (filter === 'active') {
-            return tasks.filter((t) => !t.completed);
+            return tasks.filter((t) => t.status !== TaskStatuses.Completed);
         }
         if (filter === 'completed') {
-            return tasks.filter((t) => t.completed);
+            return tasks.filter((t) => t.status === TaskStatuses.Completed);
         }
         return tasks;
     }, [tasks, filter]);
 
     const sorterTasks = useMemo(() => {
         return filteredTasks.sort((prev, next) => {
-            if (next.completed && !prev.completed) return -1;
-            if (!next.completed && prev.completed) return 1;
+            if (next.status === TaskStatuses.Completed && prev.status !== TaskStatuses.Completed) return -1;
+            if (next.status !== TaskStatuses.Completed && prev.status  === TaskStatuses.Completed) return 1;
             return 0;
         })
     }, [filteredTasks]);
@@ -84,7 +85,8 @@ const TodolistWithRedux = React.memo(({todolist}: Props) => {
     }, [dispatch, id]);
 
     const addItemHandler = useCallback((title: string) => {
-        dispatch(addTaskAC(id, title));
+        //dispatch(addTaskAC(id, title));
+        dispatch(addTaskTC(id, title))
     }, [dispatch, id]);
 
     const onChangeCoverHandler = useCallback((image: string) => {

@@ -118,7 +118,7 @@ export const setTodolistsAC = (todolists: TodolistType[]) => {
 //     }
 // }
 
-export const fetchTodolistsTC = (): AppThunkType => async dispatch => {
+export const getTodolistsTC = (): AppThunkType => async dispatch => {
     try{
         const res = await todolistAPI.getTodolist();
         dispatch(setTodolistsAC(res.data));
@@ -126,5 +126,9 @@ export const fetchTodolistsTC = (): AppThunkType => async dispatch => {
     catch (e: unknown) {
         dispatch(setTodolistsAC([]));
     }
+}
+
+export const addTodolistTC = (title: string) => {
+
 }
 

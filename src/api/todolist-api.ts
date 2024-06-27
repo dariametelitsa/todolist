@@ -29,16 +29,16 @@ export const todolistAPI = {
         return instance.put<ResponseType>(`/todo-lists/${todoId}`, {title});
     },
     getTasks: (todoId: string) => {
-        return instance.get<Array<TaskType>>(`/todo-lists/${todoId}/tasks`);
+        return instance.get<ResponceTypeGetTask>(`/todo-lists/${todoId}/tasks`);
     },
     createTask: (todoId: string, title: string) => {
-        return instance.post<ResponseType>(`/todo-lists/${todoId}/tasks`, {todolistId: todoId, title});
+        return instance.post<ResponseType<{item: TaskType}>>(`/todo-lists/${todoId}/tasks`, {todolistId: todoId, title});
     },
     deleteTask: (todoId: string, taskId: string) => {
         return instance.delete<ResponseType>(`/todo-lists/${todoId}/tasks/${taskId}`);
     },
-    updateTask: (todoId: string, taskId: string, title: string) => {
-        return instance.put<ResponseType>(`/todo-lists/${todoId}/tasks/${taskId}`,{title});
+    updateTask: (todoId: string, taskId: string, model: UpdateTaskModelType) => {
+        return instance.put<ResponseType<{item: TaskType}>>(`/todo-lists/${todoId}/tasks/${taskId}`,{...model});
     },
 };
 
@@ -79,7 +79,6 @@ export enum TodoTaskPriorities {
 export type TaskType = {
     description: string
     title: string
-    completed: boolean
     status: TaskStatuses
     priority: TodoTaskPriorities
     startDate: string
@@ -88,4 +87,20 @@ export type TaskType = {
     todoListId: string
     order: number
     addedDate: string
+}
+
+export type UpdateTaskModelType = {
+    title: string
+    description: string
+    status: number
+    priority: number
+    startDate: string
+    deadline: string
+    addedDate: string
+}
+
+export type ResponceTypeGetTask = {
+    items: TaskType[]
+    totalCount: number
+    error: string
 }

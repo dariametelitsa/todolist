@@ -14,6 +14,7 @@ import Box from '@mui/material/Box';
 import { filterButtonsContainerSx, getListItemSx } from "./Todolist.styles";
 import { CoverImage } from "../coverImage/CoverImage";
 import Grid from "@mui/material/Unstable_Grid2";
+import { TaskStatuses } from "../../api/todolist-api";
 
 
 // Create
@@ -83,14 +84,14 @@ const Todolist: React.FC<TodolistPropsType> = ({
                             const onChangeSetTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => setNewTaskStatus(id, task.id, e.currentTarget.checked);
                             return (
                                 <ListItem key={task.id}
-                                          sx={getListItemSx(task.completed)}>
+                                          sx={getListItemSx(task.status === TaskStatuses.Completed)}>
 
                                     {/*<input type={"checkbox"} checked={task.isDone}*/}
                                     {/*       onChange={onChangeSetTaskStatusHandler}/>*/}
                                     {/*<span className={task.isDone ? styles.taskDone : styles.task}>{task.title}</span>*/}
 
                                     <label className={styles.label}>
-                                        <Checkbox checked={task.completed} onChange={onChangeSetTaskStatusHandler}/>
+                                        <Checkbox checked={task.status === TaskStatuses.Completed} onChange={onChangeSetTaskStatusHandler}/>
                                         <EditableSpan oldTitle={task.title} idToChange={task.id}
                                                       updateItem={onChangeTitleTaskHandler}/>
                                     </label>

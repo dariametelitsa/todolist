@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import { AppRootStateType, useAppDispatch } from "../../model/store";
 import { TodoListDomainType } from "../../data/dataPropsTypes";
 import { useCallback, useEffect, useState } from "react";
-import { addedTodolistAC, fetchTodolistsTC } from "../../model/todolistsReducer";
+import { addedTodolistAC, getTodolistsTC } from "../../model/todolistsReducer";
 import { createTheme } from "@mui/material/styles";
 import { cyan } from "@mui/material/colors";
 
@@ -14,7 +14,7 @@ export const useAppWithRedux = () => {
 
 
     useEffect(()=>{
-        dispatch(fetchTodolistsTC());
+        dispatch(getTodolistsTC());
         //// it's wrong to do like this. Dialog with API not from view
         // todolistAPI.getTodolist()
         //     .then(res => {

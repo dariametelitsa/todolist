@@ -19,7 +19,7 @@ export type TodoListDomainType = TodolistType & {
 }
 
 export type TasksType = {
-    [key: string]: TaskType[]
+    [key: string]: TaskType[];
 }
 
 export type TasksPropsType = {
