@@ -9,7 +9,7 @@ import { TodoListDomainType } from "../data/dataPropsTypes";
 
 const rootReducer = combineReducers({
     // todolists: todolistsReducer,
-    todolists: todolistsReducer as unknown as TodoListDomainType,
+    todolists: todolistsReducer,
     tasks: tasksReducer,
 });
 
@@ -36,7 +36,7 @@ const initialGlobalState = {
     ]
 };
 
-export const storybookStore = legacy_createStore(rootReducer, initialGlobalState as returnReducerType );
+export const storybookStore = legacy_createStore(rootReducer, initialGlobalState as any );
 
 
 export const ReduxStoreProviderDecorator = (storyFn: () => React.ReactNode) => {

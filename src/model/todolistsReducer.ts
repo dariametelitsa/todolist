@@ -1,7 +1,7 @@
 import { v1 } from "uuid";
 import { FilterValuesType, TodoListDomainType } from "../data/dataPropsTypes";
 import { todolistAPI, TodolistType } from "../api/todolist-api";
-import { Dispatch } from "redux";
+import { AppThunkType } from "./store";
 
 //action types
 export type RemoveTodoActionType = ReturnType<typeof removeTodolistAC>;
@@ -104,16 +104,27 @@ export const setTodolistsAC = (todolists: TodolistType[]) => {
 };
 
 
+//пример типирования thunk и dispatch
+// export const fetchTodolistsTC = (): AppThunkType  => {
+//     return (dispatch: Dispatch<TodolistActionsType>) => {
+//         todolistAPI.getTodolist()
+//             .then(res => {
+//                 dispatch(setTodolistsAC(res.data));
+//             })
+//             .catch(err => {
+//                 console.log(err);
+//                 dispatch(setTodolistsAC([]));
+//             })
+//     }
+// }
 
-export const fetchTodolistsTC = () => {
-    return (dispatch: Dispatch<TodolistActionsType>) => {
-        todolistAPI.getTodolist()
-            .then(res => {
-                dispatch(setTodolistsAC(res.data));
-            })
-            .catch(err => {
-                console.log(err);
-                dispatch(setTodolistsAC([]));
-            })
+export const fetchTodolistsTC = (): AppThunkType => async dispatch => {
+    try{
+        const res = await todolistAPI.getTodolist();
+        dispatch(setTodolistsAC(res.data));
+    }
+    catch (e: unknown) {
+        dispatch(setTodolistsAC([]));
     }
 }
+
