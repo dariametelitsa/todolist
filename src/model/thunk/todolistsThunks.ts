@@ -45,8 +45,6 @@ export const deleteTodolistTC = (todolistId: string): AppThunkType => dispatch =
        });
 }
 
-
-
 // type UpdateDomainTodolistModelType = {
 //     order: number
 //     title: string

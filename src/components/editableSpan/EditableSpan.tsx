@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { ChangeEvent, useState } from 'react';
 import TextField from "@mui/material/TextField";
 import EditIcon from '@mui/icons-material/Edit';
 import IconButton from "@mui/material/IconButton";
 import DoneIcon from '@mui/icons-material/Done';
+import { UseEditableSpan } from "./hooks/useEditableSpan";
 
 export type EditableSpanProps = {
     oldTitle: string
@@ -14,32 +14,15 @@ export type EditableSpanProps = {
 
 export const EditableSpan = React.memo(({idToChange, oldTitle, updateItem, maxLength = 30}: EditableSpanProps) => {
 
-    const [editMode, setEditMode] = useState(false)
-    const [newTitle, setNewTitle] = useState<string>(oldTitle);
-
-    const activateEditModeHandler = () => {
-        setEditMode(true);
-        setNewTitle(oldTitle)
-    }
-    const activateViewMode = () => {
-        setEditMode(false);
-        newTitle.length !== 0 ? updateItem(idToChange, newTitle) : updateItem(idToChange, oldTitle);
-        newTitle.length !== 0 ? setNewTitle(newTitle) : setNewTitle(oldTitle);
-    }
-
-    const onChangeTitleHandler = (event: ChangeEvent<HTMLInputElement>) => {
-        setNewTitle(event.target.value);
-    }
-
-    const onKeyDownHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === 'Escape') {
-            setEditMode(!editMode);
-            setNewTitle(oldTitle);
-        }
-        if (e.key === 'Enter') {
-            activateViewMode();
-        }
-    }
+    const {
+        activateEditModeHandler,
+        activateViewMode,
+        onChangeTitleHandler,
+        onKeyDownHandler,
+        setEditMode,
+        editMode,
+        newTitle
+    } = UseEditableSpan(idToChange, oldTitle, updateItem);
 
     return (
         editMode

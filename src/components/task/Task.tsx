@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import { getListItemSx } from "../todolist/Todolist.styles";
 import styles from "../todolist/Todolist.module.scss";
@@ -8,31 +7,18 @@ import IconButton from "@mui/material/IconButton";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import ListItem from "@mui/material/ListItem";
 import { TaskStatuses, TaskType } from "../../api/todolist-api";
-import { useAppDispatch } from "../../model/store";
-import { deleteTaskTC, updateTaskTC } from "../../model/thunk/tasksThunks";
+import { useTask } from "./hooks/useTask";
 
 type TasksProps = {
     task: TaskType
     todolistId: string
-    // removeTask: (taskId: string) => void
-    // changeTaskStatus: (taskId: string, newStatus: boolean) => void
-    // changeTaskTitle: (taskId: string, newTitle: string) => void
 };
 export const Task = React.memo(({todolistId, task}: TasksProps) => {
-
-    const dispatch = useAppDispatch();
-
-    const removeTaskHandler = (taskId: string) => {
-        dispatch(deleteTaskTC(todolistId, taskId))
-    };
-
-    const changeTaskStatusHandler = (taskId: string, newState: boolean) => {
-        dispatch(updateTaskTC(todolistId, taskId, {status: newState ? TaskStatuses.Completed : TaskStatuses.New}));
-    }
-
-    const changeTaskTitleHandler = (taskId: string, newTitle: string) => {
-        dispatch(updateTaskTC(todolistId, taskId, {title: newTitle}));
-    }
+    const {
+        removeTaskHandler,
+        changeTaskStatusHandler,
+        changeTaskTitleHandler
+    } = useTask(todolistId);
 
     return (
         <ListItem key={task.id}
