@@ -16,19 +16,18 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline'
 import { HeaderMenu } from "../components/headerMenu/HeaderMenu";
 import {
-    addedTodolistAC,
+    addTodolistAC,
     changedTodolistCoverAC,
     changedTodolistFilterAC,
-    changeTodolistTitleAC,
-    removeTodolistAC,
+    changeTodolistTitleAC, deleteTodolistAC,
     todolistsReducer
-} from "../model/todolistsReducer";
+} from "../model/redusers/todolistsReducer";
 import {
     cleanTasksListAC,
-    removeTaskAC,
+    deleteTaskAC,
     tasksReducer
-} from "../model/tasksReduser";
-import { TaskStatuses, TaskType } from "../api/todolist-api";
+} from "../model/redusers/tasksReduser";
+import { TaskStatuses, TaskType, TodolistType } from "../api/todolist-api";
 
 export const sum = (a: number, b: number): number => {
     return a + b;
@@ -61,7 +60,7 @@ function App() {
     };
 
     function removeTask(todolistId: string, taskId: string) {
-        dispatchTasks(removeTaskAC(todolistId, taskId));
+        dispatchTasks(deleteTaskAC(todolistId, taskId));
     }
 
     const addTask = (todolistId: string, taskTitle: string) => {
@@ -81,13 +80,14 @@ function App() {
     };
 
     const removeTodolist = (todolistId: string) => {
-        const action = removeTodolistAC(todolistId);
+        const action = deleteTodolistAC(todolistId);
         dispatchTodoLists(action);
         dispatchTasks(action);
     };
 
     const addTodolist = (title: string) => {
-        const action = addedTodolistAC(title);
+        const todo: TodolistType = {id:'test', title, order: 0, addedDate: ''};
+        const action = addTodolistAC(todo);
         dispatchTodoLists(action);
         dispatchTasks(action);
     };

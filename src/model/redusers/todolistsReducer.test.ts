@@ -1,13 +1,15 @@
 import { v1 } from 'uuid'
 import {
-    addedTodolistAC,
+    addTodolistAC,
     changedTodolistCoverAC,
     changedTodolistFilterAC,
-    changeTodolistTitleAC,
-    removeTodolistAC, setTodolistsAC,
+    changeTodolistTitleAC, deleteTodolistAC,
+    setTodolistsAC,
     todolistsReducer
 } from "./todolistsReducer";
-import { TodoListDomainType } from "../data/dataPropsTypes";
+import { TodoListDomainType } from "../../data/dataPropsTypes";
+import { TodolistType } from "../../api/todolist-api";
+import { tasksReducer } from "./tasksReduser";
 
 //test data
 let todolistId1: string;
@@ -26,7 +28,7 @@ beforeEach(() => {
 
 
 test('correct todolist should be removed', () => {
-    const endState = todolistsReducer(startState, removeTodolistAC(todolistId1));
+    const endState = todolistsReducer(startState, deleteTodolistAC(todolistId1));
 
     expect(endState.length).toBe(1);
     // удалится нужный тудулист, а не любой
@@ -35,11 +37,13 @@ test('correct todolist should be removed', () => {
 
 
 test('correct todolist should be added', () => {
-    const newTitle = 'New Todolist';
-    const endState = todolistsReducer(startState, addedTodolistAC(newTitle));
+    const title = 'new todolist'
+    const newTodo : TodolistType = {id:'test', title, order: 0, addedDate: ''};
+
+    const endState = todolistsReducer(startState, addTodolistAC(newTodo));
 
     expect(endState.length).toBe(3);
-    expect(endState[0].title).toBe(newTitle);
+    expect(endState[0].title).toBe(title);
 });
 
 

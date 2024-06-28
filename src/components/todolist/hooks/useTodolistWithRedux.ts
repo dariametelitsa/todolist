@@ -2,14 +2,15 @@ import { useSelector } from "react-redux";
 import { AppRootStateType, useAppDispatch } from "../../../model/store";
 import { TaskStatuses, TaskType } from "../../../api/todolist-api";
 import { useCallback, useEffect, useMemo } from "react";
-import { addTaskTC, getTasksTC } from "../../../model/tasksThunks";
+import { addTaskTC, cleanTasksListTC, getTasksTC } from "../../../model/thunk/tasksThunks";
 import { FilterValuesType } from "../../../data/dataPropsTypes";
 import {
     changedTodolistCoverAC,
     changedTodolistFilterAC,
     changeTodolistTitleAC
-} from "../../../model/todolistsReducer";
-import { cleanTasksListAC } from "../../../model/tasksReduser";
+} from "../../../model/redusers/todolistsReducer";
+import { cleanTasksListAC } from "../../../model/redusers/tasksReduser";
+import { deleteTodolistTC } from "../../../model/thunk/todolistsThunks";
 
 export const useTodolistWithRedux = (id: string, filter: FilterValuesType) => {
     const tasks = useSelector<AppRootStateType, Array<TaskType>>(state => state.tasks[id]);
@@ -42,7 +43,7 @@ export const useTodolistWithRedux = (id: string, filter: FilterValuesType) => {
     }, [dispatch, id]);
 
     const onClickHandlerDeleteAllTasks = useCallback(() => {
-        dispatch(cleanTasksListAC(id))
+        dispatch(cleanTasksListTC(id));
     }, [dispatch, id]);
 
     const addItemHandler = useCallback((title: string) => {
@@ -56,6 +57,10 @@ export const useTodolistWithRedux = (id: string, filter: FilterValuesType) => {
     const changeTodolistTitleHandler = useCallback((todolistId: string, newTitle: string) => {
         dispatch(changeTodolistTitleAC(todolistId, newTitle));
     },[dispatch]);
+
+    const deleteTodolistHandler = () => {
+        dispatch(deleteTodolistTC(id));
+    }
 
     // const onChangeTitleTaskHandler = useCallback((taskId: string, newTitle: string) => {
     //     dispatch(renameTaskTitleAC(id, taskId, newTitle));
@@ -76,6 +81,7 @@ export const useTodolistWithRedux = (id: string, filter: FilterValuesType) => {
         onClickHandlerDeleteAllTasks,
         addItemHandler,
         onChangeCoverHandler,
-        changeTodolistTitleHandler
+        changeTodolistTitleHandler,
+        deleteTodolistHandler,
     }
 }

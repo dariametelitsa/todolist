@@ -1,8 +1,8 @@
 import { Provider } from "react-redux";
 import { v1 } from "uuid";
 import { combineReducers, legacy_createStore } from "redux";
-import { todolistsReducer } from "../model/todolistsReducer";
-import { tasksReducer } from "../model/tasksReduser";
+import { todolistsReducer } from "../model/redusers/todolistsReducer";
+import { tasksReducer } from "../model/redusers/tasksReduser";
 import React from "react";
 import { TodoListDomainType } from "../data/dataPropsTypes";
 

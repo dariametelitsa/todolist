@@ -9,7 +9,7 @@ import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import ListItem from "@mui/material/ListItem";
 import { TaskStatuses, TaskType } from "../../api/todolist-api";
 import { useAppDispatch } from "../../model/store";
-import { deleteTaskTC, updateTaskTC } from "../../model/tasksThunks";
+import { deleteTaskTC, updateTaskTC } from "../../model/thunk/tasksThunks";
 
 type TasksProps = {
     task: TaskType

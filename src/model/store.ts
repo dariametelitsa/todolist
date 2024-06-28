@@ -1,6 +1,6 @@
 import { AnyAction, applyMiddleware, combineReducers, compose, createStore } from "redux";
-import { TodolistActionsType, todolistsReducer } from "./todolistsReducer";
-import { TaskActionsType, tasksReducer } from "./tasksReduser";
+import { TodolistActionsType, todolistsReducer } from "./redusers/todolistsReducer";
+import { TaskActionsType, tasksReducer } from "./redusers/tasksReduser";
 import { thunk, ThunkAction, ThunkDispatch } from "redux-thunk";
 import { useDispatch } from "react-redux";
 
@@ -27,7 +27,7 @@ export type AppDispatch = typeof store.dispatch
 // export const store = createStore(rootReducer, applyMiddleware(thunk), composeEnhancers())
 
 //создаем тип для thunk
-export type AppThunkType = ThunkAction<void, AppRootStateType, unknown, AnyAction>
+export type AppThunkType<ReturnValue = void> = ThunkAction<ReturnValue, AppRootStateType, unknown, AnyAction>
 
 
 // создаем тип диспатча который принимает как AC так и TC

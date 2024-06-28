@@ -7,17 +7,14 @@ import IconButton from '@mui/material/IconButton';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import Button from '@mui/material/Button';
 import List from '@mui/material/List';
-
-import Box from '@mui/material/Box';
-import { filterButtonsContainerSx } from "./Todolist.styles";
 import { CoverImage } from "../coverImage/CoverImage";
 import Grid from "@mui/material/Unstable_Grid2";
 import Paper from '@mui/material/Paper';
-import { removeTodolistAC } from "../../model/todolistsReducer";
-import { ButtonMemo } from "../button/ButtonMemo";
 import { Task } from "../task/Task";
 import { useTodolistWithRedux } from "./hooks/useTodolistWithRedux";
 import { FiltersForTasks } from "../filtersForTasks/FiltersForTasks";
+import { deleteTodolistAC } from "../../model/redusers/todolistsReducer";
+import { deleteTodolistTC } from "../../model/thunk/todolistsThunks";
 
 type Props = {
     todolist: TodoListDomainType
@@ -31,7 +28,8 @@ const {dispatch,
     onClickHandlerDeleteAllTasks,
     addItemHandler,
     onChangeCoverHandler,
-    changeTodolistTitleHandler} = useTodolistWithRedux(id, filter);
+    changeTodolistTitleHandler,
+    deleteTodolistHandler} = useTodolistWithRedux(id, filter);
 
     const tasksForTodolist = sorterTasks.map((task) => {
         return (
@@ -49,7 +47,7 @@ const {dispatch,
             <CoverImage image={coverImage && coverImage} updateImage={onChangeCoverHandler}/>
             <h3 style={{display: "flex", justifyContent: 'space-between'}}>
                 <EditableSpan oldTitle={title} idToChange={id} updateItem={changeTodolistTitleHandler}/>
-                <IconButton aria-label="delete" onClick={() => dispatch(removeTodolistAC(id))}>
+                <IconButton aria-label="delete" onClick={deleteTodolistHandler}>
                     <DeleteOutlineIcon/>
                 </IconButton>
             </h3>

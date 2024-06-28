@@ -1,28 +1,28 @@
-import { TasksType } from "../data/dataPropsTypes";
-import { AddTodoActionType, RemoveTodoActionType, SetTodolistsActionType } from "./todolistsReducer";
-import { TaskType } from "../api/todolist-api";
+import { TasksType } from "../../data/dataPropsTypes";
+import { AddTodoActionType, DeleteTodoActionType, SetTodolistsActionType } from "./todolistsReducer";
+import { TaskType } from "../../api/todolist-api";
 
-type RemoveTaskActionType = ReturnType<typeof removeTaskAC>;
+type DeleteTaskActionType = ReturnType<typeof deleteTaskAC>;
 type AddTaskActionType = ReturnType<typeof addTaskAC>;
 type CleanAllTasksActionType = ReturnType<typeof cleanTasksListAC>;
 type SetTasksActionType = ReturnType<typeof setTasksAC>
 type UpdateTaskActionType = ReturnType<typeof updateTaskAC>
 
 export type TaskActionsType =
-    RemoveTaskActionType
+    DeleteTaskActionType
     | AddTaskActionType
     | CleanAllTasksActionType
     | AddTodoActionType
-    | RemoveTodoActionType
+    | DeleteTodoActionType
     | SetTodolistsActionType
     | SetTasksActionType
     | UpdateTaskActionType
 
 export const initialState: TasksType = {};
 
-export const tasksReducer = (state: TasksType = {}, action: TaskActionsType): TasksType => {
+export const tasksReducer = (state = initialState, action: TaskActionsType): TasksType => {
     switch (action.type) {
-        case 'REMOVE_TASK':
+        case "DELETE_TASK":
             return {
                 ...state,
                 [action.payload.todolistId]: state[action.payload.todolistId].filter(t => t.id !== action.payload.taskId)
@@ -49,8 +49,8 @@ export const tasksReducer = (state: TasksType = {}, action: TaskActionsType): Ta
         case 'CLEAN_TASKS_LIST':
             return {...state, [action.payload.todolistId]: []};
         case 'ADD_TODOLIST':
-            return {[action.payload.id]: [], ...state};
-        case 'REMOVE_TODOLIST':
+            return {[action.payload.todolist.id]: [], ...state};
+        case 'DELETE_TODOLIST':
             const {[action.payload.id]: deletedValue, ...rest} = state;
             return rest;
         case 'SET_TODOLISTS':
@@ -64,10 +64,10 @@ export const tasksReducer = (state: TasksType = {}, action: TaskActionsType): Ta
                 (acc[tl.id] = [])
                 return acc
             }, state)
-        case "SET_TASKS": {
+        case 'SET_TASKS': {
             return {...state, [action.payload.todolistId]: action.payload.tasks}
         }
-        case "UPDATE_TASKS": {
+        case 'UPDATE_TASKS': {
             return {...state, [action.payload.todolistId]: state[action.payload.todolistId].map(t => {
                 return t.id === action.payload.taskId ? action.payload.task : t;
                 })}
@@ -78,9 +78,9 @@ export const tasksReducer = (state: TasksType = {}, action: TaskActionsType): Ta
 };
 
 //ac - action creator
-export const removeTaskAC = (todolistId: string, taskId: string) => {
+export const deleteTaskAC = (todolistId: string, taskId: string) => {
     return {
-        type: 'REMOVE_TASK',
+        type: 'DELETE_TASK',
         payload: {
             todolistId,
             taskId,

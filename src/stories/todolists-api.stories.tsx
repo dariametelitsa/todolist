@@ -22,7 +22,7 @@ export const CreateTodolist = () => {
     const [state, setState] = useState<any>(null);
     const [title, setTitle] = useState<any>('');
     const onClickHandler = () => {
-        todolistAPI.createTodolist(title)
+        todolistAPI.addTodolist(title)
             .then((res) => {
                 setState(res.data);
             })
@@ -116,7 +116,7 @@ export const CreateTaskForTodolist = () => {
     const [title, setTitle] = useState<any>('');
 
     const onClickHandler = () => {
-        todolistAPI.createTask(todoId, title)
+        todolistAPI.addTask(todoId, title)
             .then(res => {
                 setState(res.data);
         })
