@@ -1,6 +1,6 @@
 import { v4 } from "uuid";
 import { TasksType } from "../data/dataPropsTypes";
-import { addTaskAC, cleanTasksListAC, removeTaskAC, renameTaskTitleAC, tasksReducer } from "./tasksReduser";
+import { addTaskAC, cleanTasksListAC, removeTaskAC, tasksReducer, updateTaskAC } from "./tasksReduser";
 import { addedTodolistAC, removeTodolistAC, setTodolistsAC } from "./todolistsReducer";
 import { TaskStatuses, TodoTaskPriorities } from "../api/todolist-api";
 
@@ -52,11 +52,14 @@ test('task should be add correct', () => {
 });
 
 test('correct rename task title', () => {
-    const newTask = 'I\'m was changed';
-    const endState = tasksReducer(state, renameTaskTitleAC(todolistId1, '1', newTask));
+    const newTitle = 'I\'m was changed';
+    let taskToUpdate = state[todolistId1].find(t => t.id === '1');
 
+    taskToUpdate ? taskToUpdate.title = newTitle : taskToUpdate = state[todolistId1][0];
+
+    const endState = tasksReducer(state, updateTaskAC(todolistId1, '1', taskToUpdate));
     expect(endState[todolistId1].length).toBe(3);
-    expect(endState[todolistId1][0].title).toBe(newTask);
+    expect(endState[todolistId1][0].title).toBe(newTitle);
     expect(endState[todolistId1][1].title).toBe('DDD');
     expect(Object.keys(endState).length).toBe(2);
     expect(endState[todolistId2][0].title).toBe("CSS&HTML");

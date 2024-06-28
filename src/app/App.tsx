@@ -26,8 +26,6 @@ import {
 import {
     cleanTasksListAC,
     removeTaskAC,
-    renameTaskTitleAC,
-    setNewTaskStatusAC,
     tasksReducer
 } from "../model/tasksReduser";
 import { TaskStatuses, TaskType } from "../api/todolist-api";
@@ -71,7 +69,7 @@ function App() {
     };
 
     const renameTaskTitle = (todolistId: string, taskId: string, newTaskTitle: string) => {
-        dispatchTasks(renameTaskTitleAC(todolistId, taskId, newTaskTitle));
+        //dispatchTasks(updateTaskTC(todolistId, taskId, newTaskTitle));
     };
 
     const deleteAllTasks = (todolistId: string) => {
@@ -79,7 +77,7 @@ function App() {
     };
 
     const setNewTaskStatus = (todolistId: string, taskId: string, newIsDone: boolean) => {
-        dispatchTasks(setNewTaskStatusAC(todolistId, taskId, newIsDone));
+        //dispatchTasks(setNewTaskStatusAC(todolistId, taskId, newIsDone));
     };
 
     const removeTodolist = (todolistId: string) => {
