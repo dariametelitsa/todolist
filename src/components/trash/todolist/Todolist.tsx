@@ -1,8 +1,8 @@
 import React, { ChangeEvent } from "react";
-import { FilterValuesType, TodolistPropsType } from "../../data/dataPropsTypes";
+import { FilterValuesType, TodolistPropsType } from "../../../data/dataPropsTypes";
 import styles from './Todolist.module.scss';
-import { AddItem } from "../addItem/AddItem";
-import { EditableSpan } from "../editableSpan/EditableSpan";
+import { AddItem } from "../../addItem/AddItem";
+import { EditableSpan } from "../../editableSpan/EditableSpan";
 import IconButton from '@mui/material/IconButton';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import Button from '@mui/material/Button';
@@ -11,10 +11,10 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 
 import Box from '@mui/material/Box';
-import { filterButtonsContainerSx, getListItemSx } from "./Todolist.styles";
-import { CoverImage } from "../coverImage/CoverImage";
+import { filterButtonsContainerSx, getListItemSx } from "../../todolist/Todolist.styles";
+import { CoverImage } from "../../coverImage/CoverImage";
 import Grid from "@mui/material/Unstable_Grid2";
-import { TaskStatuses } from "../../api/todolist-api";
+import { TaskStatuses } from "../../../api/todolist-api";
 
 
 // Create

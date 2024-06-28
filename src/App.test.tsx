@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import AppWithRedux, { sum } from './appWithRedux/AppWithRedux';
+import AppWithRedux, { sum } from './components/appWithRedux/AppWithRedux';
 
 test('renders learn react link', () => {
   const { getByText } = render(<AppWithRedux />);

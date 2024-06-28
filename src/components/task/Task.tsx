@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { getListItemSx } from "../todolist/Todolist.styles";
-import styles from "../todolist/Todolist.module.scss";
+import styles from "../trash/todolist/Todolist.module.scss";
 import Checkbox from "@mui/material/Checkbox";
 import { EditableSpan } from "../editableSpan/EditableSpan";
 import IconButton from "@mui/material/IconButton";

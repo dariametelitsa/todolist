@@ -1,11 +1,10 @@
 // trouble with reducer (task add)
 
 import React, { useReducer, useState } from 'react';
-import { FilterValuesType } from "../data/dataPropsTypes";
-import Todolist from "../components/todolist/Todolist";
-import { tasksArr, todoListsData } from "../data/Data";
+import { FilterValuesType } from "../../../data/dataPropsTypes";
+import Todolist from '../todolist/Todolist';
+import { tasksArr, todoListsData } from "../../../data/Data";
 import '../App.scss'
-import { AddItem } from "../components/addItem/AddItem";
 
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
@@ -14,7 +13,8 @@ import Paper from '@mui/material/Paper';
 import { cyan } from '@mui/material/colors';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline'
-import { HeaderMenu } from "../components/headerMenu/HeaderMenu";
+import { HeaderMenu } from  '../../headerMenu/HeaderMenu';
+        //"../../components/headerMenu/HeaderMenu";
 import {
     addTodolistAC,
     changedTodolistCoverAC,
@@ -22,9 +22,10 @@ import {
     changeTodolistTitleAC,
     deleteTodolistAC,
     todolistsReducer
-} from "../model/redusers/todolistsReducer";
-import { cleanTasksListAC, deleteTaskAC, tasksReducer } from "../model/redusers/tasksReduser";
-import { TaskStatuses, TaskType, TodolistType } from "../api/todolist-api";
+} from "../../../model/redusers/todolistsReducer";
+import { cleanTasksListAC, deleteTaskAC, tasksReducer } from "../../../model/redusers/tasksReduser";
+import { TaskStatuses, TaskType, TodolistType } from "../../../api/todolist-api";
+import { AddItem } from "../../addItem/AddItem";
 
 export const sum = (a: number, b: number): number => {
     return a + b;

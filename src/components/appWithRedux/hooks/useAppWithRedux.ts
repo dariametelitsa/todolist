@@ -1,10 +1,10 @@
 import { useSelector } from "react-redux";
-import { AppRootStateType, useAppDispatch } from "../../model/store";
-import { TodoListDomainType } from "../../data/dataPropsTypes";
+import { AppRootStateType, useAppDispatch } from "../../../model/store";
+import { TodoListDomainType } from "../../../data/dataPropsTypes";
 import { useCallback, useEffect, useState } from "react";
 import { createTheme } from "@mui/material/styles";
 import { cyan } from "@mui/material/colors";
-import { addTodolistTC, getTodolistsTC } from "../../model/thunk/todolistsThunks";
+import { addTodolistTC, getTodolistsTC } from "../../../model/thunk/todolistsThunks";
 
 type ThemeMode = 'dark' | 'light';
 

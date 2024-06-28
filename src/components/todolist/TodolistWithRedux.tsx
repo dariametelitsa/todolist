@@ -1,6 +1,6 @@
 import React from "react";
 import { TodoListDomainType } from "../../data/dataPropsTypes";
-import styles from './Todolist.module.scss';
+import styles from '../trash/todolist/Todolist.module.scss';
 import { AddItem } from "../addItem/AddItem";
 import { EditableSpan } from "../editableSpan/EditableSpan";
 import IconButton from '@mui/material/IconButton';
