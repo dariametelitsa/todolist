@@ -1,7 +1,5 @@
-import { v1 } from "uuid";
 import { FilterValuesType, TodoListDomainType } from "../../data/dataPropsTypes";
-import { TaskType, todolistAPI, TodolistType } from "../../api/todolist-api";
-import { AppThunkType } from "../store";
+import { TodolistType } from "../../api/todolist-api";
 
 //action types
 export type DeleteTodoActionType = ReturnType<typeof deleteTodolistAC>;
@@ -21,7 +19,7 @@ export type TodolistActionsType =
 
 const initialState: TodoListDomainType[] = [];
 
-export const todolistsReducer = (state: Array<TodoListDomainType> = [], action: TodolistActionsType): Array<TodoListDomainType> => {
+export const todolistsReducer = (state: Array<TodoListDomainType> = initialState, action: TodolistActionsType): Array<TodoListDomainType> => {
     switch (action.type) {
         case 'DELETE_TODOLIST': {
             return state.filter(tl => tl.id !== action.payload.id);

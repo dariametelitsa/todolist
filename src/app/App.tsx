@@ -19,14 +19,11 @@ import {
     addTodolistAC,
     changedTodolistCoverAC,
     changedTodolistFilterAC,
-    changeTodolistTitleAC, deleteTodolistAC,
+    changeTodolistTitleAC,
+    deleteTodolistAC,
     todolistsReducer
 } from "../model/redusers/todolistsReducer";
-import {
-    cleanTasksListAC,
-    deleteTaskAC,
-    tasksReducer
-} from "../model/redusers/tasksReduser";
+import { cleanTasksListAC, deleteTaskAC, tasksReducer } from "../model/redusers/tasksReduser";
 import { TaskStatuses, TaskType, TodolistType } from "../api/todolist-api";
 
 export const sum = (a: number, b: number): number => {

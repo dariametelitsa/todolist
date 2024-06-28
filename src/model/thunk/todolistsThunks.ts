@@ -1,6 +1,6 @@
 import { AppThunkType } from "../store";
 import { todolistAPI } from "../../api/todolist-api";
-import { addTodolistAC, deleteTodolistAC, setTodolistsAC } from "../redusers/todolistsReducer";
+import { addTodolistAC, changeTodolistTitleAC, deleteTodolistAC, setTodolistsAC } from "../redusers/todolistsReducer";
 import { setTasksAC } from "../redusers/tasksReduser";
 
 //пример типирования thunk и dispatch
@@ -40,11 +40,19 @@ export const addTodolistTC = (title: string): AppThunkType<Promise<void>> => asy
 
 export const deleteTodolistTC = (todolistId: string): AppThunkType => dispatch => {
    todolistAPI.deleteTodolist(todolistId)
-       .then(res => {
+       .then(() => {
            dispatch(deleteTodolistAC(todolistId));
        });
 }
 
+
+
+// type UpdateDomainTodolistModelType = {
+//     order: number
+//     title: string
+// }
+
 export const changeTodolistTitleTC = (todolistId: string, title: string): AppThunkType => dispatch => {
-    // todolistAPI.
+    todolistAPI.updateTodolist(todolistId, title)
+        .then(() => dispatch(changeTodolistTitleAC(todolistId, title)));
 }

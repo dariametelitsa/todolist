@@ -1,4 +1,4 @@
-import { TaskStatuses, TaskType, todolistAPI, TodoTaskPriorities, UpdateTaskModelType } from "../../api/todolist-api";
+import { TaskStatuses, todolistAPI, TodoTaskPriorities, UpdateTaskModelType } from "../../api/todolist-api";
 import { AppThunkType } from "../store";
 import { addTaskAC, cleanTasksListAC, deleteTaskAC, setTasksAC, updateTaskAC } from "../redusers/tasksReduser";
 
@@ -12,7 +12,7 @@ export const getTasksTC = (todoId: string): AppThunkType => dispatch => {
 
 export const deleteTaskTC = (todolistId: string, taskId: string): AppThunkType => dispatch => {
     todolistAPI.deleteTask(todolistId, taskId)
-        .then(res => {
+        .then(() => {
             dispatch(deleteTaskAC(todolistId, taskId));
         })
 }
@@ -50,6 +50,6 @@ export const cleanTasksListTC = (todolistId: string): AppThunkType => async (dis
     const tasks = getState().tasks[todolistId];
     const requests = tasks.map(t => todolistAPI.deleteTask(todolistId, t.id));
     Promise.all(requests)
-        .then(res => dispatch(cleanTasksListAC(todolistId)))
+        .then(() => dispatch(cleanTasksListAC(todolistId)))
         .catch(rej => console.log(rej));
 }

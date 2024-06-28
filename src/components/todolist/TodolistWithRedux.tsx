@@ -13,8 +13,6 @@ import Paper from '@mui/material/Paper';
 import { Task } from "../task/Task";
 import { useTodolistWithRedux } from "./hooks/useTodolistWithRedux";
 import { FiltersForTasks } from "../filtersForTasks/FiltersForTasks";
-import { deleteTodolistAC } from "../../model/redusers/todolistsReducer";
-import { deleteTodolistTC } from "../../model/thunk/todolistsThunks";
 
 type Props = {
     todolist: TodoListDomainType
@@ -22,7 +20,7 @@ type Props = {
 const TodolistWithRedux = React.memo(({todolist}: Props) => {
     const {id, title, filter, coverImage} = todolist;
 
-const {dispatch,
+const {
     sorterTasks,
     onClickFilterHandlerCreator,
     onClickHandlerDeleteAllTasks,

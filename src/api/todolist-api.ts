@@ -29,7 +29,7 @@ export const todolistAPI = {
         return instance.put<ResponseType>(`/todo-lists/${todoId}`, {title});
     },
     getTasks: (todoId: string) => {
-        return instance.get<ResponceTypeGetTask>(`/todo-lists/${todoId}/tasks`);
+        return instance.get<ResponseTypeGetTask>(`/todo-lists/${todoId}/tasks`);
     },
     addTask: (todoId: string, title: string) => {
         return instance.post<ResponseType<{item: TaskType}>>(`/todo-lists/${todoId}/tasks`, {todolistId: todoId, title});
@@ -57,9 +57,9 @@ type ResponseType<T = {}> = {
     resultCode: number
 }
 
-type CreateTodoType = {
-    "item": TodolistType
-}
+// type CreateTodoType = {
+//     "item": TodolistType
+// }
 
 export enum TaskStatuses {
     New = 0 ,
@@ -99,7 +99,7 @@ export type UpdateTaskModelType = {
     addedDate: string
 }
 
-export type ResponceTypeGetTask = {
+export type ResponseTypeGetTask = {
     items: TaskType[]
     totalCount: number
     error: string

@@ -4,13 +4,8 @@ import { TaskStatuses, TaskType } from "../../../api/todolist-api";
 import { useCallback, useEffect, useMemo } from "react";
 import { addTaskTC, cleanTasksListTC, getTasksTC } from "../../../model/thunk/tasksThunks";
 import { FilterValuesType } from "../../../data/dataPropsTypes";
-import {
-    changedTodolistCoverAC,
-    changedTodolistFilterAC,
-    changeTodolistTitleAC
-} from "../../../model/redusers/todolistsReducer";
-import { cleanTasksListAC } from "../../../model/redusers/tasksReduser";
-import { deleteTodolistTC } from "../../../model/thunk/todolistsThunks";
+import { changedTodolistCoverAC, changedTodolistFilterAC } from "../../../model/redusers/todolistsReducer";
+import { changeTodolistTitleTC, deleteTodolistTC } from "../../../model/thunk/todolistsThunks";
 
 export const useTodolistWithRedux = (id: string, filter: FilterValuesType) => {
     const tasks = useSelector<AppRootStateType, Array<TaskType>>(state => state.tasks[id]);
@@ -55,7 +50,7 @@ export const useTodolistWithRedux = (id: string, filter: FilterValuesType) => {
     },[dispatch, id]);
 
     const changeTodolistTitleHandler = useCallback((todolistId: string, newTitle: string) => {
-        dispatch(changeTodolistTitleAC(todolistId, newTitle));
+        dispatch(changeTodolistTitleTC(todolistId, newTitle));
     },[dispatch]);
 
     const deleteTodolistHandler = () => {
