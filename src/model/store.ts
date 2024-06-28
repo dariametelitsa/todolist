@@ -32,8 +32,8 @@ export type AppThunkType<ReturnValue = void> = ThunkAction<ReturnValue, AppRootS
 
 // создаем тип диспатча который принимает как AC так и TC
 export type AppThunkDispatch = ThunkDispatch<AppRootStateType, any, RootActionsType>
-export const useAppDispatch = () => useDispatch<AppThunkDispatch>(); //каррирование
-// export const useAppDispatch =  useDispatch<AppThunkDispatch>; // так тоже работает
+// export const useAppDispatch = () => useDispatch<AppThunkDispatch>(); //каррирование
+export const useAppDispatch =  useDispatch<AppThunkDispatch>; // так тоже работает
 
 // @ts-ignore
 window.store = store;

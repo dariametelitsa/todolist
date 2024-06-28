@@ -1,12 +1,12 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import App, { sum } from './app/App';
+import AppWithRedux, { sum } from './appWithRedux/AppWithRedux';
 
 test('renders learn react link', () => {
-  // const { getByText } = render(<App />);
+  const { getByText } = render(<AppWithRedux />);
   // const linkElement = getByText(/learn react/i);
   // expect(linkElement).toBeInTheDocument();
-  render(<App />);
+  render(<AppWithRedux />);
   const linkElement = screen.getByText(/learn react/i);
   expect(linkElement).toBeInTheDocument();
 });

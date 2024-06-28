@@ -1,7 +1,6 @@
 import React from 'react';
 import '../App.scss'
 import { AddItem } from "../components/addItem/AddItem";
-
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Unstable_Grid2';
@@ -10,6 +9,10 @@ import CssBaseline from '@mui/material/CssBaseline'
 import { HeaderMenu } from "../components/headerMenu/HeaderMenu";
 import TodolistWithRedux from "../components/todolist/TodolistWithRedux";
 import { useAppWithRedux } from "./hooks/useAppWithRedux";
+
+export const sum = (a: number, b: number): number => {
+    return a + b;
+}
 
 function AppWithRedux() {
    const {theme,

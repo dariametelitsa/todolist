@@ -5,16 +5,16 @@ import axios from "axios";
 //     headers: {
 //         "API-KEY": '1c0d9a02-17ae-40c8-8a16-b7733f0e908d'
 //     }
-// }
-
+// };
 const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.1',
     withCredentials: true,
     headers: {
         "API-KEY": '1c0d9a02-17ae-40c8-8a16-b7733f0e908d'
     }
-})
+});
 
+//api
 export const todolistAPI = {
     getTodolist: () => {
         return instance.get<Array<TodolistType>>('/todo-lists');
@@ -42,32 +42,13 @@ export const todolistAPI = {
     },
 };
 
-
-export type TodolistType = {
-    addedDate: string
-    id: string
-    order: number
-    title: string
-}
-
-type ResponseType<T = {}> = {
-    data: T
-    fieldsErrors?: []
-    messages: string[]
-    resultCode: number
-}
-
-// type CreateTodoType = {
-//     "item": TodolistType
-// }
-
+//enum
 export enum TaskStatuses {
     New = 0 ,
     InProgress = 1 ,
     Completed = 2,
     Draft = 3
 }
-
 export enum TodoTaskPriorities {
     Low = 0,
     Middle = 1,
@@ -76,6 +57,19 @@ export enum TodoTaskPriorities {
     Later = 4
 }
 
+//types
+export type TodolistType = {
+    addedDate: string
+    id: string
+    order: number
+    title: string
+}
+type ResponseType<T = {}> = {
+    data: T
+    fieldsErrors?: []
+    messages: string[]
+    resultCode: number
+}
 export type TaskType = {
     description: string
     title: string
@@ -88,7 +82,6 @@ export type TaskType = {
     order: number
     addedDate: string
 }
-
 export type UpdateTaskModelType = {
     title: string
     description: string
@@ -98,7 +91,6 @@ export type UpdateTaskModelType = {
     deadline: string
     addedDate: string
 }
-
 export type ResponseTypeGetTask = {
     items: TaskType[]
     totalCount: number
