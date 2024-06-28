@@ -22,8 +22,8 @@ import {
     changeTodolistTitleAC,
     deleteTodolistAC,
     todolistsReducer
-} from "../../../model/redusers/todolistsReducer";
-import { cleanTasksListAC, deleteTaskAC, tasksReducer } from "../../../model/redusers/tasksReduser";
+} from "../../../features/todolistList/redusers/todolistsReducer";
+import { cleanTasksListAC, deleteTaskAC, tasksReducer } from "../../../features/todolistList/redusers/tasksReduser";
 import { TaskStatuses, TaskType, TodolistType } from "../../../api/todolist-api";
 import { AddItem } from "../../addItem/AddItem";
 

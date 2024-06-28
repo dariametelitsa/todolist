@@ -11,7 +11,7 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 
 import Box from '@mui/material/Box';
-import { filterButtonsContainerSx, getListItemSx } from "../../todolist/Todolist.styles";
+import { filterButtonsContainerSx, getListItemSx } from "../../../features/todolistList/todolist/Todolist.styles";
 import { CoverImage } from "../../coverImage/CoverImage";
 import Grid from "@mui/material/Unstable_Grid2";
 import { TaskStatuses } from "../../../api/todolist-api";

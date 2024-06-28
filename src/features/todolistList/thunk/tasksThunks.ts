@@ -1,12 +1,16 @@
-import { TaskStatuses, todolistAPI, TodoTaskPriorities, UpdateTaskModelType } from "../../api/todolist-api";
-import { AppThunkType } from "../store";
+import { TaskStatuses, todolistAPI, TodoTaskPriorities, UpdateTaskModelType } from "../../../api/todolist-api";
+import { AppThunkType } from "../../../app/store";
 import { addTaskAC, cleanTasksListAC, deleteTaskAC, setTasksAC, updateTaskAC } from "../redusers/tasksReduser";
 
 
-export const getTasksTC = (todoId: string): AppThunkType => dispatch => {
-    todolistAPI.getTasks(todoId)
+export const getTasksTC = (todolistId: string): AppThunkType => dispatch => {
+    todolistAPI.getTasks(todolistId)
         .then(res => {
-            dispatch(setTasksAC(todoId, res.data.items));
+            dispatch(setTasksAC(todolistId, res.data.items));
+        })
+        .catch(rej => {
+            console.log(rej);
+            dispatch(setTasksAC(todolistId, []));
         })
 };
 

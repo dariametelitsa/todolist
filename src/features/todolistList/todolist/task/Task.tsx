@@ -1,12 +1,12 @@
 import * as React from 'react';
-import { getListItemSx } from "../todolist/Todolist.styles";
-import styles from "../trash/todolist/Todolist.module.scss";
+import { getListItemSx } from "../Todolist.styles";
+import styles from "../../../../components/trash/todolist/Todolist.module.scss";
 import Checkbox from "@mui/material/Checkbox";
-import { EditableSpan } from "../editableSpan/EditableSpan";
+import { EditableSpan } from "../../../../components/editableSpan/EditableSpan";
 import IconButton from "@mui/material/IconButton";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import ListItem from "@mui/material/ListItem";
-import { TaskStatuses, TaskType } from "../../api/todolist-api";
+import { TaskStatuses, TaskType } from "../../../../api/todolist-api";
 import { useTask } from "./hooks/useTask";
 
 type TasksProps = {

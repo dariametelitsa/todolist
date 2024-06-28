@@ -1,5 +1,5 @@
-import { FilterValuesType, TodoListDomainType } from "../../data/dataPropsTypes";
-import { TodolistType } from "../../api/todolist-api";
+import { FilterValuesType, TodoListDomainType } from "../../../data/dataPropsTypes";
+import { TodolistType } from "../../../api/todolist-api";
 
 const initialState: TodoListDomainType[] = [];
 

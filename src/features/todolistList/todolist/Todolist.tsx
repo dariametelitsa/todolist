@@ -1,23 +1,23 @@
 import React from "react";
-import { TodoListDomainType } from "../../data/dataPropsTypes";
-import styles from '../trash/todolist/Todolist.module.scss';
-import { AddItem } from "../addItem/AddItem";
-import { EditableSpan } from "../editableSpan/EditableSpan";
+import { TodoListDomainType } from "../../../data/dataPropsTypes";
+import styles from '../../../components/trash/todolist/Todolist.module.scss';
+import { AddItem } from "../../../components/addItem/AddItem";
+import { EditableSpan } from "../../../components/editableSpan/EditableSpan";
 import IconButton from '@mui/material/IconButton';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import Button from '@mui/material/Button';
 import List from '@mui/material/List';
-import { CoverImage } from "../coverImage/CoverImage";
+import { CoverImage } from "../../../components/coverImage/CoverImage";
 import Grid from "@mui/material/Unstable_Grid2";
 import Paper from '@mui/material/Paper';
-import { Task } from "../task/Task";
-import { useTodolistWithRedux } from "./hooks/useTodolistWithRedux";
-import { FiltersForTasks } from "../filtersForTasks/FiltersForTasks";
+import { Task } from "./task/Task";
+import { useTodolist } from "./hooks/useTodolist";
+import { FiltersForTasks } from "../../../components/filtersForTasks/FiltersForTasks";
 
-type Props = {
+type TodolistListProps = {
     todolist: TodoListDomainType
 }
-const TodolistWithRedux = React.memo(({todolist}: Props) => {
+const Todolist: React.FC<TodolistListProps> = React.memo(({todolist}) => {
     const {id, title, filter, coverImage} = todolist;
 
 const {
@@ -27,7 +27,7 @@ const {
     addItemHandler,
     onChangeCoverHandler,
     changeTodolistTitleHandler,
-    deleteTodolistHandler} = useTodolistWithRedux(id, filter);
+    deleteTodolistHandler} = useTodolist(id, filter);
 
     const tasksForTodolist = sorterTasks.map((task) => {
         return (
@@ -75,4 +75,4 @@ const {
 });
 
 
-export default TodolistWithRedux;
+export default Todolist;

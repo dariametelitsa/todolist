@@ -1,8 +1,8 @@
 import { v4 } from "uuid";
-import { TasksType } from "../../data/dataPropsTypes";
+import { TasksType } from "../../../data/dataPropsTypes";
 import { addTaskAC, cleanTasksListAC, deleteTaskAC, tasksReducer, updateTaskAC } from "./tasksReduser";
 import { addTodolistAC, deleteTodolistAC, setTodolistsAC } from "./todolistsReducer";
-import { TaskStatuses, TodolistType, TodoTaskPriorities } from "../../api/todolist-api";
+import { TaskStatuses, TodolistType, TodoTaskPriorities } from "../../../api/todolist-api";
 
 const todolistId1 = v4();
 const todolistId2 = v4();

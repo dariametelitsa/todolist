@@ -3,13 +3,13 @@ import {
     addTodolistAC,
     changedTodolistCoverAC,
     changedTodolistFilterAC,
-    changeTodolistTitleAC, deleteTodolistAC,
+    changeTodolistTitleAC,
+    deleteTodolistAC,
     setTodolistsAC,
     todolistsReducer
 } from "./todolistsReducer";
-import { TodoListDomainType } from "../../data/dataPropsTypes";
-import { TodolistType } from "../../api/todolist-api";
-import { tasksReducer } from "./tasksReduser";
+import { TodoListDomainType } from "../../../data/dataPropsTypes";
+import { TodolistType } from "../../../api/todolist-api";
 
 //test data
 let todolistId1: string;

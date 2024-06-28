@@ -1,6 +1,6 @@
-import { useAppDispatch } from "../../../model/store";
-import { deleteTaskTC, updateTaskTC } from "../../../model/thunk/tasksThunks";
-import { TaskStatuses } from "../../../api/todolist-api";
+import { useAppDispatch } from "../../../../../app/store";
+import { deleteTaskTC, updateTaskTC } from "../../../thunk/tasksThunks";
+import { TaskStatuses } from "../../../../../api/todolist-api";
 
 export const useTask = (todolistId: string) => {
     const dispatch = useAppDispatch();

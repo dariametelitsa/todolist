@@ -1,6 +1,6 @@
 // @flow
 import * as React from 'react';
-import { filterButtonsContainerSx } from "../todolist/Todolist.styles";
+import { filterButtonsContainerSx } from "../../features/todolistList/todolist/Todolist.styles";
 import { ButtonMemo } from "../button/ButtonMemo";
 import Box from "@mui/material/Box";
 import { FilterValuesType } from "../../data/dataPropsTypes";

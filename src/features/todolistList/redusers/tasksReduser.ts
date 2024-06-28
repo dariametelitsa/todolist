@@ -1,5 +1,5 @@
-import { TasksType } from "../../data/dataPropsTypes";
-import { TaskType } from "../../api/todolist-api";
+import { TasksType } from "../../../data/dataPropsTypes";
+import { TaskType } from "../../../api/todolist-api";
 import { AddTodolistAT, DeleteTodolistAT, SetTodolistsAT } from "./todolistsReducer";
 
 export const initialState: TasksType = {};

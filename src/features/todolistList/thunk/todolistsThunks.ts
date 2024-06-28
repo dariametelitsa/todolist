@@ -1,5 +1,5 @@
-import { AppThunkType } from "../store";
-import { todolistAPI } from "../../api/todolist-api";
+import { AppThunkType } from "../../../app/store";
+import { todolistAPI } from "../../../api/todolist-api";
 import { addTodolistAC, changeTodolistTitleAC, deleteTodolistAC, setTodolistsAC } from "../redusers/todolistsReducer";
 import { setTasksAC } from "../redusers/tasksReduser";
 
