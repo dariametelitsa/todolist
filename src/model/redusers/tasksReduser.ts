@@ -1,26 +1,17 @@
 import { TasksType } from "../../data/dataPropsTypes";
-import { AddTodoActionType, DeleteTodoActionType, SetTodolistsActionType } from "./todolistsReducer";
 import { TaskType } from "../../api/todolist-api";
-
-type DeleteTaskActionType = ReturnType<typeof deleteTaskAC>;
-type AddTaskActionType = ReturnType<typeof addTaskAC>;
-type CleanAllTasksActionType = ReturnType<typeof cleanTasksListAC>;
-type SetTasksActionType = ReturnType<typeof setTasksAC>
-type UpdateTaskActionType = ReturnType<typeof updateTaskAC>
+import { RootActionsType } from "../store";
 
 export type TaskActionsType =
-    DeleteTaskActionType
-    | AddTaskActionType
-    | CleanAllTasksActionType
-    | AddTodoActionType
-    | DeleteTodoActionType
-    | SetTodolistsActionType
-    | SetTasksActionType
-    | UpdateTaskActionType
+    | ReturnType<typeof deleteTaskAC>
+    | ReturnType<typeof addTaskAC>
+    | ReturnType<typeof cleanTasksListAC>
+    | ReturnType<typeof setTasksAC>
+    | ReturnType<typeof updateTaskAC>
 
 export const initialState: TasksType = {};
 
-export const tasksReducer = (state = initialState, action: TaskActionsType): TasksType => {
+export const tasksReducer = (state = initialState, action: RootActionsType): TasksType => {
     switch (action.type) {
         case "DELETE_TASK":
             return {
@@ -28,20 +19,6 @@ export const tasksReducer = (state = initialState, action: TaskActionsType): Tas
                 [action.payload.todolistId]: state[action.payload.todolistId].filter(t => t.id !== action.payload.taskId)
             };
         case 'ADD_TASK':
-            // const newTask: TaskType = {
-            //     id: v1(),
-            //     status: TaskStatuses.New,
-            //     title: action.payload.title,
-            //     todoListId: action.payload.todolistId,
-            //     description: '',
-            //     priority: TodoTaskPriorities.Low,
-            //     order: 0,
-            //     addedDate: '',
-            //     completed: false,
-            //     startDate: '',
-            //     deadline: ''
-            // };
-            //return {...state, [action.payload.todolistId]: [newTask, ...state[action.payload.todolistId]]};
             return {
                 ...state,
                 [action.payload.task.todoListId]: [action.payload.task, ...state[action.payload.task.todoListId]]

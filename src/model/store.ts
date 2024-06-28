@@ -16,7 +16,7 @@ const rootReducer = combineReducers({
 });
 
 export type AppRootStateType = ReturnType<typeof rootReducer>;
-//type RootActionsType= TodolistActionsType | TaskActionsType
+export type RootActionsType= TodolistActionsType | TaskActionsType
 
 
 //const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -27,11 +27,11 @@ export type AppDispatch = typeof store.dispatch
 // export const store = createStore(rootReducer, applyMiddleware(thunk), composeEnhancers())
 
 //создаем тип для thunk
-export type AppThunkType<ReturnValue = void> = ThunkAction<ReturnValue, AppRootStateType, unknown, AnyAction>
+export type AppThunkType<ReturnValue = void> = ThunkAction<ReturnValue, AppRootStateType, unknown, RootActionsType>
 
 
 // создаем тип диспатча который принимает как AC так и TC
-export type AppThunkDispatch = ThunkDispatch<AppRootStateType, any, AnyAction>
+export type AppThunkDispatch = ThunkDispatch<AppRootStateType, any, RootActionsType>
 export const useAppDispatch = () => useDispatch<AppThunkDispatch>(); //каррирование
 // export const useAppDispatch =  useDispatch<AppThunkDispatch>; // так тоже работает
 

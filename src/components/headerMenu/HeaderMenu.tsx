@@ -29,7 +29,6 @@ export const HeaderMenu = ({changeModeHandler}: HeaderMenuProps) => {
                     News
                 </Typography>
                 <Switch color={'default'} onChange={changeModeHandler} />
-                {/*<MenuButton color="inherit" background={'tomato'}>Login</MenuButton>*/}
                 <MenuButton color="inherit" >Login</MenuButton>
                 <MenuButton color="inherit">Logout</MenuButton>
                 <MenuButton color="inherit">Faq</MenuButton>

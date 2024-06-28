@@ -1,25 +1,19 @@
 import { FilterValuesType, TodoListDomainType } from "../../data/dataPropsTypes";
 import { TodolistType } from "../../api/todolist-api";
+import { RootActionsType } from "../store";
 
 //action types
-export type DeleteTodoActionType = ReturnType<typeof deleteTodolistAC>;
-export type AddTodoActionType = ReturnType<typeof addTodolistAC>;
-type ChangeTodoTitleActionType = ReturnType<typeof changeTodolistTitleAC>;
-type ChangeTodoFilterActionType = ReturnType<typeof changedTodolistFilterAC>;
-type ChangeTodoCoverActionType = ReturnType<typeof changedTodolistCoverAC>;
-export type SetTodolistsActionType = ReturnType<typeof setTodolistsAC>
-
 export type TodolistActionsType =
-    | DeleteTodoActionType
-    | AddTodoActionType
-    | ChangeTodoTitleActionType
-    | ChangeTodoFilterActionType
-    | ChangeTodoCoverActionType
-    | SetTodolistsActionType;
+    | ReturnType<typeof deleteTodolistAC>
+    | ReturnType<typeof addTodolistAC>
+    | ReturnType<typeof changeTodolistTitleAC>
+    | ReturnType<typeof changedTodolistFilterAC>
+    | ReturnType<typeof changedTodolistCoverAC>
+    | ReturnType<typeof setTodolistsAC>;
 
 const initialState: TodoListDomainType[] = [];
 
-export const todolistsReducer = (state: Array<TodoListDomainType> = initialState, action: TodolistActionsType): Array<TodoListDomainType> => {
+export const todolistsReducer = (state: Array<TodoListDomainType> = initialState, action: RootActionsType): Array<TodoListDomainType> => {
     switch (action.type) {
         case 'DELETE_TODOLIST': {
             return state.filter(tl => tl.id !== action.payload.id);
