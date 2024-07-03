@@ -9,6 +9,8 @@ type ThemeMode = 'dark' | 'light'
 export const useAppWithRedux = () => {
   const dispatch = useAppDispatch()
   const todoLists = useAppSelector((state) => state.todolists)
+  const status = useAppSelector((state) => state.appReducer.status)
+  const isloading = status === 'loading'
 
   useEffect(() => {
     dispatch(getTodolistsTC())
@@ -41,5 +43,6 @@ export const useAppWithRedux = () => {
     changeModeHandler,
     addTodolist,
     todoLists,
+    isloading,
   }
 }

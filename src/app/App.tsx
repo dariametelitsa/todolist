@@ -12,7 +12,7 @@ import AppBar from '@mui/material/AppBar'
 import { ErrorSnackbar } from '../components/errorSnackbar/ErrorSnackbar'
 
 function App() {
-  const { theme, changeModeHandler, addTodolist, todoLists } = useAppWithRedux()
+  const { theme, changeModeHandler, addTodolist, todoLists, isloading } = useAppWithRedux()
 
   return (
     <div className={'App'}>
@@ -21,7 +21,7 @@ function App() {
         <Box sx={{ flexGrow: 1, mb: 12 }}>
           <AppBar position="fixed">
             <HeaderMenu changeModeHandler={changeModeHandler} />
-            {/*<LinearProgress />*/}
+            {isloading && <LinearProgress />}
           </AppBar>
         </Box>
         <ErrorSnackbar />
