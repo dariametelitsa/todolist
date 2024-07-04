@@ -1,16 +1,17 @@
 import { useAppDispatch, useAppSelector } from '../store'
 import { useCallback, useEffect, useState } from 'react'
-import { createTheme } from '@mui/material/styles'
-import { cyan } from '@mui/material/colors'
+import createTheme from '@mui/material/styles/createTheme'
+import cyan from '@mui/material/colors/cyan'
 import { addTodolistTC, getTodolistsTC } from '../../features/todolistList/thunk/todolistsThunks'
+import { AppStatusTypes } from '../reducers/appReducer'
 
 type ThemeMode = 'dark' | 'light'
 
 export const useAppWithRedux = () => {
   const dispatch = useAppDispatch()
   const todoLists = useAppSelector((state) => state.todolists)
-  const status = useAppSelector((state) => state.appReducer.status)
-  const isloading = status === 'loading'
+  const status = useAppSelector<AppStatusTypes>((state) => state.app.status)
+  const isLoading = status === 'loading'
 
   useEffect(() => {
     dispatch(getTodolistsTC())
@@ -43,6 +44,6 @@ export const useAppWithRedux = () => {
     changeModeHandler,
     addTodolist,
     todoLists,
-    isloading,
+    isLoading,
   }
 }

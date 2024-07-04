@@ -7,12 +7,12 @@ import CssBaseline from '@mui/material/CssBaseline'
 import { HeaderMenu } from '../components/headerMenu/HeaderMenu'
 import { useAppWithRedux } from './hooks/useAppWithRedux'
 import { TodolistList } from '../features/todolistList/TodolistList'
-import { LinearProgress } from '@mui/material'
+import LinearProgress from '@mui/material/LinearProgress'
 import AppBar from '@mui/material/AppBar'
 import { ErrorSnackbar } from '../components/errorSnackbar/ErrorSnackbar'
 
 function App() {
-  const { theme, changeModeHandler, addTodolist, todoLists, isloading } = useAppWithRedux()
+  const { theme, changeModeHandler, addTodolist, todoLists, isLoading } = useAppWithRedux()
 
   return (
     <div className={'App'}>
@@ -21,7 +21,7 @@ function App() {
         <Box sx={{ flexGrow: 1, mb: 12 }}>
           <AppBar position="fixed">
             <HeaderMenu changeModeHandler={changeModeHandler} />
-            {isloading && <LinearProgress />}
+            {isLoading && <LinearProgress color="success" />}
           </AppBar>
         </Box>
         <ErrorSnackbar />

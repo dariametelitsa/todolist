@@ -1,14 +1,20 @@
 import { AppThunkType } from '../../../app/store'
 import { todolistAPI } from '../../../api/todolist-api'
-import { addTodolistAC, changeTodolistTitleAC, deleteTodolistAC, setTodolistsAC } from '../redusers/todolistsReducer'
+import {
+  addTodolistAC,
+  changeEntityStatusAC,
+  changeTodolistTitleAC,
+  deleteTodolistAC,
+  setTodolistsAC,
+} from '../redusers/todolistsReducer'
 import { setTasksAC } from '../redusers/tasksReduser'
 import { setAppStatusAC } from '../../../app/reducers/appReducer'
 
 export const getTodolistsTC = (): AppThunkType => async (dispatch) => {
-  dispatch(setAppStatusAC('loading'))
   try {
     const res = await todolistAPI.getTodolist()
     dispatch(setTodolistsAC(res.data))
+    dispatch(setAppStatusAC('succeeded'))
   } catch (e) {
     dispatch(setTodolistsAC([]))
   }
@@ -33,9 +39,19 @@ export const addTodolistTC =
 export const deleteTodolistTC =
   (todolistId: string): AppThunkType =>
   (dispatch) => {
-    todolistAPI.deleteTodolist(todolistId).then(() => {
-      dispatch(deleteTodolistAC(todolistId))
-    })
+    dispatch(changeEntityStatusAC(todolistId, 'loading'))
+    dispatch(setAppStatusAC('loading'))
+    todolistAPI
+      .deleteTodolist(todolistId)
+      .then(() => {
+        dispatch(deleteTodolistAC(todolistId))
+        dispatch(setAppStatusAC('succeeded'))
+      })
+      .catch((rej) => {})
+      .finally(() => {
+        dispatch(setAppStatusAC('idle'))
+        dispatch(changeEntityStatusAC(todolistId, 'idle'))
+      })
   }
 
 // type UpdateDomainTodolistModelType = {
@@ -45,5 +61,13 @@ export const deleteTodolistTC =
 export const changeTodolistTitleTC =
   (todolistId: string, title: string): AppThunkType =>
   (dispatch) => {
-    todolistAPI.updateTodolist(todolistId, title).then(() => dispatch(changeTodolistTitleAC(todolistId, title)))
+    dispatch(setAppStatusAC('loading'))
+    todolistAPI
+      .updateTodolist(todolistId, title)
+      .then(() => {
+        dispatch(changeTodolistTitleAC(todolistId, title))
+        dispatch(setAppStatusAC('succeeded'))
+      })
+      .catch((rej) => {})
+      .finally(() => dispatch(setAppStatusAC('idle')))
   }

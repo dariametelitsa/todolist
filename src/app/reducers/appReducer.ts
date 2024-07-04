@@ -1,15 +1,17 @@
-export type RequestStatusTypes = 'idle' | 'loading' | 'succeeded' | 'failed'
+export type AppStatusTypes = 'idle' | 'loading' | 'succeeded' | 'failed'
+
 export type InitialAppStateType = {
-  status: RequestStatusTypes
+  status: AppStatusTypes
   error: string | null
 }
 
 const initialState: InitialAppStateType = {
-  status: 'idle',
+  status: 'loading',
   error: null,
 }
 
-export const appReduser = (
+//управление состоянием приложения (загрузки, ошибки, локализация, темы)
+export const appReducer = (
   state: InitialAppStateType = initialState,
   action: ActionsGlobalType
 ): InitialAppStateType => {
@@ -26,7 +28,7 @@ export const appReduser = (
   }
 }
 
-export const setAppStatusAC = (status: RequestStatusTypes) => ({ type: 'APP/SET_STATUS', payload: { status } }) as const
+export const setAppStatusAC = (status: AppStatusTypes) => ({ type: 'APP/SET_STATUS', payload: { status } }) as const
 export const setAppErrorAC = (error: string | null) => ({ type: 'APP/SET_ERROR', payload: { error } }) as const
 
 export type ActionsGlobalType = ReturnType<typeof setAppStatusAC> | ReturnType<typeof setAppErrorAC>

@@ -1,8 +1,14 @@
 import { TaskStatuses, todolistAPI, TodoTaskPriorities, UpdateTaskModelType } from '../../../api/todolist-api'
 import { AppThunkType } from '../../../app/store'
 import { addTaskAC, cleanTasksListAC, deleteTaskAC, setTasksAC, updateTaskAC } from '../redusers/tasksReduser'
-import { setAppErrorAC, setAppStatusAC } from '../../../app/reducers/appReducer'
+import { setAppStatusAC } from '../../../app/reducers/appReducer'
 import { handleServerAppError, handleServerNetworkError } from '../../../utils/errorUtils'
+
+export enum STATUS_CODE {
+  SUCCESS = 0,
+  ERROR = 1,
+  RECAPTCHA_ERROR = 10,
+}
 
 export const getTasksTC =
   (todolistId: string): AppThunkType =>
@@ -37,10 +43,9 @@ export const addTaskTC =
     todolistAPI
       .addTask(todoId, title)
       .then((res) => {
-        if (res.data.resultCode === 0) {
+        if (res.data.resultCode === STATUS_CODE.ERROR) {
           dispatch(addTaskAC(res.data.data.item))
         } else {
-          console.log('error happend here')
           handleServerAppError(res.data, dispatch)
         }
       })

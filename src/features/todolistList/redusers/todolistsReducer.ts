@@ -1,5 +1,6 @@
 import { FilterValuesType, TodoListDomainType } from '../../../data/dataPropsTypes'
 import { TodolistType } from '../../../api/todolist-api'
+import { AppStatusTypes } from '../../../app/reducers/appReducer'
 
 const initialState: TodoListDomainType[] = []
 
@@ -12,7 +13,7 @@ export const todolistsReducer = (
       return state.filter((tl) => tl.id !== action.payload.id)
     }
     case 'ADD_TODOLIST': {
-      return [{ ...action.payload.todolist, filter: 'all' }, ...state]
+      return [{ ...action.payload.todolist, filter: 'all', entityStatus: 'idle' }, ...state]
     }
     case 'CHANGE_TODOLIST_TITLE': {
       return state.map((tl) => (tl.id === action.payload.id ? { ...tl, title: action.payload.title } : tl))
@@ -25,8 +26,11 @@ export const todolistsReducer = (
     }
     case 'SET_TODOLISTS': {
       return action.payload.todolists.map((tl) => {
-        return { ...tl, filter: 'all' }
+        return { ...tl, filter: 'all', entityStatus: 'idle' }
       })
+    }
+    case 'CHANGE_ENTITY_STATUS': {
+      return state.map((tl) => (tl.id === action.payload.id ? { ...tl, entityStatus: action.payload.status } : tl))
     }
     default:
       return state
@@ -50,6 +54,9 @@ export const changedTodolistCoverAC = (id: string, coverImage: string) =>
 export const setTodolistsAC = (todolists: TodolistType[]) =>
   ({ type: 'SET_TODOLISTS', payload: { todolists } }) as const
 
+export const changeEntityStatusAC = (id: string, status: AppStatusTypes) =>
+  ({ type: 'CHANGE_ENTITY_STATUS', payload: { id, status } }) as const
+
 //action types
 export type DeleteTodolistAT = ReturnType<typeof deleteTodolistAC>
 export type AddTodolistAT = ReturnType<typeof addTodolistAC>
@@ -61,3 +68,4 @@ export type TodolistActionsType =
   | ReturnType<typeof changeTodolistTitleAC>
   | ReturnType<typeof changedTodolistFilterAC>
   | ReturnType<typeof changedTodolistCoverAC>
+  | ReturnType<typeof changeEntityStatusAC>

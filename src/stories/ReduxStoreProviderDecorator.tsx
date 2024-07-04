@@ -5,12 +5,12 @@ import { tasksReducer } from '../features/todolistList/redusers/tasksReduser'
 import React from 'react'
 import { thunk } from 'redux-thunk'
 import { TaskStatuses, TodoTaskPriorities } from '../api/todolist-api'
-import { appReduser } from '../app/reducers/appReducer'
+import { appReducer } from '../app/reducers/appReducer'
 
 const rootReducer = combineReducers({
   todolists: todolistsReducer,
   tasks: tasksReducer,
-  appReducer: appReduser,
+  app: appReducer,
 })
 
 type returnReducerType = ReturnType<typeof rootReducer>
@@ -83,10 +83,10 @@ const initialGlobalState = {
     ],
   },
   todolists: [
-    { id: 'todolistId1', title: 'What to learn', filter: 'all', addedDate: Date(), order: 0 },
-    { id: 'todolistId2', title: 'What to buy', filter: 'all', addedDate: Date(), order: 0 },
+    { id: 'todolistId1', title: 'What to learn', filter: 'all', addedDate: Date(), order: 0, entityStatus: 'idle' },
+    { id: 'todolistId2', title: 'What to buy', filter: 'all', addedDate: Date(), order: 0, entityStatus: 'idle' },
   ],
-  appReducer: {
+  app: {
     status: 'idle',
     error: null,
   },

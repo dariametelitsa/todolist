@@ -6,5 +6,6 @@
   "arrowParens": "always",
   "endOfLine": "lf",
   "printWidth": 120,
-  "semi": false
+  "semi": false,
+  "bracketSpacing": true
 }

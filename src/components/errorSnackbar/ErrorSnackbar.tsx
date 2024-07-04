@@ -8,8 +8,7 @@ import { useAppDispatch, useAppSelector } from '../../app/store'
 import { setAppErrorAC } from '../../app/reducers/appReducer'
 
 export function ErrorSnackbar() {
-  //const [open, setOpen] = React.useState(false)
-  const error = useAppSelector((state) => state.appReducer.error)
+  const error = useAppSelector((state) => state.app.error)
   const dispatch = useAppDispatch()
   const isOpen = error !== null
 
@@ -18,7 +17,6 @@ export function ErrorSnackbar() {
       return
     }
     dispatch(setAppErrorAC(null))
-    //setOpen(false)
   }
 
   const action = (
@@ -35,7 +33,7 @@ export function ErrorSnackbar() {
   return (
     <Snackbar
       open={isOpen}
-      autoHideDuration={3000}
+      autoHideDuration={5000}
       onClose={handleClose}
       //message=""
       action={action}

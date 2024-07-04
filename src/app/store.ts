@@ -3,7 +3,7 @@ import { TodolistActionsType, todolistsReducer } from '../features/todolistList/
 import { TaskActionsType, tasksReducer } from '../features/todolistList/redusers/tasksReduser'
 import { thunk, ThunkAction, ThunkDispatch } from 'redux-thunk'
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
-import { ActionsGlobalType, appReduser } from './reducers/appReducer'
+import { ActionsGlobalType, appReducer } from './reducers/appReducer'
 
 declare global {
   interface Window {
@@ -14,7 +14,7 @@ declare global {
 const rootReducer = combineReducers({
   todolists: todolistsReducer,
   tasks: tasksReducer,
-  appReducer: appReduser,
+  app: appReducer,
 })
 
 export type AppRootStateType = ReturnType<typeof rootReducer>

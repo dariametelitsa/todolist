@@ -3,11 +3,12 @@ import { setAppErrorAC, setAppStatusAC } from '../app/reducers/appReducer'
 import { Dispatch } from 'redux'
 
 export const handleServerAppError = <D>(data: ResponseType<D>, dispatch: Dispatch) => {
-  if (data.messages.length) {
-    dispatch(setAppErrorAC(data.messages[0]))
-  } else {
-    dispatch(setAppErrorAC('Some error occurred'))
-  }
+  // if (data.messages.length) {
+  //   dispatch(setAppErrorAC(data.messages[0]))
+  // } else {
+  //   dispatch(setAppErrorAC('Some error occurred'))
+  // }
+  dispatch(setAppErrorAC(data.messages[0] || 'Some error occurred'))
   dispatch(setAppStatusAC('failed'))
 }
 
