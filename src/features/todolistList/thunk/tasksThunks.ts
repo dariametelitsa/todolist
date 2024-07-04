@@ -2,6 +2,7 @@ import { TaskStatuses, todolistAPI, TodoTaskPriorities, UpdateTaskModelType } fr
 import { AppThunkType } from '../../../app/store'
 import { addTaskAC, cleanTasksListAC, deleteTaskAC, setTasksAC, updateTaskAC } from '../redusers/tasksReduser'
 import { setAppErrorAC, setAppStatusAC } from '../../../app/reducers/appReducer'
+import { handleServerAppError, handleServerNetworkError } from '../../../utils/errorUtils'
 
 export const getTasksTC =
   (todolistId: string): AppThunkType =>
@@ -39,15 +40,14 @@ export const addTaskTC =
         if (res.data.resultCode === 0) {
           dispatch(addTaskAC(res.data.data.item))
         } else {
-          if (res.data.messages.length) {
-            dispatch(setAppErrorAC(res.data.messages[0]))
-          } else {
-            dispatch(setAppErrorAC('Some error occurred'))
-          }
-          dispatch(setAppStatusAC('failed'))
+          console.log('error happend here')
+          handleServerAppError(res.data, dispatch)
         }
       })
-      .catch((rej) => {})
+      .catch((rej) => {
+        console.log(rej.message)
+        handleServerNetworkError(rej, dispatch)
+      })
       .finally(() => {
         dispatch(setAppStatusAC('idle'))
       })
