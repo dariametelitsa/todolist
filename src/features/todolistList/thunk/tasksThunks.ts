@@ -1,8 +1,15 @@
-import { TaskStatuses, todolistAPI, TodoTaskPriorities, UpdateTaskModelType } from '../../../api/todolist-api'
+import {
+  ErrorResponseType,
+  TaskStatuses,
+  todolistAPI,
+  TodoTaskPriorities,
+  UpdateTaskModelType,
+} from '../../../api/todolist-api'
 import { AppThunkType } from '../../../app/store'
 import { addTaskAC, cleanTasksListAC, deleteTaskAC, setTasksAC, updateTaskAC } from '../redusers/tasksReduser'
 import { setAppStatusAC } from '../../../app/reducers/appReducer'
 import { handleServerAppError, handleServerNetworkError } from '../../../utils/errorUtils'
+import { AxiosError } from 'axios'
 
 export enum STATUS_CODE {
   SUCCESS = 0,
@@ -19,8 +26,8 @@ export const getTasksTC =
       .then((res) => {
         dispatch(setTasksAC(todolistId, res.data.items))
       })
-      .catch((rej) => {
-        console.log(rej)
+      .catch((e: AxiosError<ErrorResponseType>) => {
+        console.log(e)
         dispatch(setTasksAC(todolistId, []))
       })
       .finally(() => {
@@ -31,9 +38,14 @@ export const getTasksTC =
 export const deleteTaskTC =
   (todolistId: string, taskId: string): AppThunkType =>
   (dispatch) => {
-    todolistAPI.deleteTask(todolistId, taskId).then(() => {
-      dispatch(deleteTaskAC(todolistId, taskId))
-    })
+    todolistAPI
+      .deleteTask(todolistId, taskId)
+      .then(() => {
+        dispatch(deleteTaskAC(todolistId, taskId))
+      })
+      .catch((e: AxiosError) => {
+        handleServerNetworkError(e, dispatch)
+      })
   }
 
 export const addTaskTC =
@@ -43,15 +55,14 @@ export const addTaskTC =
     todolistAPI
       .addTask(todoId, title)
       .then((res) => {
-        if (res.data.resultCode === STATUS_CODE.ERROR) {
+        if (res.data.resultCode === STATUS_CODE.SUCCESS) {
           dispatch(addTaskAC(res.data.data.item))
         } else {
           handleServerAppError(res.data, dispatch)
         }
       })
-      .catch((rej) => {
-        console.log(rej.message)
-        handleServerNetworkError(rej, dispatch)
+      .catch((e: AxiosError) => {
+        handleServerNetworkError(e, dispatch)
       })
       .finally(() => {
         dispatch(setAppStatusAC('idle'))
@@ -75,9 +86,14 @@ export const updateTaskTC =
     const task = getState().tasks[todoId].find((t) => t.id === taskId)
     if (task) {
       const apiModel: UpdateTaskModelType = { ...task, ...model }
-      todolistAPI.updateTask(todoId, taskId, apiModel).then((res) => {
-        dispatch(updateTaskAC(todoId, taskId, res.data.data.item))
-      })
+      todolistAPI
+        .updateTask(todoId, taskId, apiModel)
+        .then((res) => {
+          dispatch(updateTaskAC(todoId, taskId, res.data.data.item))
+        })
+        .catch((e) => {
+          handleServerNetworkError(e, dispatch)
+        })
     }
   }
 
@@ -88,5 +104,7 @@ export const cleanTasksListTC =
     const requests = tasks.map((t) => todolistAPI.deleteTask(todolistId, t.id))
     Promise.all(requests)
       .then(() => dispatch(cleanTasksListAC(todolistId)))
-      .catch((rej) => console.log(rej))
+      .catch((e) => {
+        handleServerNetworkError(e, dispatch)
+      })
   }

@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios, { AxiosResponse } from 'axios'
 
 // const config = {
 //     withCredentials: true,
@@ -20,25 +20,34 @@ export const todolistAPI = {
     return instance.get<Array<TodolistType>>('/todo-lists')
   },
   addTodolist: (title: string) => {
-    return instance.post<ResponseType<{ item: TodolistType }>>('/todo-lists', { title })
+    return instance.post<ResponseType<{ item: TodolistType }>, AxiosResponse<ResponseType<{ item: TodolistType }>>>(
+      '/todo-lists',
+      { title }
+    )
   },
   deleteTodolist: (todoId: string) => {
-    return instance.delete<ResponseType>(`/todo-lists/${todoId}`)
+    return instance.delete<ResponseType, AxiosResponse<ResponseType>>(`/todo-lists/${todoId}`)
   },
   updateTodolist: (todoId: string, title: string) => {
-    return instance.put<ResponseType>(`/todo-lists/${todoId}`, { title })
+    return instance.put<ResponseType, AxiosResponse<ResponseType>>(`/todo-lists/${todoId}`, { title })
   },
   getTasks: (todoId: string) => {
     return instance.get<ResponseTypeGetTask>(`/todo-lists/${todoId}/tasks`)
   },
   addTask: (todoId: string, title: string) => {
-    return instance.post<ResponseType<{ item: TaskType }>>(`/todo-lists/${todoId}/tasks`, { todolistId: todoId, title })
+    return instance.post<ResponseType<{ item: TaskType }>, AxiosResponse<ResponseType<{ item: TaskType }>>>(
+      `/todo-lists/${todoId}/tasks`,
+      { todolistId: todoId, title }
+    )
   },
   deleteTask: (todoId: string, taskId: string) => {
-    return instance.delete<ResponseType>(`/todo-lists/${todoId}/tasks/${taskId}`)
+    return instance.delete<ResponseType, AxiosResponse<ResponseType>>(`/todo-lists/${todoId}/tasks/${taskId}`)
   },
   updateTask: (todoId: string, taskId: string, model: UpdateTaskModelType) => {
-    return instance.put<ResponseType<{ item: TaskType }>>(`/todo-lists/${todoId}/tasks/${taskId}`, { ...model })
+    return instance.put<ResponseType<{ item: TaskType }>, AxiosResponse<ResponseType<{ item: TaskType }>>>(
+      `/todo-lists/${todoId}/tasks/${taskId}`,
+      { ...model }
+    )
   },
 }
 
@@ -49,6 +58,7 @@ export enum TaskStatuses {
   Completed = 2,
   Draft = 3,
 }
+
 export enum TodoTaskPriorities {
   Low = 0,
   Middle = 1,
@@ -94,5 +104,16 @@ export type UpdateTaskModelType = {
 export type ResponseTypeGetTask = {
   items: TaskType[]
   totalCount: number
+  error: string
+}
+
+export type ErrorResponseType = {
+  statusCode: number
+  messages: [
+    {
+      message: string
+      field: string
+    },
+  ]
   error: string
 }

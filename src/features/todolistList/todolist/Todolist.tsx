@@ -46,7 +46,7 @@ const Todolist: React.FC<TodolistListProps> = React.memo(({ todolist }) => {
             </IconButton>
           </h3>
 
-          <AddItem addItem={addItemHandler} />
+          <AddItem addItem={addItemHandler} disabled={entityStatus === 'loading'} />
           <List sx={{ width: '100%', height: 200, overflow: 'auto' }}>
             {tasksForTodolist.length === 0 ? <p>Задач нет</p> : tasksForTodolist}
           </List>
