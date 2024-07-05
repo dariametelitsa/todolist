@@ -10,6 +10,7 @@ import { addTaskAC, cleanTasksListAC, deleteTaskAC, setTasksAC, updateTaskAC } f
 import { setAppStatusAC } from '../../../app/reducers/appReducer'
 import { handleServerAppError, handleServerNetworkError } from '../../../utils/errorUtils'
 import { AxiosError } from 'axios'
+import { changeEntityStatusAC } from '../redusers/todolistsReducer'
 
 export enum STATUS_CODE {
   SUCCESS = 0,
@@ -38,6 +39,7 @@ export const getTasksTC =
 export const deleteTaskTC =
   (todolistId: string, taskId: string): AppThunkType =>
   (dispatch) => {
+    dispatch(changeEntityStatusAC(todolistId, 'loading'))
     todolistAPI
       .deleteTask(todolistId, taskId)
       .then(() => {
@@ -45,6 +47,10 @@ export const deleteTaskTC =
       })
       .catch((e: AxiosError) => {
         handleServerNetworkError(e, dispatch)
+        dispatch(changeEntityStatusAC(todolistId, 'failed'))
+      })
+      .finally(() => {
+        dispatch(changeEntityStatusAC(todolistId, 'idle'))
       })
   }
 
@@ -81,18 +87,23 @@ type UpdateDomainTaskModelType = {
 }
 
 export const updateTaskTC =
-  (todoId: string, taskId: string, model: UpdateDomainTaskModelType): AppThunkType =>
+  (todolistId: string, taskId: string, model: UpdateDomainTaskModelType): AppThunkType =>
   (dispatch, getState) => {
-    const task = getState().tasks[todoId].find((t) => t.id === taskId)
+    const task = getState().tasks[todolistId].find((t) => t.id === taskId)
     if (task) {
       const apiModel: UpdateTaskModelType = { ...task, ...model }
+      dispatch(changeEntityStatusAC(todolistId, 'loading'))
       todolistAPI
-        .updateTask(todoId, taskId, apiModel)
+        .updateTask(todolistId, taskId, apiModel)
         .then((res) => {
-          dispatch(updateTaskAC(todoId, taskId, res.data.data.item))
+          dispatch(updateTaskAC(todolistId, taskId, res.data.data.item))
         })
         .catch((e) => {
           handleServerNetworkError(e, dispatch)
+          dispatch(changeEntityStatusAC(todolistId, 'failed'))
+        })
+        .finally(() => {
+          dispatch(changeEntityStatusAC(todolistId, 'idle'))
         })
     }
   }

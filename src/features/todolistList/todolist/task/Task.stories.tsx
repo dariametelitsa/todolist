@@ -1,31 +1,31 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { Task } from "./Task";
-import * as React from "react";
-import { useLayoutEffect } from "react";
-import { ReduxStoreProviderDecorator } from "../../../../stories/ReduxStoreProviderDecorator";
-import { useSelector } from "react-redux";
-import { AppRootStateType, useAppDispatch } from "../../../../app/store";
-import { TaskStatuses, TaskType, TodoTaskPriorities } from "../../../../api/todolist-api";
-import { addTaskTC } from "../../thunk/tasksThunks";
+import type { Meta, StoryObj } from '@storybook/react'
+import { Task } from './Task'
+import * as React from 'react'
+import { useLayoutEffect } from 'react'
+import { ReduxStoreProviderDecorator } from '../../../../stories/ReduxStoreProviderDecorator'
+import { useSelector } from 'react-redux'
+import { AppRootStateType, useAppDispatch } from '../../../../app/store'
+import { TaskStatuses, TaskType, TodoTaskPriorities } from '../../../../api/todolist-api'
+import { addTaskTC } from '../../thunk/tasksThunks'
 
 const meta: Meta<typeof Task> = {
-    title: 'Todolist/Task',
-    component: Task,
-    decorators: [ReduxStoreProviderDecorator],
-    parameters: {
-        layout: 'centered',
-    },
-    tags: ['autodocs'],
-    // argTypes: {
-    //     // backgroundColor: { control: 'color' },
-    // },
-    // args: {
-    //     // onClick: fn()
-    // },
-};
+  title: 'Todolist/Task',
+  component: Task,
+  decorators: [ReduxStoreProviderDecorator],
+  parameters: {
+    layout: 'centered',
+  },
+  tags: ['autodocs'],
+  // argTypes: {
+  //     // backgroundColor: { control: 'color' },
+  // },
+  // args: {
+  //     // onClick: fn()
+  // },
+}
 
-export default meta;
-type Story = StoryObj<typeof Task>;
+export default meta
+type Story = StoryObj<typeof Task>
 
 // export const TaskIsNotDoneStory: Story = {
 //     args: {
@@ -60,22 +60,32 @@ type Story = StoryObj<typeof Task>;
 // };
 
 const TaskWithRedux = () => {
-    let task = useSelector<AppRootStateType, TaskType>(state => state.tasks['todolistId1'][0]);
-    const dispatch = useAppDispatch();
+  let task = useSelector<AppRootStateType, TaskType>((state) => state.tasks['todolistId1'][0])
+  const dispatch = useAppDispatch()
 
-    if(!task) task =  {id: '1', status: TaskStatuses.New, title: 'XP', todoListId: 'todolistId1', description: '', priority: TodoTaskPriorities.Low, order: 0, addedDate: '', startDate: '', deadline: ''};
-    useLayoutEffect(() => {
-        console.log(task)
-        if(task.id === 'fake') {
-            dispatch(addTaskTC('todolistId1', 'DEFAULT'));
-        }
-    }, [task,dispatch]);
+  if (!task)
+    task = {
+      id: '1',
+      status: TaskStatuses.New,
+      title: 'XP',
+      todoListId: 'todolistId1',
+      description: '',
+      priority: TodoTaskPriorities.Low,
+      order: 0,
+      addedDate: '',
+      startDate: '',
+      deadline: '',
+    }
+  useLayoutEffect(() => {
+    console.log(task)
+    if (task.id === 'fake') {
+      dispatch(addTaskTC('todolistId1', 'DEFAULT'))
+    }
+  }, [task, dispatch])
 
-    return <Task task={task} todolistId={'todolistId1'}/>
+  return <Task task={task} todolistId={'todolistId1'} entityStatus={'idle'} />
 }
 
 export const TaskTogleStory: Story = {
-    render: () => <TaskWithRedux />
-};
-
-
+  render: () => <TaskWithRedux />,
+}

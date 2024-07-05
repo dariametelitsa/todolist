@@ -31,7 +31,7 @@ const Todolist: React.FC<TodolistListProps> = React.memo(({ todolist }) => {
   } = useTodolist(id, filter)
 
   const tasksForTodolist = sorterTasks.map((task) => {
-    return <Task key={task.id} todolistId={id} task={task} />
+    return <Task key={task.id} todolistId={id} task={task} entityStatus={entityStatus} />
   })
 
   return (

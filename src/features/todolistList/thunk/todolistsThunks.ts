@@ -9,8 +9,9 @@ import {
 } from '../redusers/todolistsReducer'
 import { setTasksAC } from '../redusers/tasksReduser'
 import { setAppErrorAC, setAppStatusAC } from '../../../app/reducers/appReducer'
-import { handleServerNetworkError } from '../../../utils/errorUtils'
-import axios, { AxiosError } from 'axios'
+import { handleServerAppError, handleServerNetworkError } from '../../../utils/errorUtils'
+import axios from 'axios'
+import { STATUS_CODE } from './tasksThunks'
 
 export const getTodolistsTC = (): AppThunkType => async (dispatch) => {
   try {
@@ -51,9 +52,13 @@ export const deleteTodolistTC =
     dispatch(setAppStatusAC('loading'))
     todolistAPI
       .deleteTodolist(todolistId)
-      .then(() => {
-        dispatch(deleteTodolistAC(todolistId))
-        dispatch(setAppStatusAC('succeeded'))
+      .then((res) => {
+        if (res.status === STATUS_CODE.SUCCESS) {
+          dispatch(deleteTodolistAC(todolistId))
+          dispatch(setAppStatusAC('succeeded'))
+        } else {
+          handleServerAppError(res.data, dispatch)
+        }
       })
       .catch((e) => {
         handleServerNetworkError(e, dispatch)
@@ -64,10 +69,6 @@ export const deleteTodolistTC =
       })
   }
 
-// type UpdateDomainTodolistModelType = {
-//     order: number
-//     title: string
-// }
 export const changeTodolistTitleTC =
   (todolistId: string, title: string): AppThunkType =>
   (dispatch) => {
@@ -81,7 +82,10 @@ export const changeTodolistTitleTC =
       })
       .catch((e) => {
         handleServerNetworkError(e, dispatch)
+        dispatch(changeEntityStatusAC(todolistId, 'failed'))
+      })
+      .finally(() => {
+        dispatch(setAppStatusAC('idle'))
         dispatch(changeEntityStatusAC(todolistId, 'idle'))
       })
-      .finally(() => dispatch(setAppStatusAC('idle')))
   }
