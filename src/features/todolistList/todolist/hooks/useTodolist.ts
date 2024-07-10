@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from '../../../../app/store'
-import { TaskStatuses } from '../../../../api/todolist-api'
+import { TaskStatuses, TaskType } from '../../../../api/todolist-api'
 import { useCallback, useEffect, useMemo } from 'react'
 import { addTaskTC, cleanTasksListTC, getTasksTC } from '../../thunk/tasksThunks'
 import { FilterValuesType } from '../../../../data/dataPropsTypes'
@@ -7,7 +7,7 @@ import { changedTodolistCoverAC, changedTodolistFilterAC } from '../../redusers/
 import { changeTodolistTitleTC, deleteTodolistTC } from '../../thunk/todolistsThunks'
 
 export const useTodolist = (id: string, filter: FilterValuesType) => {
-  const tasks = useAppSelector((state) => state.tasks[id])
+  const tasks = useAppSelector<Array<TaskType>>((state) => state.tasks[id])
   const dispatch = useAppDispatch()
 
   useEffect(() => {

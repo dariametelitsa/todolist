@@ -40,7 +40,12 @@ const Todolist: React.FC<TodolistListProps> = React.memo(({ todolist }) => {
         <div className={styles.todolist}>
           <CoverImage image={coverImage && coverImage} updateImage={onChangeCoverHandler} />
           <h3 style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <EditableSpan oldTitle={title} idToChange={id} updateItem={changeTodolistTitleHandler} />
+            <EditableSpan
+              oldTitle={title}
+              idToChange={id}
+              updateItem={changeTodolistTitleHandler}
+              isDisabled={entityStatus === 'loading'}
+            />
             <IconButton aria-label="delete" onClick={deleteTodolistHandler} disabled={entityStatus === 'loading'}>
               <DeleteOutlineIcon />
             </IconButton>

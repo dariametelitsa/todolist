@@ -58,11 +58,12 @@ export const deleteTodolistTC =
           dispatch(setAppStatusAC('succeeded'))
         } else {
           handleServerAppError(res.data, dispatch)
+          dispatch(changeEntityStatusAC(todolistId, 'failed'))
         }
       })
       .catch((e) => {
         handleServerNetworkError(e, dispatch)
-        dispatch(changeEntityStatusAC(todolistId, 'idle'))
+        dispatch(changeEntityStatusAC(todolistId, 'failed'))
       })
       .finally(() => {
         dispatch(setAppStatusAC('idle'))

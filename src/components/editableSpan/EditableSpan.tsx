@@ -43,6 +43,7 @@ export const EditableSpan = React.memo(
           onClick={() => {
             setEditMode(true)
           }}
+          disabled={isDisabled}
           color={'inherit'}
           size={'small'}>
           <DoneIcon />

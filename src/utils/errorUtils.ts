@@ -1,7 +1,6 @@
 import { ResponseType } from '../api/todolist-api'
 import { setAppErrorAC, setAppStatusAC } from '../app/reducers/appReducer'
 import { Dispatch } from 'redux'
-import { changeEntityStatusAC } from '../features/todolistList/redusers/todolistsReducer'
 
 export const handleServerAppError = <D>(data: ResponseType<D>, dispatch: Dispatch) => {
   // if (data.messages.length) {
@@ -14,6 +13,6 @@ export const handleServerAppError = <D>(data: ResponseType<D>, dispatch: Dispatc
 }
 
 export const handleServerNetworkError = (error: { message: string }, dispatch: Dispatch) => {
-  dispatch(setAppErrorAC(error.message ? error.message : 'Some error occurred'))
+  dispatch(setAppErrorAC(error.message ? error.message : 'Some network error occurred'))
   dispatch(setAppStatusAC('failed'))
 }

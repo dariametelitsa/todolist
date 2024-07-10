@@ -10,9 +10,10 @@ import { TodolistList } from '../features/todolistList/TodolistList'
 import LinearProgress from '@mui/material/LinearProgress'
 import AppBar from '@mui/material/AppBar'
 import { ErrorSnackbar } from '../components/errorSnackbar/ErrorSnackbar'
+import { Outlet } from 'react-router-dom'
 
 function App() {
-  const { theme, changeModeHandler, addTodolist, todoLists, isLoading } = useAppWithRedux()
+  const { theme, changeModeHandler, isLoading } = useAppWithRedux()
 
   return (
     <div className={'App'}>
@@ -27,7 +28,8 @@ function App() {
         <ErrorSnackbar />
 
         <Container fixed>
-          <TodolistList todoLists={todoLists} addTodolist={addTodolist} />
+          {/*<TodolistList />*/}
+          <Outlet />
         </Container>
       </ThemeProvider>
     </div>
