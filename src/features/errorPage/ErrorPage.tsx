@@ -10,11 +10,11 @@ export const ErrorPage = () => {
     <Grid container justifyContent={'center'}>
       <Grid item justifyContent={'center'}>
         <h1>Not found</h1>
-        <Button variant="outlined" href="#outlined-buttons">
-          <Link to={PATH.ROOT} style={{ color: 'inherit' }}>
+        <Link to={PATH.ROOT}>
+          <Button variant="outlined" href="#outlined-buttons">
             На главную
-          </Link>
-        </Button>
+          </Button>
+        </Link>
       </Grid>
     </Grid>
   )
