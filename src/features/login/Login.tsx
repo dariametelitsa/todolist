@@ -61,10 +61,11 @@ export const Login = () => {
               <TextField
                 label="Email"
                 margin="normal"
-                name="email"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.email}
+                // name="email"
+                // onChange={formik.handleChange}
+                // onBlur={formik.handleBlur}
+                // value={formik.values.email}
+                {...formik.getFieldProps('email')}
               />
               {formik.touched.email && formik.errors.email && (
                 <div style={{ color: 'tomato' }}>{formik.errors.email}</div>
@@ -73,10 +74,11 @@ export const Login = () => {
                 type="password"
                 label="Password"
                 margin="normal"
-                name="password"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.password}
+                // name="password"
+                // onChange={formik.handleChange}
+                // onBlur={formik.handleBlur}
+                // value={formik.values.password}
+                {...formik.getFieldProps('password')}
               />
               {formik.touched.password && formik.errors.password && (
                 <div style={{ color: 'tomato' }}>{formik.errors.password}</div>
@@ -84,9 +86,10 @@ export const Login = () => {
               <FormControlLabel
                 label={'Remember me'}
                 control={<Checkbox />}
-                onChange={formik.handleChange}
+                //onChange={formik.handleChange}
                 checked={formik.values.rememberMe}
-                name="rememberMe"
+                //name="rememberMe"
+                {...formik.getFieldProps('rememberMe')}
               />
               <Button type={'submit'} variant={'contained'} color={'primary'}>
                 Login
