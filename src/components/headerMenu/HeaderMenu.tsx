@@ -32,11 +32,11 @@ export const HeaderMenu = ({ changeModeHandler }: HeaderMenuProps) => {
         News
       </Typography>
       <Switch color={'default'} onChange={changeModeHandler} />
-      {isLoggedIn && (
-        <Link to={PATH.TODOLISTS}>
-          <MenuButton color="inherit">Todolists</MenuButton>
-        </Link>
-      )}
+      {/*{isLoggedIn && (*/}
+      {/*  <Link to={PATH.TODOLISTS}>*/}
+      {/*    <MenuButton color="inherit">Todolists</MenuButton>*/}
+      {/*  </Link>*/}
+      {/*)}*/}
       <Link to={PATH.LOGIN}>
         {isLoggedIn && (
           <MenuButton onClick={onClickLogoutHandler} color="inherit">

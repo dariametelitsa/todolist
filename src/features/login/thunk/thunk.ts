@@ -6,6 +6,7 @@ import { RootActionsType } from '../../../app/store'
 import { authAPI } from '../../../api/todolist-api'
 import { setIsLoggedInAC } from '../reduser/auth-reduser'
 import { handleServerAppError, handleServerNetworkError } from '../../../utils/errorUtils'
+import { clearTodolistsDataAC } from '../../todolistList/redusers/todolistsReducer'
 
 export const loginTC = (data: LoginType) => (dispatch: Dispatch<RootActionsType>) => {
   dispatch(setAppStatusAC('loading'))
@@ -41,6 +42,7 @@ export const meTC = () => (dispatch: Dispatch<RootActionsType>) => {
     })
     .finally(() => {
       dispatch(setIsInitializedAC(true))
+      dispatch(setAppStatusAC('idle'))
     })
 }
 
@@ -51,6 +53,8 @@ export const logOutTC = () => (dispatch: Dispatch<RootActionsType>) => {
     .then((res) => {
       if (res.data.resultCode === 0) {
         dispatch(setIsLoggedInAC(false))
+        dispatch(setIsLoggedInAC(false))
+        dispatch(clearTodolistsDataAC())
         dispatch(setAppStatusAC('succeeded'))
       } else {
         handleServerAppError(res.data, dispatch)
