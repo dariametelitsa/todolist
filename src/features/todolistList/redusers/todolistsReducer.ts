@@ -32,6 +32,9 @@ export const todolistsReducer = (
     case 'CHANGE_ENTITY_STATUS': {
       return state.map((tl) => (tl.id === action.payload.id ? { ...tl, entityStatus: action.payload.status } : tl))
     }
+    case 'CLEAR_DATA': {
+      return []
+    }
     default:
       return state
   }
@@ -57,10 +60,13 @@ export const setTodolistsAC = (todolists: TodolistType[]) =>
 export const changeEntityStatusAC = (id: string, status: AppStatusTypes) =>
   ({ type: 'CHANGE_ENTITY_STATUS', payload: { id, status } }) as const
 
+export const clearTodolistsDataAC = () => ({ type: 'CLEAR_DATA' }) as const
+
 //action types
 export type DeleteTodolistAT = ReturnType<typeof deleteTodolistAC>
 export type AddTodolistAT = ReturnType<typeof addTodolistAC>
 export type SetTodolistsAT = ReturnType<typeof setTodolistsAC>
+export type ClearTodolistsDataAT = ReturnType<typeof clearTodolistsDataAC>
 export type TodolistActionsType =
   | DeleteTodolistAT
   | AddTodolistAT
@@ -69,3 +75,4 @@ export type TodolistActionsType =
   | ReturnType<typeof changedTodolistFilterAC>
   | ReturnType<typeof changedTodolistCoverAC>
   | ReturnType<typeof changeEntityStatusAC>
+  | ClearTodolistsDataAT

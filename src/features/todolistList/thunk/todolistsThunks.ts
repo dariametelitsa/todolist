@@ -11,18 +11,23 @@ import { setTasksAC } from '../redusers/tasksReduser'
 import { setAppErrorAC, setAppStatusAC } from '../../../app/reducers/appReducer'
 import { handleServerAppError, handleServerNetworkError } from '../../../utils/errorUtils'
 import axios from 'axios'
-import { STATUS_CODE } from './tasksThunks'
+import { getTasksTC, STATUS_CODE } from './tasksThunks'
 
-export const getTodolistsTC = (): AppThunkType => async (dispatch) => {
+export const getTodolistsTC = (): AppThunkType<Promise<void>> => async (dispatch) => {
   try {
-    const res = await todolistAPI.getTodolist()
-    dispatch(setTodolistsAC(res.data))
+    const todolists = await todolistAPI.getTodolist()
+    dispatch(setTodolistsAC(todolists.data))
     dispatch(setAppStatusAC('succeeded'))
+    todolists.data.forEach((tl) => {
+      dispatch(getTasksTC(tl.id))
+    })
+    //cons
   } catch (e: any) {
     dispatch(setTodolistsAC([]))
     handleServerNetworkError(e, dispatch)
+  } finally {
+    dispatch(setAppStatusAC('idle'))
   }
-  dispatch(setAppStatusAC('idle'))
 }
 
 export const addTodolistTC =
@@ -53,7 +58,7 @@ export const deleteTodolistTC =
     todolistAPI
       .deleteTodolist(todolistId)
       .then((res) => {
-        if (res.status === STATUS_CODE.SUCCESS) {
+        if (res.data.resultCode === STATUS_CODE.SUCCESS) {
           dispatch(deleteTodolistAC(todolistId))
           dispatch(setAppStatusAC('succeeded'))
         } else {
