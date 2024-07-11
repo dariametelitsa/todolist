@@ -8,6 +8,16 @@ import FormLabel from '@mui/material/FormLabel'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import { useFormik } from 'formik'
+import { useAppDispatch, useAppSelector } from '../../app/store'
+import { Navigate } from 'react-router-dom'
+import { PATH } from '../../routes/PATH'
+import { loginTC } from './thunk/thunk'
+
+export type LoginType = {
+  email: string
+  password: string
+  rememberMe: boolean
+}
 
 type ErrorsType = {
   email?: string
@@ -15,6 +25,9 @@ type ErrorsType = {
 }
 
 export const Login = () => {
+  const dispatch = useAppDispatch()
+  const isLoggedIn = useAppSelector<boolean>((state) => state.auth.isLoggedIn)
+
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -33,13 +46,18 @@ export const Login = () => {
       }
       return errors
     },
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2))
-      //alert(JSON.stringify(values))
+    onSubmit: (values: LoginType) => {
+      dispatch(loginTC(values))
+      //alert(JSON.stringify(values, null, 2))
+      //formik.resetForm()
     },
   })
   //console.log(formik.values)
   //console.log(formik.touched)
+
+  if (isLoggedIn) {
+    return <Navigate to={PATH.TODOLISTS} />
+  }
 
   return (
     <Grid container justifyContent={'center'}>
@@ -47,13 +65,13 @@ export const Login = () => {
         <form onSubmit={formik.handleSubmit}>
           <FormControl>
             <FormLabel>
-              {/*<p>*/}
-              {/*  To log in get registered{' '}*/}
-              {/*  <a href={'https://social-network.samuraijs.com/'} target={'_blank'}>*/}
-              {/*    here*/}
-              {/*  </a>*/}
-              {/*</p>*/}
-              {/*<p>or use common test account credentials:</p>*/}
+              <p>
+                To log in get registered{' '}
+                <a href={'https://social-network.samuraijs.com/'} target={'_blank'}>
+                  here
+                </a>
+              </p>
+              <p>or use common test account credentials:</p>
               <p>Email: free@samuraijs.com</p>
               <p>Password: free</p>
             </FormLabel>

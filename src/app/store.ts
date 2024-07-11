@@ -4,6 +4,7 @@ import { TaskActionsType, tasksReducer } from '../features/todolistList/redusers
 import { thunk, ThunkAction, ThunkDispatch } from 'redux-thunk'
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 import { ActionsGlobalType, appReducer } from './reducers/appReducer'
+import { ActionsAuthType, authReducer } from '../features/login/reduser/auth-reduser'
 
 declare global {
   interface Window {
@@ -15,10 +16,11 @@ const rootReducer = combineReducers({
   todolists: todolistsReducer,
   tasks: tasksReducer,
   app: appReducer,
+  auth: authReducer,
 })
 
 export type AppRootStateType = ReturnType<typeof rootReducer>
-export type RootActionsType = TodolistActionsType | TaskActionsType | ActionsGlobalType
+export type RootActionsType = TodolistActionsType | TaskActionsType | ActionsGlobalType | ActionsAuthType
 
 //const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 

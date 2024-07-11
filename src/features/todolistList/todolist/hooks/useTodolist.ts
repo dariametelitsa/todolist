@@ -13,6 +13,9 @@ export const useTodolist = (id: string, filter: FilterValuesType) => {
   // useEffect(() => {
   //   dispatch(getTasksTC(id))
   // }, [dispatch, id])
+  // useEffect(() => {
+  //   console.log(2)
+  // }, [])
 
   const filteredTasks = useMemo(() => {
     if (filter === 'active') {

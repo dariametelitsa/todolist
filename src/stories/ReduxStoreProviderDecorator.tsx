@@ -89,6 +89,7 @@ const initialGlobalState = {
   app: {
     status: 'idle',
     error: null,
+    isInitialized: true,
   },
 } as returnReducerType
 

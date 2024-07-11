@@ -3,13 +3,19 @@ import Grid from '@mui/material/Unstable_Grid2'
 import { AddItem } from '../../components/addItem/AddItem'
 import Todolist from './todolist/Todolist'
 import { useAppWithRedux } from '../../app/hooks/useAppWithRedux'
+import { Navigate } from 'react-router-dom'
+import { PATH } from '../../routes/PATH'
 
 // type TodolistListProps = {
 //     todoLists: TodoListDomainType[]
 //     addTodolist: (title: string) => void
 // };
 export const TodolistList: React.FC = () => {
-  const { addTodolist, todoLists } = useAppWithRedux()
+  const { addTodolist, todoLists, isLoggedIn } = useAppWithRedux()
+
+  if (!isLoggedIn) {
+    return <Navigate to={PATH.LOGIN} />
+  }
 
   return (
     <>

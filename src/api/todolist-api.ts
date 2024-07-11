@@ -1,4 +1,5 @@
 import axios, { AxiosResponse } from 'axios'
+import { LoginType } from '../features/login/Login'
 
 // const config = {
 //     withCredentials: true,
@@ -48,6 +49,19 @@ export const todolistAPI = {
       `/todo-lists/${todoId}/tasks/${taskId}`,
       { ...model }
     )
+  },
+}
+
+//api
+export const authAPI = {
+  login(data: LoginType) {
+    return instance.post<ResponseType<{ userId: number }>>('auth/login', data)
+  },
+  me() {
+    return instance.get<ResponseType<UserType>>('auth/me')
+  },
+  logOut() {
+    return instance.delete<ResponseType>('auth/login')
   },
 }
 
@@ -116,4 +130,10 @@ export type ErrorResponseType = {
     },
   ]
   error: string
+}
+
+type UserType = {
+  id: number
+  login: string
+  email: string
 }

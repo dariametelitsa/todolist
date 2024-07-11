@@ -10,9 +10,17 @@ import LinearProgress from '@mui/material/LinearProgress'
 import AppBar from '@mui/material/AppBar'
 import { ErrorSnackbar } from '../components/errorSnackbar/ErrorSnackbar'
 import { Outlet } from 'react-router-dom'
+import CircularProgress from '@mui/material/CircularProgress'
 
 function App() {
-  const { theme, changeModeHandler, isLoading } = useAppWithRedux()
+  const { theme, changeModeHandler, isLoading, isInitialized } = useAppWithRedux()
+
+  if (!isInitialized)
+    return (
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
+        <CircularProgress />
+      </div>
+    )
 
   return (
     <div className={'App'}>

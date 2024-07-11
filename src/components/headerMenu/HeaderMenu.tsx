@@ -8,12 +8,21 @@ import Switch from '@mui/material/Switch'
 import { MenuButton } from '../menuButton/MenuButton'
 import { Link } from 'react-router-dom'
 import { PATH } from '../../routes/PATH'
+import { useAppDispatch, useAppSelector } from '../../app/store'
+import { logOutTC } from '../../features/login/thunk/thunk'
 
 type HeaderMenuProps = {
   changeModeHandler: () => void
 }
 
 export const HeaderMenu = ({ changeModeHandler }: HeaderMenuProps) => {
+  const isLoggedIn = useAppSelector<boolean>((state) => state.auth.isLoggedIn)
+  const dispatch = useAppDispatch()
+
+  const onClickLogoutHandler = () => {
+    dispatch(logOutTC())
+  }
+
   return (
     <Toolbar>
       <IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
@@ -23,11 +32,17 @@ export const HeaderMenu = ({ changeModeHandler }: HeaderMenuProps) => {
         News
       </Typography>
       <Switch color={'default'} onChange={changeModeHandler} />
-      <Link to={PATH.TODOLISTS}>
-        <MenuButton color="inherit">Todolists</MenuButton>
-      </Link>
+      {isLoggedIn && (
+        <Link to={PATH.TODOLISTS}>
+          <MenuButton color="inherit">Todolists</MenuButton>
+        </Link>
+      )}
       <Link to={PATH.LOGIN}>
-        <MenuButton color="inherit">Login/Logout</MenuButton>
+        {isLoggedIn && (
+          <MenuButton onClick={onClickLogoutHandler} color="inherit">
+            Logout
+          </MenuButton>
+        )}
       </Link>
       <MenuButton color="inherit">Faq</MenuButton>
     </Toolbar>

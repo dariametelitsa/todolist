@@ -4,6 +4,7 @@ import createTheme from '@mui/material/styles/createTheme'
 import cyan from '@mui/material/colors/cyan'
 import { addTodolistTC, getTodolistsTC } from '../../features/todolistList/thunk/todolistsThunks'
 import { AppStatusTypes } from '../reducers/appReducer'
+import { meTC } from '../../features/login/thunk/thunk'
 
 type ThemeMode = 'dark' | 'light'
 
@@ -11,11 +12,19 @@ export const useAppWithRedux = () => {
   const dispatch = useAppDispatch()
   const todoLists = useAppSelector((state) => state.todolists)
   const status = useAppSelector<AppStatusTypes>((state) => state.app.status)
+  const isLoggedIn = useAppSelector<boolean>((state) => state.auth.isLoggedIn)
+  const isInitialized = useAppSelector<boolean>((state) => state.app.isInitialized)
   const isLoading = status === 'loading'
 
   useEffect(() => {
-    dispatch(getTodolistsTC())
+    dispatch(meTC())
   }, [dispatch])
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      dispatch(getTodolistsTC())
+    }
+  }, [dispatch, isLoggedIn])
 
   const addTodolist = useCallback(
     (title: string) => {
@@ -45,5 +54,7 @@ export const useAppWithRedux = () => {
     addTodolist,
     todoLists,
     isLoading,
+    isLoggedIn,
+    isInitialized,
   }
 }

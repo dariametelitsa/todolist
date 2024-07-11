@@ -14,6 +14,7 @@ import axios from 'axios'
 import { getTasksTC, STATUS_CODE } from './tasksThunks'
 
 export const getTodolistsTC = (): AppThunkType<Promise<void>> => async (dispatch) => {
+  dispatch(setAppStatusAC('loading'))
   try {
     const todolists = await todolistAPI.getTodolist()
     dispatch(setTodolistsAC(todolists.data))
