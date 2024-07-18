@@ -5,16 +5,20 @@ import { addTaskTC, cleanTasksListTC, getTasksTC } from '../../thunk/tasksThunks
 import { FilterValuesType } from '../../../../data/dataPropsTypes'
 import { changedTodolistCover, changedTodolistFilter } from '../../redusers/todolistsSlice'
 import { changeTodolistTitleTC, deleteTodolistTC } from '../../thunk/todolistsThunks'
+import { setTasks } from '../../redusers/tasksSlice'
+import { setAppStatus } from '../../../../app/reducers/appSlice'
 
 export const useTodolist = (id: string, filter: FilterValuesType) => {
   const tasks = useAppSelector<Array<TaskType>>((state) => state.tasks[id])
   const isLoggedIn = useAppSelector<boolean>((state) => state.auth.isLoggedIn)
   const dispatch = useAppDispatch()
-  console.log('render use todos', id)
 
   useEffect(() => {
     if (isLoggedIn) {
       dispatch(getTasksTC(id))
+      // dispatch(setAppStatus({ status: 'idle' }))
+      // dispatch(setTasks({ todolistId: id, tasks: [] }))
+      // dispatch(setAppStatus({ status: 'idle' }))
     }
   }, [dispatch, id, isLoggedIn])
 

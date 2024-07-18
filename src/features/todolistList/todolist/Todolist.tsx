@@ -16,9 +16,17 @@ import { FiltersForTasks } from '../../../components/filtersForTasks/FiltersForT
 type TodolistListProps = {
   todolist: TodoListDomainType
 }
+
+// function arePropsEqual(prevProps: TodolistListProps, nextProps: TodolistListProps) {
+//   // Custom comparison logic here
+//   // Return true if the props have not changed and false otherwise
+//   return prevProps.todolist.id === nextProps.todolist.id
+// }
+
 const Todolist: React.FC<TodolistListProps> = React.memo(({ todolist }) => {
   const { id, title, filter, coverImage, entityStatus } = todolist
 
+  console.log('renred todo', id)
   const {
     sorterTasks,
     onClickFilterHandlerCreator,

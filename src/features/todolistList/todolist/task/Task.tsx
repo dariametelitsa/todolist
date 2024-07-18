@@ -14,6 +14,7 @@ type TasksProps = {
   todolistId: string
   entityStatus: AppStatusTypes
 }
+
 export const Task = React.memo(({ todolistId, task, entityStatus }: TasksProps) => {
   const { removeTaskHandler, changeTaskStatusHandler, changeTaskTitleHandler } = useTask(todolistId)
   const isDisable = entityStatus === 'loading'
