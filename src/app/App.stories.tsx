@@ -1,24 +1,24 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { fn } from '@storybook/test';
-import App from "./App";
-import { ReduxStoreProviderDecorator } from "../stories/ReduxStoreProviderDecorator";
+import type { Meta, StoryObj } from '@storybook/react'
+import { fn } from '@storybook/test'
+import App from './App'
+import { ReduxStoreProviderDecorator, storybookStore } from '../stories/ReduxStoreProviderDecorator'
+import { Provider } from 'react-redux'
 const meta: Meta<typeof App> = {
-    title: 'Todolist/App',
-    component: App,
-    decorators: ReduxStoreProviderDecorator,
-    tags: ['autodocs'],
-    argTypes: {
-    },
-    args: {
-        updateItem: fn(),
-        oldTitle: 'HTML',
-        idToChange: '123'
-    },
-};
+  title: 'Todolist/App',
+  component: App,
+  decorators: ReduxStoreProviderDecorator,
+  tags: ['autodocs'],
+  argTypes: {},
+  args: {},
+}
 
-export default meta;
-type Story = StoryObj<typeof App>;
+export default meta
+type Story = StoryObj<typeof App>
 
-export const TaskIsNotDoneStory: Story = {
-    // render: () => <Provider store={store}><App></App></Provider>
-};
+export const AppWithProvider: Story = {
+  // render: () => (
+  //   <Provider store={storybookStore}>
+  //     <App />
+  //   </Provider>
+  // ),
+}

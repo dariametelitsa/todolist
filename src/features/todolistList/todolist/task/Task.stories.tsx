@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux'
 import { AppRootStateType, useAppDispatch } from '../../../../app/store'
 import { TaskStatuses, TaskType, TodoTaskPriorities } from '../../../../api/todolist-api'
 import { addTaskTC } from '../../thunk/tasksThunks'
+import { v1 } from 'uuid'
 
 const meta: Meta<typeof Task> = {
   title: 'Todolist/Task',
@@ -27,19 +28,41 @@ const meta: Meta<typeof Task> = {
 export default meta
 type Story = StoryObj<typeof Task>
 
-// export const TaskIsNotDoneStory: Story = {
-//     args: {
-//         task: {id: v1(), title: 'Title', isDone: false},
-//         todolistId: 'todolistId1',
-//     },
-// };
-//
-// export const TaskIsDoneStory: Story = {
-//     args: {
-//         task: {id: 'taskID2', title: 'Title', isDone: true},
-//         todolistId: 'todoId2',
-//     },
-// };
+export const TaskIsNotDoneStory: Story = {
+  args: {
+    task: {
+      id: '1',
+      status: TaskStatuses.New,
+      title: 'XP',
+      todoListId: 'todolistId1',
+      description: '',
+      priority: TodoTaskPriorities.Low,
+      order: 0,
+      addedDate: '',
+      startDate: '',
+      deadline: '',
+    },
+    todolistId: 'todolistId1',
+  },
+}
+
+export const TaskIsDoneStory: Story = {
+  args: {
+    task: {
+      id: '1',
+      status: TaskStatuses.Completed,
+      title: 'XP',
+      todoListId: 'todolistId1',
+      description: '',
+      priority: TodoTaskPriorities.Low,
+      order: 0,
+      addedDate: '',
+      startDate: '',
+      deadline: '',
+    },
+    todolistId: 'todoId2',
+  },
+}
 // const TaskToggle = () => {
 //     const [task, setTask] = useState({id: 'taskID3', title: 'Title', isDone: false});
 //     const changeTaskStatus = () => {
@@ -86,6 +109,6 @@ const TaskWithRedux = () => {
   return <Task task={task} todolistId={'todolistId1'} entityStatus={'idle'} />
 }
 
-export const TaskTogleStory: Story = {
+export const TaskToggleStory: Story = {
   render: () => <TaskWithRedux />,
 }

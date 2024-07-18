@@ -6,11 +6,15 @@ import React from 'react'
 import { thunk } from 'redux-thunk'
 import { TaskStatuses, TodoTaskPriorities } from '../api/todolist-api'
 import { appReducer } from '../app/reducers/appReducer'
+import { authReducer } from '../features/login/reduser/auth-reduser'
+import { MemoryRouter, RouterProvider } from 'react-router-dom'
+import { router } from '../routes/router'
 
 const rootReducer = combineReducers({
   todolists: todolistsReducer,
   tasks: tasksReducer,
   app: appReducer,
+  auth: authReducer,
 })
 
 type returnReducerType = ReturnType<typeof rootReducer>
@@ -91,10 +95,18 @@ const initialGlobalState = {
     error: null,
     isInitialized: true,
   },
+  auth: {
+    isLoggedIn: true,
+  },
 } as returnReducerType
 
 export const storybookStore = legacy_createStore(rootReducer, initialGlobalState as any, applyMiddleware(thunk))
 
 export const ReduxStoreProviderDecorator = (storyFn: () => React.ReactNode) => {
-  return <Provider store={storybookStore}>{storyFn()}</Provider>
+  return (
+    <Provider store={storybookStore}>
+      <RouterProvider router={router} />
+      {/*<MemoryRouter>{storyFn()}</MemoryRouter>*/}
+    </Provider>
+  )
 }
