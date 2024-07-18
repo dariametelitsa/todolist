@@ -1,21 +1,20 @@
 // thunks
-import { setAppStatusAC, setIsInitializedAC } from '../../../app/reducers/appReducer'
+import { setAppStatus, setIsInitialized } from '../../../app/reducers/appSlice'
 import { LoginType } from '../Login'
 import { Dispatch } from 'redux'
-import { RootActionsType } from '../../../app/store'
 import { authAPI } from '../../../api/todolist-api'
-import { setIsLoggedInAC } from '../reduser/auth-reduser'
+import { setIsLoggedIn } from '../reduser/authSlice'
 import { handleServerAppError, handleServerNetworkError } from '../../../utils/errorUtils'
 import { clearTodolistsDataAC } from '../../todolistList/redusers/todolistsReducer'
 
-export const loginTC = (data: LoginType) => (dispatch: Dispatch<RootActionsType>) => {
-  dispatch(setAppStatusAC('loading'))
+export const loginTC = (data: LoginType) => (dispatch: Dispatch) => {
+  dispatch(setAppStatus({ status: 'loading' }))
   authAPI
     .login(data)
     .then((res) => {
       if (res.data.resultCode === 0) {
-        dispatch(setIsLoggedInAC(true))
-        dispatch(setAppStatusAC('succeeded'))
+        dispatch(setIsLoggedIn({ isLoggedIn: true }))
+        dispatch(setAppStatus({ status: 'succeeded' }))
       } else {
         handleServerAppError(res.data, dispatch)
       }
@@ -25,14 +24,14 @@ export const loginTC = (data: LoginType) => (dispatch: Dispatch<RootActionsType>
     })
 }
 
-export const meTC = () => (dispatch: Dispatch<RootActionsType>) => {
-  dispatch(setAppStatusAC('loading'))
+export const meTC = () => (dispatch: Dispatch) => {
+  dispatch(setAppStatus({ status: 'loading' }))
   authAPI
     .me()
     .then((res) => {
       if (res.data.resultCode === 0) {
-        dispatch(setIsLoggedInAC(true))
-        dispatch(setAppStatusAC('succeeded'))
+        dispatch(setIsLoggedIn({ isLoggedIn: true }))
+        dispatch(setAppStatus({ status: 'succeeded' }))
       } else {
         //handleServerAppError(res.data, dispatch)
       }
@@ -41,21 +40,20 @@ export const meTC = () => (dispatch: Dispatch<RootActionsType>) => {
       //handleServerNetworkError(e, dispatch)
     })
     .finally(() => {
-      dispatch(setIsInitializedAC(true))
-      dispatch(setAppStatusAC('idle'))
+      dispatch(setIsInitialized({ isInitialized: true }))
+      dispatch(setAppStatus({ status: 'idle' }))
     })
 }
 
-export const logOutTC = () => (dispatch: Dispatch<RootActionsType>) => {
-  dispatch(setAppStatusAC('loading'))
+export const logOutTC = () => (dispatch: Dispatch) => {
+  dispatch(setAppStatus({ status: 'loading' }))
   authAPI
     .logOut()
     .then((res) => {
       if (res.data.resultCode === 0) {
-        dispatch(setIsLoggedInAC(false))
-        dispatch(setIsLoggedInAC(false))
+        dispatch(setIsLoggedIn({ isLoggedIn: false }))
         dispatch(clearTodolistsDataAC())
-        dispatch(setAppStatusAC('succeeded'))
+        dispatch(setAppStatus({ status: 'succeeded' }))
       } else {
         handleServerAppError(res.data, dispatch)
       }

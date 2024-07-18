@@ -8,7 +8,7 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
 import ListItem from '@mui/material/ListItem'
 import { TaskStatuses, TaskType } from '../../../../api/todolist-api'
 import { useTask } from './hooks/useTask'
-import { AppStatusTypes } from '../../../../app/reducers/appReducer'
+import { AppStatusTypes } from '../../../../app/reducers/appSlice'
 
 type TasksProps = {
   task: TaskType

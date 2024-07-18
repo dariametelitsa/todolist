@@ -5,7 +5,7 @@ import IconButton from '@mui/material/IconButton'
 import CloseIcon from '@mui/icons-material/Close'
 import { Alert } from '@mui/material'
 import { useAppDispatch, useAppSelector } from '../../app/store'
-import { setAppErrorAC } from '../../app/reducers/appReducer'
+import { setAppError } from '../../app/reducers/appSlice'
 
 export function ErrorSnackbar() {
   const error = useAppSelector((state) => state.app.error)
@@ -16,7 +16,7 @@ export function ErrorSnackbar() {
     if (reason === 'clickaway') {
       return
     }
-    dispatch(setAppErrorAC(null))
+    dispatch(setAppError({ error: null }))
   }
 
   const action = (

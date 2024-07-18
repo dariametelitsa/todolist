@@ -1,6 +1,6 @@
 import { FilterValuesType, TodoListDomainType } from '../../../data/dataPropsTypes'
 import { TodolistType } from '../../../api/todolist-api'
-import { AppStatusTypes } from '../../../app/reducers/appReducer'
+import { AppStatusTypes } from '../../../app/reducers/appSlice'
 
 const initialState: TodoListDomainType[] = []
 

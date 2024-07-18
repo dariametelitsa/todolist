@@ -7,7 +7,7 @@ import {
 } from '../../../api/todolist-api'
 import { AppThunkType } from '../../../app/store'
 import { addTaskAC, cleanTasksListAC, deleteTaskAC, setTasksAC, updateTaskAC } from '../redusers/tasksReduser'
-import { setAppStatusAC } from '../../../app/reducers/appReducer'
+import { setAppStatus } from '../../../app/reducers/appSlice'
 import { handleServerAppError, handleServerNetworkError } from '../../../utils/errorUtils'
 import { AxiosError } from 'axios'
 import { changeEntityStatusAC } from '../redusers/todolistsReducer'
@@ -21,7 +21,7 @@ export enum STATUS_CODE {
 export const getTasksTC =
   (todolistId: string): AppThunkType =>
   (dispatch) => {
-    dispatch(setAppStatusAC('loading'))
+    dispatch(setAppStatus({ status: 'loading' }))
     todolistAPI
       .getTasks(todolistId)
       .then((res) => {
@@ -32,7 +32,7 @@ export const getTasksTC =
         dispatch(setTasksAC(todolistId, []))
       })
       .finally(() => {
-        dispatch(setAppStatusAC('idle'))
+        dispatch(setAppStatus({ status: 'idle' }))
       })
   }
 
@@ -57,7 +57,7 @@ export const deleteTaskTC =
 export const addTaskTC =
   (todoId: string, title: string): AppThunkType =>
   (dispatch) => {
-    dispatch(setAppStatusAC('loading'))
+    dispatch(setAppStatus({ status: 'loading' }))
     todolistAPI
       .addTask(todoId, title)
       .then((res) => {
@@ -71,7 +71,7 @@ export const addTaskTC =
         handleServerNetworkError(e, dispatch)
       })
       .finally(() => {
-        dispatch(setAppStatusAC('idle'))
+        dispatch(setAppStatus({ status: 'idle' }))
       })
   }
 

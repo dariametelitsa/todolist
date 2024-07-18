@@ -10,7 +10,7 @@
 //     isDone?: boolean
 // }
 import { TaskType, TodolistType } from '../api/todolist-api'
-import { AppStatusTypes } from '../app/reducers/appReducer'
+import { AppStatusTypes } from '../app/reducers/appSlice'
 
 export type FilterValuesType = 'all' | 'completed' | 'active'
 

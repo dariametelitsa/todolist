@@ -5,9 +5,9 @@ import { tasksReducer } from '../features/todolistList/redusers/tasksReduser'
 import React from 'react'
 import { thunk } from 'redux-thunk'
 import { TaskStatuses, TodoTaskPriorities } from '../api/todolist-api'
-import { appReducer } from '../app/reducers/appReducer'
-import { authReducer } from '../features/login/reduser/auth-reduser'
-import { MemoryRouter, RouterProvider } from 'react-router-dom'
+import { appReducer } from '../app/reducers/appSlice'
+import { authReducer } from '../features/login/reduser/authSlice'
+import { RouterProvider } from 'react-router-dom'
 import { router } from '../routes/router'
 
 const rootReducer = combineReducers({

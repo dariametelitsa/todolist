@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from 'react'
 import createTheme from '@mui/material/styles/createTheme'
 import cyan from '@mui/material/colors/cyan'
 import { addTodolistTC, getTodolistsTC } from '../../features/todolistList/thunk/todolistsThunks'
-import { AppStatusTypes } from '../reducers/appReducer'
+import { AppStatusTypes } from '../reducers/appSlice'
 import { meTC } from '../../features/login/thunk/thunk'
 
 type ThemeMode = 'dark' | 'light'
