@@ -1,6 +1,5 @@
 import * as React from 'react'
 import { getListItemSx } from '../Todolist.styles'
-import styles from '../../../../components/trash/todolist/Todolist.module.scss'
 import Checkbox from '@mui/material/Checkbox'
 import { EditableSpan } from '../../../../components/editableSpan/EditableSpan'
 import IconButton from '@mui/material/IconButton'
@@ -21,7 +20,7 @@ export const Task = React.memo(({ todolistId, task, entityStatus }: TasksProps) 
 
   return (
     <ListItem key={task.id} sx={getListItemSx(task.status === TaskStatuses.Completed)}>
-      <label className={styles.label}>
+      <label style={{ width: '100%', display: 'flex', alignItems: 'center' }}>
         <Checkbox
           checked={task.status === TaskStatuses.Completed}
           onChange={(e) => changeTaskStatusHandler(task.id, e.currentTarget.checked)}

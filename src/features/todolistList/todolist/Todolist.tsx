@@ -1,6 +1,5 @@
 import React from 'react'
 import { TodoListDomainType } from '../../../data/dataPropsTypes'
-import styles from '../../../components/trash/todolist/Todolist.module.scss'
 import { AddItem } from '../../../components/addItem/AddItem'
 import { EditableSpan } from '../../../components/editableSpan/EditableSpan'
 import IconButton from '@mui/material/IconButton'
@@ -37,7 +36,7 @@ const Todolist: React.FC<TodolistListProps> = React.memo(({ todolist }) => {
   return (
     <Grid xs={12} md={6} lg={4}>
       <Paper sx={{ p: 2 }}>
-        <div className={styles.todolist}>
+        <div>
           <CoverImage image={coverImage && coverImage} updateImage={onChangeCoverHandler} />
           <h3 style={{ display: 'flex', justifyContent: 'space-between' }}>
             <EditableSpan

@@ -11,9 +11,9 @@ export const ErrorPage = () => {
       <Grid item justifyContent={'center'}>
         <h1>Not found</h1>
         <Link to={PATH.ROOT}>
-          <Button variant="outlined" href="#outlined-buttons">
-            На главную
-          </Button>
+          {/*<Button variant="outlined" href="#outlined-buttons">*/}
+          На главную
+          {/*</Button>*/}
         </Link>
       </Grid>
     </Grid>

@@ -1,13 +1,13 @@
 import { v1 } from 'uuid'
 import {
-  addTodolistAC,
-  changedTodolistCoverAC,
-  changedTodolistFilterAC,
-  changeTodolistTitleAC,
-  deleteTodolistAC,
-  setTodolistsAC,
+  addTodolist,
+  changedTodolistCover,
+  changedTodolistFilter,
+  changeTodolistTitle,
+  deleteTodolist,
+  setTodolists,
   todolistsReducer,
-} from './todolistsReducer'
+} from './todolistsSlice'
 import { TodoListDomainType } from '../../../data/dataPropsTypes'
 import { TodolistType } from '../../../api/todolist-api'
 
@@ -27,7 +27,7 @@ beforeEach(() => {
 })
 
 test('correct todolist should be removed', () => {
-  const endState = todolistsReducer(startState, deleteTodolistAC(todolistId1))
+  const endState = todolistsReducer(startState, deleteTodolist({ id: todolistId1 }))
 
   expect(endState.length).toBe(1)
   // удалится нужный тудулист, а не любой
@@ -38,7 +38,7 @@ test('correct todolist should be added', () => {
   const title = 'new todolist'
   const newTodo: TodolistType = { id: 'test', title, order: 0, addedDate: '' }
 
-  const endState = todolistsReducer(startState, addTodolistAC(newTodo))
+  const endState = todolistsReducer(startState, addTodolist({ todolist: newTodo }))
 
   expect(endState.length).toBe(3)
   expect(endState[0].title).toBe(title)
@@ -47,29 +47,29 @@ test('correct todolist should be added', () => {
 test('correct todolist should change its name', () => {
   const changedTitle = 'New Todolist'
 
-  const endState = todolistsReducer(startState, changeTodolistTitleAC(todolistId2, changedTitle))
+  const endState = todolistsReducer(startState, changeTodolistTitle({ id: todolistId2, title: changedTitle }))
   expect(endState[0].title).toBe('What to learn')
   expect(endState[1].title).toBe(changedTitle)
 })
 
 test('correct filter of todolist should be changed', () => {
-  const endState = todolistsReducer(startState, changedTodolistFilterAC(todolistId2, 'completed'))
+  const endState = todolistsReducer(startState, changedTodolistFilter({ id: todolistId2, filter: 'completed' }))
   expect(endState[0].filter).toBe('all')
   expect(endState[1].filter).toBe('completed')
 })
 
 test('correct todolist cover changed', () => {
-  const endState = todolistsReducer(startState, changedTodolistCoverAC(todolistId2, 'newImg'))
+  const endState = todolistsReducer(startState, changedTodolistCover({ id: todolistId2, coverImage: 'newImg' }))
   expect(endState[0].coverImage).toBe(undefined)
   expect(endState[1].coverImage).toBe('newImg')
 
-  const endState2 = todolistsReducer(endState, changedTodolistCoverAC(todolistId1, 'newImg'))
+  const endState2 = todolistsReducer(endState, changedTodolistCover({ id: todolistId1, coverImage: 'newImg' }))
   expect(endState2[0].coverImage).toBe('newImg')
   expect(endState2[1].coverImage).toBe('newImg')
 })
 
 test('todolists should br set to the state', () => {
-  const endState = todolistsReducer([], setTodolistsAC(startState))
+  const endState = todolistsReducer([], setTodolists({ todolists: startState }))
 
   expect(endState.length).toBe(2)
 })

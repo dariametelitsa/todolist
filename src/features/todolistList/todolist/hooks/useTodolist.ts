@@ -3,16 +3,20 @@ import { TaskStatuses, TaskType } from '../../../../api/todolist-api'
 import { useCallback, useEffect, useMemo } from 'react'
 import { addTaskTC, cleanTasksListTC, getTasksTC } from '../../thunk/tasksThunks'
 import { FilterValuesType } from '../../../../data/dataPropsTypes'
-import { changedTodolistCoverAC, changedTodolistFilterAC } from '../../redusers/todolistsReducer'
+import { changedTodolistCover, changedTodolistFilter } from '../../redusers/todolistsSlice'
 import { changeTodolistTitleTC, deleteTodolistTC } from '../../thunk/todolistsThunks'
 
 export const useTodolist = (id: string, filter: FilterValuesType) => {
   const tasks = useAppSelector<Array<TaskType>>((state) => state.tasks[id])
+  const isLoggedIn = useAppSelector<boolean>((state) => state.auth.isLoggedIn)
   const dispatch = useAppDispatch()
+  console.log('render use todos', id)
 
   useEffect(() => {
-    dispatch(getTasksTC(id))
-  }, [dispatch, id])
+    if (isLoggedIn) {
+      dispatch(getTasksTC(id))
+    }
+  }, [dispatch, id, isLoggedIn])
 
   const filteredTasks = useMemo(() => {
     if (filter === 'active') {
@@ -25,7 +29,7 @@ export const useTodolist = (id: string, filter: FilterValuesType) => {
   }, [tasks, filter])
 
   const sorterTasks = useMemo(() => {
-    return filteredTasks.sort((prev, next) => {
+    return [...filteredTasks].sort((prev, next) => {
       if (next.status === TaskStatuses.Completed && prev.status !== TaskStatuses.Completed) return -1
       if (next.status !== TaskStatuses.Completed && prev.status === TaskStatuses.Completed) return 1
       return 0
@@ -34,7 +38,7 @@ export const useTodolist = (id: string, filter: FilterValuesType) => {
 
   const onClickFilterHandlerCreator = useCallback(
     (filter: FilterValuesType) => {
-      return () => dispatch(changedTodolistFilterAC(id, filter))
+      return () => dispatch(changedTodolistFilter({ id: id, filter: filter }))
     },
     [dispatch, id]
   )
@@ -52,7 +56,7 @@ export const useTodolist = (id: string, filter: FilterValuesType) => {
 
   const onChangeCoverHandler = useCallback(
     (image: string) => {
-      dispatch(changedTodolistCoverAC(id, image))
+      dispatch(changedTodolistCover({ id: id, coverImage: image }))
     },
     [dispatch, id]
   )

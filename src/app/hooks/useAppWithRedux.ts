@@ -10,7 +10,6 @@ type ThemeMode = 'dark' | 'light'
 
 export const useAppWithRedux = () => {
   const dispatch = useAppDispatch()
-  const todoLists = useAppSelector((state) => state.todolists)
   const status = useAppSelector<AppStatusTypes>((state) => state.app.status)
   const isLoggedIn = useAppSelector<boolean>((state) => state.auth.isLoggedIn)
   const isInitialized = useAppSelector<boolean>((state) => state.app.isInitialized)
@@ -24,14 +23,7 @@ export const useAppWithRedux = () => {
     if (isLoggedIn) {
       dispatch(getTodolistsTC())
     }
-  }, [dispatch, isLoggedIn])
-
-  const addTodolist = useCallback(
-    (title: string) => {
-      dispatch(addTodolistTC(title))
-    },
-    [dispatch]
-  )
+  }, [isLoggedIn, dispatch])
 
   const [themeMode, setThemeMode] = useState<ThemeMode>('dark')
   const changeModeHandler = () => {
@@ -51,8 +43,6 @@ export const useAppWithRedux = () => {
   return {
     theme,
     changeModeHandler,
-    addTodolist,
-    todoLists,
     isLoading,
     isLoggedIn,
     isInitialized,
