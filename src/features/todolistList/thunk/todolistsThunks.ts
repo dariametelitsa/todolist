@@ -11,7 +11,7 @@ import { setTasksAC } from '../redusers/tasksReduser'
 import { setAppErrorAC, setAppStatusAC } from '../../../app/reducers/appReducer'
 import { handleServerAppError, handleServerNetworkError } from '../../../utils/errorUtils'
 import axios from 'axios'
-import { getTasksTC, STATUS_CODE } from './tasksThunks'
+import { STATUS_CODE } from './tasksThunks'
 
 export const getTodolistsTC = (): AppThunkType<Promise<void>> => async (dispatch) => {
   dispatch(setAppStatusAC('loading'))
@@ -19,10 +19,9 @@ export const getTodolistsTC = (): AppThunkType<Promise<void>> => async (dispatch
     const todolists = await todolistAPI.getTodolist()
     dispatch(setTodolistsAC(todolists.data))
     dispatch(setAppStatusAC('succeeded'))
-    todolists.data.forEach((tl) => {
-      dispatch(getTasksTC(tl.id))
-    })
-    //cons
+    // todolists.data.forEach((tl) => {
+    //   dispatch(getTasksTC(tl.id))
+    // })
   } catch (e: any) {
     dispatch(setTodolistsAC([]))
     handleServerNetworkError(e, dispatch)

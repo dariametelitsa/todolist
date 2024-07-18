@@ -1,7 +1,7 @@
 import { useAppDispatch, useAppSelector } from '../../../../app/store'
 import { TaskStatuses, TaskType } from '../../../../api/todolist-api'
-import { useCallback, useMemo } from 'react'
-import { addTaskTC, cleanTasksListTC } from '../../thunk/tasksThunks'
+import { useCallback, useEffect, useMemo } from 'react'
+import { addTaskTC, cleanTasksListTC, getTasksTC } from '../../thunk/tasksThunks'
 import { FilterValuesType } from '../../../../data/dataPropsTypes'
 import { changedTodolistCoverAC, changedTodolistFilterAC } from '../../redusers/todolistsReducer'
 import { changeTodolistTitleTC, deleteTodolistTC } from '../../thunk/todolistsThunks'
@@ -10,12 +10,9 @@ export const useTodolist = (id: string, filter: FilterValuesType) => {
   const tasks = useAppSelector<Array<TaskType>>((state) => state.tasks[id])
   const dispatch = useAppDispatch()
 
-  // useEffect(() => {
-  //   dispatch(getTasksTC(id))
-  // }, [dispatch, id])
-  // useEffect(() => {
-  //   console.log(2)
-  // }, [])
+  useEffect(() => {
+    dispatch(getTasksTC(id))
+  }, [dispatch, id])
 
   const filteredTasks = useMemo(() => {
     if (filter === 'active') {

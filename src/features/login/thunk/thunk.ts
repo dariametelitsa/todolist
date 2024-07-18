@@ -34,11 +34,11 @@ export const meTC = () => (dispatch: Dispatch<RootActionsType>) => {
         dispatch(setIsLoggedInAC(true))
         dispatch(setAppStatusAC('succeeded'))
       } else {
-        handleServerAppError(res.data, dispatch)
+        //handleServerAppError(res.data, dispatch)
       }
     })
     .catch((e) => {
-      handleServerNetworkError(e, dispatch)
+      //handleServerNetworkError(e, dispatch)
     })
     .finally(() => {
       dispatch(setIsInitializedAC(true))
