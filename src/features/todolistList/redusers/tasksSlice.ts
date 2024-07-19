@@ -1,6 +1,6 @@
 import { TasksType } from '../../../data/dataPropsTypes'
 import { TaskType } from '../../../api/todolist-api'
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { addTodolist, clearTodolistsData, deleteTodolist, setTodolists } from './todolistsSlice'
 
 const slice = createSlice({
@@ -53,3 +53,8 @@ const slice = createSlice({
 export const { deleteTask, addTask, cleanTasksList, updateTask, setTasks } = slice.actions
 export const tasksReducer = slice.reducer
 export const { selectTasks } = slice.selectors
+
+export const selectTasksForTodolist = createSelector(
+  [selectTasks, (state, todolistId) => todolistId],
+  (tasksList, todolistId) => tasksList[todolistId] || []
+)
