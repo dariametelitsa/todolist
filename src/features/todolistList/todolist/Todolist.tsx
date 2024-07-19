@@ -17,12 +17,6 @@ type TodolistListProps = {
   todolist: TodoListDomainType
 }
 
-// function arePropsEqual(prevProps: TodolistListProps, nextProps: TodolistListProps) {
-//   // Custom comparison logic here
-//   // Return true if the props have not changed and false otherwise
-//   return prevProps.todolist.id === nextProps.todolist.id
-// }
-
 const Todolist: React.FC<TodolistListProps> = React.memo(({ todolist }) => {
   const { id, title, filter, coverImage, entityStatus } = todolist
 
@@ -72,7 +66,6 @@ const Todolist: React.FC<TodolistListProps> = React.memo(({ todolist }) => {
             </Button>
           </Grid>
           <FiltersForTasks filter={filter} filterCheck={onClickFilterHandlerCreator} />
-          {/*</Box>*/}
         </div>
       </Paper>
     </Grid>

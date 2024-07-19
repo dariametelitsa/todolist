@@ -11,7 +11,7 @@ import { useFormik } from 'formik'
 import { AppRootStateType, useAppDispatch, useAppSelector } from '../../app/store'
 import { Navigate } from 'react-router-dom'
 import { PATH } from '../../routes/PATH'
-import { loginTC } from './thunk/thunk'
+import { loginTC } from './thunk/loginThunk'
 import { useSelector } from 'react-redux'
 import { selectIsLoggedIn } from './reduser/authSlice'
 

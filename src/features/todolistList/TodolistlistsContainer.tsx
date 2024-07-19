@@ -2,25 +2,19 @@ import React, { useCallback } from 'react'
 import Grid from '@mui/material/Unstable_Grid2'
 import { AddItem } from '../../components/addItem/AddItem'
 import Todolist from './todolist/Todolist'
-import { useAppWithRedux } from '../../app/hooks/useAppWithRedux'
 import { Navigate } from 'react-router-dom'
 import { PATH } from '../../routes/PATH'
-import { useAppDispatch, useAppSelector } from '../../app/store'
+import { useAppDispatch } from '../../app/store'
 import { addTodolistTC } from './thunk/todolistsThunks'
 import { useSelector } from 'react-redux'
 import { selectIsLoggedIn } from '../login/reduser/authSlice'
 import { selectTodolists } from './redusers/todolistsSlice'
 
-// type TodolistListProps = {
-//     todoLists: TodoListDomainType[]
-//     addTodolist: (title: string) => void
-// };
 export const TodolistlistsContainer: React.FC = () => {
   //const { addTodolist, todoLists, isLoggedIn } = useAppWithRedux()
   const todoLists = useSelector(selectTodolists)
   const isLoggedIn = useSelector(selectIsLoggedIn)
   const dispatch = useAppDispatch()
-
   const addTodolist = useCallback(
     (title: string) => {
       dispatch(addTodolistTC(title))

@@ -1,26 +1,25 @@
-import { store, useAppDispatch, useAppSelector } from '../../../../app/store'
+import { AppRootStateType, useAppDispatch, useAppSelector } from '../../../../app/store'
 import { TaskStatuses, TaskType } from '../../../../api/todolist-api'
 import { useCallback, useEffect, useMemo } from 'react'
-import { addTaskTC, cleanTasksListTC, getTasksTC } from '../../thunk/tasksThunks'
+import { addTaskTC, cleanTasksListTC } from '../../thunk/tasksThunks'
 import { FilterValuesType } from '../../../../data/dataPropsTypes'
-import { changedTodolistCover, changedTodolistFilter, clearTodolistsData } from '../../redusers/todolistsSlice'
+import { changedTodolistCover, changedTodolistFilter } from '../../redusers/todolistsSlice'
 import { changeTodolistTitleTC, deleteTodolistTC } from '../../thunk/todolistsThunks'
 import { useSelector } from 'react-redux'
 import { selectIsLoggedIn } from '../../../login/reduser/authSlice'
-import { cleanTasksList } from '../../redusers/tasksSlice'
+
+const mySelector = (id: string) => (state: AppRootStateType) => state.tasks[id]
 
 export const useTodolist = (id: string, filter: FilterValuesType) => {
-  const tasks = useAppSelector<Array<TaskType>>((state) => state.tasks[id])
-  //const isLoggedIn = useAppSelector<boolean>((state) => state.auth.isLoggedIn)
+  const tasks = useAppSelector<Array<TaskType>>(mySelector(id))
+  //const tasks = useSelector(selectTasks)
+  //const tasks = useSelector((state) => selectTasks(state, id))
   const isLoggedIn = useSelector(selectIsLoggedIn)
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    if (store.getState().auth?.isLoggedIn) {
-      dispatch(getTasksTC(id))
-      // dispatch(setAppStatus({ status: 'idle' }))
-      // dispatch(setTasks({ todolistId: id, tasks: [] }))
-      // dispatch(setAppStatus({ status: 'idle' }))
+    if (isLoggedIn) {
+      // dispatch(getTasksTC(id))
     }
   }, [dispatch, id, isLoggedIn])
 
@@ -77,18 +76,6 @@ export const useTodolist = (id: string, filter: FilterValuesType) => {
   const deleteTodolistHandler = () => {
     dispatch(deleteTodolistTC(id))
   }
-
-  // const onChangeTitleTaskHandler = useCallback((taskId: string, newTitle: string) => {
-  //     dispatch(renameTaskTitleAC(id, taskId, newTitle));
-  // }, [dispatch, id]);
-  //
-  // const onChangeSetTaskStatusHandler = useCallback((taskId: string, newStatus: boolean) => {
-  //     dispatch(setNewTaskStatusAC(id, taskId, newStatus));
-  // }, [dispatch, id]);
-  //
-  // const deleteTaskHandler = useCallback((taskId: string) => {
-  //     dispatch(removeTaskAC(id, taskId));
-  // }, [dispatch, id]);
 
   return {
     dispatch,

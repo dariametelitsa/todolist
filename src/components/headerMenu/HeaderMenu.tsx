@@ -6,10 +6,8 @@ import MenuIcon from '@mui/icons-material/Menu'
 import Typography from '@mui/material/Typography'
 import Switch from '@mui/material/Switch'
 import { MenuButton } from '../menuButton/MenuButton'
-import { Link } from 'react-router-dom'
-import { PATH } from '../../routes/PATH'
 import { useAppDispatch, useAppSelector } from '../../app/store'
-import { logOutTC } from '../../features/login/thunk/thunk'
+import { logOutTC } from '../../features/login/thunk/loginThunk'
 
 type HeaderMenuProps = {
   changeModeHandler: () => void
@@ -32,18 +30,11 @@ export const HeaderMenu = ({ changeModeHandler }: HeaderMenuProps) => {
         News
       </Typography>
       <Switch color={'default'} onChange={changeModeHandler} />
-      {/*{isLoggedIn && (*/}
-      {/*  <Link to={PATH.TODOLISTS}>*/}
-      {/*    <MenuButton color="inherit">Todolists</MenuButton>*/}
-      {/*  </Link>*/}
-      {/*)}*/}
-      <Link to={PATH.LOGIN}>
-        {isLoggedIn && (
-          <MenuButton onClick={onClickLogoutHandler} color="inherit">
-            Logout
-          </MenuButton>
-        )}
-      </Link>
+      {isLoggedIn && (
+        <MenuButton onClick={onClickLogoutHandler} color="inherit">
+          Logout
+        </MenuButton>
+      )}
       <MenuButton color="inherit">Faq</MenuButton>
     </Toolbar>
   )

@@ -4,7 +4,7 @@ import createTheme from '@mui/material/styles/createTheme'
 import cyan from '@mui/material/colors/cyan'
 import { addTodolistTC, getTodolistsTC } from '../../features/todolistList/thunk/todolistsThunks'
 import { AppStatusTypes, selectAppIsInitialized, selectAppStatus } from '../reducers/appSlice'
-import { meTC } from '../../features/login/thunk/thunk'
+import { meTC } from '../../features/login/thunk/loginThunk'
 import { useSelector } from 'react-redux'
 import { selectIsLoggedIn } from '../../features/login/reduser/authSlice'
 

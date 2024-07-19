@@ -1,4 +1,3 @@
-import React, { useCallback, useEffect, useState } from 'react'
 import '../App.scss'
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
@@ -11,15 +10,11 @@ import AppBar from '@mui/material/AppBar'
 import { ErrorSnackbar } from '../components/errorSnackbar/ErrorSnackbar'
 import { Outlet } from 'react-router-dom'
 import CircularProgress from '@mui/material/CircularProgress'
-import { useAppDispatch, useAppSelector } from './store'
-import { AppStatusTypes } from './reducers/appSlice'
-import { meTC } from '../features/login/thunk/thunk'
-import { getTodolistsTC } from '../features/todolistList/thunk/todolistsThunks'
-import createTheme from '@mui/material/styles/createTheme'
-import cyan from '@mui/material/colors/cyan'
 
 function App() {
   const { theme, changeModeHandler, isLoading, isInitialized } = useAppWithRedux()
+  // const path = useLocation()
+  // alert(path.pathname)
 
   if (!isInitialized)
     return (

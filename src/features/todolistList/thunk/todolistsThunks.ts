@@ -19,9 +19,9 @@ export const getTodolistsTC = (): AppThunkType<Promise<void>> => async (dispatch
     const todolists = await todolistAPI.getTodolist()
     dispatch(setTodolists({ todolists: todolists.data }))
     dispatch(setAppStatus({ status: 'succeeded' }))
-    // todolists.data.forEach((tl) => {
-    //   dispatch(getTasksTC(tl.id))
-    // })
+    todolists.data.forEach((tl) => {
+      dispatch(getTasksTC(tl.id))
+    })
   } catch (e: any) {
     dispatch(setTodolists({ todolists: [] }))
     handleServerNetworkError(e, dispatch)

@@ -52,7 +52,6 @@ export const logOutTC = () => (dispatch: Dispatch) => {
     .then((res) => {
       if (res.data.resultCode === 0) {
         dispatch(setIsLoggedIn({ isLoggedIn: false }))
-        console.log('logOut API => isLoggedIn false')
         dispatch(clearTodolistsData({}))
         dispatch(setAppStatus({ status: 'succeeded' }))
       } else {
