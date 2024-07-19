@@ -1,7 +1,7 @@
 import { TasksType } from '../../../data/dataPropsTypes'
 import { TaskType } from '../../../api/todolist-api'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { addTodolist, deleteTodolist, setTodolists } from './todolistsSlice'
+import { addTodolist, clearTodolistsData, deleteTodolist, setTodolists } from './todolistsSlice'
 // import { AddTodolistAT, ClearTodolistsDataAT, DeleteTodolistAT, SetTodolistsAT } from './todolistsSlice'
 
 const slice = createSlice({
@@ -40,6 +40,11 @@ const slice = createSlice({
       .addCase(setTodolists, (state, action) => {
         action.payload.todolists.forEach((tl) => {
           state[tl.id] = []
+        })
+      })
+      .addCase(clearTodolistsData, (state, action) => {
+        Object.keys(state).forEach((id) => {
+          delete state[id]
         })
       })
   },
