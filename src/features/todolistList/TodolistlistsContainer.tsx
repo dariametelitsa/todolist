@@ -7,6 +7,9 @@ import { Navigate } from 'react-router-dom'
 import { PATH } from '../../routes/PATH'
 import { useAppDispatch, useAppSelector } from '../../app/store'
 import { addTodolistTC } from './thunk/todolistsThunks'
+import { useSelector } from 'react-redux'
+import { selectIsLoggedIn } from '../login/reduser/authSlice'
+import { selectTodolists } from './redusers/todolistsSlice'
 
 // type TodolistListProps = {
 //     todoLists: TodoListDomainType[]
@@ -14,8 +17,8 @@ import { addTodolistTC } from './thunk/todolistsThunks'
 // };
 export const TodolistlistsContainer: React.FC = () => {
   //const { addTodolist, todoLists, isLoggedIn } = useAppWithRedux()
-  const todoLists = useAppSelector((state) => state.todolists)
-  const isLoggedIn = useAppSelector<boolean>((state) => state.auth.isLoggedIn)
+  const todoLists = useSelector(selectTodolists)
+  const isLoggedIn = useSelector(selectIsLoggedIn)
   const dispatch = useAppDispatch()
 
   const addTodolist = useCallback(

@@ -43,10 +43,14 @@ const slice = createSlice({
         })
       })
       .addCase(clearTodolistsData, (state, action) => {
-        Object.keys(state).forEach((id) => {
-          delete state[id]
-        })
+        // Object.keys(state).forEach((id) => {
+        //   delete state[id]
+        // })
+        return {}
       })
+  },
+  selectors: {
+    //selectTasks: (state) => state.
   },
 })
 

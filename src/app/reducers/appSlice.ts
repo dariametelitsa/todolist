@@ -32,12 +32,18 @@ const slice = createSlice({
       state.isInitialized = action.payload.isInitialized
     },
   },
+  selectors: {
+    selectAppStatus: (state) => state.status,
+    selectAppError: (state) => state.error,
+    selectAppIsInitialized: (state) => state.isInitialized,
+  },
 })
 
 export type AppInitialState = ReturnType<typeof slice.getInitialState>
 
 export const { setAppStatus, setAppError, setIsInitialized } = slice.actions
 export const appReducer = slice.reducer
+export const { selectAppStatus, selectAppError, selectAppIsInitialized } = slice.selectors
 
 //управление состоянием приложения (загрузки, ошибки, локализация, темы)
 // export const _appReducer = (

@@ -3,16 +3,18 @@ import { useCallback, useEffect, useState } from 'react'
 import createTheme from '@mui/material/styles/createTheme'
 import cyan from '@mui/material/colors/cyan'
 import { addTodolistTC, getTodolistsTC } from '../../features/todolistList/thunk/todolistsThunks'
-import { AppStatusTypes } from '../reducers/appSlice'
+import { AppStatusTypes, selectAppIsInitialized, selectAppStatus } from '../reducers/appSlice'
 import { meTC } from '../../features/login/thunk/thunk'
+import { useSelector } from 'react-redux'
+import { selectIsLoggedIn } from '../../features/login/reduser/authSlice'
 
 type ThemeMode = 'dark' | 'light'
 
 export const useAppWithRedux = () => {
   const dispatch = useAppDispatch()
-  const status = useAppSelector<AppStatusTypes>((state) => state.app.status)
-  const isLoggedIn = useAppSelector<boolean>((state) => state.auth.isLoggedIn)
-  const isInitialized = useAppSelector<boolean>((state) => state.app.isInitialized)
+  const status = useSelector(selectAppStatus)
+  const isLoggedIn = useSelector(selectIsLoggedIn)
+  const isInitialized = useSelector(selectAppIsInitialized)
   const isLoading = status === 'loading'
 
   useEffect(() => {

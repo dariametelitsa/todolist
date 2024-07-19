@@ -42,6 +42,9 @@ const slice = createSlice({
       return []
     },
   },
+  selectors: {
+    selectTodolists: (state) => state,
+  },
 })
 
 export const {
@@ -55,6 +58,7 @@ export const {
   clearTodolistsData,
 } = slice.actions
 export const todolistsReducer = slice.reducer
+export const { selectTodolists } = slice.selectors
 
 // const initialState: TodoListDomainType[] = []
 

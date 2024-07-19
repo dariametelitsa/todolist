@@ -3,10 +3,11 @@ import { TaskStatuses, TaskType } from '../../../../api/todolist-api'
 import { useCallback, useEffect, useMemo } from 'react'
 import { addTaskTC, cleanTasksListTC, getTasksTC } from '../../thunk/tasksThunks'
 import { FilterValuesType } from '../../../../data/dataPropsTypes'
-import { changedTodolistCover, changedTodolistFilter } from '../../redusers/todolistsSlice'
+import { changedTodolistCover, changedTodolistFilter, clearTodolistsData } from '../../redusers/todolistsSlice'
 import { changeTodolistTitleTC, deleteTodolistTC } from '../../thunk/todolistsThunks'
 import { useSelector } from 'react-redux'
 import { selectIsLoggedIn } from '../../../login/reduser/authSlice'
+import { cleanTasksList } from '../../redusers/tasksSlice'
 
 export const useTodolist = (id: string, filter: FilterValuesType) => {
   const tasks = useAppSelector<Array<TaskType>>((state) => state.tasks[id])
@@ -15,9 +16,6 @@ export const useTodolist = (id: string, filter: FilterValuesType) => {
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    console.log('useTodolist -> getTasksTC', isLoggedIn)
-
-    console.log(store.getState().auth?.isLoggedIn)
     if (store.getState().auth?.isLoggedIn) {
       dispatch(getTasksTC(id))
       // dispatch(setAppStatus({ status: 'idle' }))
