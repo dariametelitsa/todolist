@@ -1,20 +1,24 @@
-import { useAppDispatch, useAppSelector } from '../../../../app/store'
+import { store, useAppDispatch, useAppSelector } from '../../../../app/store'
 import { TaskStatuses, TaskType } from '../../../../api/todolist-api'
 import { useCallback, useEffect, useMemo } from 'react'
 import { addTaskTC, cleanTasksListTC, getTasksTC } from '../../thunk/tasksThunks'
 import { FilterValuesType } from '../../../../data/dataPropsTypes'
 import { changedTodolistCover, changedTodolistFilter } from '../../redusers/todolistsSlice'
 import { changeTodolistTitleTC, deleteTodolistTC } from '../../thunk/todolistsThunks'
-import { setTasks } from '../../redusers/tasksSlice'
-import { setAppStatus } from '../../../../app/reducers/appSlice'
+import { useSelector } from 'react-redux'
+import { selectIsLoggedIn } from '../../../login/reduser/authSlice'
 
 export const useTodolist = (id: string, filter: FilterValuesType) => {
   const tasks = useAppSelector<Array<TaskType>>((state) => state.tasks[id])
-  const isLoggedIn = useAppSelector<boolean>((state) => state.auth.isLoggedIn)
+  //const isLoggedIn = useAppSelector<boolean>((state) => state.auth.isLoggedIn)
+  const isLoggedIn = useSelector(selectIsLoggedIn)
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    if (isLoggedIn) {
+    console.log('useTodolist -> getTasksTC', isLoggedIn)
+
+    console.log(store.getState().auth?.isLoggedIn)
+    if (store.getState().auth?.isLoggedIn) {
       dispatch(getTasksTC(id))
       // dispatch(setAppStatus({ status: 'idle' }))
       // dispatch(setTasks({ todolistId: id, tasks: [] }))

@@ -6,7 +6,6 @@ import { authAPI } from '../../../api/todolist-api'
 import { setIsLoggedIn } from '../reduser/authSlice'
 import { handleServerAppError, handleServerNetworkError } from '../../../utils/errorUtils'
 import { clearTodolistsData } from '../../todolistList/redusers/todolistsSlice'
-import { store } from '../../../app/store'
 
 export const loginTC = (data: LoginType) => (dispatch: Dispatch) => {
   dispatch(setAppStatus({ status: 'loading' }))
@@ -53,9 +52,9 @@ export const logOutTC = () => (dispatch: Dispatch) => {
     .then((res) => {
       if (res.data.resultCode === 0) {
         dispatch(setIsLoggedIn({ isLoggedIn: false }))
+        console.log('logOut API => isLoggedIn false')
         dispatch(clearTodolistsData({}))
         dispatch(setAppStatus({ status: 'succeeded' }))
-        console.log(store.getState())
       } else {
         handleServerAppError(res.data, dispatch)
       }

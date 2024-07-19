@@ -12,7 +12,7 @@ import { addTodolistTC } from './thunk/todolistsThunks'
 //     todoLists: TodoListDomainType[]
 //     addTodolist: (title: string) => void
 // };
-export const TodolistList: React.FC = () => {
+export const TodolistlistsContainer: React.FC = () => {
   //const { addTodolist, todoLists, isLoggedIn } = useAppWithRedux()
   const todoLists = useAppSelector((state) => state.todolists)
   const isLoggedIn = useAppSelector<boolean>((state) => state.auth.isLoggedIn)

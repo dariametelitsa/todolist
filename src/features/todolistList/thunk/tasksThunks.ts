@@ -22,6 +22,7 @@ export const getTasksTC =
   (todolistId: string): AppThunkType =>
   (dispatch) => {
     dispatch(setAppStatus({ status: 'loading' }))
+    console.log('getTasksTC')
     todolistAPI
       .getTasks(todolistId)
       .then((res) => {

@@ -26,7 +26,6 @@ type TodolistListProps = {
 const Todolist: React.FC<TodolistListProps> = React.memo(({ todolist }) => {
   const { id, title, filter, coverImage, entityStatus } = todolist
 
-  console.log('renred todo', id)
   const {
     sorterTasks,
     onClickFilterHandlerCreator,

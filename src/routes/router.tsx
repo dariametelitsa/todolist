@@ -1,7 +1,7 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom'
 import App from '../app/App'
 import { Login } from '../features/login/Login'
-import { TodolistList } from '../features/todolistList/TodolistList'
+import { TodolistlistsContainer } from '../features/todolistList/TodolistlistsContainer'
 import { PATH } from './PATH'
 import { ErrorPage } from '../features/errorPage/ErrorPage'
 
@@ -21,7 +21,7 @@ export const router = createBrowserRouter([
       },
       {
         path: PATH.TODOLISTS,
-        element: <TodolistList />,
+        element: <TodolistlistsContainer />,
       },
       {
         path: PATH.ERROR,

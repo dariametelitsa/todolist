@@ -8,10 +8,14 @@ const slice = createSlice({
       state.isLoggedIn = action.payload.isLoggedIn
     },
   },
+  selectors: {
+    selectIsLoggedIn: (state) => state.isLoggedIn,
+  },
 })
 
 export const { setIsLoggedIn } = slice.actions
 export const authReducer = slice.reducer
+export const { selectIsLoggedIn } = slice.selectors
 
 // const initialState = {
 //   isLoggedIn: false,
