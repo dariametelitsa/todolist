@@ -6,18 +6,13 @@ import { FilterValuesType } from '../../../../data/dataPropsTypes'
 import { changedTodolistCover, changedTodolistFilter } from '../../redusers/todolistsSlice'
 import { changeTodolistTitleTC, deleteTodolistTC } from '../../thunk/todolistsThunks'
 import { useSelector } from 'react-redux'
-import { selectIsLoggedIn } from '../../../login/reduser/authSlice'
 import { selectTasksForTodolist } from '../../redusers/tasksSlice'
 
-// const mySelector = (id: string) => (state: AppRootStateType) => state.tasks[id]
-
 export const useTodolist = (id: string, filter: FilterValuesType) => {
-  //const tasks = useAppSelector<Array<TaskType>>(mySelector(id))
-  //const tasks = useSelector(selectTasks)
   const tasks = useSelector((state) => selectTasksForTodolist(state, id))
   const dispatch = useAppDispatch()
 
-  const isLoggedIn = useSelector(selectIsLoggedIn)
+  //const isLoggedIn = useSelector(selectIsLoggedIn)
   // useEffect(() => {
   //   if (isLoggedIn) {
   //     dispatch(getTasksTC(id))
