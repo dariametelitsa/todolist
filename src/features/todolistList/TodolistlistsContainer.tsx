@@ -11,7 +11,6 @@ import { selectIsLoggedIn } from '../login/reduser/authSlice'
 import { selectTodolists } from './redusers/todolistsSlice'
 
 export const TodolistlistsContainer: React.FC = () => {
-  //const { addTodolist, todoLists, isLoggedIn } = useAppWithRedux()
   const todoLists = useSelector(selectTodolists)
   const isLoggedIn = useSelector(selectIsLoggedIn)
   const dispatch = useAppDispatch()
