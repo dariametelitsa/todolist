@@ -11,7 +11,6 @@ import { setAppError, setAppStatus } from '../../../app/reducers/appSlice';
 import { handleServerAppError, handleServerNetworkError } from '../../../utils/errorUtils';
 import axios from 'axios';
 import { fetchTasks, STATUS_CODE } from './tasksThunks';
-import { createAsyncThunk } from '@reduxjs/toolkit';
 
 // export const fetchTodolists = createAsyncThunk('')
 

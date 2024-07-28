@@ -2,8 +2,7 @@ import { v4 } from 'uuid';
 import { TasksType } from '../../../data/dataPropsTypes';
 import { addTask, cleanTasksList, deleteTask, fetchTasks, tasksReducer, updateTask } from './tasksSlice';
 import { addTodolist, deleteTodolist, setTodolists } from './todolistsSlice';
-import { TaskStatuses, TaskType, TodolistType, TodoTaskPriorities } from '../../../api/todolist-api';
-import { string } from 'prop-types';
+import { TaskStatuses, TodolistType, TodoTaskPriorities } from '../../../api/todolist-api';
 
 const todolistId1 = v4();
 const todolistId2 = v4();

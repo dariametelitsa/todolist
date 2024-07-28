@@ -1,10 +1,4 @@
-import {
-  ErrorResponseType,
-  TaskStatuses,
-  todolistAPI,
-  TodoTaskPriorities,
-  UpdateTaskModelType,
-} from '../../../api/todolist-api';
+import { TaskStatuses, todolistAPI, TodoTaskPriorities, UpdateTaskModelType } from '../../../api/todolist-api';
 import { AppThunkType } from '../../../app/store';
 import { addTask, cleanTasksList, deleteTask, updateTask } from '../redusers/tasksSlice';
 import { setAppStatus } from '../../../app/reducers/appSlice';

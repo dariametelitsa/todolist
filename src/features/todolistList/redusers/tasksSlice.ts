@@ -39,7 +39,7 @@ const slice = createSlice({
           state[tl.id] = [];
         });
       })
-      .addCase(clearTodolistsData, (state, action) => {
+      .addCase(clearTodolistsData, () => {
         return {};
       })
       .addCase(fetchTasks.fulfilled, (state, action) => {

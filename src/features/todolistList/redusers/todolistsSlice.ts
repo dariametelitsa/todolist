@@ -37,7 +37,7 @@ const slice = createSlice({
       const todolist = state.find((td) => td.id === action.payload.id);
       if (todolist) todolist.entityStatus = action.payload.status;
     },
-    clearTodolistsData: (state, action: PayloadAction<{}>) => {
+    clearTodolistsData: () => {
       return [];
     },
   },
