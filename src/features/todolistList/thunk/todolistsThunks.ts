@@ -7,11 +7,13 @@ import {
   deleteTodolist,
   setTodolists,
 } from '../redusers/todolistsSlice'
-import { setTasks } from '../redusers/tasksSlice'
 import { setAppError, setAppStatus } from '../../../app/reducers/appSlice'
 import { handleServerAppError, handleServerNetworkError } from '../../../utils/errorUtils'
 import axios from 'axios'
-import { getTasksTC, STATUS_CODE } from './tasksThunks'
+import { fetchTasks, STATUS_CODE } from './tasksThunks'
+import { createAsyncThunk } from '@reduxjs/toolkit'
+
+// export const fetchTodolists = createAsyncThunk('')
 
 export const getTodolistsTC = (): AppThunkType<Promise<void>> => async (dispatch) => {
   dispatch(setAppStatus({ status: 'loading' }))
@@ -20,7 +22,8 @@ export const getTodolistsTC = (): AppThunkType<Promise<void>> => async (dispatch
     dispatch(setTodolists({ todolists: todolists.data }))
     dispatch(setAppStatus({ status: 'succeeded' }))
     todolists.data.forEach((tl) => {
-      dispatch(getTasksTC(tl.id))
+      dispatch(fetchTasks(tl.id))
+      // dispatch(getTasksTC(tl.id))
     })
   } catch (e: any) {
     dispatch(setTodolists({ todolists: [] }))
@@ -37,8 +40,8 @@ export const addTodolistTC =
     try {
       const todoRes = await todolistAPI.addTodolist(title)
       dispatch(addTodolist({ todolist: todoRes.data.data.item }))
-      const taskRes = await todolistAPI.getTasks(todoRes.data.data.item.id)
-      dispatch(setTasks({ todolistId: todoRes.data.data.item.id, tasks: taskRes.data.items }))
+      //const taskRes = await todolistAPI.getTasks(todoRes.data.data.item.id)
+      //dispatch(setTasks({ todolistId: todoRes.data.data.item.id, tasks: taskRes.data.items }))
     } catch (e: unknown) {
       if (axios.isAxiosError<ErrorResponseType>(e)) {
         // handleServerNetworkError(e as AxiosError<ErrorResponseType>, dispatch)

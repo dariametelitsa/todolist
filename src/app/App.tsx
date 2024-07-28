@@ -13,8 +13,6 @@ import CircularProgress from '@mui/material/CircularProgress'
 
 function App() {
   const { theme, changeModeHandler, isLoading, isInitialized } = useAppWithRedux()
-  // const path = useLocation()
-  // alert(path.pathname)
 
   if (!isInitialized)
     return (

@@ -2,6 +2,7 @@ import { TasksType } from '../../../data/dataPropsTypes'
 import { TaskType } from '../../../api/todolist-api'
 import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { addTodolist, clearTodolistsData, deleteTodolist, setTodolists } from './todolistsSlice'
+import { fetchTasks } from '../thunk/tasksThunks'
 
 const slice = createSlice({
   name: 'tasks',
@@ -24,9 +25,9 @@ const slice = createSlice({
       const index = tasks.findIndex((task) => task.id === action.payload.taskId)
       if (index !== -1) tasks[index] = { ...tasks[index], ...action.payload.task }
     },
-    setTasks: (state, action: PayloadAction<{ todolistId: string; tasks: TaskType[] }>) => {
-      state[action.payload.todolistId] = action.payload.tasks
-    },
+    // setTasks: (state, action: PayloadAction<{ todolistId: string; tasks: TaskType[] }>) => {
+    //   state[action.payload.todolistId] = action.payload.tasks
+    // },
   },
   extraReducers: (builder) => {
     builder
@@ -44,13 +45,16 @@ const slice = createSlice({
       .addCase(clearTodolistsData, (state, action) => {
         return {}
       })
+      .addCase(fetchTasks.fulfilled, (state, action) => {
+        state[action.payload.todolistId] = action.payload.tasks
+      })
   },
   selectors: {
     selectTasks: (state) => state,
   },
 })
 
-export const { deleteTask, addTask, cleanTasksList, updateTask, setTasks } = slice.actions
+export const { deleteTask, addTask, cleanTasksList, updateTask } = slice.actions
 export const tasksReducer = slice.reducer
 export const { selectTasks } = slice.selectors
 

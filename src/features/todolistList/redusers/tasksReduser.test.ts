@@ -125,7 +125,7 @@ test('task should be add correct', () => {
     startDate: '',
     deadline: '',
   }
-  const endState2 = tasksReducer(state, addTask({ task: newTask }))
+  const endState2 = tasksReducer(state, addTask({ task: newTask2 }))
   expect(endState2[todolistId2].length).toBe(3)
   expect(endState2[todolistId2][0].title).toBe(newTitle)
 })
@@ -179,10 +179,8 @@ test('create new tasks list to correct todolist', () => {
 
   const { [todolistId1]: first, todolistId2: second, ...newTasks } = endState
   expect(Object.keys(endState).length).toBe(3)
-  expect(Object.keys(endState)[2]).toBe(todolistId2)
-
-  const keyId = Object.keys(newTasks)[0]
-  expect(newTasks[keyId].length).toBe(0)
+  expect(endState.hasOwnProperty(newTodo.id)).toBe(true)
+  expect(endState[newTodo.id].length).toBe(0)
 })
 
 test('correct task should be added to correct array', () => {
