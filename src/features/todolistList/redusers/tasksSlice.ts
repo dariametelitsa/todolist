@@ -12,30 +12,11 @@ import { addTodolist, changeEntityStatus, clearTodolistsData, deleteTodolist, se
 import { setAppStatus } from '../../../app/reducers/appSlice';
 import { handleServerAppError, handleServerNetworkError } from '../../../utils/errorUtils';
 import { createAppAsyncThunk } from '../../../utils/createAppAsyncThunk';
-import exp from 'node:constants';
 
 const slice = createSlice({
   name: 'tasks',
   initialState: {} as TasksType,
-  reducers: {
-    // deleteTask: (state, action: PayloadAction<{ todolistId: string; taskId: string }>) => {
-    //   const tasks = state[action.payload.todolistId];
-    //   const index = tasks.findIndex((task) => task.id === action.payload.taskId);
-    //   if (index !== -1) tasks.splice(index, 1);
-    // },
-    // addTask: (state, action: PayloadAction<{ task: TaskType }>) => {
-    //   const tasks = state[action.payload.task.todoListId];
-    //   tasks.unshift(action.payload.task);
-    // },
-    // cleanTasksList: (state, action: PayloadAction<{ todolistId: string }>) => {
-    //   state[action.payload.todolistId] = [];
-    // },
-    // updateTask: (state, action: PayloadAction<{ todolistId: string; taskId: string; task: TaskType }>) => {
-    //   const tasks = state[action.payload.task.todoListId];
-    //   const index = tasks.findIndex((task) => task.id === action.payload.taskId);
-    //   if (index !== -1) tasks[index] = { ...tasks[index], ...action.payload.task };
-    // },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(addTodolist, (state, action) => {
