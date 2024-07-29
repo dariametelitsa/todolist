@@ -29,11 +29,12 @@ export const todolistAPI = {
   deleteTodolist: (todoId: string) => {
     return instance.delete<ResponseType, AxiosResponse<ResponseType>>(`/todo-lists/${todoId}`);
   },
-  updateTodolist: (todoId: string, title: string) => {
-    return instance.put<ResponseType, AxiosResponse<ResponseType>>(`/todo-lists/${todoId}`, { title });
+  updateTodolist: (arg: UpdateTodolistTitle) => {
+    const { todolistId, title } = arg;
+    return instance.put<ResponseType, AxiosResponse<ResponseType>>(`/todo-lists/${todolistId}`, { title });
   },
-  getTasks: (todoId: string) => {
-    return instance.get<ResponseTypeGetTask>(`/todo-lists/${todoId}/tasks`);
+  getTasks: (todolistId: string) => {
+    return instance.get<ResponseTypeGetTask>(`/todo-lists/${todolistId}/tasks`);
   },
   addTask: (arg: AddTaskArgs) => {
     const { todolistId, title } = arg;
@@ -98,6 +99,11 @@ export type AddTaskArgs = {
 export type DeleteTaskArgs = {
   todolistId: string;
   taskId: string;
+};
+
+export type UpdateTodolistTitle = {
+  todolistId: string;
+  title: string;
 };
 
 export type TodolistType = {

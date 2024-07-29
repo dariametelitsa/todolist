@@ -76,23 +76,23 @@ export const getTodolistsTC = (): AppThunkType<Promise<void>> => async (dispatch
 //       });
 //   };
 
-export const changeTodolistTitleTC =
-  (todolistId: string, title: string): AppThunkType =>
-  (dispatch) => {
-    dispatch(setAppStatus({ status: 'loading' }));
-    dispatch(changeEntityStatus({ id: todolistId, status: 'loading' }));
-    todolistAPI
-      .updateTodolist(todolistId, title)
-      .then(() => {
-        dispatch(changeTodolistTitle({ id: todolistId, title: title }));
-        dispatch(setAppStatus({ status: 'succeeded' }));
-      })
-      .catch((e) => {
-        handleServerNetworkError(e, dispatch);
-        dispatch(changeEntityStatus({ id: todolistId, status: 'failed' }));
-      })
-      .finally(() => {
-        dispatch(setAppStatus({ status: 'idle' }));
-        dispatch(changeEntityStatus({ id: todolistId, status: 'idle' }));
-      });
-  };
+// export const changeTodolistTitleTC =
+//   (todolistId: string, title: string): AppThunkType =>
+//   (dispatch) => {
+//     dispatch(setAppStatus({ status: 'loading' }));
+//     dispatch(changeEntityStatus({ id: todolistId, status: 'loading' }));
+//     todolistAPI
+//       .updateTodolist(todolistId, title)
+//       .then(() => {
+//         dispatch(changeTodolistTitle({ id: todolistId, title: title }));
+//         dispatch(setAppStatus({ status: 'succeeded' }));
+//       })
+//       .catch((e) => {
+//         handleServerNetworkError(e, dispatch);
+//         dispatch(changeEntityStatus({ id: todolistId, status: 'failed' }));
+//       })
+//       .finally(() => {
+//         dispatch(setAppStatus({ status: 'idle' }));
+//         dispatch(changeEntityStatus({ id: todolistId, status: 'idle' }));
+//       });
+//   };
