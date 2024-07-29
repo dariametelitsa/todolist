@@ -28,7 +28,11 @@ beforeEach(() => {
 });
 
 test('correct todolist should be removed', () => {
-  const endState = todolistsReducer(startState, deleteTodolist({ id: todolistId1 }));
+  const action: ActionTypeForTest<typeof deleteTodolist.fulfilled> = {
+    type: deleteTodolist.fulfilled.type,
+    payload: todolistId1,
+  };
+  const endState = todolistsReducer(startState, action);
 
   expect(endState.length).toBe(1);
   // удалится нужный тудулист, а не любой

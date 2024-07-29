@@ -2,8 +2,8 @@ import { useAppDispatch } from '../../../../app/store';
 import { TaskStatuses } from '../../../../api/todolist-api';
 import { useCallback, useMemo } from 'react';
 import { FilterValuesType } from '../../../../data/dataPropsTypes';
-import { changedTodolistCover, changedTodolistFilter } from '../../redusers/todolistsSlice';
-import { changeTodolistTitleTC, deleteTodolistTC } from '../../thunk/todolistsThunks';
+import { changedTodolistCover, changedTodolistFilter, deleteTodolist } from '../../redusers/todolistsSlice';
+import { changeTodolistTitleTC } from '../../thunk/todolistsThunks';
 import { useSelector } from 'react-redux';
 import { addTask, cleanTasksList, selectTasksForTodolist } from '../../redusers/tasksSlice';
 
@@ -69,7 +69,7 @@ export const useTodolist = (id: string, filter: FilterValuesType) => {
   );
 
   const deleteTodolistHandler = () => {
-    dispatch(deleteTodolistTC(id));
+    dispatch(deleteTodolist(id));
   };
 
   return {

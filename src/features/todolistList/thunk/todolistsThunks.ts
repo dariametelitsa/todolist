@@ -51,30 +51,30 @@ export const getTodolistsTC = (): AppThunkType<Promise<void>> => async (dispatch
 //     dispatch(setAppStatus({ status: 'idle' }));
 //   };
 
-export const deleteTodolistTC =
-  (todolistId: string): AppThunkType =>
-  (dispatch) => {
-    dispatch(changeEntityStatus({ id: todolistId, status: 'loading' }));
-    dispatch(setAppStatus({ status: 'loading' }));
-    todolistAPI
-      .deleteTodolist(todolistId)
-      .then((res) => {
-        if (res.data.resultCode === STATUS_CODE.SUCCESS) {
-          dispatch(deleteTodolist({ id: todolistId }));
-          dispatch(setAppStatus({ status: 'succeeded' }));
-        } else {
-          handleServerAppError(res.data, dispatch);
-          dispatch(changeEntityStatus({ id: todolistId, status: 'failed' }));
-        }
-      })
-      .catch((e) => {
-        handleServerNetworkError(e, dispatch);
-        dispatch(changeEntityStatus({ id: todolistId, status: 'failed' }));
-      })
-      .finally(() => {
-        dispatch(setAppStatus({ status: 'idle' }));
-      });
-  };
+// export const deleteTodolistTC =
+//   (todolistId: string): AppThunkType =>
+//   (dispatch) => {
+//     dispatch(changeEntityStatus({ id: todolistId, status: 'loading' }));
+//     dispatch(setAppStatus({ status: 'loading' }));
+//     todolistAPI
+//       .deleteTodolist(todolistId)
+//       .then((res) => {
+//         if (res.data.resultCode === STATUS_CODE.SUCCESS) {
+//           dispatch(deleteTodolist({ id: todolistId }));
+//           dispatch(setAppStatus({ status: 'succeeded' }));
+//         } else {
+//           handleServerAppError(res.data, dispatch);
+//           dispatch(changeEntityStatus({ id: todolistId, status: 'failed' }));
+//         }
+//       })
+//       .catch((e) => {
+//         handleServerNetworkError(e, dispatch);
+//         dispatch(changeEntityStatus({ id: todolistId, status: 'failed' }));
+//       })
+//       .finally(() => {
+//         dispatch(setAppStatus({ status: 'idle' }));
+//       });
+//   };
 
 export const changeTodolistTitleTC =
   (todolistId: string, title: string): AppThunkType =>
