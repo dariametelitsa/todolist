@@ -3,6 +3,10 @@ import { TasksType } from '../../../data/dataPropsTypes';
 import { addTask, cleanTasksList, deleteTask, fetchTasks, tasksReducer, updateTask } from './tasksSlice';
 import { addTodolist, deleteTodolist, setTodolists } from './todolistsSlice';
 import { TaskStatuses, TodolistType, TodoTaskPriorities } from '../../../api/todolist-api';
+import { string } from 'prop-types';
+import { Action } from 'redux';
+
+type ActionTypeForTest<T extends (...args: any) => any> = Omit<ReturnType<T>, 'meta'>;
 
 const todolistId1 = v4();
 const todolistId2 = v4();
@@ -79,7 +83,15 @@ beforeEach(() => {
 });
 
 test('correct task should be removed', () => {
-  const endState = tasksReducer(state, deleteTask({ todolistId: todolistId1, taskId: '1' }));
+  const action: ActionTypeForTest<typeof deleteTask.fulfilled> = {
+    type: deleteTask.fulfilled.type,
+    payload: {
+      todolistId: todolistId1,
+      taskId: '1',
+    },
+  };
+
+  const endState = tasksReducer(state, action);
 
   expect(endState[todolistId1].length).toBe(2);
   expect(endState[todolistId1][0].title).toBe('DDD');
@@ -102,7 +114,11 @@ test('task should be add correct', () => {
     startDate: '',
     deadline: '',
   };
-  const endState = tasksReducer(state, addTask({ task: newTask }));
+  const action: ActionTypeForTest<typeof addTask.fulfilled> = {
+    type: addTask.fulfilled.type,
+    payload: { task: newTask },
+  };
+  const endState = tasksReducer(state, action);
 
   expect(endState[todolistId1].length).toBe(4);
   expect(endState[todolistId1][0].title).toBe(newTitle);
@@ -125,7 +141,11 @@ test('task should be add correct', () => {
     startDate: '',
     deadline: '',
   };
-  const endState2 = tasksReducer(state, addTask({ task: newTask2 }));
+  const action2: ActionTypeForTest<typeof addTask.fulfilled> = {
+    type: addTask.fulfilled.type,
+    payload: { task: newTask2 },
+  };
+  const endState2 = tasksReducer(state, action2);
   expect(endState2[todolistId2].length).toBe(3);
   expect(endState2[todolistId2][0].title).toBe(newTitle);
 });
@@ -133,10 +153,15 @@ test('task should be add correct', () => {
 test('correct rename task title', () => {
   const newTitle = "I'm was changed";
   let taskToUpdate = state[todolistId1].find((t) => t.id === '1');
-
   taskToUpdate ? (taskToUpdate.title = newTitle) : (taskToUpdate = state[todolistId1][0]);
+  const action: ActionTypeForTest<typeof updateTask.fulfilled> = {
+    type: updateTask.fulfilled.type,
+    payload: {
+      task: taskToUpdate,
+    },
+  };
 
-  const endState = tasksReducer(state, updateTask({ todolistId: todolistId1, taskId: '1', task: taskToUpdate }));
+  const endState = tasksReducer(state, action);
   expect(endState[todolistId1].length).toBe(3);
   expect(endState[todolistId1][0].title).toBe(newTitle);
   expect(endState[todolistId1][1].title).toBe('DDD');
@@ -145,7 +170,11 @@ test('correct rename task title', () => {
 });
 
 test('clean all tasks list from correct todolist', () => {
-  const endState = tasksReducer(state, cleanTasksList({ todolistId: todolistId2 }));
+  const action: ActionTypeForTest<typeof cleanTasksList.fulfilled> = {
+    type: cleanTasksList.fulfilled.type,
+    payload: todolistId2,
+  };
+  const endState = tasksReducer(state, action);
 
   expect(Object.keys(endState).length).toBe(2);
   expect(endState[todolistId1].length).toBe(3);
@@ -156,8 +185,13 @@ test('task status should be changed correctly', () => {
   let newStatus = TaskStatuses.Completed;
   let taskToUpdate = state[todolistId1].find((t) => t.id === '1');
   taskToUpdate ? (taskToUpdate.status = newStatus) : (taskToUpdate = state[todolistId1][0]);
-
-  const endState = tasksReducer(state, updateTask({ todolistId: todolistId1, taskId: '1', task: taskToUpdate }));
+  const action: ActionTypeForTest<typeof updateTask.fulfilled> = {
+    type: updateTask.fulfilled.type,
+    payload: {
+      task: taskToUpdate,
+    },
+  };
+  const endState = tasksReducer(state, action);
 
   expect(endState[todolistId1].length).toBe(3);
   expect(endState[todolistId1][0].status).toBe(newStatus);
@@ -166,7 +200,11 @@ test('task status should be changed correctly', () => {
 });
 
 test('clean all tasks from todolist, todolist should be empty', () => {
-  const endState = tasksReducer(state, cleanTasksList({ todolistId: todolistId1 }));
+  const action: ActionTypeForTest<typeof cleanTasksList.fulfilled> = {
+    type: cleanTasksList.fulfilled.type,
+    payload: todolistId1,
+  };
+  const endState = tasksReducer(state, action);
 
   expect(Object.keys(endState).length).toBe(2);
   expect(endState[Object.keys(endState)[0]].length).toBe(0);
@@ -197,8 +235,11 @@ test('correct task should be added to correct array', () => {
     startDate: '',
     deadline: '',
   };
+  const action: ActionTypeForTest<typeof addTask.fulfilled> = {
+    type: addTask.fulfilled.type,
+    payload: { task: newTask },
+  };
 
-  const action = addTask({ task: newTask });
   const endState = tasksReducer(state, action);
 
   expect(endState[todolistId1].length).toBe(3);

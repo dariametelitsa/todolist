@@ -1,5 +1,5 @@
 import { AppThunkType } from '../../../app/store';
-import { ErrorResponseType, todolistAPI } from '../../../api/todolist-api';
+import { ErrorResponseType, STATUS_CODE, todolistAPI } from '../../../api/todolist-api';
 import {
   addTodolist,
   changeEntityStatus,
@@ -10,7 +10,6 @@ import {
 import { setAppError, setAppStatus } from '../../../app/reducers/appSlice';
 import { handleServerAppError, handleServerNetworkError } from '../../../utils/errorUtils';
 import axios from 'axios';
-import { STATUS_CODE } from './tasksThunks';
 import { fetchTasks } from '../redusers/tasksSlice';
 
 // export const fetchTodolists = createAsyncThunk('')
