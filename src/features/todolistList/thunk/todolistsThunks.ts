@@ -2,7 +2,7 @@ import { AppThunkType } from '../../../app/store';
 import { todolistAPI } from '../../../api/todolist-api';
 import { setTodolists } from '../redusers/todolistsSlice';
 import { setAppStatus } from '../../../app/reducers/appSlice';
-import { handleServerNetworkError } from '../../../utils/errorUtils';
+import { handleServerNetworkError } from '../../../utils/handleServerNetworkError';
 import { fetchTasks } from '../redusers/tasksSlice';
 
 // export const fetchTodolists = createAsyncThunk('')

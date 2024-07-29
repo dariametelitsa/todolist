@@ -1,25 +1,25 @@
 // @flow
-import * as React from 'react'
-import Toolbar from '@mui/material/Toolbar'
-import IconButton from '@mui/material/IconButton'
-import MenuIcon from '@mui/icons-material/Menu'
-import Typography from '@mui/material/Typography'
-import Switch from '@mui/material/Switch'
-import { MenuButton } from '../menuButton/MenuButton'
-import { useAppDispatch, useAppSelector } from '../../app/store'
-import { logOutTC } from '../../features/login/thunk/loginThunk'
+import * as React from 'react';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
+import Typography from '@mui/material/Typography';
+import Switch from '@mui/material/Switch';
+import { MenuButton } from '../menuButton/MenuButton';
+import { useAppDispatch, useAppSelector } from '../../app/store';
+import { logOut } from '../../features/login/reduser/authSlice';
 
 type HeaderMenuProps = {
-  changeModeHandler: () => void
-}
+  changeModeHandler: () => void;
+};
 
 export const HeaderMenu = ({ changeModeHandler }: HeaderMenuProps) => {
-  const isLoggedIn = useAppSelector<boolean>((state) => state.auth.isLoggedIn)
-  const dispatch = useAppDispatch()
+  const isLoggedIn = useAppSelector<boolean>((state) => state.auth.isLoggedIn);
+  const dispatch = useAppDispatch();
 
   const onClickLogoutHandler = () => {
-    dispatch(logOutTC())
-  }
+    dispatch(logOut());
+  };
 
   return (
     <Toolbar>
@@ -37,5 +37,5 @@ export const HeaderMenu = ({ changeModeHandler }: HeaderMenuProps) => {
       )}
       <MenuButton color="inherit">Faq</MenuButton>
     </Toolbar>
-  )
-}
+  );
+};

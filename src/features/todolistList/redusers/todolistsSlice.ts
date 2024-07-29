@@ -3,7 +3,7 @@ import { todolistAPI, TodolistType, UpdateTodolistTitle } from '../../../api/tod
 import { AppStatusTypes, setAppStatus } from '../../../app/reducers/appSlice';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { createAppAsyncThunk } from '../../../utils/createAppAsyncThunk';
-import { handleServerNetworkError } from '../../../utils/errorUtils';
+import { handleServerNetworkError } from '../../../utils/handleServerNetworkError';
 
 const slice = createSlice({
   name: 'todolists',

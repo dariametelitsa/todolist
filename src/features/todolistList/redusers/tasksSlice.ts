@@ -10,8 +10,9 @@ import {
 import { createSelector, createSlice } from '@reduxjs/toolkit';
 import { addTodolist, changeEntityStatus, clearTodolistsData, deleteTodolist, setTodolists } from './todolistsSlice';
 import { setAppStatus } from '../../../app/reducers/appSlice';
-import { handleServerAppError, handleServerNetworkError } from '../../../utils/errorUtils';
+import { handleServerNetworkError } from '../../../utils/handleServerNetworkError';
 import { createAppAsyncThunk } from '../../../utils/createAppAsyncThunk';
+import { handleServerAppError } from '../../../utils/handleServerAppError';
 
 const slice = createSlice({
   name: 'tasks',
