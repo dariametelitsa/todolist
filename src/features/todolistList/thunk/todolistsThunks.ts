@@ -1,15 +1,8 @@
 import { AppThunkType } from '../../../app/store';
-import { ErrorResponseType, STATUS_CODE, todolistAPI } from '../../../api/todolist-api';
-import {
-  addTodolist,
-  changeEntityStatus,
-  changeTodolistTitle,
-  deleteTodolist,
-  setTodolists,
-} from '../redusers/todolistsSlice';
-import { setAppError, setAppStatus } from '../../../app/reducers/appSlice';
-import { handleServerAppError, handleServerNetworkError } from '../../../utils/errorUtils';
-import axios from 'axios';
+import { todolistAPI } from '../../../api/todolist-api';
+import { setTodolists } from '../redusers/todolistsSlice';
+import { setAppStatus } from '../../../app/reducers/appSlice';
+import { handleServerNetworkError } from '../../../utils/errorUtils';
 import { fetchTasks } from '../redusers/tasksSlice';
 
 // export const fetchTodolists = createAsyncThunk('')

@@ -4,7 +4,6 @@ import { AppStatusTypes, setAppStatus } from '../../../app/reducers/appSlice';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { createAppAsyncThunk } from '../../../utils/createAppAsyncThunk';
 import { handleServerNetworkError } from '../../../utils/errorUtils';
-import { fetchTasks } from './tasksSlice';
 
 const slice = createSlice({
   name: 'todolists',

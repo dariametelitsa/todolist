@@ -218,7 +218,7 @@ test('create new tasks list to correct todolist', () => {
   };
   const endState = tasksReducer(state, action);
 
-  const { [todolistId1]: first, todolistId2: second, ...newTasks } = endState;
+  //const { [todolistId1]: first, todolistId2: second, ...newTasks } = endState;
   expect(Object.keys(endState).length).toBe(3);
   expect(endState.hasOwnProperty(newTodo.id)).toBe(true);
   expect(endState[newTodo.id].length).toBe(0);
