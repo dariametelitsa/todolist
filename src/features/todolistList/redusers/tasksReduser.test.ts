@@ -3,10 +3,7 @@ import { TasksType } from '../../../data/dataPropsTypes';
 import { addTask, cleanTasksList, deleteTask, fetchTasks, tasksReducer, updateTask } from './tasksSlice';
 import { addTodolist, deleteTodolist, setTodolists } from './todolistsSlice';
 import { TaskStatuses, TodolistType, TodoTaskPriorities } from '../../../api/todolist-api';
-import { string } from 'prop-types';
-import { Action } from 'redux';
-
-type ActionTypeForTest<T extends (...args: any) => any> = Omit<ReturnType<T>, 'meta'>;
+import { ActionTypeForTest } from '../../../common/types/types';
 
 const todolistId1 = v4();
 const todolistId2 = v4();
@@ -213,7 +210,13 @@ test('clean all tasks from todolist, todolist should be empty', () => {
 test('create new tasks list to correct todolist', () => {
   const title = 'new todolist';
   const newTodo: TodolistType = { id: 'test', title, order: 0, addedDate: '' };
-  const endState = tasksReducer(state, addTodolist({ todolist: newTodo }));
+  const action: ActionTypeForTest<typeof addTodolist.fulfilled> = {
+    type: addTodolist.fulfilled.type,
+    payload: {
+      todolist: newTodo,
+    },
+  };
+  const endState = tasksReducer(state, action);
 
   const { [todolistId1]: first, todolistId2: second, ...newTasks } = endState;
   expect(Object.keys(endState).length).toBe(3);
@@ -252,7 +255,13 @@ test('correct task should be added to correct array', () => {
 test('new array should be added when new todolist is added', () => {
   const title = 'new todolist';
   const newTodo: TodolistType = { id: 'test', title, order: 0, addedDate: '' };
-  const endState = tasksReducer(state, addTodolist({ todolist: newTodo }));
+  const action: ActionTypeForTest<typeof addTodolist.fulfilled> = {
+    type: addTodolist.fulfilled.type,
+    payload: {
+      todolist: newTodo,
+    },
+  };
+  const endState = tasksReducer(state, action);
 
   const keys = Object.keys(endState);
   const newKey = keys.find((k) => k !== todolistId1 && k !== todolistId2);

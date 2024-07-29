@@ -31,25 +31,25 @@ export const getTodolistsTC = (): AppThunkType<Promise<void>> => async (dispatch
   }
 };
 
-export const addTodolistTC =
-  (title: string): AppThunkType<Promise<void>> =>
-  async (dispatch) => {
-    dispatch(setAppStatus({ status: 'loading' }));
-    try {
-      const todoRes = await todolistAPI.addTodolist(title);
-      dispatch(addTodolist({ todolist: todoRes.data.data.item }));
-      //const taskRes = await todolistAPI.getTasks(todoRes.data.data.item.id)
-      //dispatch(setTasks({ todolistId: todoRes.data.data.item.id, tasks: taskRes.data.items }))
-    } catch (e: unknown) {
-      if (axios.isAxiosError<ErrorResponseType>(e)) {
-        // handleServerNetworkError(e as AxiosError<ErrorResponseType>, dispatch)
-        handleServerNetworkError(e, dispatch);
-      } else {
-        dispatch(setAppError({ error: (e as Error).message }));
-      }
-    }
-    dispatch(setAppStatus({ status: 'idle' }));
-  };
+// export const addTodolistTC =
+//   (title: string): AppThunkType<Promise<void>> =>
+//   async (dispatch) => {
+//     dispatch(setAppStatus({ status: 'loading' }));
+//     try {
+//       const todoRes = await todolistAPI.addTodolist(title);
+//       dispatch(addTodolist({ todolist: todoRes.data.data.item }));
+//       //const taskRes = await todolistAPI.getTasks(todoRes.data.data.item.id)
+//       //dispatch(setTasks({ todolistId: todoRes.data.data.item.id, tasks: taskRes.data.items }))
+//     } catch (e: unknown) {
+//       if (axios.isAxiosError<ErrorResponseType>(e)) {
+//         // handleServerNetworkError(e as AxiosError<ErrorResponseType>, dispatch)
+//         handleServerNetworkError(e, dispatch);
+//       } else {
+//         dispatch(setAppError({ error: (e as Error).message }));
+//       }
+//     }
+//     dispatch(setAppStatus({ status: 'idle' }));
+//   };
 
 export const deleteTodolistTC =
   (todolistId: string): AppThunkType =>

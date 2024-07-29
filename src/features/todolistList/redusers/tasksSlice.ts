@@ -7,7 +7,7 @@ import {
   todolistAPI,
   UpdateTaskModelType,
 } from '../../../api/todolist-api';
-import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSelector, createSlice } from '@reduxjs/toolkit';
 import { addTodolist, changeEntityStatus, clearTodolistsData, deleteTodolist, setTodolists } from './todolistsSlice';
 import { setAppStatus } from '../../../app/reducers/appSlice';
 import { handleServerAppError, handleServerNetworkError } from '../../../utils/errorUtils';
@@ -19,7 +19,7 @@ const slice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(addTodolist, (state, action) => {
+      .addCase(addTodolist.fulfilled, (state, action) => {
         state[action.payload.todolist.id] = [];
       })
       .addCase(deleteTodolist, (state, action) => {
