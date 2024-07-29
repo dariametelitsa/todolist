@@ -5,28 +5,28 @@ import { setAppStatus } from '../../../app/reducers/appSlice';
 import { handleServerAppError, handleServerNetworkError } from '../../../utils/errorUtils';
 import { AxiosError } from 'axios';
 import { changeEntityStatus } from '../redusers/todolistsSlice';
-import { createAsyncThunk } from '@reduxjs/toolkit';
 
 export enum STATUS_CODE {
   SUCCESS = 0,
   ERROR = 1,
   RECAPTCHA_ERROR = 10,
 }
+
 //name - ${slice.name}
-export const fetchTasks = createAsyncThunk(`tasks/fetchTasks`, async (todolistId: string, thunkAPI) => {
-  const { dispatch } = thunkAPI;
-  dispatch(setAppStatus({ status: 'loading' }));
-  try {
-    const res = await todolistAPI.getTasks(todolistId);
-    return { todolistId: todolistId, tasks: res.data.items };
-    //dispatch(setTasks({ todolistId: todolistId, tasks: res.data.items }))
-  } catch {
-    return { todolistId: todolistId, tasks: [] };
-    //dispatch(setTasks({ todolistId: todolistId, tasks: [] }))
-  } finally {
-    dispatch(setAppStatus({ status: 'idle' }));
-  }
-});
+// export const fetchTasks = createAsyncThunk(`tasks/fetchTasks`, async (todolistId: string, thunkAPI) => {
+//   const { dispatch } = thunkAPI;
+//   dispatch(setAppStatus({ status: 'loading' }));
+//   try {
+//     const res = await todolistAPI.getTasks(todolistId);
+//     return { todolistId: todolistId, tasks: res.data.items };
+//     //dispatch(setTasks({ todolistId: todolistId, tasks: res.data.items }))
+//   } catch {
+//     return { todolistId: todolistId, tasks: [] };
+//     //dispatch(setTasks({ todolistId: todolistId, tasks: [] }))
+//   } finally {
+//     dispatch(setAppStatus({ status: 'idle' }));
+//   }
+// });
 
 // export const getTasksTC =
 //   (todolistId: string): AppThunkType =>

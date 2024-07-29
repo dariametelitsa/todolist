@@ -10,7 +10,8 @@ import {
 import { setAppError, setAppStatus } from '../../../app/reducers/appSlice';
 import { handleServerAppError, handleServerNetworkError } from '../../../utils/errorUtils';
 import axios from 'axios';
-import { fetchTasks, STATUS_CODE } from './tasksThunks';
+import { STATUS_CODE } from './tasksThunks';
+import { fetchTasks } from '../redusers/tasksSlice';
 
 // export const fetchTodolists = createAsyncThunk('')
 
@@ -22,7 +23,6 @@ export const getTodolistsTC = (): AppThunkType<Promise<void>> => async (dispatch
     dispatch(setAppStatus({ status: 'succeeded' }));
     todolists.data.forEach((tl) => {
       dispatch(fetchTasks(tl.id));
-      // dispatch(getTasksTC(tl.id))
     });
   } catch (e: any) {
     dispatch(setTodolists({ todolists: [] }));
