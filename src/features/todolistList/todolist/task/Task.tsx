@@ -5,9 +5,9 @@ import IconButton from '@mui/material/IconButton';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import ListItem from '@mui/material/ListItem';
 import { useTask } from './hooks/useTask';
-import { AppStatusTypes } from '../../../../app/reducers/appSlice';
-import { TaskStatuses } from '../../../../common/enums/enums';
-import { EditableSpan } from '../../../../common/components/editableSpan/EditableSpan';
+import { AppStatusTypes } from 'app/reducers/appSlice';
+import { TaskStatuses } from 'common/enums';
+import { EditableSpan } from 'common/components/editableSpan/EditableSpan';
 import { TaskType } from '../../todolistAPI/todolistAPI.types';
 
 type TasksProps = {

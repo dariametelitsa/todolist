@@ -1,5 +1,5 @@
 import React from 'react';
-import { TodoListDomainType } from '../../../common/data/dataPropsTypes';
+import { TodoListDomainType } from 'common/data/dataPropsTypes';
 import IconButton from '@mui/material/IconButton';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import Button from '@mui/material/Button';
@@ -8,10 +8,10 @@ import Grid from '@mui/material/Unstable_Grid2';
 import Paper from '@mui/material/Paper';
 import { Task } from './task/Task';
 import { useTodolist } from './hooks/useTodolist';
-import { EditableSpan } from '../../../common/components/editableSpan/EditableSpan';
-import { AddItem } from '../../../common/components/addItem/AddItem';
-import { FiltersForTasks } from '../../../common/components/filtersForTasks/FiltersForTasks';
-import { CoverImage } from '../../../common/components/coverImage/CoverImage';
+import { EditableSpan } from 'common/components/editableSpan/EditableSpan';
+import { AddItem } from 'common/components/addItem/AddItem';
+import { FiltersForTasks } from 'common/components/filtersForTasks/FiltersForTasks';
+import { CoverImage } from 'common/components/coverImage/CoverImage';
 
 type TodolistListProps = {
   todolist: TodoListDomainType;
