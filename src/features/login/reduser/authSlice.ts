@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { createAppAsyncThunk } from '../../../utils/createAppAsyncThunk';
 import { setAppStatus, setIsInitialized } from '../../../app/reducers/appSlice';
-import { authAPI } from '../../../api/todolist-api';
+import { authAPI, STATUS_CODE } from '../../../api/todolist-api';
 import { handleServerAppError } from '../../../utils/handleServerAppError';
 import { handleServerNetworkError } from '../../../utils/handleServerNetworkError';
 import { LoginType } from '../Login';
@@ -40,7 +40,7 @@ export const login = createAppAsyncThunk<boolean, LoginType>(`${slice.name}/logi
   dispatch(setAppStatus({ status: 'loading' }));
   try {
     const res = await authAPI.login(arg);
-    if (res.data.resultCode === 0) {
+    if (res.data.resultCode === STATUS_CODE.SUCCESS) {
       dispatch(setAppStatus({ status: 'succeeded' }));
       return true;
     } else {
@@ -60,7 +60,7 @@ export const me = createAppAsyncThunk<boolean>(`${slice.name}/me`, async (arg, t
   dispatch(setAppStatus({ status: 'loading' }));
   try {
     const res = await authAPI.me();
-    if (res.data.resultCode === 0) {
+    if (res.data.resultCode === STATUS_CODE.SUCCESS) {
       dispatch(setAppStatus({ status: 'succeeded' }));
       return true;
     } else {
@@ -79,7 +79,7 @@ export const logOut = createAppAsyncThunk<boolean>(`${slice.name}/logOut`, async
   dispatch(setAppStatus({ status: 'loading' }));
   try {
     const res = await authAPI.logOut();
-    if (res.data.resultCode === 0) {
+    if (res.data.resultCode === STATUS_CODE.SUCCESS) {
       dispatch(clearTodolistsData());
       dispatch(setAppStatus({ status: 'succeeded' }));
       return false;
