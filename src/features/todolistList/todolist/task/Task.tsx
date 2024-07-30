@@ -4,11 +4,11 @@ import Checkbox from '@mui/material/Checkbox';
 import IconButton from '@mui/material/IconButton';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import ListItem from '@mui/material/ListItem';
-import { TaskType } from '../../todolistAPI/todolist-api';
 import { useTask } from './hooks/useTask';
 import { AppStatusTypes } from '../../../../app/reducers/appSlice';
 import { TaskStatuses } from '../../../../common/enums/enums';
 import { EditableSpan } from '../../../../common/components/editableSpan/EditableSpan';
+import { TaskType } from '../../todolistAPI/todolistAPI.types';
 
 type TasksProps = {
   task: TaskType;

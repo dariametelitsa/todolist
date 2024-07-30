@@ -5,9 +5,9 @@ import { useLayoutEffect } from 'react';
 import { ReduxStoreProviderDecorator } from '../../../../stories/ReduxStoreProviderDecorator';
 import { useSelector } from 'react-redux';
 import { AppRootStateType, useAppDispatch } from '../../../../app/store';
-import { TaskType } from '../../todolistAPI/todolist-api';
 import { addTask } from '../../model/tasksSlice';
 import { TaskStatuses, TodoTaskPriorities } from '../../../../common/enums/enums';
+import { TaskType } from '../../todolistAPI/todolistAPI.types';
 
 const meta: Meta<typeof Task> = {
   title: 'Todolist/Task',

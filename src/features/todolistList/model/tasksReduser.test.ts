@@ -2,9 +2,9 @@ import { v4 } from 'uuid';
 import { TasksType } from '../../../common/data/dataPropsTypes';
 import { addTask, cleanTasksList, deleteTask, fetchTasks, tasksReducer, updateTask } from './tasksSlice';
 import { addTodolist, deleteTodolist, setTodolists } from './todolistsSlice';
-import { TodolistType } from '../todolistAPI/todolist-api';
 import { ActionTypeForTest } from '../../../common/types/types';
 import { TaskStatuses, TodoTaskPriorities } from '../../../common/enums/enums';
+import { TodolistType } from '../todolistAPI/todolistAPI.types';
 
 const todolistId1 = v4();
 const todolistId2 = v4();

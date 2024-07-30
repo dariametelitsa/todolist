@@ -9,8 +9,8 @@ import {
   todolistsReducer,
 } from './todolistsSlice';
 import { TodoListDomainType } from '../../../common/data/dataPropsTypes';
-import { TodolistType } from '../todolistAPI/todolist-api';
 import { ActionTypeForTest } from '../../../common/types/types';
+import { TodolistType } from '../todolistAPI/todolistAPI.types';
 
 //test data
 let todolistId1: string;

@@ -1,16 +1,5 @@
-// export type TodoListType = {
-//     id: string
-//     title: string
-//     filter : FilterValuesType
-//     coverImage?: string
-// }
-// export type TaskType = {
-//     id: string
-//     title: string
-//     isDone?: boolean
-// }
-import { TaskType, TodolistType } from '../../features/todolistList/todolistAPI/todolist-api';
 import { AppStatusTypes } from '../../app/reducers/appSlice';
+import { TaskType, TodolistType } from '../../features/todolistList/todolistAPI/todolistAPI.types';
 
 export type FilterValuesType = 'all' | 'completed' | 'active';
 

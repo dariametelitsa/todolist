@@ -1,5 +1,5 @@
 import { AppThunkType } from '../../../../app/store';
-import { todolistAPI } from '../../todolistAPI/todolist-api';
+import { todolistAPI } from '../../todolistAPI/todolistAPI';
 import { setTodolists } from '../todolistsSlice';
 import { setAppStatus } from '../../../../app/reducers/appSlice';
 import { handleServerNetworkError } from '../../../../common/utils/handleServerNetworkError';
