@@ -1,15 +1,15 @@
 import { useAppDispatch } from '../../../../app/store';
-import { TaskStatuses } from '../../../../api/todolist-api';
 import { useCallback, useMemo } from 'react';
-import { FilterValuesType } from '../../../../data/dataPropsTypes';
+import { FilterValuesType } from '../../../../common/data/dataPropsTypes';
 import {
   changedTodolistCover,
   changedTodolistFilter,
   changeTodolistTitle,
   deleteTodolist,
-} from '../../redusers/todolistsSlice';
+} from '../../model/todolistsSlice';
 import { useSelector } from 'react-redux';
-import { addTask, cleanTasksList, selectTasksForTodolist } from '../../redusers/tasksSlice';
+import { addTask, cleanTasksList, selectTasksForTodolist } from '../../model/tasksSlice';
+import { TaskStatuses } from '../../../../common/enums/enums';
 
 export const useTodolist = (id: string, filter: FilterValuesType) => {
   const tasks = useSelector((state) => selectTasksForTodolist(state, id));

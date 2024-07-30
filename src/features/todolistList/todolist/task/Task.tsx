@@ -1,23 +1,24 @@
-import * as React from 'react'
-import { getListItemSx } from '../Todolist.styles'
-import Checkbox from '@mui/material/Checkbox'
-import { EditableSpan } from '../../../../components/editableSpan/EditableSpan'
-import IconButton from '@mui/material/IconButton'
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
-import ListItem from '@mui/material/ListItem'
-import { TaskStatuses, TaskType } from '../../../../api/todolist-api'
-import { useTask } from './hooks/useTask'
-import { AppStatusTypes } from '../../../../app/reducers/appSlice'
+import * as React from 'react';
+import { getListItemSx } from '../Todolist.styles';
+import Checkbox from '@mui/material/Checkbox';
+import IconButton from '@mui/material/IconButton';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import ListItem from '@mui/material/ListItem';
+import { TaskType } from '../../todolistAPI/todolist-api';
+import { useTask } from './hooks/useTask';
+import { AppStatusTypes } from '../../../../app/reducers/appSlice';
+import { TaskStatuses } from '../../../../common/enums/enums';
+import { EditableSpan } from '../../../../common/components/editableSpan/EditableSpan';
 
 type TasksProps = {
-  task: TaskType
-  todolistId: string
-  entityStatus: AppStatusTypes
-}
+  task: TaskType;
+  todolistId: string;
+  entityStatus: AppStatusTypes;
+};
 
 export const Task = React.memo(({ todolistId, task, entityStatus }: TasksProps) => {
-  const { removeTaskHandler, changeTaskStatusHandler, changeTaskTitleHandler } = useTask(todolistId)
-  const isDisable = entityStatus === 'loading'
+  const { removeTaskHandler, changeTaskStatusHandler, changeTaskTitleHandler } = useTask(todolistId);
+  const isDisable = entityStatus === 'loading';
 
   return (
     <ListItem key={task.id} sx={getListItemSx(task.status === TaskStatuses.Completed)}>
@@ -38,5 +39,5 @@ export const Task = React.memo(({ todolistId, task, entityStatus }: TasksProps) 
         <DeleteOutlineIcon />
       </IconButton>
     </ListItem>
-  )
-})
+  );
+});

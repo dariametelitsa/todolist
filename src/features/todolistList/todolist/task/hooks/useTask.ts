@@ -1,6 +1,6 @@
 import { useAppDispatch } from '../../../../../app/store';
-import { TaskStatuses } from '../../../../../api/todolist-api';
-import { deleteTask, updateTask } from '../../../redusers/tasksSlice';
+import { deleteTask, updateTask } from '../../../model/tasksSlice';
+import { TaskStatuses } from '../../../../../common/enums/enums';
 
 export const useTask = (todolistId: string) => {
   const dispatch = useAppDispatch();

@@ -1,24 +1,24 @@
-import React from 'react'
-import { TodoListDomainType } from '../../../data/dataPropsTypes'
-import { AddItem } from '../../../components/addItem/AddItem'
-import { EditableSpan } from '../../../components/editableSpan/EditableSpan'
-import IconButton from '@mui/material/IconButton'
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
-import Button from '@mui/material/Button'
-import List from '@mui/material/List'
-import { CoverImage } from '../../../components/coverImage/CoverImage'
-import Grid from '@mui/material/Unstable_Grid2'
-import Paper from '@mui/material/Paper'
-import { Task } from './task/Task'
-import { useTodolist } from './hooks/useTodolist'
-import { FiltersForTasks } from '../../../components/filtersForTasks/FiltersForTasks'
+import React from 'react';
+import { TodoListDomainType } from '../../../common/data/dataPropsTypes';
+import IconButton from '@mui/material/IconButton';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import Button from '@mui/material/Button';
+import List from '@mui/material/List';
+import Grid from '@mui/material/Unstable_Grid2';
+import Paper from '@mui/material/Paper';
+import { Task } from './task/Task';
+import { useTodolist } from './hooks/useTodolist';
+import { EditableSpan } from '../../../common/components/editableSpan/EditableSpan';
+import { AddItem } from '../../../common/components/addItem/AddItem';
+import { FiltersForTasks } from '../../../common/components/filtersForTasks/FiltersForTasks';
+import { CoverImage } from '../../../common/components/coverImage/CoverImage';
 
 type TodolistListProps = {
-  todolist: TodoListDomainType
-}
+  todolist: TodoListDomainType;
+};
 
 const Todolist: React.FC<TodolistListProps> = React.memo(({ todolist }) => {
-  const { id, title, filter, coverImage, entityStatus } = todolist
+  const { id, title, filter, coverImage, entityStatus } = todolist;
 
   const {
     sorterTasks,
@@ -28,11 +28,11 @@ const Todolist: React.FC<TodolistListProps> = React.memo(({ todolist }) => {
     onChangeCoverHandler,
     changeTodolistTitleHandler,
     deleteTodolistHandler,
-  } = useTodolist(id, filter)
+  } = useTodolist(id, filter);
 
   const tasksForTodolist = sorterTasks.map((task) => {
-    return <Task key={task.id} todolistId={id} task={task} entityStatus={entityStatus} />
-  })
+    return <Task key={task.id} todolistId={id} task={task} entityStatus={entityStatus} />;
+  });
 
   return (
     <Grid xs={12} md={6} lg={4}>
@@ -60,7 +60,7 @@ const Todolist: React.FC<TodolistListProps> = React.memo(({ todolist }) => {
             <Button
               size="small"
               onClick={() => {
-                onClickHandlerDeleteAllTasks()
+                onClickHandlerDeleteAllTasks();
               }}>
               Delete all
             </Button>
@@ -69,7 +69,7 @@ const Todolist: React.FC<TodolistListProps> = React.memo(({ todolist }) => {
         </div>
       </Paper>
     </Grid>
-  )
-})
+  );
+});
 
-export default Todolist
+export default Todolist;

@@ -1,13 +1,13 @@
 import React, { useCallback } from 'react';
 import Grid from '@mui/material/Unstable_Grid2';
-import { AddItem } from '../../components/addItem/AddItem';
 import Todolist from './todolist/Todolist';
 import { Navigate } from 'react-router-dom';
-import { PATH } from '../../routes/PATH';
+import { PATH } from '../../common/routes/PATH';
 import { useAppDispatch } from '../../app/store';
 import { useSelector } from 'react-redux';
-import { selectIsLoggedIn } from '../login/reduser/authSlice';
-import { addTodolist, selectTodolists } from './redusers/todolistsSlice';
+import { selectIsLoggedIn } from '../auth/model/authSlice';
+import { addTodolist, selectTodolists } from './model/todolistsSlice';
+import { AddItem } from '../../common/components/addItem/AddItem';
 
 export const TodolistlistsContainer: React.FC = () => {
   const todoLists = useSelector(selectTodolists);

@@ -1,9 +1,9 @@
 // @flow
-import * as React from 'react'
-import { PATH } from '../../routes/PATH'
-import { Link } from 'react-router-dom'
-import Grid from '@mui/material/Grid'
-import Button from '@mui/material/Button'
+import * as React from 'react';
+import { PATH } from '../../common/routes/PATH';
+import { Link } from 'react-router-dom';
+import Grid from '@mui/material/Grid';
+import Button from '@mui/material/Button';
 
 export const ErrorPage = () => {
   return (
@@ -17,5 +17,5 @@ export const ErrorPage = () => {
         </Link>
       </Grid>
     </Grid>
-  )
-}
+  );
+};
