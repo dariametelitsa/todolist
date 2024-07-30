@@ -1,11 +1,11 @@
-import { TasksType } from '../../../common/data/dataPropsTypes';
+import { TasksType } from 'common/data/dataPropsTypes';
 import { createSelector, createSlice } from '@reduxjs/toolkit';
 import { addTodolist, changeEntityStatus, clearTodolistsData, deleteTodolist, setTodolists } from './todolistsSlice';
-import { setAppStatus } from '../../../app/reducers/appSlice';
-import { handleServerNetworkError } from '../../../common/utils/handleServerNetworkError';
-import { createAppAsyncThunk } from '../../../common/utils/createAppAsyncThunk';
-import { handleServerAppError } from '../../../common/utils/handleServerAppError';
-import { STATUS_CODE } from '../../../common/enums/enums';
+import { setAppStatus } from 'app/reducers/appSlice';
+import { handleServerNetworkError } from 'common/utils';
+import { createAppAsyncThunk } from 'common/utils/createAppAsyncThunk';
+import { handleServerAppError } from 'common/utils';
+import { StatusCode } from 'common/enums';
 import { taskAPI } from '../todolistAPI/taskAPI';
 import { AddTaskArgs, DeleteTaskArgs, TaskType, UpdateTaskModelType } from '../todolistAPI/todolistAPI.types';
 
@@ -88,7 +88,7 @@ export const addTask = createAppAsyncThunk<{ task: TaskType }, AddTaskArgs>(
     dispatch(setAppStatus({ status: 'loading' }));
     try {
       const res = await taskAPI.addTask(arg);
-      if (res.data.resultCode === STATUS_CODE.SUCCESS) {
+      if (res.data.resultCode === StatusCode.SUCCESS) {
         return { task: res.data.data.item };
       } else {
         handleServerAppError(res.data, dispatch);
@@ -134,7 +134,7 @@ export const deleteTask = createAppAsyncThunk<DeleteTaskArgs, DeleteTaskArgs>(
     try {
       dispatch(changeEntityStatus({ id: arg.todolistId, status: 'loading' }));
       const res = await taskAPI.deleteTask(arg);
-      if (res.data.resultCode === STATUS_CODE.SUCCESS) {
+      if (res.data.resultCode === StatusCode.SUCCESS) {
         return { ...arg };
       } else {
         return rejectWithValue(null);

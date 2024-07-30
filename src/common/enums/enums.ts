@@ -14,7 +14,7 @@ export enum TodoTaskPriorities {
   Later = 4,
 }
 
-export enum STATUS_CODE {
+export enum StatusCode {
   SUCCESS = 0,
   ERROR = 1,
   RECAPTCHA_ERROR = 10,

@@ -6,7 +6,7 @@ import { handleServerNetworkError } from '../../../common/utils/handleServerNetw
 import { clearTodolistsData } from '../../todolistList/model/todolistsSlice';
 import { authAPI } from '../api/authAPI';
 import { LoginParams } from '../api/authAPI.types';
-import { STATUS_CODE } from '../../../common/enums/enums';
+import { StatusCode } from '../../../common/enums/enums';
 
 const slice = createSlice({
   name: 'auth',
@@ -41,7 +41,7 @@ export const login = createAppAsyncThunk<boolean, LoginParams>(`${slice.name}/lo
   dispatch(setAppStatus({ status: 'loading' }));
   try {
     const res = await authAPI.login(arg);
-    if (res.data.resultCode === STATUS_CODE.SUCCESS) {
+    if (res.data.resultCode === StatusCode.SUCCESS) {
       dispatch(setAppStatus({ status: 'succeeded' }));
       return true;
     } else {
@@ -61,7 +61,7 @@ export const me = createAppAsyncThunk<boolean>(`${slice.name}/me`, async (arg, t
   dispatch(setAppStatus({ status: 'loading' }));
   try {
     const res = await authAPI.me();
-    if (res.data.resultCode === STATUS_CODE.SUCCESS) {
+    if (res.data.resultCode === StatusCode.SUCCESS) {
       dispatch(setAppStatus({ status: 'succeeded' }));
       return true;
     } else {
@@ -80,7 +80,7 @@ export const logOut = createAppAsyncThunk<boolean>(`${slice.name}/logOut`, async
   dispatch(setAppStatus({ status: 'loading' }));
   try {
     const res = await authAPI.logOut();
-    if (res.data.resultCode === STATUS_CODE.SUCCESS) {
+    if (res.data.resultCode === StatusCode.SUCCESS) {
       dispatch(clearTodolistsData());
       dispatch(setAppStatus({ status: 'succeeded' }));
       return false;
