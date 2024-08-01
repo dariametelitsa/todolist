@@ -2,7 +2,6 @@ import { FilterValuesType, TodoListDomainType } from 'common/data/dataPropsTypes
 import { todolistAPI } from '../todolistAPI/todolistAPI';
 import { AppStatusTypes, setAppStatus } from 'app/reducers/appSlice';
 import { asyncThunkCreator, buildCreateSlice, PayloadAction } from '@reduxjs/toolkit';
-import { createAppAsyncThunk } from 'common/utils/createAppAsyncThunk';
 import { TodolistType, UpdateTodolistTitle } from '../todolistAPI/todolistAPI.types';
 import { handleServerNetworkError } from 'common/utils';
 

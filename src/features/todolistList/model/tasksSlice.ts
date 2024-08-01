@@ -1,13 +1,11 @@
 import { TasksType } from 'common/data/dataPropsTypes';
-import { asyncThunkCreator, buildCreateSlice, createSelector, createSlice } from '@reduxjs/toolkit';
-import { addTodolist, changeEntityStatus, clearTodolistsData, deleteTodolist, setTodolists } from './todolistsSlice';
+import { asyncThunkCreator, buildCreateSlice, createSelector } from '@reduxjs/toolkit';
+import { addTodolist, changeEntityStatus, deleteTodolist, setTodolists } from './todolistsSlice';
 import { setAppStatus } from 'app/reducers/appSlice';
-import { handleServerNetworkError } from 'common/utils';
-import { createAppAsyncThunk } from 'common/utils/createAppAsyncThunk';
-import { handleServerAppError } from 'common/utils';
+import { handleServerAppError, handleServerNetworkError } from 'common/utils';
 import { StatusCode } from 'common/enums';
 import { taskAPI } from '../todolistAPI/taskAPI';
-import { AddTaskArgs, DeleteTaskArgs, TaskType, UpdateTaskModelType } from '../todolistAPI/todolistAPI.types';
+import { AddTaskArgs, DeleteTaskArgs, UpdateTaskModelType } from '../todolistAPI/todolistAPI.types';
 import { AppRootStateType } from 'app/store';
 
 const createAppSlice = buildCreateSlice({

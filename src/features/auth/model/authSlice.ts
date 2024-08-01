@@ -1,8 +1,6 @@
-import { asyncThunkCreator, buildCreateSlice, createSlice } from '@reduxjs/toolkit';
-import { createAppAsyncThunk } from 'common/utils/createAppAsyncThunk';
+import { asyncThunkCreator, buildCreateSlice } from '@reduxjs/toolkit';
 import { setAppStatus, setIsInitialized } from 'app/reducers/appSlice';
-import { handleServerAppError } from 'common/utils';
-import { handleServerNetworkError } from 'common/utils';
+import { handleServerAppError, handleServerNetworkError } from 'common/utils';
 import { clearTodolistsData } from '../../todolistList/model/todolistsSlice';
 import { authAPI } from '../api/authAPI';
 import { LoginParams } from '../api/authAPI.types';
