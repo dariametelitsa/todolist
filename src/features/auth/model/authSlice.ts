@@ -1,12 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { createAppAsyncThunk } from '../../../common/utils/createAppAsyncThunk';
-import { setAppStatus, setIsInitialized } from '../../../app/reducers/appSlice';
-import { handleServerAppError } from '../../../common/utils/handleServerAppError';
-import { handleServerNetworkError } from '../../../common/utils/handleServerNetworkError';
+import { createAppAsyncThunk } from 'common/utils/createAppAsyncThunk';
+import { setAppStatus, setIsInitialized } from 'app/reducers/appSlice';
+import { handleServerAppError } from 'common/utils';
+import { handleServerNetworkError } from 'common/utils';
 import { clearTodolistsData } from '../../todolistList/model/todolistsSlice';
 import { authAPI } from '../api/authAPI';
 import { LoginParams } from '../api/authAPI.types';
-import { StatusCode } from '../../../common/enums/enums';
+import { StatusCode } from 'common/enums';
 
 const slice = createSlice({
   name: 'auth',

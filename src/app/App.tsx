@@ -3,13 +3,13 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import { useAppWithRedux } from '../common/hooks/useAppWithRedux';
+import { useAppWithRedux } from 'common/hooks/useAppWithRedux';
 import LinearProgress from '@mui/material/LinearProgress';
 import AppBar from '@mui/material/AppBar';
 import { Outlet } from 'react-router-dom';
 import CircularProgress from '@mui/material/CircularProgress';
-import { ErrorSnackbar } from '../common/components/errorSnackbar/ErrorSnackbar';
-import { HeaderMenu } from '../common/components/headerMenu/HeaderMenu';
+import { ErrorSnackbar } from 'common/components/errorSnackbar/ErrorSnackbar';
+import { HeaderMenu } from 'common/components/headerMenu/HeaderMenu';
 
 function App() {
   const { theme, changeModeHandler, isLoading, isInitialized } = useAppWithRedux();

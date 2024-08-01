@@ -1,4 +1,4 @@
-import { setAppError, setAppStatus } from '../../app/reducers/appSlice';
+import { setAppError, setAppStatus } from 'app/reducers/appSlice';
 import { Dispatch } from 'redux';
 import axios from 'axios';
 

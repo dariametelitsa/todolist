@@ -1,5 +1,5 @@
-import { instance } from '../../../common/instance/instance';
-import { BaseResponse } from '../../../common/types/types';
+import { instance } from 'common/instance/instance';
+import { BaseResponse } from 'common/types';
 import { AxiosResponse } from 'axios';
 import { TodolistType, UpdateTodolistTitle } from './todolistAPI.types';
 
