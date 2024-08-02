@@ -1,10 +1,10 @@
 import { asyncThunkCreator, buildCreateSlice } from '@reduxjs/toolkit';
 import { setAppStatus, setIsInitialized } from 'app/reducers/appSlice';
 import { handleServerAppError, handleServerNetworkError } from 'common/utils';
-import { clearTodolistsData } from '../../todolistList/model/todolistsSlice';
 import { authAPI } from '../api/authAPI';
 import { LoginParams } from '../api/authAPI.types';
 import { StatusCode } from 'common/enums';
+import { cleatTasksAndTodolists } from 'common/actions/commonActions';
 
 const createAppSlice = buildCreateSlice({
   creators: { asyncThunk: asyncThunkCreator },
@@ -72,7 +72,8 @@ const slice = createAppSlice({
         try {
           const res = await authAPI.logOut();
           if (res.data.resultCode === StatusCode.SUCCESS) {
-            dispatch(clearTodolistsData());
+            //dispatch(clearTodolistsData());
+            dispatch(cleatTasksAndTodolists());
             dispatch(setAppStatus({ status: 'succeeded' }));
             return false;
           } else {

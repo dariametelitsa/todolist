@@ -4,6 +4,7 @@ import { AppStatusTypes, setAppStatus } from 'app/reducers/appSlice';
 import { asyncThunkCreator, buildCreateSlice, PayloadAction } from '@reduxjs/toolkit';
 import { TodolistType, UpdateTodolistTitle } from '../todolistAPI/todolistAPI.types';
 import { handleServerNetworkError } from 'common/utils';
+import { cleatTasksAndTodolists } from 'common/actions/commonActions';
 
 const createAppSlice = buildCreateSlice({
   creators: { asyncThunk: asyncThunkCreator },
@@ -30,9 +31,9 @@ const slice = createAppSlice({
       const todolist = state.find((td) => td.id === action.payload.id);
       if (todolist) todolist.entityStatus = action.payload.status;
     }),
-    clearTodolistsData: create.reducer(() => {
-      return [];
-    }),
+    // clearTodolistsData: create.reducer(() => {
+    //   return [];
+    // }),
     addTodolist: create.asyncThunk(
       async (arg: string, thunkAPI) => {
         const { dispatch, rejectWithValue } = thunkAPI;
@@ -102,14 +103,15 @@ const slice = createAppSlice({
       }
     ),
   }),
-  // extraReducers(builder) {
-  //   builder;
-  // .addCase(getTodolists.fulfilled, (state, action) => {
-  //   action.payload.forEach((tl) => {
-  //     state.push({ ...tl, filter: 'all', entityStatus: 'idle' });
-  //   });
-  // })
-
+  extraReducers(builder) {
+    builder.addCase(cleatTasksAndTodolists.type, () => {
+      return [];
+    });
+    // .addCase(getTodolists.fulfilled, (state, action) => {
+    //   action.payload.forEach((tl) => {
+    //     state.push({ ...tl, filter: 'all', entityStatus: 'idle' });
+    //   });
+  },
   // .addCase(addTodolist.fulfilled, (state, action) => {
   //   state.unshift({ ...action.payload.todolist, filter: 'all', entityStatus: 'idle' });
   // })
@@ -134,7 +136,7 @@ export const {
   changedTodolistCover,
   setTodolists,
   changeEntityStatus,
-  clearTodolistsData,
+  //clearTodolistsData,
   addTodolist,
   deleteTodolist,
   changeTodolistTitle,

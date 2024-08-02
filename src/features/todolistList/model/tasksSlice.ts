@@ -7,6 +7,7 @@ import { StatusCode } from 'common/enums';
 import { taskAPI } from '../todolistAPI/taskAPI';
 import { AddTaskArgs, DeleteTaskArgs, UpdateTaskModelType } from '../todolistAPI/todolistAPI.types';
 import { AppRootStateType } from 'app/store';
+import { cleatTasksAndTodolists } from 'common/actions/commonActions';
 
 const createAppSlice = buildCreateSlice({
   creators: { asyncThunk: asyncThunkCreator },
@@ -180,6 +181,9 @@ const slice = createAppSlice({
       // })
       .addCase(cleanTasksList.fulfilled, (state, action) => {
         state[action.payload] = [];
+      })
+      .addCase(cleatTasksAndTodolists.type, () => {
+        return {};
       });
   },
   selectors: {
