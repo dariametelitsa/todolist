@@ -1,5 +1,5 @@
 //types
-import { TaskStatuses, TodoTaskPriorities } from '../../../common/enums/enums';
+import { TaskStatuses, TodoTaskPriorities } from 'common/enums';
 
 export type AddTaskArgs = {
   todolistId: string;

@@ -47,10 +47,12 @@ export const Login = () => {
       dispatch(login(values))
         .unwrap()
         .catch((error: BaseResponse) => {
-          if (error.fieldsErrors) {
-            error.fieldsErrors.forEach((el) => {
-              formikHelpers.setFieldError(el.field, el.error);
-            });
+          console.log(error);
+          if (error.messages) {
+            formikHelpers.setFieldError('password', error.messages[0]);
+            // error.messages?.forEach((el) => {
+            //   formikHelpers.setFieldError(el.field, el.error);
+            // });
           }
         });
       //res.payload.

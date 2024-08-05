@@ -4,7 +4,7 @@ import createTheme from '@mui/material/styles/createTheme';
 import cyan from '@mui/material/colors/cyan';
 import { selectAppIsInitialized, selectAppStatus } from 'app/reducers/appSlice';
 import { useSelector } from 'react-redux';
-import { me, selectIsLoggedIn } from 'features/auth/model/authSlice';
+import { initializeApp, selectIsLoggedIn } from 'features/auth/model/authSlice';
 import { getTodolists } from 'features/todolistList/model/todolistsSlice';
 
 type ThemeMode = 'dark' | 'light';
@@ -17,7 +17,7 @@ export const useAppWithRedux = () => {
   const isLoading = status === 'loading';
 
   useEffect(() => {
-    dispatch(me());
+    dispatch(initializeApp());
   }, [dispatch]);
 
   useEffect(() => {

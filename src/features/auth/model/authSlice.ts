@@ -6,6 +6,7 @@ import { LoginParams } from '../api/authAPI.types';
 import { StatusCode } from 'common/enums';
 import { cleatTasksAndTodolists } from 'common/actions/commonActions';
 import { BaseResponse } from 'common/types';
+import { FieldErrorType } from 'common/types/types';
 
 const createAppSlice = buildCreateSlice({
   creators: { asyncThunk: asyncThunkCreator },
@@ -15,7 +16,7 @@ const slice = createAppSlice({
   name: 'auth',
   initialState: { isLoggedIn: false },
   reducers: (create) => ({
-    login: create.asyncThunk(
+    login: create.asyncThunk<boolean, LoginParams, { rejectValue: BaseResponse | null }>(
       async (arg: LoginParams, thunkAPI) => {
         const { dispatch, rejectWithValue } = thunkAPI;
         dispatch(setAppStatus({ status: 'loading' }));
@@ -26,7 +27,7 @@ const slice = createAppSlice({
             return true;
           } else {
             handleServerAppError(res.data, dispatch);
-            return rejectWithValue(res.data.messages[0]);
+            return rejectWithValue(res.data);
           }
         } catch (error) {
           handleServerNetworkError(error, dispatch);
@@ -41,7 +42,7 @@ const slice = createAppSlice({
         },
       }
     ),
-    me: create.asyncThunk(
+    initializeApp: create.asyncThunk(
       async (_, thunkAPI) => {
         const { dispatch, rejectWithValue } = thunkAPI;
         dispatch(setAppStatus({ status: 'loading' }));
@@ -102,7 +103,7 @@ const slice = createAppSlice({
   },
 });
 
-export const { login, me, logOut } = slice.actions;
+export const { login, initializeApp, logOut } = slice.actions;
 export const authReducer = slice.reducer;
 export const { selectIsLoggedIn } = slice.selectors;
 
