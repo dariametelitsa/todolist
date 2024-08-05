@@ -47,7 +47,6 @@ export const Login = () => {
       dispatch(login(values))
         .unwrap()
         .catch((error: BaseResponse) => {
-          console.log(error);
           if (error.messages) {
             formikHelpers.setFieldError('password', error.messages[0]);
             // error.messages?.forEach((el) => {

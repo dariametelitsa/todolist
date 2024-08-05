@@ -26,7 +26,8 @@ const slice = createAppSlice({
             dispatch(setAppStatus({ status: 'succeeded' }));
             return true;
           } else {
-            handleServerAppError(res.data, dispatch);
+            const isShowGlobalError = !res.data.messages.length;
+            handleServerAppError(res.data, dispatch, isShowGlobalError);
             return rejectWithValue(res.data);
           }
         } catch (error) {
