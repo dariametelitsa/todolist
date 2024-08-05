@@ -1,5 +1,5 @@
-import { BaseResponse } from '../../../common/types/types';
-import { instance } from '../../../common/instance/instance';
+import { BaseResponse } from 'common/types';
+import { instance } from 'common/instance/instance';
 import { LoginParams } from './authAPI.types';
 
 export const authAPI = {

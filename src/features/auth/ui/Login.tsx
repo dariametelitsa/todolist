@@ -7,13 +7,14 @@ import FormGroup from '@mui/material/FormGroup';
 import FormLabel from '@mui/material/FormLabel';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import { useFormik } from 'formik';
-import { useAppDispatch } from '../../../app/store';
+import { FormikHelpers, useFormik } from 'formik';
+import { useAppDispatch } from 'app/store';
 import { Navigate } from 'react-router-dom';
-import { PATH } from '../../../common/routes/PATH';
+import { PATH } from 'common/routes/PATH';
 import { useSelector } from 'react-redux';
 import { login, selectIsLoggedIn } from '../model/authSlice';
 import { LoginParams } from '../api/authAPI.types';
+import { BaseResponse } from 'common/types';
 
 type ErrorsType = {
   email?: string;
@@ -42,8 +43,21 @@ export const Login = () => {
       }
       return errors;
     },
-    onSubmit: (values: LoginParams) => {
-      dispatch(login(values));
+    onSubmit: (values: LoginParams, formikHelpers: FormikHelpers<LoginParams>) => {
+      dispatch(login(values))
+        .unwrap()
+        .catch((error: BaseResponse) => {
+          if (error.fieldsErrors) {
+            error.fieldsErrors.forEach((el) => {
+              formikHelpers.setFieldError(el.field, el.error);
+            });
+          }
+        });
+      //res.payload.
+      // if (res.payload) {
+      //   const errorMessage = res.payload as string;
+      //   formikHelpers.setFieldError('password', errorMessage);
+      // }
       //alert(JSON.stringify(values, null, 2))
       //formik.resetForm()
     },

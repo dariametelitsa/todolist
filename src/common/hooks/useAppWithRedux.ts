@@ -2,10 +2,10 @@ import { useAppDispatch } from 'app/store';
 import { useEffect, useState } from 'react';
 import createTheme from '@mui/material/styles/createTheme';
 import cyan from '@mui/material/colors/cyan';
-import { getTodolistsTC } from 'features/todolistList/model/thunk/todolistsThunks';
 import { selectAppIsInitialized, selectAppStatus } from 'app/reducers/appSlice';
 import { useSelector } from 'react-redux';
 import { me, selectIsLoggedIn } from 'features/auth/model/authSlice';
+import { getTodolists } from 'features/todolistList/model/todolistsSlice';
 
 type ThemeMode = 'dark' | 'light';
 
@@ -22,7 +22,7 @@ export const useAppWithRedux = () => {
 
   useEffect(() => {
     if (isLoggedIn) {
-      dispatch(getTodolistsTC());
+      dispatch(getTodolists());
     }
   }, [isLoggedIn, dispatch]);
 

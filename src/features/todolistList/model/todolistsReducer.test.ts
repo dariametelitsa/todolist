@@ -5,11 +5,11 @@ import {
   changedTodolistFilter,
   changeTodolistTitle,
   deleteTodolist,
-  setTodolists,
+  getTodolists,
   todolistsReducer,
 } from './todolistsSlice';
-import { TodoListDomainType } from '../../../common/data/dataPropsTypes';
-import { ActionTypeForTest } from '../../../common/types/types';
+import { TodoListDomainType } from 'common/data/dataPropsTypes';
+import { ActionTypeForTest } from 'common/types';
 import { TodolistType } from '../todolistAPI/todolistAPI.types';
 
 //test data
@@ -86,7 +86,10 @@ test('correct todolist cover changed', () => {
 });
 
 test('todolists should br set to the state', () => {
-  const endState = todolistsReducer([], setTodolists({ todolists: startState }));
-
+  const action: ActionTypeForTest<typeof getTodolists.fulfilled> = {
+    type: getTodolists.fulfilled.type,
+    payload: { todolists: startState },
+  };
+  const endState = todolistsReducer([], action);
   expect(endState.length).toBe(2);
 });

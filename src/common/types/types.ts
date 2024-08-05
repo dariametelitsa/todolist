@@ -2,7 +2,7 @@ export type ActionTypeForTest<T extends (...args: any) => any> = Omit<ReturnType
 
 export type BaseResponse<T = {}> = {
   data: T;
-  fieldsErrors?: [];
+  fieldsErrors?: Array<{ field: string; error: string }>;
   messages: string[];
   resultCode: number;
 };

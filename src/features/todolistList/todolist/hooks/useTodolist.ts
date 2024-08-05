@@ -1,6 +1,6 @@
-import { useAppDispatch } from '../../../../app/store';
+import { useAppDispatch } from 'app/store';
 import { useCallback, useMemo } from 'react';
-import { FilterValuesType } from '../../../../common/data/dataPropsTypes';
+import { FilterValuesType } from 'common/data/dataPropsTypes';
 import {
   changedTodolistCover,
   changedTodolistFilter,
@@ -9,7 +9,7 @@ import {
 } from '../../model/todolistsSlice';
 import { useSelector } from 'react-redux';
 import { addTask, cleanTasksList, selectTasksForTodolist } from '../../model/tasksSlice';
-import { TaskStatuses } from '../../../../common/enums/enums';
+import { TaskStatuses } from 'common/enums';
 
 export const useTodolist = (id: string, filter: FilterValuesType) => {
   const tasks = useSelector((state) => selectTasksForTodolist(state, id));
