@@ -6,7 +6,6 @@ import { LoginParams } from '../api/authAPI.types';
 import { StatusCode } from 'common/enums';
 import { cleatTasksAndTodolists } from 'common/actions/commonActions';
 import { BaseResponse } from 'common/types';
-import { FieldErrorType } from 'common/types/types';
 
 const createAppSlice = buildCreateSlice({
   creators: { asyncThunk: asyncThunkCreator },

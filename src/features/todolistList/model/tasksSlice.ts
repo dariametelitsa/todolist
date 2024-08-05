@@ -8,6 +8,7 @@ import { taskAPI } from '../todolistAPI/taskAPI';
 import { AddTaskArgs, DeleteTaskArgs, UpdateTaskModelType } from '../todolistAPI/todolistAPI.types';
 import { AppRootStateType } from 'app/store';
 import { cleatTasksAndTodolists } from 'common/actions/commonActions';
+import { thunkTryCatch } from 'common/utils/thunkTryCatch';
 
 const createAppSlice = buildCreateSlice({
   creators: { asyncThunk: asyncThunkCreator },
@@ -40,8 +41,7 @@ const slice = createAppSlice({
     addTask: create.asyncThunk(
       async (arg: AddTaskArgs, thunkApi) => {
         const { dispatch, rejectWithValue } = thunkApi;
-        dispatch(setAppStatus({ status: 'loading' }));
-        try {
+        return thunkTryCatch(thunkApi, async () => {
           const res = await taskAPI.addTask(arg);
           if (res.data.resultCode === StatusCode.SUCCESS) {
             return { task: res.data.data.item };
@@ -49,12 +49,23 @@ const slice = createAppSlice({
             handleServerAppError(res.data, dispatch);
             return rejectWithValue(null);
           }
-        } catch (error) {
-          handleServerNetworkError(error, dispatch);
-          return rejectWithValue(null);
-        } finally {
-          dispatch(setAppStatus({ status: 'idle' }));
-        }
+        });
+        // const { dispatch, rejectWithValue } = thunkApi;
+        // dispatch(setAppStatus({ status: 'loading' }));
+        // try {
+        //   const res = await taskAPI.addTask(arg);
+        //   if (res.data.resultCode === StatusCode.SUCCESS) {
+        //     return { task: res.data.data.item };
+        //   } else {
+        //     handleServerAppError(res.data, dispatch);
+        //     return rejectWithValue(null);
+        //   }
+        // } catch (error) {
+        //   handleServerNetworkError(error, dispatch);
+        //   return rejectWithValue(null);
+        // } finally {
+        //   dispatch(setAppStatus({ status: 'idle' }));
+        // }
       },
       {
         fulfilled: (state, action) => {
