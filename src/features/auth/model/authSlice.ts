@@ -1,4 +1,4 @@
-import { asyncThunkCreator, buildCreateSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { asyncThunkCreator, buildCreateSlice } from '@reduxjs/toolkit';
 import { setAppStatus, setIsInitialized } from 'app/reducers/appSlice';
 import { handleServerAppError, handleServerNetworkError } from 'common/utils';
 import { authAPI } from '../api/authAPI';
@@ -97,11 +97,6 @@ const slice = createAppSlice({
       }
     ),
   }),
-  // extraReducers: (builder) => {
-  //   builder.addCase(login.fulfilled, (state, action) => {
-  //     state.isLoggedIn = action.payload;
-  //   });
-  // },
   selectors: {
     selectIsLoggedIn: (state) => state.isLoggedIn,
   },
