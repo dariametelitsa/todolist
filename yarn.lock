@@ -3387,7 +3387,7 @@
     "@babel/runtime" "^7.23.2"
     immutable "^4.3.4"
 
-"@reduxjs/toolkit@^2.2.6":
+"@reduxjs/toolkit@2.2.6":
   version "2.2.6"
   resolved "https://registry.yarnpkg.com/@reduxjs/toolkit/-/toolkit-2.2.6.tgz#4a8356dad9d0c1ab255607a555d492168e0e3bc1"
   integrity sha512-kH0r495c5z1t0g796eDQAkYbEQ3a1OLYN9o8jQQVZyKyw367pfRGS+qZLkHYvFHiUUdafpoSlQ2QYObIApjPWA==

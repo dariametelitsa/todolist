@@ -6,6 +6,7 @@ import { LoginParams } from '../api/authAPI.types';
 import { StatusCode } from 'common/enums';
 import { cleatTasksAndTodolists } from 'common/actions/commonActions';
 import { BaseResponse } from 'common/types';
+import { thunkTryCatch } from 'common/utils/thunkTryCatch';
 
 const createAppSlice = buildCreateSlice({
   creators: { asyncThunk: asyncThunkCreator },
@@ -45,8 +46,7 @@ const slice = createAppSlice({
     initializeApp: create.asyncThunk(
       async (_, thunkAPI) => {
         const { dispatch, rejectWithValue } = thunkAPI;
-        dispatch(setAppStatus({ status: 'loading' }));
-        try {
+        return thunkTryCatch(thunkAPI, async () => {
           const res = await authAPI.me();
           if (res.data.resultCode === StatusCode.SUCCESS) {
             dispatch(setAppStatus({ status: 'succeeded' }));
@@ -54,12 +54,9 @@ const slice = createAppSlice({
           } else {
             return rejectWithValue(null);
           }
-        } catch (error) {
-          return rejectWithValue(null);
-        } finally {
+        }).finally(() => {
           dispatch(setIsInitialized({ isInitialized: true }));
-          dispatch(setAppStatus({ status: 'idle' }));
-        }
+        });
       },
       {
         fulfilled: (state, action) => {
