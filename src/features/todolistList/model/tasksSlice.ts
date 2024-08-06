@@ -20,17 +20,10 @@ const slice = createAppSlice({
   reducers: (create) => ({
     fetchTasks: create.asyncThunk(
       async (todolistId: string, thunkAPI) => {
-        const { dispatch, rejectWithValue } = thunkAPI;
-        dispatch(setAppStatus({ status: 'loading' }));
-        try {
+        return thunkTryCatch(thunkAPI, async () => {
           const res = await taskAPI.getTasks(todolistId);
           return { todolistId: todolistId, tasks: res.data.items };
-        } catch (error: any) {
-          handleServerNetworkError(error, dispatch);
-          return rejectWithValue(null);
-        } finally {
-          dispatch(setAppStatus({ status: 'idle' }));
-        }
+        });
       },
       {
         fulfilled: (state, action) => {

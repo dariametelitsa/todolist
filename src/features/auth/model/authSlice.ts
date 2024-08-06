@@ -1,6 +1,6 @@
 import { asyncThunkCreator, buildCreateSlice } from '@reduxjs/toolkit';
 import { setAppStatus, setIsInitialized } from 'app/reducers/appSlice';
-import { handleServerAppError, handleServerNetworkError } from 'common/utils';
+import { handleServerAppError } from 'common/utils';
 import { authAPI } from '../api/authAPI';
 import { LoginParams } from '../api/authAPI.types';
 import { StatusCode } from 'common/enums';
@@ -19,8 +19,7 @@ const slice = createAppSlice({
     login: create.asyncThunk<boolean, LoginParams, { rejectValue: BaseResponse | null }>(
       async (arg: LoginParams, thunkAPI) => {
         const { dispatch, rejectWithValue } = thunkAPI;
-        dispatch(setAppStatus({ status: 'loading' }));
-        try {
+        return thunkTryCatch(thunkAPI, async () => {
           const res = await authAPI.login(arg);
           if (res.data.resultCode === StatusCode.SUCCESS) {
             dispatch(setAppStatus({ status: 'succeeded' }));
@@ -30,12 +29,7 @@ const slice = createAppSlice({
             handleServerAppError(res.data, dispatch, isShowGlobalError);
             return rejectWithValue(res.data);
           }
-        } catch (error) {
-          handleServerNetworkError(error, dispatch);
-          return rejectWithValue(null);
-        } finally {
-          dispatch(setAppStatus({ status: 'idle' }));
-        }
+        });
       },
       {
         fulfilled: (state, action) => {
@@ -68,26 +62,18 @@ const slice = createAppSlice({
     logOut: create.asyncThunk<boolean, undefined, { rejectValue: BaseResponse | null }>(
       async (_, thunkAPI) => {
         const { dispatch, rejectWithValue } = thunkAPI;
-        dispatch(setAppStatus({ status: 'loading' }));
-        try {
+
+        return thunkTryCatch(thunkAPI, async () => {
           const res = await authAPI.logOut();
           if (res.data.resultCode === StatusCode.SUCCESS) {
-            //dispatch(clearTodolistsData());
             dispatch(cleatTasksAndTodolists());
             dispatch(setAppStatus({ status: 'succeeded' }));
             return false;
           } else {
             handleServerAppError(res.data, dispatch);
             return rejectWithValue(res.data);
-            //return rejectWithValue({ error: res.data.messages[0] });
           }
-        } catch (error) {
-          handleServerNetworkError(error, dispatch);
-          return rejectWithValue(null);
-        } finally {
-          dispatch(setIsInitialized({ isInitialized: true }));
-          dispatch(setAppStatus({ status: 'idle' }));
-        }
+        });
       },
       {
         fulfilled: (state, action) => {

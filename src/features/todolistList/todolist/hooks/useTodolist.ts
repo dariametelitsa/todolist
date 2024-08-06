@@ -13,26 +13,8 @@ import { TaskStatuses } from 'common/enums';
 export const useTodolist = (id: string, filter: FilterValuesType) => {
   //const tasks = useAppSelector((state) => selectTasksByTd(state, id));
   //const tasks = useSelector((state) => selectTasksForTodolist(state, id));
-  // const filteredTasksSelector = makeSelectFilteredTasks(id, filter);
   const filteredTasks = useAppSelector((state) => makeSelectFilteredTasks(state, id, filter));
   const dispatch = useAppDispatch();
-
-  //const isLoggedIn = useSelector(selectIsLoggedIn)
-  // useEffect(() => {
-  //   if (isLoggedIn) {
-  //     dispatch(getTasksTC(id))
-  //   }
-  // }, [dispatch, id, isLoggedIn])
-
-  // const filteredTasks = useMemo(() => {
-  //   if (filter === 'active') {
-  //     return tasks.filter((t) => t.status !== TaskStatuses.Completed);
-  //   }
-  //   if (filter === 'completed') {
-  //     return tasks.filter((t) => t.status === TaskStatuses.Completed);
-  //   }
-  //   return tasks;
-  // }, [tasks, filter]);
 
   const sorterTasks = useMemo(() => {
     return [...filteredTasks].sort((prev, next) => {
