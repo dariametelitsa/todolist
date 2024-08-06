@@ -4,11 +4,12 @@ import Snackbar from '@mui/material/Snackbar';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import { Alert } from '@mui/material';
-import { useAppDispatch, useAppSelector } from 'app/store';
+import { useAppDispatch } from 'app/store';
 import { selectAppError, setAppError } from 'app/reducers/appSlice';
+import { useSelector } from 'react-redux';
 
 export function ErrorSnackbar() {
-  const error = useAppSelector(selectAppError);
+  const error = useSelector(selectAppError);
   const dispatch = useAppDispatch();
   const isOpen = error !== null;
 

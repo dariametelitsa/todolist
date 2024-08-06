@@ -1,13 +1,14 @@
 import { setAppStatus } from 'app/reducers/appSlice';
 import { handleServerNetworkError } from 'common/utils/handleServerNetworkError';
 import { BaseThunkAPI } from '@reduxjs/toolkit/dist/createAsyncThunk';
-import { AppDispatch } from 'app/store';
+import { AppDispatch, AppRootStateType } from 'app/store';
 import { BaseResponse } from 'common/types';
+import { Dispatch } from 'redux';
 
 //type ThunkAPI = { dispatch: AppDispatch; rejectWithValue: BaseResponse | null };
+//type ThunkAPI = BaseThunkAPI<any, any>;
 //type ThunkAPI = BaseThunkAPI<AppRootStateType, unknown, AppDispatch, BaseResponse | null>;
-type ThunkAPI = BaseThunkAPI<any, unknown, any, BaseResponse | null>;
-//type ThunkAPI = any;
+type ThunkAPI = any;
 
 export const thunkTryCatch = async <T>(
   thunkAPI: ThunkAPI,

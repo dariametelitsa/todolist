@@ -6,15 +6,16 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Typography from '@mui/material/Typography';
 import Switch from '@mui/material/Switch';
 import { MenuButton } from '../menuButton/MenuButton';
-import { useAppDispatch, useAppSelector } from '../../../app/store';
-import { logOut } from '../../../features/auth/model/authSlice';
+import { useAppDispatch } from 'app/store';
+import { logOut, selectIsLoggedIn } from 'features/auth/model/authSlice';
+import { useSelector } from 'react-redux';
 
 type HeaderMenuProps = {
   changeModeHandler: () => void;
 };
 
 export const HeaderMenu = ({ changeModeHandler }: HeaderMenuProps) => {
-  const isLoggedIn = useAppSelector<boolean>((state) => state.auth.isLoggedIn);
+  const isLoggedIn = useSelector(selectIsLoggedIn);
   const dispatch = useAppDispatch();
 
   const onClickLogoutHandler = () => {

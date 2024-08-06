@@ -43,7 +43,7 @@ const slice = createAppSlice({
         },
       }
     ),
-    initializeApp: create.asyncThunk(
+    initializeApp: create.asyncThunk<boolean, undefined, { rejectValue: BaseResponse | null }>(
       async (_, thunkAPI) => {
         const { dispatch, rejectWithValue } = thunkAPI;
         return thunkTryCatch(thunkAPI, async () => {
@@ -64,6 +64,7 @@ const slice = createAppSlice({
         },
       }
     ),
+
     logOut: create.asyncThunk<boolean, undefined, { rejectValue: BaseResponse | null }>(
       async (_, thunkAPI) => {
         const { dispatch, rejectWithValue } = thunkAPI;
