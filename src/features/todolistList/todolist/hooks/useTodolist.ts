@@ -1,4 +1,4 @@
-import { useAppDispatch } from 'app/store';
+import { useAppDispatch, useAppSelector } from 'app/store';
 import { useCallback, useMemo } from 'react';
 import { FilterValuesType } from 'common/data/dataPropsTypes';
 import {
@@ -7,12 +7,14 @@ import {
   changeTodolistTitle,
   deleteTodolist,
 } from '../../model/todolistsSlice';
-import { useSelector } from 'react-redux';
-import { addTask, cleanTasksList, selectTasksForTodolist } from '../../model/tasksSlice';
+import { addTask, cleanTasksList, makeSelectFilteredTasks } from '../../model/tasksSlice';
 import { TaskStatuses } from 'common/enums';
 
 export const useTodolist = (id: string, filter: FilterValuesType) => {
-  const tasks = useSelector((state) => selectTasksForTodolist(state, id));
+  //const tasks = useAppSelector((state) => selectTasksByTd(state, id));
+  //const tasks = useSelector((state) => selectTasksForTodolist(state, id));
+  // const filteredTasksSelector = makeSelectFilteredTasks(id, filter);
+  const filteredTasks = useAppSelector((state) => makeSelectFilteredTasks(state, id, filter));
   const dispatch = useAppDispatch();
 
   //const isLoggedIn = useSelector(selectIsLoggedIn)
@@ -22,15 +24,15 @@ export const useTodolist = (id: string, filter: FilterValuesType) => {
   //   }
   // }, [dispatch, id, isLoggedIn])
 
-  const filteredTasks = useMemo(() => {
-    if (filter === 'active') {
-      return tasks.filter((t) => t.status !== TaskStatuses.Completed);
-    }
-    if (filter === 'completed') {
-      return tasks.filter((t) => t.status === TaskStatuses.Completed);
-    }
-    return tasks;
-  }, [tasks, filter]);
+  // const filteredTasks = useMemo(() => {
+  //   if (filter === 'active') {
+  //     return tasks.filter((t) => t.status !== TaskStatuses.Completed);
+  //   }
+  //   if (filter === 'completed') {
+  //     return tasks.filter((t) => t.status === TaskStatuses.Completed);
+  //   }
+  //   return tasks;
+  // }, [tasks, filter]);
 
   const sorterTasks = useMemo(() => {
     return [...filteredTasks].sort((prev, next) => {

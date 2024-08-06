@@ -1,11 +1,11 @@
-import { TasksType } from 'common/data/dataPropsTypes';
+import { FilterValuesType, TasksType } from 'common/data/dataPropsTypes';
 import { asyncThunkCreator, buildCreateSlice, createSelector } from '@reduxjs/toolkit';
 import { addTodolist, changeEntityStatus, deleteTodolist, getTodolists } from './todolistsSlice';
 import { setAppStatus } from 'app/reducers/appSlice';
 import { handleServerAppError, handleServerNetworkError } from 'common/utils';
-import { StatusCode } from 'common/enums';
+import { StatusCode, TaskStatuses } from 'common/enums';
 import { taskAPI } from '../todolistAPI/taskAPI';
-import { AddTaskArgs, DeleteTaskArgs, UpdateTaskModelType } from '../todolistAPI/todolistAPI.types';
+import { AddTaskArgs, DeleteTaskArgs, TaskType, UpdateTaskModelType } from '../todolistAPI/todolistAPI.types';
 import { AppRootStateType } from 'app/store';
 import { cleatTasksAndTodolists } from 'common/actions/commonActions';
 import { thunkTryCatch } from 'common/utils/thunkTryCatch';
@@ -50,22 +50,6 @@ const slice = createAppSlice({
             return rejectWithValue(null);
           }
         });
-        // const { dispatch, rejectWithValue } = thunkApi;
-        // dispatch(setAppStatus({ status: 'loading' }));
-        // try {
-        //   const res = await taskAPI.addTask(arg);
-        //   if (res.data.resultCode === StatusCode.SUCCESS) {
-        //     return { task: res.data.data.item };
-        //   } else {
-        //     handleServerAppError(res.data, dispatch);
-        //     return rejectWithValue(null);
-        //   }
-        // } catch (error) {
-        //   handleServerNetworkError(error, dispatch);
-        //   return rejectWithValue(null);
-        // } finally {
-        //   dispatch(setAppStatus({ status: 'idle' }));
-        // }
       },
       {
         fulfilled: (state, action) => {
@@ -179,14 +163,79 @@ const slice = createAppSlice({
   },
   selectors: {
     selectTasks: (state) => state,
+    selectTasksByTd: (state, todolistId: string) => state[todolistId],
+    selectFilteredTasks: (state, todolistId: string, filter: FilterValuesType): TaskType[] => {
+      let filteredTasks = state[todolistId];
+      if (filter === 'active') {
+        return filteredTasks.filter((t) => t.status !== TaskStatuses.Completed);
+      }
+      if (filter === 'completed') {
+        return filteredTasks.filter((t) => t.status === TaskStatuses.Completed);
+      }
+      return filteredTasks;
+    },
   },
 });
 
 export const { fetchTasks, addTask, updateTask, deleteTask, cleanTasksList } = slice.actions;
 export const tasksReducer = slice.reducer;
-export const { selectTasks } = slice.selectors;
+export const { selectTasks, selectTasksByTd } = slice.selectors;
 
 export const selectTasksForTodolist = createSelector(
   [selectTasks, (state, todolistId) => todolistId],
   (tasksList, todolistId) => tasksList[todolistId] || []
 );
+
+export const makeSelectFilteredTasks = createSelector(
+  [
+    selectTasks,
+    (state, todolistId: string) => todolistId,
+    (state, todolistId: string, filter: FilterValuesType) => filter,
+  ],
+  (tasks, todolistId, filter) => {
+    let allTasks: TaskType[] = tasks[todolistId];
+    switch (filter) {
+      case 'completed':
+        return allTasks.filter((t) => t.status === TaskStatuses.Completed);
+      case 'active':
+        return allTasks.filter((t) => t.status !== TaskStatuses.Completed);
+      case 'all':
+      default:
+        return allTasks;
+    }
+  }
+);
+
+// export const makeSelectFilteredTasks = createSelector(
+//   [
+//     selectTasks,
+//     (state, todolistId: string) => todolistId,
+//     (state, todolistId: string, filter: FilterValuesType) => filter,
+//   ],
+//   (tasks, todolistId, filter) => {
+//     const allTasks = tasks[todolistId] || [];
+//     switch (filter) {
+//       case 'completed':
+//         return allTasks.filter((t) => t.status === TaskStatuses.Completed);
+//       case 'active':
+//         return allTasks.filter((t) => t.status !== TaskStatuses.Completed);
+//       case 'all':
+//       default:
+//         return allTasks;
+//     }
+//   }
+// );
+
+// export const makeSelectFilteredTasks = (todolistId: string, filter: FilterValuesType) =>
+//   createSelector([selectTasks], (tasks) => {
+//     const allTasks = tasks[todolistId] || [];
+//     switch (filter) {
+//       case 'completed':
+//         return allTasks.filter((t) => t.status === TaskStatuses.Completed);
+//       case 'active':
+//         return allTasks.filter((t) => t.status !== TaskStatuses.Completed);
+//       case 'all':
+//       default:
+//         return allTasks;
+//     }
+//   });
