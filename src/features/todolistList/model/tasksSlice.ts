@@ -56,7 +56,7 @@ const slice = createAppSlice({
         const { dispatch, rejectWithValue, getState } = thunkAPI;
         const state = getState() as AppRootStateType;
         const task = state.tasks[arg.todolistId].find((t) => t.id === arg.taskId);
-        try {
+        return thunkTryCatch(thunkAPI, async () => {
           if (task) {
             const apiModel: UpdateTaskModelType = { ...task, ...arg.model };
             dispatch(changeEntityStatus({ id: arg.todolistId, status: 'loading' }));
@@ -65,13 +65,9 @@ const slice = createAppSlice({
           } else {
             return rejectWithValue(null);
           }
-        } catch (error) {
-          handleServerNetworkError(error, dispatch);
-          return rejectWithValue(null);
-        } finally {
+        }).finally(() => {
           dispatch(changeEntityStatus({ id: arg.todolistId, status: 'idle' }));
-          dispatch(setAppStatus({ status: 'idle' }));
-        }
+        });
       },
       {
         fulfilled: (state, action) => {
@@ -84,21 +80,16 @@ const slice = createAppSlice({
     deleteTask: create.asyncThunk(
       async (arg: DeleteTaskArgs, thunkAPI) => {
         const { dispatch, rejectWithValue } = thunkAPI;
-        try {
-          dispatch(changeEntityStatus({ id: arg.todolistId, status: 'loading' }));
+        return thunkTryCatch(thunkAPI, async () => {
           const res = await taskAPI.deleteTask(arg);
           if (res.data.resultCode === StatusCode.SUCCESS) {
             return { ...arg };
           } else {
             return rejectWithValue(null);
           }
-        } catch (error) {
-          handleServerNetworkError(error, dispatch);
-          return rejectWithValue(null);
-        } finally {
+        }).finally(() => {
           dispatch(changeEntityStatus({ id: arg.todolistId, status: 'idle' }));
-          dispatch(setAppStatus({ status: 'idle' }));
-        }
+        });
       },
       {
         fulfilled: (state, action) => {
@@ -112,20 +103,16 @@ const slice = createAppSlice({
     ),
     cleanTasksList: create.asyncThunk(
       async (todolistId: string, thunkAPI) => {
-        const { dispatch, rejectWithValue, getState } = thunkAPI;
-        try {
-          const state = getState() as AppRootStateType;
-          const tasks = state.tasks[todolistId];
-          const requests = tasks.map((t) => taskAPI.deleteTask({ todolistId, taskId: t.id }));
+        const { dispatch, getState } = thunkAPI;
+        const state = getState() as AppRootStateType;
+        const tasks = state.tasks[todolistId];
+        const requests = tasks.map((t) => taskAPI.deleteTask({ todolistId, taskId: t.id }));
+        return thunkTryCatch(thunkAPI, async () => {
           await Promise.all(requests);
           return todolistId;
-        } catch (error) {
-          handleServerNetworkError(error, dispatch);
-          return rejectWithValue(null);
-        } finally {
+        }).finally(() => {
           dispatch(changeEntityStatus({ id: todolistId, status: 'idle' }));
-          dispatch(setAppStatus({ status: 'idle' }));
-        }
+        });
       },
       {
         fulfilled: (state, action) => {
