@@ -35,14 +35,17 @@ const slice = createAppSlice({
           if (index !== -1) state[index].filter = action.payload.filter;
         }
       ),
+
       changedTodolistCover: create.reducer((state, action: PayloadAction<{ id: string; coverImage: string }>) => {
         const index = state.findIndex((td) => td.id === action.payload.id);
         if (index !== -1) state[index].coverImage = action.payload.coverImage;
       }),
+
       changeEntityStatus: create.reducer((state, action: PayloadAction<{ id: string; status: AppStatusTypes }>) => {
         const todolist = state.find((td) => td.id === action.payload.id);
         if (todolist) todolist.entityStatus = action.payload.status;
       }),
+
       addTodolist: createAThunk<{ todolist: TodolistType }, string>(
         async (arg, thunkAPI) => {
           const { dispatch, rejectWithValue } = thunkAPI;
@@ -62,6 +65,7 @@ const slice = createAppSlice({
           },
         }
       ),
+
       deleteTodolist: createAThunk<string, string>(
         async (arg, thunkAPI) => {
           const { dispatch, rejectWithValue } = thunkAPI;
@@ -85,6 +89,7 @@ const slice = createAppSlice({
           },
         }
       ),
+
       changeTodolistTitle: createAThunk<UpdateTodolistTitle, UpdateTodolistTitle>(
         async (arg, thunkAPI) => {
           const { dispatch } = thunkAPI;
@@ -103,7 +108,8 @@ const slice = createAppSlice({
           },
         }
       ),
-      getTodolists: createAThunk<{ todolists: TodolistType[] }>(
+
+      fetchTodolists: createAThunk<{ todolists: TodolistType[] }>(
         async (arg, thunkAPI) => {
           const { dispatch } = thunkAPI;
           return thunkTryCatch(thunkAPI, async () => {
@@ -124,6 +130,7 @@ const slice = createAppSlice({
       ),
     };
   },
+
   extraReducers(builder) {
     builder.addCase(cleatTasksAndTodolists.type, () => {
       return [];
@@ -137,7 +144,7 @@ const slice = createAppSlice({
 export const {
   changedTodolistFilter,
   changedTodolistCover,
-  getTodolists,
+  fetchTodolists,
   changeEntityStatus,
   addTodolist,
   deleteTodolist,

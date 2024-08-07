@@ -15,6 +15,7 @@ export const useTodolist = (id: string, filter: FilterValuesType) => {
   //const tasks = useSelector((state) => selectTasksForTodolist(state, id));
   const filteredTasks = useAppSelector((state) => makeSelectFilteredTasks(state, id, filter));
   const dispatch = useAppDispatch();
+  console.log('rerender');
 
   const sorterTasks = useMemo(() => {
     return [...filteredTasks].sort((prev, next) => {

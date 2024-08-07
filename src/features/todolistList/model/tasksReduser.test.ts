@@ -1,7 +1,7 @@
 import { v4 } from 'uuid';
 import { TasksType } from 'common/data/dataPropsTypes';
 import { addTask, cleanTasksList, deleteTask, fetchTasks, tasksReducer, updateTask } from './tasksSlice';
-import { addTodolist, deleteTodolist, getTodolists } from './todolistsSlice';
+import { addTodolist, deleteTodolist, fetchTodolists } from './todolistsSlice';
 import { ActionTypeForTest } from 'common/types';
 import { TaskStatuses, TodoTaskPriorities } from 'common/enums';
 import { TodolistType } from '../todolistAPI/todolistAPI.types';
@@ -287,8 +287,8 @@ test('property with todolistId should be deleted', () => {
 });
 
 test('empty arrays should be added when we set todolists', () => {
-  const action: ActionTypeForTest<typeof getTodolists.fulfilled> = {
-    type: getTodolists.fulfilled.type,
+  const action: ActionTypeForTest<typeof fetchTodolists.fulfilled> = {
+    type: fetchTodolists.fulfilled.type,
     payload: {
       todolists: [
         { id: todolistId1, title: 'What to learn', addedDate: Date(), order: 0 },

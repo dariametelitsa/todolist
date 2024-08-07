@@ -5,7 +5,7 @@ import {
   changedTodolistFilter,
   changeTodolistTitle,
   deleteTodolist,
-  getTodolists,
+  fetchTodolists,
   todolistsReducer,
 } from './todolistsSlice';
 import { TodoListDomainType } from 'common/data/dataPropsTypes';
@@ -86,8 +86,8 @@ test('correct todolist cover changed', () => {
 });
 
 test('todolists should br set to the state', () => {
-  const action: ActionTypeForTest<typeof getTodolists.fulfilled> = {
-    type: getTodolists.fulfilled.type,
+  const action: ActionTypeForTest<typeof fetchTodolists.fulfilled> = {
+    type: fetchTodolists.fulfilled.type,
     payload: { todolists: startState },
   };
   const endState = todolistsReducer([], action);

@@ -1,6 +1,6 @@
 import { FilterValuesType, TasksType } from 'common/data/dataPropsTypes';
-import { asyncThunkCreator, buildCreateSlice, createSelector } from '@reduxjs/toolkit';
-import { addTodolist, changeEntityStatus, deleteTodolist, getTodolists } from './todolistsSlice';
+import { asyncThunkCreator, buildCreateSlice, createSelector, isRejected } from '@reduxjs/toolkit';
+import { addTodolist, changeEntityStatus, deleteTodolist, fetchTodolists } from './todolistsSlice';
 import { handleServerAppError } from 'common/utils';
 import { StatusCode, TaskStatuses } from 'common/enums';
 import { taskAPI } from '../todolistAPI/taskAPI';
@@ -35,6 +35,7 @@ const slice = createAppSlice({
           },
         }
       ),
+
       addTask: createAThunk<{ task: TaskType }, AddTaskArgs>(
         async (arg, thunkApi) => {
           const { dispatch, rejectWithValue } = thunkApi;
@@ -55,6 +56,7 @@ const slice = createAppSlice({
           },
         }
       ),
+
       updateTask: createAThunk<
         { task: TaskType },
         { todolistId: string; taskId: string; model: Partial<UpdateTaskModelType> }
@@ -84,6 +86,7 @@ const slice = createAppSlice({
           },
         }
       ),
+
       deleteTask: createAThunk<DeleteTaskArgs, DeleteTaskArgs>(
         async (arg, thunkAPI) => {
           const { dispatch, rejectWithValue } = thunkAPI;
@@ -108,6 +111,7 @@ const slice = createAppSlice({
           },
         }
       ),
+
       cleanTasksList: createAThunk<string, string>(
         async (todolistId, thunkAPI) => {
           const { dispatch, getState } = thunkAPI;
@@ -137,7 +141,7 @@ const slice = createAppSlice({
       .addCase(deleteTodolist.fulfilled, (state, action) => {
         delete state[action.payload];
       })
-      .addCase(getTodolists.fulfilled, (state, action) => {
+      .addCase(fetchTodolists.fulfilled, (state, action) => {
         action.payload.todolists.forEach((tl) => {
           state[tl.id] = [];
         });
@@ -147,6 +151,9 @@ const slice = createAppSlice({
       })
       .addCase(cleatTasksAndTodolists.type, () => {
         return {};
+      })
+      .addMatcher(isRejected(cleanTasksList), (state, action) => {
+        alert(action.error.message);
       });
   },
   selectors: {
@@ -167,7 +174,7 @@ const slice = createAppSlice({
 
 export const { fetchTasks, addTask, updateTask, deleteTask, cleanTasksList } = slice.actions;
 export const tasksReducer = slice.reducer;
-export const { selectTasks, selectTasksByTd } = slice.selectors;
+export const { selectTasks, selectTasksByTd, selectFilteredTasks } = slice.selectors;
 
 export const selectTasksForTodolist = createSelector(
   [selectTasks, (state, todolistId) => todolistId],

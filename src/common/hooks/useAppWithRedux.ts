@@ -5,7 +5,7 @@ import cyan from '@mui/material/colors/cyan';
 import { selectAppIsInitialized, selectAppStatus } from 'app/reducers/appSlice';
 import { useSelector } from 'react-redux';
 import { initializeApp, selectIsLoggedIn } from 'features/auth/model/authSlice';
-import { getTodolists } from 'features/todolistList/model/todolistsSlice';
+import { fetchTodolists } from 'features/todolistList/model/todolistsSlice';
 
 type ThemeMode = 'dark' | 'light';
 
@@ -22,7 +22,7 @@ export const useAppWithRedux = () => {
 
   useEffect(() => {
     if (isLoggedIn) {
-      dispatch(getTodolists());
+      dispatch(fetchTodolists());
     }
   }, [isLoggedIn, dispatch]);
 
