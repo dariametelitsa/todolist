@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from 'app/store';
-import { useCallback, useMemo } from 'react';
+import { useCallback, useDeferredValue, useMemo } from 'react';
 import { FilterValuesType } from 'common/data/dataPropsTypes';
 import {
   changedTodolistCover,
@@ -15,7 +15,6 @@ export const useTodolist = (id: string, filter: FilterValuesType) => {
   //const tasks = useSelector((state) => selectTasksForTodolist(state, id));
   const filteredTasks = useAppSelector((state) => makeSelectFilteredTasks(state, id, filter));
   const dispatch = useAppDispatch();
-  console.log('rerender');
 
   const sorterTasks = useMemo(() => {
     return [...filteredTasks].sort((prev, next) => {
