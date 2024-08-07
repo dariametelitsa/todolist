@@ -1,4 +1,4 @@
-import { createSlice, isAllOf, isFulfilled, isPending, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, isAllOf, isPending, PayloadAction } from '@reduxjs/toolkit';
 import { fetchTasks } from 'features/todolistList/model/tasksSlice';
 
 export type AppStatusTypes = 'idle' | 'loading' | 'succeeded' | 'failed';
@@ -36,10 +36,10 @@ const slice = createSlice({
 
   extraReducers: (builder) => {
     builder
-      .addMatcher(isPending(fetchTasks), (state, action) => {
+      .addMatcher(isPending(fetchTasks), (state) => {
         state.status = 'loading';
       })
-      .addMatcher(isAllOf(fetchTasks.fulfilled), (state, action) => {
+      .addMatcher(isAllOf(fetchTasks.fulfilled), (state) => {
         state.status = 'idle';
       });
   },
