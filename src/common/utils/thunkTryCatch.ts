@@ -14,7 +14,9 @@ export const thunkTryCatch = async <T>(
   thunkAPI: ThunkAPI,
   logic: () => Promise<T>
 ): Promise<T | ReturnType<typeof rejectWithValue>> => {
-  const { dispatch, rejectWithValue } = thunkAPI;
+  //const { dispatch, rejectWithValue } = thunkAPI;
+  const rejectWithValue = thunkAPI.rejectWithValue;
+  const dispatch = thunkAPI.dispatch as AppDispatch;
   dispatch(setAppStatus({ status: 'loading' }));
   try {
     return await logic();

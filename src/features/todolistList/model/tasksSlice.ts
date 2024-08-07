@@ -1,14 +1,14 @@
 import { FilterValuesType, TasksType } from 'common/data/dataPropsTypes';
 import { asyncThunkCreator, buildCreateSlice, createSelector } from '@reduxjs/toolkit';
 import { addTodolist, changeEntityStatus, deleteTodolist, getTodolists } from './todolistsSlice';
-import { setAppStatus } from 'app/reducers/appSlice';
-import { handleServerAppError, handleServerNetworkError } from 'common/utils';
+import { handleServerAppError } from 'common/utils';
 import { StatusCode, TaskStatuses } from 'common/enums';
 import { taskAPI } from '../todolistAPI/taskAPI';
 import { AddTaskArgs, DeleteTaskArgs, TaskType, UpdateTaskModelType } from '../todolistAPI/todolistAPI.types';
 import { AppRootStateType } from 'app/store';
 import { cleatTasksAndTodolists } from 'common/actions/commonActions';
 import { thunkTryCatch } from 'common/utils/thunkTryCatch';
+import { BaseResponse } from 'common/types';
 
 const createAppSlice = buildCreateSlice({
   creators: { asyncThunk: asyncThunkCreator },
@@ -17,110 +17,118 @@ const createAppSlice = buildCreateSlice({
 const slice = createAppSlice({
   name: 'tasks',
   initialState: {} as TasksType,
-  reducers: (create) => ({
-    fetchTasks: create.asyncThunk(
-      async (todolistId: string, thunkAPI) => {
-        return thunkTryCatch(thunkAPI, async () => {
-          const res = await taskAPI.getTasks(todolistId);
-          return { todolistId: todolistId, tasks: res.data.items };
-        });
-      },
-      {
-        fulfilled: (state, action) => {
-          state[action.payload.todolistId] = action.payload.tasks;
+  reducers: (create) => {
+    const createAThunk = create.asyncThunk.withTypes<{
+      rejectValue: BaseResponse | null;
+    }>();
+    return {
+      fetchTasks: createAThunk<{ todolistId: string; tasks: TaskType[] }, string>(
+        async (todolistId: string, thunkAPI) => {
+          return thunkTryCatch(thunkAPI, async () => {
+            const res = await taskAPI.getTasks(todolistId);
+            return { todolistId: todolistId, tasks: res.data.items };
+          });
         },
-      }
-    ),
-    addTask: create.asyncThunk(
-      async (arg: AddTaskArgs, thunkApi) => {
-        const { dispatch, rejectWithValue } = thunkApi;
-        return thunkTryCatch(thunkApi, async () => {
-          const res = await taskAPI.addTask(arg);
-          if (res.data.resultCode === StatusCode.SUCCESS) {
-            return { task: res.data.data.item };
-          } else {
-            handleServerAppError(res.data, dispatch);
-            return rejectWithValue(null);
-          }
-        });
-      },
-      {
-        fulfilled: (state, action) => {
-          const tasks = state[action.payload.task.todoListId];
-          tasks.unshift(action.payload.task);
+        {
+          fulfilled: (state, action) => {
+            state[action.payload.todolistId] = action.payload.tasks;
+          },
+        }
+      ),
+      addTask: createAThunk<{ task: TaskType }, AddTaskArgs>(
+        async (arg, thunkApi) => {
+          const { dispatch, rejectWithValue } = thunkApi;
+          return thunkTryCatch(thunkApi, async () => {
+            const res = await taskAPI.addTask(arg);
+            if (res.data.resultCode === StatusCode.SUCCESS) {
+              return { task: res.data.data.item };
+            } else {
+              handleServerAppError(res.data, dispatch);
+              return rejectWithValue(null);
+            }
+          });
         },
-      }
-    ),
-    updateTask: create.asyncThunk(
-      async (arg: { todolistId: string; taskId: string; model: Partial<UpdateTaskModelType> }, thunkAPI) => {
-        const { dispatch, rejectWithValue, getState } = thunkAPI;
-        const state = getState() as AppRootStateType;
-        const task = state.tasks[arg.todolistId].find((t) => t.id === arg.taskId);
-        return thunkTryCatch(thunkAPI, async () => {
-          if (task) {
-            const apiModel: UpdateTaskModelType = { ...task, ...arg.model };
-            dispatch(changeEntityStatus({ id: arg.todolistId, status: 'loading' }));
-            const res = await taskAPI.updateTask(arg.todolistId, arg.taskId, apiModel);
-            return { task: res.data.data.item };
-          } else {
-            return rejectWithValue(null);
-          }
-        }).finally(() => {
-          dispatch(changeEntityStatus({ id: arg.todolistId, status: 'idle' }));
-        });
-      },
-      {
-        fulfilled: (state, action) => {
-          const tasks = state[action.payload.task.todoListId];
-          const index = tasks.findIndex((task) => task.id === action.payload.task.id);
-          if (index !== -1) tasks[index] = { ...tasks[index], ...action.payload.task };
+        {
+          fulfilled: (state, action) => {
+            const tasks = state[action.payload.task.todoListId];
+            tasks.unshift(action.payload.task);
+          },
+        }
+      ),
+      updateTask: createAThunk<
+        { task: TaskType },
+        { todolistId: string; taskId: string; model: Partial<UpdateTaskModelType> }
+      >(
+        async (arg, thunkAPI) => {
+          const { dispatch, rejectWithValue, getState } = thunkAPI;
+          const state = getState() as AppRootStateType;
+          const task = state.tasks[arg.todolistId].find((t) => t.id === arg.taskId);
+          return thunkTryCatch(thunkAPI, async () => {
+            if (task) {
+              const apiModel: UpdateTaskModelType = { ...task, ...arg.model };
+              dispatch(changeEntityStatus({ id: arg.todolistId, status: 'loading' }));
+              const res = await taskAPI.updateTask(arg.todolistId, arg.taskId, apiModel);
+              return { task: res.data.data.item };
+            } else {
+              return rejectWithValue(null);
+            }
+          }).finally(() => {
+            dispatch(changeEntityStatus({ id: arg.todolistId, status: 'idle' }));
+          });
         },
-      }
-    ),
-    deleteTask: create.asyncThunk(
-      async (arg: DeleteTaskArgs, thunkAPI) => {
-        const { dispatch, rejectWithValue } = thunkAPI;
-        return thunkTryCatch(thunkAPI, async () => {
-          const res = await taskAPI.deleteTask(arg);
-          if (res.data.resultCode === StatusCode.SUCCESS) {
-            return { ...arg };
-          } else {
-            return rejectWithValue(null);
-          }
-        }).finally(() => {
-          dispatch(changeEntityStatus({ id: arg.todolistId, status: 'idle' }));
-        });
-      },
-      {
-        fulfilled: (state, action) => {
-          const tasks = state[action.payload.todolistId];
-          const index = tasks.findIndex((task) => task.id === action.payload.taskId);
-          if (index !== -1) {
-            tasks.splice(index, 1);
-          }
+        {
+          fulfilled: (state, action) => {
+            const tasks = state[action.payload.task.todoListId];
+            const index = tasks.findIndex((task) => task.id === action.payload.task.id);
+            if (index !== -1) tasks[index] = { ...tasks[index], ...action.payload.task };
+          },
+        }
+      ),
+      deleteTask: createAThunk<DeleteTaskArgs, DeleteTaskArgs>(
+        async (arg, thunkAPI) => {
+          const { dispatch, rejectWithValue } = thunkAPI;
+          return thunkTryCatch(thunkAPI, async () => {
+            const res = await taskAPI.deleteTask(arg);
+            if (res.data.resultCode === StatusCode.SUCCESS) {
+              return { ...arg };
+            } else {
+              return rejectWithValue(null);
+            }
+          }).finally(() => {
+            dispatch(changeEntityStatus({ id: arg.todolistId, status: 'idle' }));
+          });
         },
-      }
-    ),
-    cleanTasksList: create.asyncThunk(
-      async (todolistId: string, thunkAPI) => {
-        const { dispatch, getState } = thunkAPI;
-        const state = getState() as AppRootStateType;
-        const tasks = state.tasks[todolistId];
-        const requests = tasks.map((t) => taskAPI.deleteTask({ todolistId, taskId: t.id }));
-        return thunkTryCatch(thunkAPI, async () => {
-          await Promise.all(requests);
-          return todolistId;
-        }).finally(() => {
-          dispatch(changeEntityStatus({ id: todolistId, status: 'idle' }));
-        });
-      },
-      {
-        fulfilled: (state, action) => {
-          state[action.payload] = [];
+        {
+          fulfilled: (state, action) => {
+            const tasks = state[action.payload.todolistId];
+            const index = tasks.findIndex((task) => task.id === action.payload.taskId);
+            if (index !== -1) {
+              tasks.splice(index, 1);
+            }
+          },
+        }
+      ),
+      cleanTasksList: createAThunk<string, string>(
+        async (todolistId, thunkAPI) => {
+          const { dispatch, getState } = thunkAPI;
+          const state = getState() as AppRootStateType;
+          const tasks = state.tasks[todolistId];
+          const requests = tasks.map((t) => taskAPI.deleteTask({ todolistId, taskId: t.id }));
+          return thunkTryCatch(thunkAPI, async () => {
+            await Promise.all(requests);
+            return todolistId;
+          }).finally(() => {
+            dispatch(changeEntityStatus({ id: todolistId, status: 'idle' }));
+          });
         },
-      }
-    ),
-  }),
+        {
+          fulfilled: (state, action) => {
+            state[action.payload] = [];
+          },
+        }
+      ),
+    };
+  },
   extraReducers: (builder) => {
     builder
       .addCase(addTodolist.fulfilled, (state, action) => {
