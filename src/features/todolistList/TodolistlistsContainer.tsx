@@ -8,6 +8,7 @@ import { selectIsLoggedIn } from '../auth/model/authSlice';
 import { addTodolist, selectTodolists } from './model/todolistsSlice';
 import { AddItem } from 'common/components/addItem/AddItem';
 import CircularProgress from '@mui/material/CircularProgress';
+import { TodolistContainerSkeleton } from 'features/todolistList/TodolistContainerSkeleton';
 // import Todolist from './todolist/Todolist';
 
 const Todolist = lazy(() => import('./todolist/Todolist'));
@@ -32,7 +33,7 @@ export const TodolistlistsContainer: React.FC = () => {
       <Grid container spacing={2} sx={{ m: 0, mb: 5 }}>
         <AddItem addItem={addTodolistCallback}></AddItem>
       </Grid>
-      <Suspense fallback={<CircularProgress />}>
+      <Suspense fallback={<TodolistContainerSkeleton />}>
         <Grid container spacing={3}>
           {todoLists.map((td) => {
             return <Todolist todolist={td} key={td.id} />;
