@@ -25,14 +25,6 @@ export const useTodolist = (id: string, filter: FilterValues) => {
     });
   }, [filteredTasks]);
 
-  const changeFilterHandler = useCallback(
-    (filter: FilterValues) => {
-      //const cb = bindActionCreators({ changedTodolistFilter }, dispatch);
-      return () => dispatch(changedTodolistFilter({ id: id, filter: filter }));
-    },
-    [dispatch, id]
-  );
-
   const deleteAllTasksHandler = useCallback(() => {
     dispatch(cleanTasksList(id));
   }, [dispatch, id]);
@@ -65,7 +57,6 @@ export const useTodolist = (id: string, filter: FilterValues) => {
   return {
     dispatch,
     sorterTasks,
-    changeFilterHandler,
     deleteAllTasksHandler,
     addItemHandler,
     changeCoverHandler,

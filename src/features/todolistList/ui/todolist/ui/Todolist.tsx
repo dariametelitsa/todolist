@@ -9,9 +9,10 @@ import Paper from '@mui/material/Paper';
 import { useTodolist } from 'features/todolistList/ui/todolist/lib/useTodolist';
 import { EditableSpan } from 'common/components/editableSpan/EditableSpan';
 import { AddItem } from 'common/components/addItem/AddItem';
-import { FiltersForTasks } from 'common/components/filtersForTasks/FiltersForTasks';
+import { FilterTasksButtons } from 'features/todolistList/ui/todolist/filtersTasksButtons/FilterTasksButtons';
 import { CoverImage } from 'common/components/coverImage/CoverImage';
 import CircularProgress from '@mui/material/CircularProgress';
+import { Title } from 'features/todolistList/ui/todolist/title/Title';
 
 const Task = lazy(() => import('features/todolistList/ui/todolist/ui/task/ui/Task'));
 
@@ -24,7 +25,6 @@ const Todolist = React.memo(({ todolist }: Props) => {
 
   const {
     sorterTasks,
-    changeFilterHandler,
     deleteAllTasksHandler,
     addItemHandler,
     changeCoverHandler,
@@ -43,17 +43,24 @@ const Todolist = React.memo(({ todolist }: Props) => {
       <Paper sx={{ p: 2 }}>
         <div>
           <CoverImage image={coverImage && coverImage} updateImage={changeCoverHandler} />
-          <h3 style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <EditableSpan
-              oldTitle={title}
-              idToChange={id}
-              updateItem={changeTodolistTitleHandler}
-              isDisabled={entityStatus === 'loading'}
-            />
-            <IconButton aria-label="delete" onClick={deleteTodolistHandler} disabled={entityStatus === 'loading'}>
-              <DeleteOutlineIcon />
-            </IconButton>
-          </h3>
+          <Title
+            title={title}
+            id={id}
+            entityStatus={entityStatus}
+            deleteTodolistHandler={deleteTodolistHandler}
+            changeTodolistTitleHandler={changeTodolistTitleHandler}
+          />
+          {/*<h3 style={{ display: 'flex', justifyContent: 'space-between' }}>*/}
+          {/*  <EditableSpan*/}
+          {/*    oldTitle={title}*/}
+          {/*    idToChange={id}*/}
+          {/*    updateItem={changeTodolistTitleHandler}*/}
+          {/*    isDisabled={entityStatus === 'loading'}*/}
+          {/*  />*/}
+          {/*  <IconButton aria-label="delete" onClick={deleteTodolistHandler} disabled={entityStatus === 'loading'}>*/}
+          {/*    <DeleteOutlineIcon />*/}
+          {/*  </IconButton>*/}
+          {/*</h3>*/}
 
           <AddItem addItem={addItemHandler} disabled={entityStatus === 'loading'} />
 
@@ -72,7 +79,7 @@ const Todolist = React.memo(({ todolist }: Props) => {
               Delete all
             </Button>
           </Grid>
-          <FiltersForTasks filter={filter} filterCheck={changeFilterHandler} />
+          <FilterTasksButtons filter={filter} id={id} />
         </div>
       </Paper>
     </Grid>

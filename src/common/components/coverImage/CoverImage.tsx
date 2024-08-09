@@ -5,9 +5,9 @@ import defaultBg from '../../../assets/vp2jc2_ec8e6b23a8162cceecc47903db29a202cd
 import styles from './CoverImage.module.scss';
 import IconButton from '@mui/material/IconButton';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
-import { CoverImage } from '../../data/dataPropsTypes';
+import { CoverImage as CoverImageType } from '../../data/dataPropsTypes';
 
-export const CoverImage = ({ image, updateImage }: CoverImage) => {
+export const CoverImage = ({ image, updateImage }: CoverImageType) => {
   const handleFileInput = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files ? e.target.files[0] : null;
 
