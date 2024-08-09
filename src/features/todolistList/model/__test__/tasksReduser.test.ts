@@ -155,7 +155,7 @@ test('task should be add correct', () => {
   expect(endState2[todolistId2][0].title).toBe(newTitle);
 });
 
-test('correct rename task title', () => {
+test('correct rename task todolistTitle', () => {
   const newTitle = "I'm was changed";
   let taskToUpdate = state[todolistId1].find((t) => t.id === '1');
   taskToUpdate ? (taskToUpdate.title = newTitle) : (taskToUpdate = state[todolistId1][0]);

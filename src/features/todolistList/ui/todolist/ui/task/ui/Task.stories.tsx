@@ -64,13 +64,13 @@ export const TaskIsDoneStory: Story = {
   },
 };
 // const TaskToggle = () => {
-//     const [task, setTask] = useState({id: 'taskID3', title: 'Title', isDone: false});
+//     const [task, setTask] = useState({id: 'taskID3', todolistTitle: 'Title', isDone: false});
 //     const changeTaskStatus = () => {
 //         setTask({...task, isDone: !task.isDone});
 //     };
 //
 //     const changeTaskTitle = (taskId: string, newTitle:string) => {
-//         setTask({...task, title: newTitle});
+//         setTask({...task, todolistTitle: newTitle});
 //     };
 //     const removeTask = () => {
 //         action('Task Deleted');

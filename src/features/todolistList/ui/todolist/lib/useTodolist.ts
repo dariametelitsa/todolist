@@ -43,24 +43,11 @@ export const useTodolist = (id: string, filter: FilterValues) => {
     [dispatch, id]
   );
 
-  const changeTodolistTitleHandler = useCallback(
-    (todolistId: string, title: string) => {
-      dispatch(changeTodolistTitle({ todolistId, title }));
-    },
-    [dispatch]
-  );
-
-  const deleteTodolistHandler = () => {
-    dispatch(deleteTodolist(id));
-  };
-
   return {
     dispatch,
     sorterTasks,
     deleteAllTasksHandler,
     addItemHandler,
     changeCoverHandler,
-    changeTodolistTitleHandler,
-    deleteTodolistHandler,
   };
 };
