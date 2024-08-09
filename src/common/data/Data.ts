@@ -1,6 +1,6 @@
 import { Tasks, TodoListDomain } from './dataPropsTypes';
 import { v1, v4 } from 'uuid';
-import { TaskStatuses, TodoTaskPriorities } from '../enums/enums';
+import { TaskStatuses, TodoTaskPriorities } from 'common/enums';
 
 export const todolistId1 = v4();
 export const todolistId2 = v4();

@@ -1,12 +1,7 @@
 import { useAppDispatch, useAppSelector } from 'app/store';
 import { useCallback, useMemo } from 'react';
 import { FilterValues } from 'common/data/dataPropsTypes';
-import {
-  changedTodolistCover,
-  changedTodolistFilter,
-  changeTodolistTitle,
-  deleteTodolist,
-} from 'features/todolistList/model/todolistsSlice';
+import { changedTodolistCover } from 'features/todolistList/model/todolistsSlice';
 import { addTask, cleanTasksList, makeSelectFilteredTasks } from 'features/todolistList/model/tasksSlice';
 import { TaskStatuses } from 'common/enums';
 import { bindActionCreators } from 'redux';
