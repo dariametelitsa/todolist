@@ -5,7 +5,7 @@ import { FormikHelpers, useFormik } from 'formik';
 import { LoginParams } from 'features/auth/api/authAPI.types';
 import { BaseResponse } from 'common/types';
 
-type ErrorsType = {
+type Errors = {
   email?: string;
   password?: string;
 };
@@ -21,7 +21,7 @@ export const useLogin = () => {
       rememberMe: false,
     },
     validate: (values) => {
-      const errors: ErrorsType = {};
+      const errors: Errors = {};
       if (!values.email) {
         errors.email = 'Required email';
       } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {

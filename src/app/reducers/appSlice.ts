@@ -1,7 +1,7 @@
 import { createSlice, isAllOf, isPending, PayloadAction } from '@reduxjs/toolkit';
 import { fetchTasks } from 'features/todolistList/model/tasksSlice';
 
-export type AppStatusTypes = 'idle' | 'loading' | 'succeeded' | 'failed';
+export type AppStatus = 'idle' | 'loading' | 'succeeded' | 'failed';
 
 // export type InitialAppStateType = {
 //   status: AppStatusTypes
@@ -18,12 +18,12 @@ export type AppStatusTypes = 'idle' | 'loading' | 'succeeded' | 'failed';
 const slice = createSlice({
   name: 'app',
   initialState: {
-    status: 'idle' as AppStatusTypes,
+    status: 'idle' as AppStatus,
     error: null as string | null,
     isInitialized: false,
   },
   reducers: {
-    setAppStatus: (state, action: PayloadAction<{ status: AppStatusTypes }>) => {
+    setAppStatus: (state, action: PayloadAction<{ status: AppStatus }>) => {
       state.status = action.payload.status;
     },
     setAppError: (state, action: PayloadAction<{ error: string | null }>) => {

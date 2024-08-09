@@ -1,5 +1,5 @@
 import { v4 } from 'uuid';
-import { TasksType } from 'common/data/dataPropsTypes';
+import { Tasks } from 'common/data/dataPropsTypes';
 import {
   addTask,
   cleanTasksList,
@@ -16,7 +16,7 @@ import { TodolistType } from 'features/todolistList/api/todolistAPI.types';
 const todolistId1 = v4();
 const todolistId2 = v4();
 
-let state: TasksType = {};
+let state: Tasks = {};
 
 beforeEach(() => {
   state = {

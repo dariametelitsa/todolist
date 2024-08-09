@@ -1,11 +1,11 @@
-import { TasksType, TodoListDomainType } from './dataPropsTypes';
+import { Tasks, TodoListDomain } from './dataPropsTypes';
 import { v1, v4 } from 'uuid';
 import { TaskStatuses, TodoTaskPriorities } from '../enums/enums';
 
 export const todolistId1 = v4();
 export const todolistId2 = v4();
 
-export const tasksArr: TasksType = {
+export const tasksArr: Tasks = {
   [todolistId1]: [
     {
       id: v1(),
@@ -96,7 +96,7 @@ export const tasksArr: TasksType = {
   ],
 };
 
-export const todoListsData: TodoListDomainType[] = [
+export const todoListsData: TodoListDomain[] = [
   { id: todolistId1, title: 'What to learn', filter: 'all', addedDate: Date(), order: 0, entityStatus: 'idle' },
   { id: todolistId2, title: 'What to do', filter: 'all', addedDate: Date(), order: 0, entityStatus: 'idle' },
 ];

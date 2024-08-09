@@ -1,25 +1,25 @@
-import { AppInitialState, appReducer, AppStatusTypes, setAppError, setAppStatus } from './appSlice'
+import { AppInitialState, appReducer, AppStatus, setAppError, setAppStatus } from './appSlice';
 
-let startState: AppInitialState
+let startState: AppInitialState;
 
 beforeEach(() => {
   startState = {
     status: 'idle',
     error: null,
     isInitialized: true,
-  }
-})
+  };
+});
 
 test('correct error message should be set', () => {
-  const errorMessage = 'Some error message'
-  const endState = appReducer(startState, setAppError({ error: errorMessage }))
+  const errorMessage = 'Some error message';
+  const endState = appReducer(startState, setAppError({ error: errorMessage }));
 
-  expect(endState.error).toBe(errorMessage)
-})
+  expect(endState.error).toBe(errorMessage);
+});
 
 test('status should set properly', () => {
-  const status: AppStatusTypes = 'loading'
-  const endState = appReducer(startState, setAppStatus({ status }))
+  const status: AppStatus = 'loading';
+  const endState = appReducer(startState, setAppStatus({ status }));
 
-  expect(endState.status).toBe(status)
-})
+  expect(endState.status).toBe(status);
+});

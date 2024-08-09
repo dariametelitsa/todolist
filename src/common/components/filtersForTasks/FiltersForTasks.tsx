@@ -2,12 +2,12 @@
 import * as React from 'react';
 import { ButtonMemo } from '../button/ButtonMemo';
 import Box from '@mui/material/Box';
-import { FilterValuesType } from '../../data/dataPropsTypes';
+import { FilterValues } from '../../data/dataPropsTypes';
 import { filterButtonsContainerSx } from 'features/todolistList/ui/todolist/ui/Todolist.styles';
 
 type FiltersForTasksProps = {
-  filter: FilterValuesType;
-  filterCheck: (filter: FilterValuesType) => () => void;
+  filter: FilterValues;
+  filterCheck: (filter: FilterValues) => () => void;
 };
 export const FiltersForTasks = ({ filter, filterCheck }: FiltersForTasksProps) => {
   return (

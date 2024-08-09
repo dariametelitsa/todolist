@@ -1,16 +1,16 @@
-import { AppStatusTypes } from 'app/reducers/appSlice';
+import { AppStatus } from 'app/reducers/appSlice';
 import { TodolistType } from 'features/todolistList/api/todolistAPI.types';
 import { Task } from 'features/todolistList/api/taskAPI.types';
 
-export type FilterValuesType = 'all' | 'completed' | 'active';
+export type FilterValues = 'all' | 'completed' | 'active';
 
-export type TodoListDomainType = TodolistType & {
-  filter: FilterValuesType;
-  entityStatus: AppStatusTypes;
+export type TodoListDomain = TodolistType & {
+  filter: FilterValues;
+  entityStatus: AppStatus;
   coverImage?: string;
 };
 
-export type TasksType = {
+export type Tasks = {
   [key: string]: Task[];
 };
 
@@ -18,7 +18,7 @@ export type TasksPropsType = {
   id: string;
   title: string;
   tasks: Array<Task>;
-  filter: FilterValuesType;
+  filter: FilterValues;
 };
 
 export type TasksArrPropsType = {
@@ -28,8 +28,8 @@ export type TasksArrPropsType = {
 export type TodolistPropsType = {
   children?: any;
   id: string;
-  filter: FilterValuesType;
-  changeFilter: (toListId: string, filter: FilterValuesType) => void;
+  filter: FilterValues;
+  changeFilter: (toListId: string, filter: FilterValues) => void;
   title: string;
   tasks: Array<Task>;
   coverImage?: string;
@@ -43,7 +43,7 @@ export type TodolistPropsType = {
   changeTodoCover: (todolistId: string, coverImage: string) => void;
 };
 
-export type CoverImageProps = {
+export type CoverImage = {
   image?: string;
   updateImage: (coverImage: string) => void;
 };

@@ -1,5 +1,5 @@
 import React, { lazy, Suspense, useDeferredValue } from 'react';
-import { TodoListDomainType } from 'common/data/dataPropsTypes';
+import { TodoListDomain } from 'common/data/dataPropsTypes';
 import IconButton from '@mui/material/IconButton';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import Button from '@mui/material/Button';
@@ -16,7 +16,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 const Task = lazy(() => import('features/todolistList/ui/todolist/ui/task/ui/Task'));
 
 type Props = {
-  todolist: TodoListDomainType;
+  todolist: TodoListDomain;
 };
 
 const Todolist = React.memo(({ todolist }: Props) => {

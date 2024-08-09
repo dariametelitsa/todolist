@@ -1,6 +1,6 @@
-import { FilterValuesType, TodoListDomainType } from 'common/data/dataPropsTypes';
+import { FilterValues, TodoListDomain } from 'common/data/dataPropsTypes';
 import { todolistAPI } from 'features/todolistList/api/todolistAPI';
-import { AppStatusTypes, setAppStatus } from 'app/reducers/appSlice';
+import { AppStatus, setAppStatus } from 'app/reducers/appSlice';
 import { asyncThunkCreator, buildCreateSlice, PayloadAction } from '@reduxjs/toolkit';
 import { TodolistType, UpdateTodolistTitle } from 'features/todolistList/api/todolistAPI.types';
 import { handleServerAppError } from 'common/utils';
@@ -16,7 +16,7 @@ const createAppSlice = buildCreateSlice({
 
 const slice = createAppSlice({
   name: 'todolists',
-  initialState: [] as TodoListDomainType[],
+  initialState: [] as TodoListDomain[],
   reducers: (create) => {
     const createAThunk = create.asyncThunk.withTypes<{
       rejectValue: BaseResponse | null;
@@ -28,7 +28,7 @@ const slice = createAppSlice({
           state,
           action: PayloadAction<{
             id: string;
-            filter: FilterValuesType;
+            filter: FilterValues;
           }>
         ) => {
           const index = state.findIndex((td) => td.id === action.payload.id);
@@ -41,7 +41,7 @@ const slice = createAppSlice({
         if (index !== -1) state[index].coverImage = action.payload.coverImage;
       }),
 
-      changeEntityStatus: create.reducer((state, action: PayloadAction<{ id: string; status: AppStatusTypes }>) => {
+      changeEntityStatus: create.reducer((state, action: PayloadAction<{ id: string; status: AppStatus }>) => {
         const todolist = state.find((td) => td.id === action.payload.id);
         if (todolist) todolist.entityStatus = action.payload.status;
       }),

@@ -8,14 +8,14 @@ import {
   fetchTodolists,
   todolistsReducer,
 } from 'features/todolistList/model/todolistsSlice';
-import { TodoListDomainType } from 'common/data/dataPropsTypes';
+import { TodoListDomain } from 'common/data/dataPropsTypes';
 import { ActionTypeForTest } from 'common/types';
 import { TodolistType } from 'features/todolistList/api/todolistAPI.types';
 
 //test data
 let todolistId1: string;
 let todolistId2: string;
-let startState: TodoListDomainType[] = [];
+let startState: TodoListDomain[] = [];
 
 //initialization
 beforeEach(() => {

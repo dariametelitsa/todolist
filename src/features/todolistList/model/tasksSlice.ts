@@ -1,4 +1,4 @@
-import { FilterValuesType, TasksType } from 'common/data/dataPropsTypes';
+import { FilterValues, Tasks } from 'common/data/dataPropsTypes';
 import { asyncThunkCreator, buildCreateSlice, createSelector, isRejected } from '@reduxjs/toolkit';
 import { addTodolist, changeEntityStatus, deleteTodolist, fetchTodolists } from './todolistsSlice';
 import { handleServerAppError } from 'common/utils';
@@ -16,7 +16,7 @@ const createAppSlice = buildCreateSlice({
 
 const slice = createAppSlice({
   name: 'tasks',
-  initialState: {} as TasksType,
+  initialState: {} as Tasks,
   reducers: (create) => {
     const createAThunk = create.asyncThunk.withTypes<{
       rejectValue: BaseResponse | null;
@@ -159,7 +159,7 @@ const slice = createAppSlice({
   selectors: {
     selectTasks: (state) => state,
     selectTasksByTd: (state, todolistId: string) => state[todolistId],
-    selectFilteredTasks: (state, todolistId: string, filter: FilterValuesType): Task[] => {
+    selectFilteredTasks: (state, todolistId: string, filter: FilterValues): Task[] => {
       let filteredTasks = state[todolistId];
       if (filter === 'active') {
         return filteredTasks.filter((t) => t.status !== TaskStatuses.Completed);
@@ -182,11 +182,7 @@ export const selectTasksForTodolist = createSelector(
 );
 
 export const makeSelectFilteredTasks = createSelector(
-  [
-    selectTasks,
-    (state, todolistId: string) => todolistId,
-    (state, todolistId: string, filter: FilterValuesType) => filter,
-  ],
+  [selectTasks, (state, todolistId: string) => todolistId, (state, todolistId: string, filter: FilterValues) => filter],
   (tasks, todolistId, filter) => {
     let allTasks: Task[] = tasks[todolistId];
     switch (filter) {
