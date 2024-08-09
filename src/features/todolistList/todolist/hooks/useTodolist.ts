@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from 'app/store';
-import { useCallback, useDeferredValue, useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { FilterValuesType } from 'common/data/dataPropsTypes';
 import {
   changedTodolistCover,
@@ -9,6 +9,7 @@ import {
 } from '../../model/todolistsSlice';
 import { addTask, cleanTasksList, makeSelectFilteredTasks } from '../../model/tasksSlice';
 import { TaskStatuses } from 'common/enums';
+import { bindActionCreators } from 'redux';
 
 export const useTodolist = (id: string, filter: FilterValuesType) => {
   //const tasks = useAppSelector((state) => selectTasksByTd(state, id));
@@ -26,6 +27,7 @@ export const useTodolist = (id: string, filter: FilterValuesType) => {
 
   const onClickFilterHandlerCreator = useCallback(
     (filter: FilterValuesType) => {
+      const cb = bindActionCreators({ changedTodolistFilter }, dispatch);
       return () => dispatch(changedTodolistFilter({ id: id, filter: filter }));
     },
     [dispatch, id]
