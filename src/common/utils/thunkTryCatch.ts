@@ -15,7 +15,7 @@ export const thunkTryCatch = async <T>(
   try {
     return await logic();
   } catch (error) {
-    handleServerNetworkError(error, dispatch);
+    //handleServerNetworkError(error, dispatch);
     return rejectWithValue(null);
   }
 };

@@ -1,5 +1,6 @@
 import { createSlice, isAllOf, isFulfilled, isPending, isRejected, PayloadAction } from '@reduxjs/toolkit';
 import { fetchTasks } from 'features/todolistList/model/tasksSlice';
+import { BaseResponse } from 'common/types';
 
 export type AppStatus = 'idle' | 'loading' | 'succeeded' | 'failed';
 
@@ -39,12 +40,20 @@ const slice = createSlice({
       .addMatcher(isPending, (state) => {
         state.status = 'loading';
       })
+      .addMatcher(isFulfilled, (state) => {
+        state.status = 'idle';
+      })
       .addMatcher(isRejected, (state) => {
         state.status = 'failed';
       })
-      .addMatcher(isFulfilled, (state) => {
-        state.status = 'idle';
-      });
+      .addMatcher(
+        (action): action is PayloadAction<BaseResponse> => {
+          return isRejected(action) && action.payload;
+        },
+        (state, action: PayloadAction<BaseResponse>) => {
+          state.error = action.payload.messages.length ? action.payload.messages[0] : 'Some error occurred';
+        }
+      );
   },
 
   selectors: {

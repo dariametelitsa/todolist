@@ -7,7 +7,7 @@ export const useItemForm = (addItem: (name: string) => Promise<any>) => {
   let [itemTitle, setNewItemTitle] = useState('');
   let [itemInputError, setItemInputError] = useState<string | null>(null);
 
-  const isTitleToLong = itemTitle.length > 30;
+  const isTitleToLong = itemTitle.length > 300;
   const ifTaskCanAdded = itemTitle && !isTitleToLong;
 
   const addItemHandler = (title: string) => {
