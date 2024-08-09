@@ -25,7 +25,7 @@ export const useTodolist = (id: string, filter: FilterValuesType) => {
     });
   }, [filteredTasks]);
 
-  const onClickFilterHandlerCreator = useCallback(
+  const changeFilterHandler = useCallback(
     (filter: FilterValuesType) => {
       //const cb = bindActionCreators({ changedTodolistFilter }, dispatch);
       return () => dispatch(changedTodolistFilter({ id: id, filter: filter }));
@@ -33,7 +33,7 @@ export const useTodolist = (id: string, filter: FilterValuesType) => {
     [dispatch, id]
   );
 
-  const onClickHandlerDeleteAllTasks = useCallback(() => {
+  const deleteAllTasksHandler = useCallback(() => {
     dispatch(cleanTasksList(id));
   }, [dispatch, id]);
 
@@ -44,7 +44,7 @@ export const useTodolist = (id: string, filter: FilterValuesType) => {
     [dispatch, id]
   );
 
-  const onChangeCoverHandler = useCallback(
+  const changeCoverHandler = useCallback(
     (image: string) => {
       dispatch(changedTodolistCover({ id: id, coverImage: image }));
     },
@@ -65,10 +65,10 @@ export const useTodolist = (id: string, filter: FilterValuesType) => {
   return {
     dispatch,
     sorterTasks,
-    onClickFilterHandlerCreator,
-    onClickHandlerDeleteAllTasks,
+    changeFilterHandler,
+    deleteAllTasksHandler,
     addItemHandler,
-    onChangeCoverHandler,
+    changeCoverHandler,
     changeTodolistTitleHandler,
     deleteTodolistHandler,
   };

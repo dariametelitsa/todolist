@@ -10,13 +10,13 @@ import { TaskStatuses } from 'common/enums';
 import { EditableSpan } from 'common/components/editableSpan/EditableSpan';
 import { TaskType } from 'features/todolistList/api/taskAPI.types';
 
-type TasksProps = {
+type Props = {
   task: TaskType;
   todolistId: string;
   entityStatus: AppStatusTypes;
 };
 
-const Task = React.memo(({ todolistId, task, entityStatus }: TasksProps) => {
+const Task = React.memo(({ todolistId, task, entityStatus }: Props) => {
   const { removeTaskHandler, changeTaskStatusHandler, changeTaskTitleHandler } = useTask(todolistId);
   const isDisable = entityStatus === 'loading';
 

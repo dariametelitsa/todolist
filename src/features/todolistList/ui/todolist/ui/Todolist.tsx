@@ -15,19 +15,19 @@ import CircularProgress from '@mui/material/CircularProgress';
 
 const Task = lazy(() => import('features/todolistList/ui/todolist/ui/task/ui/Task'));
 
-type TodolistListProps = {
+type Props = {
   todolist: TodoListDomainType;
 };
 
-const Todolist: React.FC<TodolistListProps> = React.memo(({ todolist }) => {
+const Todolist = React.memo(({ todolist }: Props) => {
   const { id, title, filter, coverImage, entityStatus } = todolist;
 
   const {
     sorterTasks,
-    onClickFilterHandlerCreator,
-    onClickHandlerDeleteAllTasks,
+    changeFilterHandler,
+    deleteAllTasksHandler,
     addItemHandler,
-    onChangeCoverHandler,
+    changeCoverHandler,
     changeTodolistTitleHandler,
     deleteTodolistHandler,
   } = useTodolist(id, filter);
@@ -42,7 +42,7 @@ const Todolist: React.FC<TodolistListProps> = React.memo(({ todolist }) => {
     <Grid xs={12} md={6} lg={4}>
       <Paper sx={{ p: 2 }}>
         <div>
-          <CoverImage image={coverImage && coverImage} updateImage={onChangeCoverHandler} />
+          <CoverImage image={coverImage && coverImage} updateImage={changeCoverHandler} />
           <h3 style={{ display: 'flex', justifyContent: 'space-between' }}>
             <EditableSpan
               oldTitle={title}
@@ -67,12 +67,12 @@ const Todolist: React.FC<TodolistListProps> = React.memo(({ todolist }) => {
             <Button
               size="small"
               onClick={() => {
-                onClickHandlerDeleteAllTasks();
+                deleteAllTasksHandler();
               }}>
               Delete all
             </Button>
           </Grid>
-          <FiltersForTasks filter={filter} filterCheck={onClickFilterHandlerCreator} />
+          <FiltersForTasks filter={filter} filterCheck={changeFilterHandler} />
         </div>
       </Paper>
     </Grid>
