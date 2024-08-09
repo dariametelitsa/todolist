@@ -11,7 +11,7 @@ export type DeleteTaskArgs = {
   taskId: string;
 };
 
-export type TaskType = {
+export type Task = {
   description: string;
   title: string;
   status: TaskStatuses;
@@ -35,7 +35,7 @@ export type UpdateTaskModelType = {
 };
 
 export type ResponseTypeGetTask = {
-  items: TaskType[];
+  items: Task[];
   totalCount: number;
   error: string;
 };

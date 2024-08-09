@@ -1,6 +1,6 @@
 import { AppStatusTypes } from 'app/reducers/appSlice';
 import { TodolistType } from 'features/todolistList/api/todolistAPI.types';
-import { TaskType } from 'features/todolistList/api/taskAPI.types';
+import { Task } from 'features/todolistList/api/taskAPI.types';
 
 export type FilterValuesType = 'all' | 'completed' | 'active';
 
@@ -11,18 +11,18 @@ export type TodoListDomainType = TodolistType & {
 };
 
 export type TasksType = {
-  [key: string]: TaskType[];
+  [key: string]: Task[];
 };
 
 export type TasksPropsType = {
   id: string;
   title: string;
-  tasks: Array<TaskType>;
+  tasks: Array<Task>;
   filter: FilterValuesType;
 };
 
 export type TasksArrPropsType = {
-  [id: string]: Array<TaskType>;
+  [id: string]: Array<Task>;
 };
 
 export type TodolistPropsType = {
@@ -31,7 +31,7 @@ export type TodolistPropsType = {
   filter: FilterValuesType;
   changeFilter: (toListId: string, filter: FilterValuesType) => void;
   title: string;
-  tasks: Array<TaskType>;
+  tasks: Array<Task>;
   coverImage?: string;
   removeTask: (todolistId: string, id: string) => void;
   addTask: (todolistId: string, taskTitle: string) => void;

@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 import { AppRootStateType, useAppDispatch } from 'app/store';
 import { addTask } from 'features/todolistList/model/tasksSlice';
 import { TaskStatuses, TodoTaskPriorities } from 'common/enums';
-import { TaskType } from 'features/todolistList/api/taskAPI.types';
+import { Task as TaskType } from 'features/todolistList/api/taskAPI.types';
 
 const meta: Meta<typeof Task> = {
   title: 'Todolist/Task',

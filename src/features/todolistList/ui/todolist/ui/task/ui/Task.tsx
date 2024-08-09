@@ -8,7 +8,7 @@ import { useTask } from 'features/todolistList/ui/todolist/ui/task/lib/useTask';
 import { AppStatusTypes } from 'app/reducers/appSlice';
 import { TaskStatuses } from 'common/enums';
 import { EditableSpan } from 'common/components/editableSpan/EditableSpan';
-import { TaskType } from 'features/todolistList/api/taskAPI.types';
+import { Task as TaskType } from 'features/todolistList/api/taskAPI.types';
 
 type Props = {
   task: TaskType;

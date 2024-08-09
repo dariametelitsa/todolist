@@ -4,7 +4,7 @@ import { addTodolist, changeEntityStatus, deleteTodolist, fetchTodolists } from 
 import { handleServerAppError } from 'common/utils';
 import { StatusCode, TaskStatuses } from 'common/enums';
 import { taskAPI } from 'features/todolistList/api/taskAPI';
-import { AddTaskArgs, DeleteTaskArgs, TaskType, UpdateTaskModelType } from 'features/todolistList/api/taskAPI.types';
+import { AddTaskArgs, DeleteTaskArgs, Task, UpdateTaskModelType } from 'features/todolistList/api/taskAPI.types';
 import { AppRootStateType } from 'app/store';
 import { cleatTasksAndTodolists } from 'common/actions/commonActions';
 import { thunkTryCatch } from 'common/utils/thunkTryCatch';
@@ -22,7 +22,7 @@ const slice = createAppSlice({
       rejectValue: BaseResponse | null;
     }>();
     return {
-      fetchTasks: createAThunk<{ todolistId: string; tasks: TaskType[] }, string>(
+      fetchTasks: createAThunk<{ todolistId: string; tasks: Task[] }, string>(
         async (todolistId: string, thunkAPI) => {
           return thunkTryCatch(thunkAPI, async () => {
             const res = await taskAPI.getTasks(todolistId);
@@ -36,7 +36,7 @@ const slice = createAppSlice({
         }
       ),
 
-      addTask: createAThunk<{ task: TaskType }, AddTaskArgs>(
+      addTask: createAThunk<{ task: Task }, AddTaskArgs>(
         async (arg, thunkApi) => {
           const { dispatch, rejectWithValue } = thunkApi;
           return thunkTryCatch(thunkApi, async () => {
@@ -58,7 +58,7 @@ const slice = createAppSlice({
       ),
 
       updateTask: createAThunk<
-        { task: TaskType },
+        { task: Task },
         { todolistId: string; taskId: string; model: Partial<UpdateTaskModelType> }
       >(
         async (arg, thunkAPI) => {
@@ -159,7 +159,7 @@ const slice = createAppSlice({
   selectors: {
     selectTasks: (state) => state,
     selectTasksByTd: (state, todolistId: string) => state[todolistId],
-    selectFilteredTasks: (state, todolistId: string, filter: FilterValuesType): TaskType[] => {
+    selectFilteredTasks: (state, todolistId: string, filter: FilterValuesType): Task[] => {
       let filteredTasks = state[todolistId];
       if (filter === 'active') {
         return filteredTasks.filter((t) => t.status !== TaskStatuses.Completed);
@@ -188,7 +188,7 @@ export const makeSelectFilteredTasks = createSelector(
     (state, todolistId: string, filter: FilterValuesType) => filter,
   ],
   (tasks, todolistId, filter) => {
-    let allTasks: TaskType[] = tasks[todolistId];
+    let allTasks: Task[] = tasks[todolistId];
     switch (filter) {
       case 'completed':
         return allTasks.filter((t) => t.status === TaskStatuses.Completed);
