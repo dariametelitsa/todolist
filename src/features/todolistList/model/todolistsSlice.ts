@@ -1,8 +1,8 @@
 import { FilterValuesType, TodoListDomainType } from 'common/data/dataPropsTypes';
-import { todolistAPI } from '../todolistAPI/todolistAPI';
+import { todolistAPI } from 'features/todolistList/api/todolistAPI';
 import { AppStatusTypes, setAppStatus } from 'app/reducers/appSlice';
 import { asyncThunkCreator, buildCreateSlice, PayloadAction } from '@reduxjs/toolkit';
-import { TodolistType, UpdateTodolistTitle } from '../todolistAPI/todolistAPI.types';
+import { TodolistType, UpdateTodolistTitle } from 'features/todolistList/api/todolistAPI.types';
 import { handleServerAppError } from 'common/utils';
 import { cleatTasksAndTodolists } from 'common/actions/commonActions';
 import { fetchTasks } from 'features/todolistList/model/tasksSlice';

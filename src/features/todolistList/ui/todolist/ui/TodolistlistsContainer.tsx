@@ -4,14 +4,14 @@ import { Navigate } from 'react-router-dom';
 import { PATH } from 'common/routes/PATH';
 import { useAppDispatch } from 'app/store';
 import { useSelector } from 'react-redux';
-import { selectIsLoggedIn } from '../auth/model/authSlice';
-import { addTodolist, selectTodolists } from './model/todolistsSlice';
+import { selectIsLoggedIn } from 'features/auth/model/authSlice';
+import { addTodolist, selectTodolists } from 'features/todolistList/model/todolistsSlice';
 import { AddItem } from 'common/components/addItem/AddItem';
 import CircularProgress from '@mui/material/CircularProgress';
-import { TodolistContainerSkeleton } from 'features/todolistList/TodolistContainerSkeleton';
+import { TodolistContainerSkeleton } from 'features/todolistList/ui/todolist/ui/TodolistContainerSkeleton';
 // import Todolist from './todolist/Todolist';
 
-const Todolist = lazy(() => import('./todolist/Todolist'));
+const Todolist = lazy(() => import('features/todolistList/ui/todolist/ui/Todolist'));
 
 export const TodolistlistsContainer: React.FC = () => {
   const todoLists = useSelector(selectTodolists);

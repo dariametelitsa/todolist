@@ -3,8 +3,8 @@ import { asyncThunkCreator, buildCreateSlice, createSelector, isRejected } from 
 import { addTodolist, changeEntityStatus, deleteTodolist, fetchTodolists } from './todolistsSlice';
 import { handleServerAppError } from 'common/utils';
 import { StatusCode, TaskStatuses } from 'common/enums';
-import { taskAPI } from '../todolistAPI/taskAPI';
-import { AddTaskArgs, DeleteTaskArgs, TaskType, UpdateTaskModelType } from '../todolistAPI/todolistAPI.types';
+import { taskAPI } from 'features/todolistList/api/taskAPI';
+import { AddTaskArgs, DeleteTaskArgs, TaskType, UpdateTaskModelType } from 'features/todolistList/api/taskAPI.types';
 import { AppRootStateType } from 'app/store';
 import { cleatTasksAndTodolists } from 'common/actions/commonActions';
 import { thunkTryCatch } from 'common/utils/thunkTryCatch';

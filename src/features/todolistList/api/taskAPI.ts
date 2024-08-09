@@ -1,7 +1,7 @@
-import { instance } from '../../../common/instance/instance';
-import { BaseResponse } from '../../../common/types/types';
+import { instance } from 'common/instance/instance';
+import { BaseResponse } from 'common/types';
 import { AxiosResponse } from 'axios';
-import { AddTaskArgs, DeleteTaskArgs, ResponseTypeGetTask, TaskType, UpdateTaskModelType } from './todolistAPI.types';
+import { AddTaskArgs, DeleteTaskArgs, ResponseTypeGetTask, TaskType, UpdateTaskModelType } from './taskAPI.types';
 
 export const taskAPI = {
   getTasks: (todolistId: string) => {

@@ -11,18 +11,6 @@ export type DeleteTaskArgs = {
   taskId: string;
 };
 
-export type UpdateTodolistTitle = {
-  todolistId: string;
-  title: string;
-};
-
-export type TodolistType = {
-  addedDate: string;
-  id: string;
-  order: number;
-  title: string;
-};
-
 export type TaskType = {
   description: string;
   title: string;
@@ -35,6 +23,7 @@ export type TaskType = {
   order: number;
   addedDate: string;
 };
+
 export type UpdateTaskModelType = {
   title: string;
   description: string;
@@ -44,19 +33,9 @@ export type UpdateTaskModelType = {
   deadline: string;
   addedDate: string;
 };
+
 export type ResponseTypeGetTask = {
   items: TaskType[];
   totalCount: number;
-  error: string;
-};
-
-export type ErrorResponseType = {
-  statusCode: number;
-  messages: [
-    {
-      message: string;
-      field: string;
-    },
-  ];
   error: string;
 };

@@ -6,7 +6,7 @@ import Button from '@mui/material/Button';
 import List from '@mui/material/List';
 import Grid from '@mui/material/Unstable_Grid2';
 import Paper from '@mui/material/Paper';
-import { useTodolist } from './hooks/useTodolist';
+import { useTodolist } from 'features/todolistList/ui/todolist/lib/useTodolist';
 import { EditableSpan } from 'common/components/editableSpan/EditableSpan';
 import { AddItem } from 'common/components/addItem/AddItem';
 import { FiltersForTasks } from 'common/components/filtersForTasks/FiltersForTasks';
@@ -14,7 +14,7 @@ import { CoverImage } from 'common/components/coverImage/CoverImage';
 import CircularProgress from '@mui/material/CircularProgress';
 // import { Task } from './task/Task';
 
-const Task = lazy(() => import('./task/Task'));
+const Task = lazy(() => import('features/todolistList/ui/todolist/ui/task/ui/Task'));
 
 type TodolistListProps = {
   todolist: TodoListDomainType;

@@ -10,7 +10,7 @@ import {
 } from './todolistsSlice';
 import { TodoListDomainType } from 'common/data/dataPropsTypes';
 import { ActionTypeForTest } from 'common/types';
-import { TodolistType } from '../todolistAPI/todolistAPI.types';
+import { TodolistType } from 'features/todolistList/api/todolistAPI.types';
 
 //test data
 let todolistId1: string;

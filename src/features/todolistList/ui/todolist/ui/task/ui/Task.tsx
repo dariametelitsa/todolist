@@ -1,14 +1,14 @@
 import * as React from 'react';
-import { getListItemSx } from '../Todolist.styles';
+import { getListItemSx } from 'features/todolistList/ui/todolist/ui/Todolist.styles';
 import Checkbox from '@mui/material/Checkbox';
 import IconButton from '@mui/material/IconButton';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import ListItem from '@mui/material/ListItem';
-import { useTask } from './hooks/useTask';
+import { useTask } from 'features/todolistList/ui/todolist/ui/task/lib/useTask';
 import { AppStatusTypes } from 'app/reducers/appSlice';
 import { TaskStatuses } from 'common/enums';
 import { EditableSpan } from 'common/components/editableSpan/EditableSpan';
-import { TaskType } from '../../todolistAPI/todolistAPI.types';
+import { TaskType } from 'features/todolistList/api/taskAPI.types';
 
 type TasksProps = {
   task: TaskType;

@@ -1,5 +1,6 @@
-import { AppStatusTypes } from '../../app/reducers/appSlice';
-import { TaskType, TodolistType } from '../../features/todolistList/todolistAPI/todolistAPI.types';
+import { AppStatusTypes } from 'app/reducers/appSlice';
+import { TodolistType } from 'features/todolistList/api/todolistAPI.types';
+import { TaskType } from 'features/todolistList/api/taskAPI.types';
 
 export type FilterValuesType = 'all' | 'completed' | 'active';
 

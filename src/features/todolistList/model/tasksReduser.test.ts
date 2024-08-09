@@ -4,7 +4,7 @@ import { addTask, cleanTasksList, deleteTask, fetchTasks, tasksReducer, updateTa
 import { addTodolist, deleteTodolist, fetchTodolists } from './todolistsSlice';
 import { ActionTypeForTest } from 'common/types';
 import { TaskStatuses, TodoTaskPriorities } from 'common/enums';
-import { TodolistType } from '../todolistAPI/todolistAPI.types';
+import { TodolistType } from 'features/todolistList/api/todolistAPI.types';
 
 const todolistId1 = v4();
 const todolistId2 = v4();

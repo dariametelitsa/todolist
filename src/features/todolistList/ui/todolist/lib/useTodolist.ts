@@ -6,8 +6,8 @@ import {
   changedTodolistFilter,
   changeTodolistTitle,
   deleteTodolist,
-} from '../../model/todolistsSlice';
-import { addTask, cleanTasksList, makeSelectFilteredTasks } from '../../model/tasksSlice';
+} from 'features/todolistList/model/todolistsSlice';
+import { addTask, cleanTasksList, makeSelectFilteredTasks } from 'features/todolistList/model/tasksSlice';
 import { TaskStatuses } from 'common/enums';
 import { bindActionCreators } from 'redux';
 
