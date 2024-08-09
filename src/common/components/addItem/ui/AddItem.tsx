@@ -1,12 +1,12 @@
 import * as React from 'react';
-import s from './AddItem.module.scss';
+import s from 'common/components/addItem/ui/AddItem.module.scss';
 import TextField from '@mui/material/TextField';
 import IconButton from '@mui/material/IconButton';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import { useItemForm } from 'common/components/addItem/lib/useAddItem';
 
 export type AddItemProps = {
-  addItem: (name: string) => void;
+  addItem: (name: string) => Promise<any>;
   disabled?: boolean;
 };
 

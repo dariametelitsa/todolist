@@ -1,13 +1,25 @@
 import { ChangeEvent, useState } from 'react';
 import * as React from 'react';
+import { unwrapResult } from '@reduxjs/toolkit';
 
-export const useItemForm = (addItem: (name: string) => void) => {
+export const useItemForm = (addItem: (name: string) => Promise<any>) => {
   //local state - not business tasks
   let [itemTitle, setNewItemTitle] = useState('');
   let [itemInputError, setItemInputError] = useState<string | null>(null);
 
   const isTitleToLong = itemTitle.length > 30;
   const ifTaskCanAdded = itemTitle && !isTitleToLong;
+
+  const addItemHandler = (title: string) => {
+    addItem(title)
+      .then(unwrapResult)
+      .then(() => {
+        setNewItemTitle('');
+      })
+      .catch((err) => {
+        console.log(err.message[0]);
+      });
+  };
 
   const onClickAddItemHandler = () => {
     addItemWithCheck();
@@ -22,7 +34,7 @@ export const useItemForm = (addItem: (name: string) => void) => {
     const trimmedTaskTitle = itemTitle.trim();
     if (ifTaskCanAdded) {
       if (trimmedTaskTitle) {
-        addItem(trimmedTaskTitle);
+        addItemHandler(trimmedTaskTitle);
         setNewItemTitle('');
       } else {
         setItemInputError('Title is required');

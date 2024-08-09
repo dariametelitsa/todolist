@@ -6,7 +6,7 @@ import { useAppDispatch } from 'app/store';
 import { useSelector } from 'react-redux';
 import { selectIsLoggedIn } from 'features/auth/model/authSlice';
 import { addTodolist, selectTodolists } from 'features/todolistList/model/todolistsSlice';
-import { AddItem } from 'common/components/addItem/AddItem';
+import { AddItem } from 'common/components/addItem/ui/AddItem';
 import { TodolistContainerSkeleton } from 'features/todolistList/ui/todolist/ui/TodolistContainerSkeleton';
 
 const Todolist = lazy(() => import('features/todolistList/ui/todolist/ui/Todolist'));
@@ -17,7 +17,7 @@ export const TodolistlistsContainer: React.FC = () => {
   const dispatch = useAppDispatch();
   const addTodolistCallback = useCallback(
     (title: string) => {
-      dispatch(addTodolist(title));
+      return dispatch(addTodolist(title));
     },
     [dispatch]
   );

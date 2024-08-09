@@ -26,7 +26,7 @@ export const useTodolist = (id: string, filter: FilterValues) => {
 
   const addItemHandler = useCallback(
     (title: string) => {
-      dispatch(addTask({ todolistId: id, title }));
+      return dispatch(addTask({ todolistId: id, title }));
     },
     [dispatch, id]
   );

@@ -5,7 +5,7 @@ import List from '@mui/material/List';
 import Grid from '@mui/material/Unstable_Grid2';
 import Paper from '@mui/material/Paper';
 import { useTodolist } from 'features/todolistList/ui/todolist/lib/useTodolist';
-import { AddItem } from 'common/components/addItem/AddItem';
+import { AddItem } from 'common/components/addItem/ui/AddItem';
 import { FilterTasksButtons } from 'features/todolistList/ui/todolist/filtersTasksButtons/FilterTasksButtons';
 import { CoverImage } from 'common/components/coverImage/CoverImage';
 import CircularProgress from '@mui/material/CircularProgress';
