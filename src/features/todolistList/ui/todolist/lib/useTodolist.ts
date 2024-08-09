@@ -27,7 +27,7 @@ export const useTodolist = (id: string, filter: FilterValuesType) => {
 
   const onClickFilterHandlerCreator = useCallback(
     (filter: FilterValuesType) => {
-      const cb = bindActionCreators({ changedTodolistFilter }, dispatch);
+      //const cb = bindActionCreators({ changedTodolistFilter }, dispatch);
       return () => dispatch(changedTodolistFilter({ id: id, filter: filter }));
     },
     [dispatch, id]

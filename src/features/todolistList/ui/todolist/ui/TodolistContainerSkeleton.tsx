@@ -8,7 +8,7 @@ export const TodolistContainerSkeleton = ({ count = 3 }: { count?: number }) => 
       <Grid container spacing={3}>
         {Array(count)
           .fill(null)
-          .map((_, index) => (
+          .map((_) => (
             <Grid container xs={12} md={6} lg={4}>
               <Stack spacing={{ xs: 1, sm: 2 }} direction="row" useFlexGap flexWrap="wrap">
                 <Skeleton variant="rounded" width={330} height={120} />

@@ -12,7 +12,6 @@ import { AddItem } from 'common/components/addItem/AddItem';
 import { FiltersForTasks } from 'common/components/filtersForTasks/FiltersForTasks';
 import { CoverImage } from 'common/components/coverImage/CoverImage';
 import CircularProgress from '@mui/material/CircularProgress';
-// import { Task } from './task/Task';
 
 const Task = lazy(() => import('features/todolistList/ui/todolist/ui/task/ui/Task'));
 
