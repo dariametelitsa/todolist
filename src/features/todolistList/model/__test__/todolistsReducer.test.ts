@@ -7,7 +7,7 @@ import {
   deleteTodolist,
   fetchTodolists,
   todolistsReducer,
-} from './todolistsSlice';
+} from 'features/todolistList/model/todolistsSlice';
 import { TodoListDomainType } from 'common/data/dataPropsTypes';
 import { ActionTypeForTest } from 'common/types';
 import { TodolistType } from 'features/todolistList/api/todolistAPI.types';

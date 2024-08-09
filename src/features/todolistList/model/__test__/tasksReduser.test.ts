@@ -1,7 +1,14 @@
 import { v4 } from 'uuid';
 import { TasksType } from 'common/data/dataPropsTypes';
-import { addTask, cleanTasksList, deleteTask, fetchTasks, tasksReducer, updateTask } from './tasksSlice';
-import { addTodolist, deleteTodolist, fetchTodolists } from './todolistsSlice';
+import {
+  addTask,
+  cleanTasksList,
+  deleteTask,
+  fetchTasks,
+  tasksReducer,
+  updateTask,
+} from 'features/todolistList/model/tasksSlice';
+import { addTodolist, deleteTodolist, fetchTodolists } from 'features/todolistList/model/todolistsSlice';
 import { ActionTypeForTest } from 'common/types';
 import { TaskStatuses, TodoTaskPriorities } from 'common/enums';
 import { TodolistType } from 'features/todolistList/api/todolistAPI.types';

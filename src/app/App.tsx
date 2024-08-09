@@ -34,7 +34,6 @@ function App() {
         <ErrorSnackbar />
 
         <Container fixed>
-          {/*<TodolistlistsContainer />*/}
           <Outlet />
         </Container>
       </ThemeProvider>
