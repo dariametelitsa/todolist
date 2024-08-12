@@ -68,18 +68,34 @@ const slice = createAppSlice({
           const { dispatch, rejectWithValue, getState } = thunkAPI;
           const state = getState() as AppRootStateType;
           const task = state.tasks[arg.todolistId].find((t) => t.id === arg.taskId);
-          return thunkTryCatch(thunkAPI, async () => {
-            if (task) {
-              const apiModel: UpdateTaskModelType = { ...task, ...arg.model };
+          if (task) {
+            try {
               dispatch(changeEntityStatus({ id: arg.todolistId, status: 'loading' }));
+              const apiModel: UpdateTaskModelType = { ...task, ...arg.model };
               const res = await taskAPI.updateTask(arg.todolistId, arg.taskId, apiModel);
-              return { task: res.data.data.item };
-            } else {
-              //return rejectWithValue(null);
+              if (res.data.resultCode === StatusCode.SUCCESS) {
+                return { task: res.data.data.item };
+              } else {
+                return rejectWithValue({ error: res.data, type: 'appError' } as RejectActionError);
+              }
+            } catch (error) {
+              return rejectWithValue({ error, type: 'catchError' } as RejectActionError);
+            } finally {
+              dispatch(changeEntityStatus({ id: arg.todolistId, status: 'idle' }));
             }
-          }).finally(() => {
-            dispatch(changeEntityStatus({ id: arg.todolistId, status: 'idle' }));
-          });
+          } else return rejectWithValue({ error: 'There is no such task', type: 'catchError' } as RejectActionError);
+          // return thunkTryCatch(thunkAPI, async () => {
+          //   if (task) {
+          //     const apiModel: UpdateTaskModelType = { ...task, ...arg.model };
+          //     dispatch(changeEntityStatus({ id: arg.todolistId, status: 'loading' }));
+          //     const res = await taskAPI.updateTask(arg.todolistId, arg.taskId, apiModel);
+          //     return { task: res.data.data.item };
+          //   } else {
+          //     //return rejectWithValue(null);
+          //   }
+          // }).finally(() => {
+          //   dispatch(changeEntityStatus({ id: arg.todolistId, status: 'idle' }));
+          // });
         },
         {
           fulfilled: (state, action) => {
@@ -93,16 +109,19 @@ const slice = createAppSlice({
       deleteTask: createAThunk<DeleteTaskArgs, DeleteTaskArgs>(
         async (arg, thunkAPI) => {
           const { dispatch, rejectWithValue } = thunkAPI;
-          return thunkTryCatch(thunkAPI, async () => {
+          try {
+            dispatch(changeEntityStatus({ id: arg.todolistId, status: 'loading' }));
             const res = await taskAPI.deleteTask(arg);
             if (res.data.resultCode === StatusCode.SUCCESS) {
               return { ...arg };
             } else {
-              //return rejectWithValue(null);
+              return rejectWithValue({ error: res.data, type: 'appError' } as RejectActionError);
             }
-          }).finally(() => {
+          } catch (error) {
+            return rejectWithValue({ error, type: 'catchError' } as RejectActionError);
+          } finally {
             dispatch(changeEntityStatus({ id: arg.todolistId, status: 'idle' }));
-          });
+          }
         },
         {
           fulfilled: (state, action) => {
@@ -117,16 +136,19 @@ const slice = createAppSlice({
 
       cleanTasksList: createAThunk<string, string>(
         async (todolistId, thunkAPI) => {
-          const { dispatch, getState } = thunkAPI;
+          const { dispatch, getState, rejectWithValue } = thunkAPI;
           const state = getState() as AppRootStateType;
           const tasks = state.tasks[todolistId];
           const requests = tasks.map((t) => taskAPI.deleteTask({ todolistId, taskId: t.id }));
-          return thunkTryCatch(thunkAPI, async () => {
+          try {
+            dispatch(changeEntityStatus({ id: todolistId, status: 'loading' }));
             await Promise.all(requests);
             return todolistId;
-          }).finally(() => {
+          } catch (error) {
+            return rejectWithValue({ error, type: 'catchError' } as RejectActionError);
+          } finally {
             dispatch(changeEntityStatus({ id: todolistId, status: 'idle' }));
-          });
+          }
         },
         {
           fulfilled: (state, action) => {
