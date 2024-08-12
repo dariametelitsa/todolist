@@ -1,19 +1,10 @@
 import { FilterValues, TodoListDomain } from 'common/data/dataPropsTypes';
 import { todolistAPI } from 'features/todolistList/api/todolistAPI';
-import { AppStatus, setAppStatus } from 'app/reducers/appSlice';
-import {
-  asyncThunkCreator,
-  buildCreateSlice,
-  isAnyOf,
-  isFulfilled,
-  isPending,
-  isRejected,
-  PayloadAction,
-} from '@reduxjs/toolkit';
+import { AppStatus } from 'app/reducers/appSlice';
+import { asyncThunkCreator, buildCreateSlice, PayloadAction } from '@reduxjs/toolkit';
 import { TodolistType, UpdateTodolistTitle } from 'features/todolistList/api/todolistAPI.types';
 import { cleatTasksAndTodolists } from 'common/actions/commonActions';
 import { fetchTasks } from 'features/todolistList/model/tasksSlice';
-import { thunkTryCatch } from 'common/utils/thunkTryCatch';
 import { StatusCode } from 'common/enums';
 import { RejectActionError } from 'common/types/types';
 
@@ -124,17 +115,15 @@ const slice = createAppSlice({
       fetchTodolists: createAThunk<{ todolists: TodolistType[] }>(
         async (arg, thunkAPI) => {
           const { dispatch, rejectWithValue } = thunkAPI;
-          return thunkTryCatch(thunkAPI, async () => {
-            try {
-              const res = await todolistAPI.getTodolist();
-              res.data.forEach((tl) => {
-                dispatch(fetchTasks(tl.id));
-              });
-              return { todolists: res.data };
-            } catch (error) {
-              return rejectWithValue({ error, type: 'catchError' } as RejectActionError);
-            }
-          });
+          try {
+            const res = await todolistAPI.getTodolist();
+            res.data.forEach((tl) => {
+              dispatch(fetchTasks(tl.id));
+            });
+            return { todolists: res.data };
+          } catch (error) {
+            return rejectWithValue({ error, type: 'catchError' } as RejectActionError);
+          }
         },
         {
           fulfilled: (state, action) => {
@@ -151,12 +140,6 @@ const slice = createAppSlice({
     builder.addCase(cleatTasksAndTodolists.type, () => {
       return [];
     });
-    // .addMatcher(isPending(deleteTodolist), (state, action: PayloadAction<any>) => {
-    //   const todolistIndex = state.findIndex((el) => el.id === action.payload);
-    //   if (todolistIndex) {
-    //     state[todolistIndex].entityStatus = 'loading';
-    //   }
-    // });
   },
   selectors: {
     selectTodolists: (state) => state,
