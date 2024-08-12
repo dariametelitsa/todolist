@@ -1,14 +1,14 @@
 import { Provider } from 'react-redux';
 import { applyMiddleware, combineReducers, legacy_createStore } from 'redux';
-import { todolistsReducer } from '../features/todolistList/model/todolistsSlice';
-import { tasksReducer } from '../features/todolistList/model/tasksSlice';
+import { todolistsReducer } from 'features/todolistList/model/todolistsSlice';
+import { tasksReducer } from 'features/todolistList/model/tasksSlice';
 import React from 'react';
 import { thunk } from 'redux-thunk';
-import { appReducer } from '../app/reducers/appSlice';
-import { authReducer } from '../features/auth/model/authSlice';
+import { appReducer } from 'app/reducers/appSlice';
+import { authReducer } from 'features/auth/model/authSlice';
 import { RouterProvider } from 'react-router-dom';
-import { router } from '../common/routes/router';
-import { TaskStatuses, TodoTaskPriorities } from '../common/enums/enums';
+import { router } from 'common/routes/router';
+import { TaskStatuses, TodoTaskPriorities } from 'common/enums';
 
 const rootReducer = combineReducers({
   todolists: todolistsReducer,

@@ -39,7 +39,7 @@ const slice = createAppSlice({
 
       addTask: createAThunk<{ task: Task }, AddTaskArgs>(
         async (arg, thunkApi) => {
-          const { dispatch, rejectWithValue } = thunkApi;
+          const { rejectWithValue } = thunkApi;
           try {
             const res = await taskAPI.addTask(arg);
             if (res.data.resultCode === StatusCode.SUCCESS) {
@@ -176,7 +176,7 @@ const slice = createAppSlice({
       .addCase(cleatTasksAndTodolists.type, () => {
         return {};
       })
-      .addMatcher(isRejected(cleanTasksList), (state, action) => {
+      .addMatcher(isRejected(cleanTasksList), (_, action) => {
         alert(action.error.message);
       });
   },
@@ -201,12 +201,12 @@ export const tasksReducer = slice.reducer;
 export const { selectTasks, selectTasksByTd, selectFilteredTasks } = slice.selectors;
 
 export const selectTasksForTodolist = createSelector(
-  [selectTasks, (state, todolistId) => todolistId],
+  [selectTasks, (_, todolistId) => todolistId],
   (tasksList, todolistId) => tasksList[todolistId] || []
 );
 
 export const makeSelectFilteredTasks = createSelector(
-  [selectTasks, (state, todolistId: string) => todolistId, (state, todolistId: string, filter: FilterValues) => filter],
+  [selectTasks, (_, todolistId: string) => todolistId, (_, todolistId: string, filter: FilterValues) => filter],
   (tasks, todolistId, filter) => {
     let allTasks: Task[] = tasks[todolistId];
     switch (filter) {

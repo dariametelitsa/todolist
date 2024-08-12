@@ -10,11 +10,11 @@ import { useAppDispatch } from 'app/store';
 import { logOut, selectIsLoggedIn } from 'features/auth/model/authSlice';
 import { useSelector } from 'react-redux';
 
-type HeaderMenuProps = {
+type Props = {
   changeModeHandler: () => void;
 };
 
-export const HeaderMenu = ({ changeModeHandler }: HeaderMenuProps) => {
+export const HeaderMenu = ({ changeModeHandler }: Props) => {
   const isLoggedIn = useSelector(selectIsLoggedIn);
   const dispatch = useAppDispatch();
 

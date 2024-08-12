@@ -1,13 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
 import { action } from '@storybook/addon-actions';
-import { AddItem, AddItemProps } from 'common/components/addItem/ui/AddItem';
 import * as React from 'react';
 import { ChangeEvent, useState } from 'react';
-import s from 'common/components/addItem/ui/AddItem.module.scss';
 import TextField from '@mui/material/TextField';
 import IconButton from '@mui/material/IconButton';
 import AddBoxIcon from '@mui/icons-material/AddBox';
+import { AddItem } from './AddItem';
 
 const meta: Meta<typeof AddItem> = {
   title: 'Todolist/AddItemForm',
@@ -28,11 +27,16 @@ const meta: Meta<typeof AddItem> = {
 export default meta;
 type Story = StoryObj<typeof AddItem>;
 
-// export const AddItemFormStory: Story = {
-//   args: { addItem: action('Clicked old version active') },
-// };
+const addItemAction = async (name: string) => {
+  action('clicked')(`Add Item called with: ${name}`);
+  return Promise.resolve();
+};
 
-const AddItemFormWithError = React.memo(({ addItem }: AddItemProps) => {
+export const AddItemFormStory: Story = {
+  args: { addItem: addItemAction },
+};
+
+const AddItemFormWithError = React.memo(({ addItem }: { addItem: (name: string) => Promise<any> }) => {
   //local state - not business tasks
   let [itemTitle, setNewItemTitle] = useState('');
   let [itemInputError, setItemInputError] = useState<string | null>('Title is required');
@@ -73,7 +77,7 @@ const AddItemFormWithError = React.memo(({ addItem }: AddItemProps) => {
   };
 
   return (
-    <div className={s.addItemBox}>
+    <div>
       <TextField
         onChange={onChangeInputHandler}
         onKeyDown={onKeyDownHandler}

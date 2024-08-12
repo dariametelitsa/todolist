@@ -113,7 +113,7 @@ const slice = createAppSlice({
       ),
 
       fetchTodolists: createAThunk<{ todolists: TodolistType[] }>(
-        async (arg, thunkAPI) => {
+        async (_, thunkAPI) => {
           const { dispatch, rejectWithValue } = thunkAPI;
           try {
             const res = await todolistAPI.getTodolist();

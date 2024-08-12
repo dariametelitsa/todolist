@@ -1,14 +1,14 @@
 import React, { ChangeEvent, InputHTMLAttributes } from 'react';
 import TextField from '@mui/material/TextField';
 
-type InputProps = {
+type Props = {
   changeTitle: (title: string) => void;
   title: string;
   onKeyDown: () => void;
   error?: string;
 } & InputHTMLAttributes<HTMLInputElement>;
 
-export const Input = ({ changeTitle, title, onKeyDown, ...restProps }: InputProps) => {
+export const Input = ({ changeTitle, title, onKeyDown, ...restProps }: Props) => {
   const onChangeInputHandler = (event: ChangeEvent<HTMLInputElement>) => {
     changeTitle(event.currentTarget.value);
   };

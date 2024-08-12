@@ -1,21 +1,20 @@
 import * as React from 'react';
-import s from 'common/components/addItem/ui/AddItem.module.scss';
 import TextField from '@mui/material/TextField';
 import IconButton from '@mui/material/IconButton';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import { useItemForm } from 'common/components/addItem/lib/useAddItem';
 
-export type AddItemProps = {
+export type Props = {
   addItem: (name: string) => Promise<any>;
   disabled?: boolean;
 };
 
-export const AddItem = React.memo(({ addItem, disabled }: AddItemProps) => {
+export const AddItem = React.memo(({ addItem, disabled }: Props) => {
   const { itemTitle, changeInputHandler, saveItemTitleHandler, itemInputError, onClickAddItemHandler } =
     useItemForm(addItem);
 
   return (
-    <div className={s.addItem}>
+    <div style={{ width: '100%', display: 'flex' }}>
       <TextField
         onChange={changeInputHandler}
         onKeyDown={saveItemTitleHandler}
