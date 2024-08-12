@@ -1,12 +1,10 @@
 import { asyncThunkCreator, buildCreateSlice, isFulfilled, PayloadAction } from '@reduxjs/toolkit';
 import { setAppStatus, setIsInitialized } from 'app/reducers/appSlice';
-import { handleServerAppError } from 'common/utils';
 import { authAPI } from '../api/authAPI';
 import { LoginParams } from '../api/authAPI.types';
 import { StatusCode } from 'common/enums';
 import { cleatTasksAndTodolists } from 'common/actions/commonActions';
-import { BaseResponse } from 'common/types';
-import { thunkTryCatch } from 'common/utils/thunkTryCatch';
+import { RejectActionError } from 'common/types/types';
 
 const createAppSlice = buildCreateSlice({
   creators: { asyncThunk: asyncThunkCreator },
@@ -17,8 +15,7 @@ const slice = createAppSlice({
   initialState: { isLoggedIn: false },
   reducers: (create) => {
     const createAThunk = create.asyncThunk.withTypes<{
-      //rejectValue: BaseResponse | unknown;
-      //todo RejectActionError
+      rejectValue: RejectActionError;
     }>();
 
     return {
@@ -27,49 +24,51 @@ const slice = createAppSlice({
         try {
           const res = await authAPI.login(arg);
           if (res.data.resultCode === StatusCode.SUCCESS) {
-            dispatch(setAppStatus({ status: 'succeeded' }));
             return true;
           } else {
-            const isShowGlobalError = !res.data.messages.length;
-            handleServerAppError(res.data, dispatch, isShowGlobalError);
-            return rejectWithValue(res.data);
+            return rejectWithValue({ error: res.data, type: 'appError' } as RejectActionError);
           }
-        } catch (e) {
-          return rejectWithValue(e);
+        } catch (error) {
+          return rejectWithValue({ error, type: 'catchError' } as RejectActionError);
         }
       }, {}),
+
       initializeApp: createAThunk<boolean>(async (_, thunkAPI) => {
         const { dispatch, rejectWithValue } = thunkAPI;
-        return thunkTryCatch(thunkAPI, async () => {
+        try {
           const res = await authAPI.me();
           if (res.data.resultCode === StatusCode.SUCCESS) {
             dispatch(setAppStatus({ status: 'succeeded' }));
             return true;
           } else {
-            return rejectWithValue(null);
+            return rejectWithValue({ error: res.data, type: 'appError' } as RejectActionError);
           }
-        }).finally(() => {
+        } catch (error) {
+          return rejectWithValue({ error, type: 'catchError' } as RejectActionError);
+        } finally {
           dispatch(setIsInitialized({ isInitialized: true }));
-        });
+        }
       }, {}),
 
       logOut: createAThunk<boolean>(async (_, thunkAPI) => {
         const { dispatch, rejectWithValue } = thunkAPI;
 
-        return thunkTryCatch(thunkAPI, async () => {
+        try {
           const res = await authAPI.logOut();
           if (res.data.resultCode === StatusCode.SUCCESS) {
             dispatch(cleatTasksAndTodolists());
             dispatch(setAppStatus({ status: 'succeeded' }));
             return false;
           } else {
-            handleServerAppError(res.data, dispatch);
-            return rejectWithValue(res.data);
+            return rejectWithValue({ error: res.data, type: 'appError' } as RejectActionError);
           }
-        });
+        } catch (error) {
+          return rejectWithValue({ error, type: 'catchError' } as RejectActionError);
+        }
       }, {}),
     };
   },
+
   extraReducers: (builder) => {
     builder.addMatcher(isFulfilled(login, logOut, initializeApp), (state, action: PayloadAction<boolean>) => {
       state.isLoggedIn = action.payload;

@@ -6,7 +6,6 @@ import { taskAPI } from 'features/todolistList/api/taskAPI';
 import { AddTaskArgs, DeleteTaskArgs, Task, UpdateTaskModelType } from 'features/todolistList/api/taskAPI.types';
 import { AppRootStateType } from 'app/store';
 import { cleatTasksAndTodolists } from 'common/actions/commonActions';
-import { thunkTryCatch } from 'common/utils/thunkTryCatch';
 import { RejectActionError } from 'common/types/types';
 
 const createAppSlice = buildCreateSlice({

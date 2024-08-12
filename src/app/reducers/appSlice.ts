@@ -1,16 +1,8 @@
-import { createSlice, isFulfilled, isPending, isRejected, PayloadAction, UnknownAction } from '@reduxjs/toolkit';
+import { createSlice, isFulfilled, isPending, isRejected, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { RejectActionError } from 'common/types/types';
-import { addTodolist } from 'features/todolistList/model/todolistsSlice';
-import { action } from '@storybook/addon-actions';
 
 export type AppStatus = 'idle' | 'loading' | 'succeeded' | 'failed';
-
-// export type InitialAppStateType = {
-//   status: AppStatusTypes
-//   error: string | null
-//   isInitialized: boolean
-// }
 
 const slice = createSlice({
   name: 'app',
