@@ -19,7 +19,7 @@ const slice = createAppSlice({
   initialState: {} as Tasks,
   reducers: (create) => {
     const createAThunk = create.asyncThunk.withTypes<{
-      rejectValue: BaseResponse | null;
+      //rejectValue: BaseResponse | unknown;
     }>();
     return {
       fetchTasks: createAThunk<{ todolistId: string; tasks: Task[] }, string>(

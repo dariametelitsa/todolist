@@ -17,13 +17,14 @@ const slice = createAppSlice({
   initialState: { isLoggedIn: false },
   reducers: (create) => {
     const createAThunk = create.asyncThunk.withTypes<{
-      rejectValue: BaseResponse | null;
+      //rejectValue: BaseResponse | unknown;
+      //todo RejectActionError
     }>();
 
     return {
       login: createAThunk<boolean, LoginParams>(async (arg, thunkAPI) => {
         const { dispatch, rejectWithValue } = thunkAPI;
-        return thunkTryCatch(thunkAPI, async () => {
+        try {
           const res = await authAPI.login(arg);
           if (res.data.resultCode === StatusCode.SUCCESS) {
             dispatch(setAppStatus({ status: 'succeeded' }));
@@ -33,7 +34,9 @@ const slice = createAppSlice({
             handleServerAppError(res.data, dispatch, isShowGlobalError);
             return rejectWithValue(res.data);
           }
-        });
+        } catch (e) {
+          return rejectWithValue(e);
+        }
       }, {}),
       initializeApp: createAThunk<boolean>(async (_, thunkAPI) => {
         const { dispatch, rejectWithValue } = thunkAPI;

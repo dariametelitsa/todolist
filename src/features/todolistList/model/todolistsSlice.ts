@@ -3,12 +3,11 @@ import { todolistAPI } from 'features/todolistList/api/todolistAPI';
 import { AppStatus, setAppStatus } from 'app/reducers/appSlice';
 import { asyncThunkCreator, buildCreateSlice, PayloadAction } from '@reduxjs/toolkit';
 import { TodolistType, UpdateTodolistTitle } from 'features/todolistList/api/todolistAPI.types';
-import { handleServerAppError } from 'common/utils';
 import { cleatTasksAndTodolists } from 'common/actions/commonActions';
 import { fetchTasks } from 'features/todolistList/model/tasksSlice';
 import { thunkTryCatch } from 'common/utils/thunkTryCatch';
 import { StatusCode } from 'common/enums';
-import { BaseResponse } from 'common/types';
+import { RejectActionError } from 'common/types/types';
 
 const createAppSlice = buildCreateSlice({
   creators: { asyncThunk: asyncThunkCreator },
@@ -19,7 +18,7 @@ const slice = createAppSlice({
   initialState: [] as TodoListDomain[],
   reducers: (create) => {
     const createAThunk = create.asyncThunk.withTypes<{
-      rejectValue: BaseResponse | null;
+      rejectValue: RejectActionError;
     }>();
 
     return {
@@ -48,16 +47,17 @@ const slice = createAppSlice({
 
       addTodolist: createAThunk<{ todolist: TodolistType }, string>(
         async (arg, thunkAPI) => {
-          const { dispatch, rejectWithValue } = thunkAPI;
-          return thunkTryCatch(thunkAPI, async () => {
+          const { rejectWithValue } = thunkAPI;
+          try {
             const res = await todolistAPI.addTodolist(arg);
             if (res.data.resultCode === StatusCode.SUCCESS) {
               return { todolist: res.data.data.item };
             } else {
-              handleServerAppError(res.data, dispatch);
-              return rejectWithValue(res.data);
+              return rejectWithValue({ error: res.data, type: 'appError' } satisfies RejectActionError);
             }
-          });
+          } catch (error) {
+            return rejectWithValue({ error, type: 'catchError' } satisfies RejectActionError);
+          }
         },
         {
           fulfilled: (state, action) => {
@@ -75,8 +75,8 @@ const slice = createAppSlice({
               dispatch(setAppStatus({ status: 'succeeded' }));
               return arg;
             } else {
-              handleServerAppError(res.data, dispatch);
-              return rejectWithValue(null);
+              //handleServerAppError(res.data, dispatch);
+              //return rejectWithValue({ error: res.data, errorType: 'appError' } as RejectActionError);
             }
           });
         },

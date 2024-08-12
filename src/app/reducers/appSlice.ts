@@ -1,6 +1,8 @@
-import { createSlice, isAllOf, isFulfilled, isPending, isRejected, PayloadAction } from '@reduxjs/toolkit';
-import { fetchTasks } from 'features/todolistList/model/tasksSlice';
-import { BaseResponse } from 'common/types';
+import { createSlice, isFulfilled, isPending, isRejected, PayloadAction, UnknownAction } from '@reduxjs/toolkit';
+import axios from 'axios';
+import { RejectActionError } from 'common/types/types';
+import { addTodolist } from 'features/todolistList/model/todolistsSlice';
+import { action } from '@storybook/addon-actions';
 
 export type AppStatus = 'idle' | 'loading' | 'succeeded' | 'failed';
 
@@ -8,12 +10,6 @@ export type AppStatus = 'idle' | 'loading' | 'succeeded' | 'failed';
 //   status: AppStatusTypes
 //   error: string | null
 //   isInitialized: boolean
-// }
-//
-// const initialState: InitialAppStateType = {
-//   status: 'idle',
-//   error: null,
-//   isInitialized: false,
 // }
 
 const slice = createSlice({
@@ -36,6 +32,7 @@ const slice = createSlice({
   },
 
   extraReducers: (builder) => {
+    // @ts-ignore
     builder
       .addMatcher(isPending, (state) => {
         state.status = 'loading';
@@ -47,11 +44,34 @@ const slice = createSlice({
         state.status = 'failed';
       })
       .addMatcher(
-        (action): action is PayloadAction<BaseResponse> => {
+        (action): action is PayloadAction<RejectActionError> => {
           return isRejected(action) && action.payload;
         },
-        (state, action: PayloadAction<BaseResponse>) => {
-          state.error = action.payload.messages.length ? action.payload.messages[0] : 'Some error occurred';
+        //(action) => action.type.endsWith('/rejected'),
+        (state, action: PayloadAction<RejectActionError>) => {
+          const defaultErrorMessage = 'Some error occurred';
+          switch (action.payload.type) {
+            case 'appError': {
+              state.error = action.payload.error.messages.length
+                ? action.payload.error.messages[0]
+                : defaultErrorMessage;
+              break;
+            }
+            case 'catchError': {
+              let error = action.payload.error;
+              if (axios.isAxiosError(error)) {
+                state.error = error.response?.data?.message || error?.message || defaultErrorMessage;
+              } else if (error instanceof Error) {
+                state.error = `Native error: ${error.message}`;
+              } else {
+                state.error = JSON.stringify(error);
+              }
+              break;
+            }
+            default: {
+              state.error = defaultErrorMessage;
+            }
+          }
         }
       );
   },

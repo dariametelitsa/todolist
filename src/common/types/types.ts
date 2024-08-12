@@ -11,3 +11,15 @@ export type FieldErrorType = {
   error: string;
   field: string;
 };
+
+type RejectAppError = {
+  error: BaseResponse;
+  type: 'appError';
+};
+
+type RejectCatchError = {
+  error: unknown;
+  type: 'catchError';
+};
+
+export type RejectActionError = RejectAppError | RejectCatchError;
