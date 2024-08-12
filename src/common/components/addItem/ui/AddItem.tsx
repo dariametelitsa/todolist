@@ -26,7 +26,7 @@ export const AddItem = React.memo(({ addItem, disabled }: AddItemProps) => {
         helperText={!!itemInputError ? `${itemInputError}` : ' '}
         size="small"
         disabled={disabled}
-        className={s.addItemBox}
+        sx={{ mt: 2, width: 1 }}
       />
 
       <IconButton onClick={onClickAddItemHandler} color={'primary'} disabled={disabled}>
