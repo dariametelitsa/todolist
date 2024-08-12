@@ -1,17 +1,17 @@
-import * as React from 'react'
-import TextField from '@mui/material/TextField'
-import EditIcon from '@mui/icons-material/Edit'
-import IconButton from '@mui/material/IconButton'
-import DoneIcon from '@mui/icons-material/Done'
-import { UseEditableSpan } from './hooks/useEditableSpan'
+import * as React from 'react';
+import TextField from '@mui/material/TextField';
+import EditIcon from '@mui/icons-material/Edit';
+import IconButton from '@mui/material/IconButton';
+import DoneIcon from '@mui/icons-material/Done';
+import { UseEditableSpan } from 'common/components/editableSpan/lib/useEditableSpan';
 
 export type EditableSpanProps = {
-  oldTitle: string
-  idToChange: string
-  updateItem: (id: string, newTitle: string) => void
-  maxLength?: number
-  isDisabled?: boolean
-}
+  oldTitle: string;
+  idToChange: string;
+  updateItem: (id: string, newTitle: string) => void;
+  maxLength?: number;
+  isDisabled?: boolean;
+};
 
 export const EditableSpan = React.memo(
   ({ idToChange, oldTitle, updateItem, maxLength = 30, isDisabled }: EditableSpanProps) => {
@@ -23,7 +23,7 @@ export const EditableSpan = React.memo(
       setEditMode,
       editMode,
       newTitle,
-    } = UseEditableSpan(idToChange, oldTitle, updateItem)
+    } = UseEditableSpan(idToChange, oldTitle, updateItem);
 
     return editMode && !isDisabled ? (
       <>
@@ -41,7 +41,7 @@ export const EditableSpan = React.memo(
         />
         <IconButton
           onClick={() => {
-            setEditMode(true)
+            setEditMode(true);
           }}
           disabled={isDisabled}
           color={'inherit'}
@@ -57,14 +57,14 @@ export const EditableSpan = React.memo(
         <IconButton
           disabled={isDisabled}
           onClick={(e) => {
-            e.preventDefault()
-            setEditMode(true)
+            e.preventDefault();
+            setEditMode(true);
           }}
           color={'inherit'}
           size={'small'}>
           <EditIcon />
         </IconButton>
       </>
-    )
+    );
   }
-)
+);
