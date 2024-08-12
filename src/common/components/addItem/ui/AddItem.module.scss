@@ -11,3 +11,13 @@
 //.taskInputErrorMessage {
 //  color: tomato;
 //}
+.addItem{
+  width: 100%;
+  display: flex;
+}
+
+.addItemBox {
+  align-self: center;
+  flex-grow: 1;
+  margin-top: 20px;
+}

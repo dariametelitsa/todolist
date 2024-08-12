@@ -15,7 +15,7 @@ export const AddItem = React.memo(({ addItem, disabled }: AddItemProps) => {
     useItemForm(addItem);
 
   return (
-    <div className={s.addItemBox}>
+    <div className={s.addItem}>
       <TextField
         onChange={changeInputHandler}
         onKeyDown={saveItemTitleHandler}
@@ -26,6 +26,7 @@ export const AddItem = React.memo(({ addItem, disabled }: AddItemProps) => {
         helperText={!!itemInputError ? `${itemInputError}` : ' '}
         size="small"
         disabled={disabled}
+        className={s.addItemBox}
       />
 
       <IconButton onClick={onClickAddItemHandler} color={'primary'} disabled={disabled}>

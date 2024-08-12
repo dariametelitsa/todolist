@@ -17,7 +17,8 @@ export const useItemForm = (addItem: (name: string) => Promise<any>) => {
         setNewItemTitle('');
       })
       .catch((err) => {
-        console.log(err.message[0]);
+        console.log(err.error.messages[0]);
+        setItemInputError(err.error.messages[0]);
       });
   };
 
@@ -30,15 +31,14 @@ export const useItemForm = (addItem: (name: string) => Promise<any>) => {
       addItemWithCheck();
     }
   };
+
   const addItemWithCheck = () => {
     const trimmedTaskTitle = itemTitle.trim();
     if (ifTaskCanAdded) {
       if (trimmedTaskTitle) {
         addItemHandler(trimmedTaskTitle);
-        setNewItemTitle('');
       } else {
         setItemInputError('Title is required');
-        setNewItemTitle('');
       }
     }
   };
