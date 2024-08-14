@@ -20,7 +20,7 @@ const slice = createAppSlice({
 
     return {
       login: createAThunk<boolean, LoginParams>(async (arg, thunkAPI) => {
-        const { dispatch, rejectWithValue } = thunkAPI;
+        const { rejectWithValue } = thunkAPI;
         try {
           const res = await authAPI.login(arg);
           if (res.data.resultCode === StatusCode.SUCCESS) {
