@@ -23,7 +23,14 @@ export const TodolistTitle = ({ id, title, entityStatus }: Props) => {
   };
 
   return (
-    <h3 style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 0, marginTop: '30px' }}>
+    <h3
+      style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        marginBottom: 0,
+        marginTop: '30px',
+        wordBreak: 'break-all',
+      }}>
       <EditableSpan
         oldTitle={title}
         idToChange={id}

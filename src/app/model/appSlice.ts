@@ -1,6 +1,7 @@
 import { createSlice, isFulfilled, isPending, isRejected, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { RejectActionError } from 'common/types/types';
+import { initializeApp } from 'features/auth/model/authSlice';
 
 export type AppStatus = 'idle' | 'loading' | 'succeeded' | 'failed';
 
@@ -41,6 +42,10 @@ const slice = createSlice({
         },
         //(action) => action.type.endsWith('/rejected'),
         (state, action: PayloadAction<RejectActionError>) => {
+          if (action.type === initializeApp.rejected.type) {
+            return;
+          }
+
           const defaultErrorMessage = 'Some error occurred';
           switch (action.payload.type) {
             case 'appError': {
