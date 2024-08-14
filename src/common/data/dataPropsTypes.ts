@@ -1,4 +1,4 @@
-import { AppStatus } from 'app/reducers/appSlice';
+import { AppStatus } from 'app/model/appSlice';
 import { TodolistType } from 'features/todolistList/api/todolistAPI.types';
 import { Task } from 'features/todolistList/api/taskAPI.types';
 

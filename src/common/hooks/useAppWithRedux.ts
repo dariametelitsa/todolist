@@ -2,7 +2,7 @@ import { useAppDispatch } from 'app/store';
 import { useEffect, useState } from 'react';
 import createTheme from '@mui/material/styles/createTheme';
 import cyan from '@mui/material/colors/cyan';
-import { selectAppIsInitialized, selectAppStatus } from 'app/reducers/appSlice';
+import { selectAppIsInitialized, selectAppStatus } from 'app/model/appSlice';
 import { useSelector } from 'react-redux';
 import { initializeApp, selectIsLoggedIn } from 'features/auth/model/authSlice';
 import { fetchTodolists } from 'features/todolistList/model/todolistsSlice';

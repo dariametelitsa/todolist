@@ -4,7 +4,7 @@ import { todolistsReducer } from 'features/todolistList/model/todolistsSlice';
 import { tasksReducer } from 'features/todolistList/model/tasksSlice';
 import React from 'react';
 import { thunk } from 'redux-thunk';
-import { appReducer } from 'app/reducers/appSlice';
+import { appReducer } from 'app/model/appSlice';
 import { authReducer } from 'features/auth/model/authSlice';
 import { RouterProvider } from 'react-router-dom';
 import { router } from 'common/routes/router';

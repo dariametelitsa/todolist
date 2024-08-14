@@ -4,7 +4,6 @@ import { FilterValues } from 'common/data/dataPropsTypes';
 import { changedTodolistCover } from 'features/todolistList/model/todolistsSlice';
 import { addTask, cleanTasksList, makeSelectFilteredTasks } from 'features/todolistList/model/tasksSlice';
 import { TaskStatuses } from 'common/enums';
-import { bindActionCreators } from 'redux';
 
 export const useTodolist = (id: string, filter: FilterValues) => {
   //const tasks = useAppSelector((state) => selectTasksByTd(state, id));

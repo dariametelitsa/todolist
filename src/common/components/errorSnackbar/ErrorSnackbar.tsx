@@ -5,7 +5,7 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import { Alert } from '@mui/material';
 import { useAppDispatch } from 'app/store';
-import { selectAppError, setAppError } from 'app/reducers/appSlice';
+import { selectAppError, setAppError } from 'app/model/appSlice';
 import { useSelector } from 'react-redux';
 
 export function ErrorSnackbar() {

@@ -1,5 +1,5 @@
 import { asyncThunkCreator, buildCreateSlice, isFulfilled, PayloadAction } from '@reduxjs/toolkit';
-import { setAppStatus, setIsInitialized } from 'app/reducers/appSlice';
+import { setAppStatus, setIsInitialized } from 'app/model/appSlice';
 import { authAPI } from '../api/authAPI';
 import { LoginParams } from '../api/authAPI.types';
 import { StatusCode } from 'common/enums';

@@ -5,7 +5,7 @@ import IconButton from '@mui/material/IconButton';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import ListItem from '@mui/material/ListItem';
 import { useTask } from 'features/todolistList/ui/todolist/ui/task/lib/useTask';
-import { AppStatus } from 'app/reducers/appSlice';
+import { AppStatus } from 'app/model/appSlice';
 import { TaskStatuses } from 'common/enums';
 import { EditableSpan } from 'common/components/editableSpan/EditableSpan';
 import { Task as TaskType } from 'features/todolistList/api/taskAPI.types';
