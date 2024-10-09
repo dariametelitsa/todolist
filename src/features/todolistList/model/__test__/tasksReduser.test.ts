@@ -5,8 +5,8 @@ import {
   cleanTasksList,
   deleteTask,
   fetchTasks,
-  tasksReducer,
   updateTask,
+  tasksReducer,
 } from 'features/todolistList/model/tasksSlice';
 import { addTodolist, deleteTodolist, fetchTodolists } from 'features/todolistList/model/todolistsSlice';
 import { ActionTypeForTest } from 'common/types';
