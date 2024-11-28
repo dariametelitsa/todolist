@@ -1,22 +1,20 @@
-import { useAppDispatch } from 'app/store';
-import { deleteTask, updateTask } from 'features/todolistList/model/tasksSlice';
 import { TaskStatuses } from 'common/enums/enums';
+import { useDeleteTaskMutation, useUpdateTaskMutation } from 'features/todolistList/api/taskAPI';
 
 export const useTask = (todolistId: string) => {
-  const dispatch = useAppDispatch();
+  const [deleteTask] = useDeleteTaskMutation();
+  const [updateTask] = useUpdateTaskMutation();
 
   const removeTaskHandler = (taskId: string) => {
-    dispatch(deleteTask({ todolistId, taskId }));
+    deleteTask({ todolistId, taskId });
   };
 
   const changeTaskStatusHandler = (taskId: string, newState: boolean) => {
-    dispatch(
-      updateTask({ todolistId, taskId, model: { status: newState ? TaskStatuses.Completed : TaskStatuses.New } })
-    );
+    updateTask({ todolistId, taskId, model: { status: newState ? TaskStatuses.Completed : TaskStatuses.New } });
   };
 
   const changeTaskTitleHandler = (taskId: string, newTitle: string) => {
-    dispatch(updateTask({ todolistId, taskId, model: { title: newTitle } }));
+    updateTask({ todolistId, taskId, model: { title: newTitle } });
   };
 
   return {

@@ -2,9 +2,9 @@ import { useAppDispatch } from 'app/store';
 import { useCallback, useMemo } from 'react';
 import { FilterValues } from 'common/data/dataPropsTypes';
 import { changedTodolistCover } from 'features/todolistList/model/todolistsSlice';
-import { addTask, cleanTasksList } from 'features/todolistList/model/tasksSlice';
+import { cleanTasksList } from 'features/todolistList/model/tasksSlice';
 import { TaskStatuses } from 'common/enums';
-import { useGetTaskQuery } from 'features/todolistList/api/taskAPI';
+import { useAddTaskMutation, useGetTaskQuery } from 'features/todolistList/api/taskAPI';
 
 export const useTodolist = (id: string, filter: FilterValues) => {
   //const tasks = useAppSelector((state) => selectTasksByTd(state, id));
@@ -14,7 +14,7 @@ export const useTodolist = (id: string, filter: FilterValues) => {
       tasks: res.data?.items,
     }),
   });
-  console.log(id);
+  const [addTask] = useAddTaskMutation();
   // const filteredTasks = useAppSelector((state) => makeSelectFilteredTasks(state, id, filter));
   const filteredTasks = tasks ?? [];
   const dispatch = useAppDispatch();
@@ -33,9 +33,9 @@ export const useTodolist = (id: string, filter: FilterValues) => {
 
   const addItemHandler = useCallback(
     (title: string) => {
-      return dispatch(addTask({ todolistId: id, title }));
+      return addTask({ todolistId: id, title });
     },
-    [dispatch, id]
+    [id, addTask]
   );
 
   const changeCoverHandler = useCallback(
