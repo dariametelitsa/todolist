@@ -1,9 +1,10 @@
 import { useAppDispatch } from 'app/store';
 import { useSelector } from 'react-redux';
-import { login, selectIsLoggedIn } from 'features/auth/model/authSlice';
 import { FormikHelpers, useFormik } from 'formik';
 import { LoginParams } from 'features/auth/api/authAPI.types';
 import { BaseResponse } from 'common/types';
+import { selectAppIsLogin } from 'app/model/appSlice';
+import { useLoginMutation } from 'features/auth/api/authAPI';
 
 type Errors = {
   email?: string;
@@ -12,7 +13,8 @@ type Errors = {
 
 export const useLogin = () => {
   const dispatch = useAppDispatch();
-  const isLoggedIn = useSelector(selectIsLoggedIn);
+  const isLoggedIn = useSelector(selectAppIsLogin);
+  const [login] = useLoginMutation();
 
   const formik = useFormik({
     initialValues: {
@@ -34,7 +36,8 @@ export const useLogin = () => {
     },
 
     onSubmit: (values: LoginParams, formikHelpers: FormikHelpers<LoginParams>) => {
-      dispatch(login(values))
+      // dispatch(login(values))
+      login(values)
         .unwrap()
         .catch((error: BaseResponse) => {
           if (error.messages) {

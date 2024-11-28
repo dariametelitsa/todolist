@@ -2,9 +2,11 @@ import { useAppDispatch } from 'app/store';
 import { useEffect, useState } from 'react';
 import createTheme from '@mui/material/styles/createTheme';
 import cyan from '@mui/material/colors/cyan';
-import { selectAppIsInitialized, selectAppStatus } from 'app/model/appSlice';
+import { selectAppIsInitialized, selectAppIsLogin, selectAppStatus, setIsLoggedIn } from 'app/model/appSlice';
 import { useSelector } from 'react-redux';
-import { initializeApp, selectIsLoggedIn } from 'features/auth/model/authSlice';
+import { useMeQuery } from 'features/auth/api/authAPI';
+import { StatusCode } from 'common/enums';
+// import { initializeApp, selectIsLoggedIn } from 'features/auth/model/authSlice';
 // import { fetchTodolists } from 'features/todolistList/model/todolistsSlice';
 
 type ThemeMode = 'dark' | 'light';
@@ -12,13 +14,18 @@ type ThemeMode = 'dark' | 'light';
 export const useAppWithRedux = () => {
   const dispatch = useAppDispatch();
   const status = useSelector(selectAppStatus);
-  const isLoggedIn = useSelector(selectIsLoggedIn);
-  const isInitialized = useSelector(selectAppIsInitialized);
-  const isLoading = status === 'loading';
+  const isLoggedIn = useSelector(selectAppIsLogin);
+  const { data, isLoading } = useMeQuery();
+  const [isInitialized, setIsInitialized] = useState(false);
 
   useEffect(() => {
-    dispatch(initializeApp());
-  }, [dispatch]);
+    if (!isLoading) {
+      setIsInitialized(true);
+      if (data?.resultCode === StatusCode.SUCCESS) {
+        dispatch(setIsLoggedIn({ isLoggedIn: true }));
+      }
+    }
+  }, [dispatch, data?.resultCode, isLoading]);
 
   useEffect(() => {
     if (isLoggedIn) {

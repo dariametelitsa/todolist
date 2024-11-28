@@ -10,19 +10,21 @@ import { useAppDispatch } from 'app/store';
 // import { logOut, selectIsLoggedIn } from 'features/auth/model/authSlice';
 import { useSelector } from 'react-redux';
 import { useLogoutMutation } from 'features/auth/api/authAPI';
+import { selectAppIsLogin } from 'app/model/appSlice';
 
 type Props = {
   changeModeHandler: () => void;
 };
 
 export const HeaderMenu = ({ changeModeHandler }: Props) => {
-  const isLoggedIn = useSelector(selectIsLoggedIn);
+  const isLoggedIn = useSelector(selectAppIsLogin);
   const [logOut] = useLogoutMutation();
 
   const onClickLogoutHandler = () => {
+    logOut();
+  };
 
-
-    return (
+  return (
     <Toolbar>
       <IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
         <MenuIcon />

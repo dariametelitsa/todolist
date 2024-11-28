@@ -3,17 +3,17 @@ import Grid from '@mui/material/Unstable_Grid2';
 import { Navigate } from 'react-router-dom';
 import { PATH } from 'common/routes/PATH';
 import { useSelector } from 'react-redux';
-import { selectIsLoggedIn } from 'features/auth/model/authSlice';
 import { AddItem } from 'common/components/addItem/ui/AddItem';
 import { TodolistContainerSkeleton } from 'features/todolistList/ui/todolist/ui/TodolistContainerSkeleton';
 import { useAddTodolistMutation, useGetTodolistQuery } from 'features/todolistList/api/todolistAPI';
+import { selectAppIsLogin } from 'app/model/appSlice';
 
 const Todolist = lazy(() => import('features/todolistList/ui/todolist/ui/Todolist'));
 
 export const TodolistlistsContainer: React.FC = () => {
   const { data: todoLists } = useGetTodolistQuery();
   const [addTodolist] = useAddTodolistMutation();
-  const isLoggedIn = useSelector(selectIsLoggedIn);
+  const isLoggedIn = useSelector(selectAppIsLogin);
 
   const addTodolistCallback = useCallback(
     (title: string) => {

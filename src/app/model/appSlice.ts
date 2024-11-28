@@ -11,6 +11,7 @@ const slice = createSlice({
     status: 'idle' as AppStatus,
     error: null as string | null,
     isInitialized: false,
+    isLoggedIn: false,
   },
   reducers: {
     setAppStatus: (state, action: PayloadAction<{ status: AppStatus }>) => {
@@ -21,6 +22,9 @@ const slice = createSlice({
     },
     setIsInitialized: (state, action: PayloadAction<{ isInitialized: boolean }>) => {
       state.isInitialized = action.payload.isInitialized;
+    },
+    setIsLoggedIn: (state, action: PayloadAction<{ isLoggedIn: boolean }>) => {
+      state.isLoggedIn = action.payload.isLoggedIn;
     },
   },
 
@@ -75,6 +79,7 @@ const slice = createSlice({
 
   selectors: {
     selectAppStatus: (state) => state.status,
+    selectAppIsLogin: (state) => state.isLoggedIn,
     selectAppError: (state) => state.error,
     selectAppIsInitialized: (state) => state.isInitialized,
   },
@@ -82,6 +87,6 @@ const slice = createSlice({
 
 export type AppInitialState = ReturnType<typeof slice.getInitialState>;
 
-export const { setAppStatus, setAppError, setIsInitialized } = slice.actions;
+export const { setAppStatus, setAppError, setIsInitialized, setIsLoggedIn } = slice.actions;
 export const appReducer = slice.reducer;
-export const { selectAppStatus, selectAppError, selectAppIsInitialized } = slice.selectors;
+export const { selectAppStatus, selectAppError, selectAppIsInitialized, selectAppIsLogin } = slice.selectors;
