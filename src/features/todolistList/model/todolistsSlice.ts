@@ -1,10 +1,7 @@
 import { FilterValues, TodoListDomain } from 'common/data/dataPropsTypes';
-import { todolistAPI } from 'features/todolistList/api/todolistAPI';
 import { AppStatus } from 'app/model/appSlice';
 import { asyncThunkCreator, buildCreateSlice, PayloadAction } from '@reduxjs/toolkit';
-import { TodolistType, UpdateTodolistTitle } from 'features/todolistList/api/todolistAPI.types';
 import { cleatTasksAndTodolists } from 'common/actions/commonActions';
-import { StatusCode } from 'common/enums';
 import { RejectActionError } from 'common/types/types';
 
 const createAppSlice = buildCreateSlice({
