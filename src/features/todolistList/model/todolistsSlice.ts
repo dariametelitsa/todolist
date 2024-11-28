@@ -89,27 +89,27 @@ const slice = createAppSlice({
       //   }
       // ),
 
-      changeTodolistTitle: createAThunk<UpdateTodolistTitle, UpdateTodolistTitle>(
-        async (arg, thunkAPI) => {
-          const { rejectWithValue } = thunkAPI;
-          try {
-            const res = await todolistAPI.updateTodolist(arg);
-            if (res.data.resultCode === StatusCode.SUCCESS) {
-              return arg;
-            } else {
-              return rejectWithValue({ error: res.data, type: 'appError' } as RejectActionError);
-            }
-          } catch (error) {
-            return rejectWithValue({ error, type: 'catchError' } as RejectActionError);
-          }
-        },
-        {
-          fulfilled: (state, action) => {
-            const index = state.findIndex((td) => td.id === action.payload.todolistId);
-            if (index !== -1) state[index].title = action.payload.title;
-          },
-        }
-      ),
+      // changeTodolistTitle: createAThunk<UpdateTodolistTitle, UpdateTodolistTitle>(
+      //   async (arg, thunkAPI) => {
+      //     const { rejectWithValue } = thunkAPI;
+      //     try {
+      //       const res = await todolistAPI.updateTodolist(arg);
+      //       if (res.data.resultCode === StatusCode.SUCCESS) {
+      //         return arg;
+      //       } else {
+      //         return rejectWithValue({ error: res.data, type: 'appError' } as RejectActionError);
+      //       }
+      //     } catch (error) {
+      //       return rejectWithValue({ error, type: 'catchError' } as RejectActionError);
+      //     }
+      //   },
+      //   {
+      //     fulfilled: (state, action) => {
+      //       const index = state.findIndex((td) => td.id === action.payload.todolistId);
+      //       if (index !== -1) state[index].title = action.payload.title;
+      //     },
+      //   }
+      //),
 
       // fetchTodolists: createAThunk<{ todolists: TodolistType[] }>(
       //   async (_, thunkAPI) => {
@@ -152,7 +152,7 @@ export const {
   changeEntityStatus,
   // addTodolist,
   // deleteTodolist,
-  changeTodolistTitle,
+  //changeTodolistTitle,
 } = slice.actions;
 
 export const todolistsReducer = slice.reducer;

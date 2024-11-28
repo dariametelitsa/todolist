@@ -4,7 +4,6 @@ import { AxiosResponse } from 'axios';
 import { TodolistType, UpdateTodolistTitle } from './todolistAPI.types';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { TodoListDomain } from 'common/data/dataPropsTypes';
-import { BaseQueryArg } from '@reduxjs/toolkit/dist/query/baseQueryTypes';
 
 export const todolistApi = createApi({
   reducerPath: 'todolistApi',
@@ -16,18 +15,22 @@ export const todolistApi = createApi({
       headers.set('Authorization', `Bearer ${process.env.REACT_APP_AUTH_TOKEN}`);
     },
   }),
+  tagTypes: ['Todolist'],
   endpoints: (builder) => ({
     getTodolist: builder.query<Array<TodoListDomain>, void>({
       query: () => ({ url: '/todo-lists' }),
       transformResponse(todolists: TodolistType[]): TodoListDomain[] {
         return todolists.map((td) => ({ ...td, filter: 'all', entityStatus: 'idle' }));
       },
+      providesTags: ['Todolist'],
     }),
     addTodolist: builder.mutation<BaseResponse<{ item: TodolistType }>, string>({
       query: (title) => ({ url: '/todo-lists', method: 'POST', body: { title } }),
+      invalidatesTags: ['Todolist'],
     }),
     deleteTodolist: builder.mutation<BaseResponse, string>({
       query: (todoId) => ({ url: `/todo-lists/${todoId}`, method: 'DELETE' }),
+      invalidatesTags: ['Todolist'],
     }),
     updateTodolist: builder.mutation<BaseResponse, UpdateTodolistTitle>({
       query: (arg) => {
@@ -38,6 +41,7 @@ export const todolistApi = createApi({
           method: 'PUT',
         };
       },
+      invalidatesTags: ['Todolist'],
     }),
   }),
 });
@@ -58,8 +62,8 @@ export const todolistAPI = {
   // deleteTodolist: (todoId: string) => {
   //   return instance.delete<BaseResponse, AxiosResponse<BaseResponse>>(`/todo-lists/${todoId}`);
   // },
-  updateTodolist: (arg: UpdateTodolistTitle) => {
-    const { todolistId, title } = arg;
-    return instance.put<BaseResponse, AxiosResponse<BaseResponse>>(`/todo-lists/${todolistId}`, { title });
-  },
+  // updateTodolist: (arg: UpdateTodolistTitle) => {
+  //   const { todolistId, title } = arg;
+  //   return instance.put<BaseResponse, AxiosResponse<BaseResponse>>(`/todo-lists/${todolistId}`, { title });
+  // },
 };
