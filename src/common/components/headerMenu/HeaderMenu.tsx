@@ -10,7 +10,8 @@ import { useAppDispatch } from 'app/store';
 // import { logOut, selectIsLoggedIn } from 'features/auth/model/authSlice';
 import { useSelector } from 'react-redux';
 import { useLogoutMutation } from 'features/auth/api/authAPI';
-import { selectAppIsLogin } from 'app/model/appSlice';
+import { selectAppIsLogin, setIsLoggedIn } from 'app/model/appSlice';
+import { StatusCode } from 'common/enums';
 
 type Props = {
   changeModeHandler: () => void;
@@ -19,9 +20,20 @@ type Props = {
 export const HeaderMenu = ({ changeModeHandler }: Props) => {
   const isLoggedIn = useSelector(selectAppIsLogin);
   const [logOut] = useLogoutMutation();
+  const dispatch = useAppDispatch();
 
   const onClickLogoutHandler = () => {
-    logOut();
+    logOut()
+      .unwrap()
+      .then((res) => {
+        if (res.resultCode === StatusCode.SUCCESS) {
+          dispatch(setIsLoggedIn({ isLoggedIn: false }));
+          localStorage.removeItem('sn-token');
+          //todo
+          // dispatch(clearTasks())
+          // dispatch(clearTodolists())
+        }
+      });
   };
 
   return (

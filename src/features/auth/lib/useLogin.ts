@@ -3,8 +3,9 @@ import { useSelector } from 'react-redux';
 import { FormikHelpers, useFormik } from 'formik';
 import { LoginParams } from 'features/auth/api/authAPI.types';
 import { BaseResponse } from 'common/types';
-import { selectAppIsLogin } from 'app/model/appSlice';
+import { selectAppIsLogin, setIsLoggedIn } from 'app/model/appSlice';
 import { useLoginMutation } from 'features/auth/api/authAPI';
+import { StatusCode } from 'common/enums';
 
 type Errors = {
   email?: string;
@@ -39,6 +40,12 @@ export const useLogin = () => {
       // dispatch(login(values))
       login(values)
         .unwrap()
+        .then((res) => {
+          if (res.resultCode === StatusCode.SUCCESS) {
+            dispatch(setIsLoggedIn({ isLoggedIn: true }));
+            localStorage.setItem('sn-token', res.data.token);
+          }
+        })
         .catch((error: BaseResponse) => {
           if (error.messages) {
             formikHelpers.setFieldError('password', error.messages[0]);
