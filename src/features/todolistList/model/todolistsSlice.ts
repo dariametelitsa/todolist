@@ -112,27 +112,27 @@ const slice = createAppSlice({
         }
       ),
 
-      fetchTodolists: createAThunk<{ todolists: TodolistType[] }>(
-        async (_, thunkAPI) => {
-          const { dispatch, rejectWithValue } = thunkAPI;
-          try {
-            const res = await todolistAPI.getTodolist();
-            res.data.forEach((tl) => {
-              dispatch(fetchTasks(tl.id));
-            });
-            return { todolists: res.data };
-          } catch (error) {
-            return rejectWithValue({ error, type: 'catchError' } as RejectActionError);
-          }
-        },
-        {
-          fulfilled: (state, action) => {
-            action.payload.todolists.forEach((tl) => {
-              state.push({ ...tl, filter: 'all', entityStatus: 'idle' });
-            });
-          },
-        }
-      ),
+      // fetchTodolists: createAThunk<{ todolists: TodolistType[] }>(
+      //   async (_, thunkAPI) => {
+      //     const { dispatch, rejectWithValue } = thunkAPI;
+      //     try {
+      //       const res = await todolistAPI.getTodolist();
+      //       res.data.forEach((tl) => {
+      //         dispatch(fetchTasks(tl.id));
+      //       });
+      //       return { todolists: res.data };
+      //     } catch (error) {
+      //       return rejectWithValue({ error, type: 'catchError' } as RejectActionError);
+      //     }
+      //   },
+      //   {
+      //     fulfilled: (state, action) => {
+      //       action.payload.todolists.forEach((tl) => {
+      //         state.push({ ...tl, filter: 'all', entityStatus: 'idle' });
+      //       });
+      //     },
+      //   }
+      // ),
     };
   },
 
@@ -149,7 +149,7 @@ const slice = createAppSlice({
 export const {
   changedTodolistFilter,
   changedTodolistCover,
-  fetchTodolists,
+  // fetchTodolists,
   changeEntityStatus,
   addTodolist,
   deleteTodolist,

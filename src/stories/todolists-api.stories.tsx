@@ -6,16 +6,16 @@ export default {
   title: 'API',
 };
 
-export const GetTodolists = () => {
-  const [state, setState] = useState<any>(null);
-  useEffect(() => {
-    todolistAPI.getTodolist().then((response) => {
-      console.log(response.data);
-      setState(response.data);
-    });
-  }, []);
-  return <div>{JSON.stringify(state)}</div>;
-};
+// export const GetTodolists = () => {
+//   const [state, setState] = useState<any>(null);
+//   useEffect(() => {
+//     todolistAPI.getTodolist().then((response) => {
+//       console.log(response.data);
+//       setState(response.data);
+//     });
+//   }, []);
+//   return <div>{JSON.stringify(state)}</div>;
+// };
 
 export const CreateTodolist = () => {
   const [state, setState] = useState<any>(null);

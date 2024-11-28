@@ -4,6 +4,8 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { appReducer } from 'app/model/appSlice';
 import { authReducer } from 'features/auth/model/authSlice';
 import { configureStore } from '@reduxjs/toolkit';
+import { todolistApi } from 'features/todolistList/api/todolistAPI';
+import { setupListeners } from '@reduxjs/toolkit/query';
 
 export const store = configureStore({
   reducer: {
@@ -11,8 +13,12 @@ export const store = configureStore({
     tasks: tasksReducer,
     app: appReducer,
     auth: authReducer,
+    [todolistApi.reducerPath]: todolistApi.reducer,
   },
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(todolistApi.middleware),
 });
+
+setupListeners(store.dispatch);
 
 export type AppRootStateType = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
