@@ -43,51 +43,51 @@ const slice = createAppSlice({
         if (todolist) todolist.entityStatus = action.payload.status;
       }),
 
-      addTodolist: createAThunk<{ todolist: TodolistType }, string>(
-        async (arg, thunkAPI) => {
-          const { rejectWithValue } = thunkAPI;
-          try {
-            const res = await todolistAPI.addTodolist(arg);
-            if (res.data.resultCode === StatusCode.SUCCESS) {
-              return { todolist: res.data.data.item };
-            } else {
-              return rejectWithValue({ error: res.data, type: 'appError' } as RejectActionError);
-            }
-          } catch (error) {
-            return rejectWithValue({ error, type: 'catchError' } as RejectActionError);
-          }
-        },
-        {
-          fulfilled: (state, action) => {
-            state.unshift({ ...action.payload.todolist, filter: 'all', entityStatus: 'idle' });
-          },
-        }
-      ),
+      // addTodolist: createAThunk<{ todolist: TodolistType }, string>(
+      //   async (arg, thunkAPI) => {
+      //     const { rejectWithValue } = thunkAPI;
+      //     try {
+      //       const res = await todolistAPI.addTodolist(arg);
+      //       if (res.data.resultCode === StatusCode.SUCCESS) {
+      //         return { todolist: res.data.data.item };
+      //       } else {
+      //         return rejectWithValue({ error: res.data, type: 'appError' } as RejectActionError);
+      //       }
+      //     } catch (error) {
+      //       return rejectWithValue({ error, type: 'catchError' } as RejectActionError);
+      //     }
+      //   },
+      //   {
+      //     fulfilled: (state, action) => {
+      //       state.unshift({ ...action.payload.todolist, filter: 'all', entityStatus: 'idle' });
+      //     },
+      //   }
+      // ),
 
-      deleteTodolist: createAThunk<string, string>(
-        async (arg, thunkAPI) => {
-          const { dispatch, rejectWithValue } = thunkAPI;
-          dispatch(changeEntityStatus({ id: arg, status: 'loading' }));
-          try {
-            const res = await todolistAPI.deleteTodolist(arg);
-            if (res.data.resultCode === StatusCode.SUCCESS) {
-              return arg;
-            } else {
-              return rejectWithValue({ error: res.data, type: 'appError' } as RejectActionError);
-            }
-          } catch (error) {
-            return rejectWithValue({ error, type: 'catchError' } as RejectActionError);
-          }
-        },
-        {
-          fulfilled: (state, action) => {
-            const index = state.findIndex((td) => td.id === action.payload);
-            if (index !== -1) {
-              state.splice(index, 1);
-            }
-          },
-        }
-      ),
+      // deleteTodolist: createAThunk<string, string>(
+      //   async (arg, thunkAPI) => {
+      //     const { dispatch, rejectWithValue } = thunkAPI;
+      //     dispatch(changeEntityStatus({ id: arg, status: 'loading' }));
+      //     try {
+      //       const res = await todolistAPI.deleteTodolist(arg);
+      //       if (res.data.resultCode === StatusCode.SUCCESS) {
+      //         return arg;
+      //       } else {
+      //         return rejectWithValue({ error: res.data, type: 'appError' } as RejectActionError);
+      //       }
+      //     } catch (error) {
+      //       return rejectWithValue({ error, type: 'catchError' } as RejectActionError);
+      //     }
+      //   },
+      //   {
+      //     fulfilled: (state, action) => {
+      //       const index = state.findIndex((td) => td.id === action.payload);
+      //       if (index !== -1) {
+      //         state.splice(index, 1);
+      //       }
+      //     },
+      //   }
+      // ),
 
       changeTodolistTitle: createAThunk<UpdateTodolistTitle, UpdateTodolistTitle>(
         async (arg, thunkAPI) => {
@@ -150,8 +150,8 @@ export const {
   changedTodolistCover,
   // fetchTodolists,
   changeEntityStatus,
-  addTodolist,
-  deleteTodolist,
+  // addTodolist,
+  // deleteTodolist,
   changeTodolistTitle,
 } = slice.actions;
 

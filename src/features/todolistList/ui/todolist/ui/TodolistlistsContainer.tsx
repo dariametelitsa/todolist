@@ -2,28 +2,24 @@ import React, { lazy, Suspense, useCallback } from 'react';
 import Grid from '@mui/material/Unstable_Grid2';
 import { Navigate } from 'react-router-dom';
 import { PATH } from 'common/routes/PATH';
-import { useAppDispatch } from 'app/store';
 import { useSelector } from 'react-redux';
 import { selectIsLoggedIn } from 'features/auth/model/authSlice';
-import { addTodolist } from 'features/todolistList/model/todolistsSlice';
 import { AddItem } from 'common/components/addItem/ui/AddItem';
 import { TodolistContainerSkeleton } from 'features/todolistList/ui/todolist/ui/TodolistContainerSkeleton';
-import { useGetTodolistQuery } from 'features/todolistList/api/todolistAPI';
+import { useAddTodolistMutation, useGetTodolistQuery } from 'features/todolistList/api/todolistAPI';
 
 const Todolist = lazy(() => import('features/todolistList/ui/todolist/ui/Todolist'));
 
 export const TodolistlistsContainer: React.FC = () => {
-  // const todoLists = useSelector(selectTodolists);
-  // const { data: todoLists } = useGetTodolistQuery() as unknown as { data: TodoListDomain[] };
   const { data: todoLists } = useGetTodolistQuery();
-  console.log(todoLists);
+  const [addTodolist] = useAddTodolistMutation();
   const isLoggedIn = useSelector(selectIsLoggedIn);
-  const dispatch = useAppDispatch();
+
   const addTodolistCallback = useCallback(
     (title: string) => {
-      return dispatch(addTodolist(title));
+      return addTodolist(title);
     },
-    [dispatch]
+    [addTodolist]
   );
 
   if (!isLoggedIn) {

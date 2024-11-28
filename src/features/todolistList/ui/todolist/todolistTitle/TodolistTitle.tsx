@@ -1,10 +1,10 @@
-// @flow
 import * as React from 'react';
 import { EditableSpan } from 'common/components/editableSpan/EditableSpan';
 import IconButton from '@mui/material/IconButton';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import { changeTodolistTitle, deleteTodolist } from 'features/todolistList/model/todolistsSlice';
+import { changeTodolistTitle } from 'features/todolistList/model/todolistsSlice';
 import { useAppDispatch } from 'app/store';
+import { useDeleteTodolistMutation } from 'features/todolistList/api/todolistAPI';
 
 type Props = {
   title: string;
@@ -14,12 +14,15 @@ type Props = {
 
 export const TodolistTitle = ({ id, title, entityStatus }: Props) => {
   const dispatch = useAppDispatch();
+  const [deleteTodolist] = useDeleteTodolistMutation();
+
   const changeTodolistTitleHandler = (todolistId: string, title: string) => {
     dispatch(changeTodolistTitle({ todolistId, title }));
   };
 
   const deleteTodolistHandler = () => {
-    dispatch(deleteTodolist(id));
+    // dispatch(deleteTodolist(id));
+    deleteTodolist(id);
   };
 
   return (

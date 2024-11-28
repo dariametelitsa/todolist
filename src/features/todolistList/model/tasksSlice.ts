@@ -1,6 +1,6 @@
 import { FilterValues, Tasks } from 'common/data/dataPropsTypes';
 import { asyncThunkCreator, buildCreateSlice, createSelector, isRejected } from '@reduxjs/toolkit';
-import { addTodolist, changeEntityStatus, deleteTodolist } from './todolistsSlice';
+import { changeEntityStatus } from './todolistsSlice';
 import { StatusCode, TaskStatuses } from 'common/enums';
 import { taskAPI } from 'features/todolistList/api/taskAPI';
 import { AddTaskArgs, DeleteTaskArgs, Task, UpdateTaskModelType } from 'features/todolistList/api/taskAPI.types';
@@ -159,12 +159,12 @@ const slice = createAppSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(addTodolist.fulfilled, (state, action) => {
-        state[action.payload.todolist.id] = [];
-      })
-      .addCase(deleteTodolist.fulfilled, (state, action) => {
-        delete state[action.payload];
-      })
+      // .addCase(addTodolist.fulfilled, (state, action) => {
+      //   state[action.payload.todolist.id] = [];
+      // })
+      // .addCase(deleteTodolist.fulfilled, (state, action) => {
+      //   delete state[action.payload];
+      // })
       // .addCase(fetchTodolists.fulfilled, (state, action) => {
       //   action.payload.todolists.forEach((tl) => {
       //     state[tl.id] = [];
