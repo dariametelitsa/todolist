@@ -17,6 +17,7 @@ export const TodolistlistsContainer: React.FC = () => {
   // const todoLists = useSelector(selectTodolists);
   // const { data: todoLists } = useGetTodolistQuery() as unknown as { data: TodoListDomain[] };
   const { data: todoLists } = useGetTodolistQuery();
+  console.log(todoLists);
   const isLoggedIn = useSelector(selectIsLoggedIn);
   const dispatch = useAppDispatch();
   const addTodolistCallback = useCallback(

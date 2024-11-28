@@ -7,7 +7,14 @@ import { TodoListDomain } from 'common/data/dataPropsTypes';
 
 export const todolistApi = createApi({
   reducerPath: 'todolistApi',
-  baseQuery: fetchBaseQuery({ baseUrl: process.env.REACT_APP_BASE_URL }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: 'https://social-network.samuraijs.com/api/1.1'.toString(),
+    credentials: 'include',
+    prepareHeaders: (headers) => {
+      headers.set('API-KEY', `${process.env.REACT_APP_API_KEY}`);
+      headers.set('Authorization', `Bearer ${process.env.REACT_APP_AUTH_TOKEN}`);
+    },
+  }),
   endpoints: (builder) => ({
     getTodolist: builder.query<Array<TodoListDomain>, void>({
       query: () => ({ url: '/todo-lists' }),
