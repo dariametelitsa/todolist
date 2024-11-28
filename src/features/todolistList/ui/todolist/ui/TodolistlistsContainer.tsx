@@ -9,7 +9,6 @@ import { addTodolist } from 'features/todolistList/model/todolistsSlice';
 import { AddItem } from 'common/components/addItem/ui/AddItem';
 import { TodolistContainerSkeleton } from 'features/todolistList/ui/todolist/ui/TodolistContainerSkeleton';
 import { useGetTodolistQuery } from 'features/todolistList/api/todolistAPI';
-import { TodoListDomain } from 'common/data/dataPropsTypes';
 
 const Todolist = lazy(() => import('features/todolistList/ui/todolist/ui/Todolist'));
 

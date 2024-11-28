@@ -4,7 +4,6 @@ import { AppStatus } from 'app/model/appSlice';
 import { asyncThunkCreator, buildCreateSlice, PayloadAction } from '@reduxjs/toolkit';
 import { TodolistType, UpdateTodolistTitle } from 'features/todolistList/api/todolistAPI.types';
 import { cleatTasksAndTodolists } from 'common/actions/commonActions';
-import { fetchTasks } from 'features/todolistList/model/tasksSlice';
 import { StatusCode } from 'common/enums';
 import { RejectActionError } from 'common/types/types';
 

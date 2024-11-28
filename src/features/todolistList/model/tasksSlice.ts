@@ -20,22 +20,22 @@ const slice = createAppSlice({
       rejectValue: RejectActionError;
     }>();
     return {
-      fetchTasks: createAThunk<{ todolistId: string; tasks: Task[] }, string>(
-        async (todolistId: string, thunkAPI) => {
-          const { rejectWithValue } = thunkAPI;
-          try {
-            const res = await taskAPI.getTasks(todolistId);
-            return { todolistId: todolistId, tasks: res.data.items };
-          } catch (error) {
-            return rejectWithValue({ error, type: 'catchError' } as RejectActionError);
-          }
-        },
-        {
-          fulfilled: (state, action) => {
-            state[action.payload.todolistId] = action.payload.tasks;
-          },
-        }
-      ),
+      // fetchTasks: createAThunk<{ todolistId: string; tasks: Task[] }, string>(
+      //   async (todolistId: string, thunkAPI) => {
+      //     const { rejectWithValue } = thunkAPI;
+      //     try {
+      //       const res = await taskAPI.getTasks(todolistId);
+      //       return { todolistId: todolistId, tasks: res.data.items };
+      //     } catch (error) {
+      //       return rejectWithValue({ error, type: 'catchError' } as RejectActionError);
+      //     }
+      //   },
+      //   {
+      //     fulfilled: (state, action) => {
+      //       state[action.payload.todolistId] = action.payload.tasks;
+      //     },
+      //   }
+      // ),
 
       addTask: createAThunk<{ task: Task }, AddTaskArgs>(
         async (arg, thunkApi) => {
@@ -196,7 +196,7 @@ const slice = createAppSlice({
   },
 });
 
-export const { fetchTasks, addTask, updateTask, deleteTask, cleanTasksList } = slice.actions;
+export const { addTask, updateTask, deleteTask, cleanTasksList } = slice.actions;
 export const tasksReducer = slice.reducer;
 export const { selectTasks, selectTasksByTd, selectFilteredTasks } = slice.selectors;
 

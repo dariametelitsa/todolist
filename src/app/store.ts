@@ -6,6 +6,7 @@ import { authReducer } from 'features/auth/model/authSlice';
 import { configureStore } from '@reduxjs/toolkit';
 import { todolistApi } from 'features/todolistList/api/todolistAPI';
 import { setupListeners } from '@reduxjs/toolkit/query';
+import { taskApi } from 'features/todolistList/api/taskAPI';
 
 export const store = configureStore({
   reducer: {
@@ -14,8 +15,9 @@ export const store = configureStore({
     app: appReducer,
     auth: authReducer,
     [todolistApi.reducerPath]: todolistApi.reducer,
+    [taskApi.reducerPath]: taskApi.reducer,
   },
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(todolistApi.middleware),
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(todolistApi.middleware, taskApi.middleware),
 });
 
 setupListeners(store.dispatch);
