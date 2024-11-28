@@ -13,20 +13,20 @@ const slice = createSlice({
     isInitialized: false,
     isLoggedIn: false,
   },
-  reducers: {
-    setAppStatus: (state, action: PayloadAction<{ status: AppStatus }>) => {
+  reducers: (create) => ({
+    setAppStatus: create.reducer<{ status: AppStatus }>((state, action) => {
       state.status = action.payload.status;
-    },
-    setAppError: (state, action: PayloadAction<{ error: string | null }>) => {
+    }),
+    setAppError: create.reducer<{ error: string | null }>((state, action) => {
       state.error = action.payload.error;
-    },
-    setIsInitialized: (state, action: PayloadAction<{ isInitialized: boolean }>) => {
+    }),
+    setIsInitialized: create.reducer<{ isInitialized: boolean }>((state, action) => {
       state.isInitialized = action.payload.isInitialized;
-    },
-    setIsLoggedIn: (state, action: PayloadAction<{ isLoggedIn: boolean }>) => {
+    }),
+    setIsLoggedIn: create.reducer<{ isLoggedIn: boolean }>((state, action) => {
       state.isLoggedIn = action.payload.isLoggedIn;
-    },
-  },
+    }),
+  }),
 
   extraReducers: (builder) => {
     // @ts-ignore
