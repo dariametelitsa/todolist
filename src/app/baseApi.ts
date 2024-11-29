@@ -11,5 +11,5 @@ export const baseApi = createApi({
     },
   }),
   endpoints: () => ({}),
-  tagTypes: ['Todolist'],
+  tagTypes: ['Todolist', 'Task'],
 });

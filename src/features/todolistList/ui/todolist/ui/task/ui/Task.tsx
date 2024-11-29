@@ -17,7 +17,7 @@ type Props = {
 };
 
 const Task = React.memo(({ todolistId, task, entityStatus }: Props) => {
-  const { removeTaskHandler, changeTaskStatusHandler, changeTaskTitleHandler } = useTask(todolistId);
+  const { removeTaskHandler, changeTaskStatusHandler, changeTaskTitleHandler } = useTask(todolistId, task);
   const isDisable = entityStatus === 'loading';
 
   return (

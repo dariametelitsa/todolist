@@ -5,9 +5,9 @@ import { StatusCode } from 'common/enums';
 import { cleatTasksAndTodolists } from 'common/actions/commonActions';
 import { RejectActionError } from 'common/types/types';
 
-const createAppSlice = buildCreateSlice({
-  creators: { asyncThunk: asyncThunkCreator },
-});
+// const createAppSlice = buildCreateSlice({
+//   creators: { asyncThunk: asyncThunkCreator },
+// });
 
 // const slice = createAppSlice({
 //   name: 'auth',

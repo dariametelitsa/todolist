@@ -1,7 +1,8 @@
 import { TaskStatuses } from 'common/enums/enums';
 import { useDeleteTaskMutation, useUpdateTaskMutation } from 'features/todolistList/api/taskAPI';
+import { Task as TaskType, UpdateTaskModelType } from 'features/todolistList/api/taskAPI.types';
 
-export const useTask = (todolistId: string) => {
+export const useTask = (todolistId: string, task: TaskType) => {
   const [deleteTask] = useDeleteTaskMutation();
   const [updateTask] = useUpdateTaskMutation();
 
@@ -10,11 +11,13 @@ export const useTask = (todolistId: string) => {
   };
 
   const changeTaskStatusHandler = (taskId: string, newState: boolean) => {
-    updateTask({ todolistId, taskId, model: { status: newState ? TaskStatuses.Completed : TaskStatuses.New } });
+    const model = createTaskModel(task, { status: newState ? TaskStatuses.Completed : TaskStatuses.New });
+    updateTask({ todolistId, taskId, model });
   };
 
   const changeTaskTitleHandler = (taskId: string, newTitle: string) => {
-    updateTask({ todolistId, taskId, model: { title: newTitle } });
+    const model = createTaskModel(task, { title: newTitle });
+    updateTask({ todolistId, taskId, model });
   };
 
   return {
@@ -23,3 +26,16 @@ export const useTask = (todolistId: string) => {
     changeTaskTitleHandler,
   };
 };
+
+function createTaskModel(task: TaskType, domainModel: Partial<UpdateTaskModelType>): UpdateTaskModelType {
+  return {
+    status: task.status,
+    title: task.title,
+    deadline: task.deadline,
+    description: task.description,
+    priority: task.priority,
+    startDate: task.startDate,
+    addedDate: task.addedDate,
+    ...domainModel,
+  };
+}

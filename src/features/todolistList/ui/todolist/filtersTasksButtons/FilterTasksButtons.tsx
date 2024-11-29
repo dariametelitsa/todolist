@@ -6,6 +6,7 @@ import { FilterValues } from 'common/data/dataPropsTypes';
 import { filterButtonsContainerSx } from 'features/todolistList/ui/todolist/ui/Todolist.styles';
 import { useAppDispatch } from 'app/store';
 import { changedTodolistFilter } from 'features/todolistList/model/todolistsSlice';
+import { todolistApi } from 'features/todolistList/api/todolistAPI';
 
 type FiltersForTasksProps = {
   id: string;
@@ -15,7 +16,15 @@ export const FilterTasksButtons = ({ id, filter }: FiltersForTasksProps) => {
   const dispatch = useAppDispatch();
 
   const changeFilterHandler = (filter: FilterValues) => {
-    dispatch(changedTodolistFilter({ id: id, filter: filter }));
+    // dispatch(changedTodolistFilter({ id: id, filter: filter }));
+    dispatch(
+      todolistApi.util.updateQueryData('getTodolist', undefined, (state) => {
+        const index = state.findIndex((td) => td.id === id);
+        if (index !== -1) {
+          state[index].filter = filter;
+        }
+      })
+    );
   };
 
   return (

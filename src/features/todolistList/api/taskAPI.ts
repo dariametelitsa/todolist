@@ -1,15 +1,13 @@
-import { instance } from 'common/instance/instance';
 import { BaseResponse } from 'common/types';
-import { AxiosResponse } from 'axios';
 import { AddTaskArgs, DeleteTaskArgs, ResponseTypeGetTask, Task, UpdateTaskModelType } from './taskAPI.types';
 import { baseApi } from 'app/baseApi';
 import { Paths } from 'common/Paths';
-import { BaseQueryArg } from '@reduxjs/toolkit/dist/query/baseQueryTypes';
 
 export const taskApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getTask: builder.query<ResponseTypeGetTask, string>({
       query: (todolistId) => ({ url: `${Paths.todolists}/${todolistId}/tasks` }),
+      providesTags: ['Task'],
     }),
     addTask: builder.mutation<BaseResponse<{ item: Task }>, AddTaskArgs>({
       query: (arg) => {
@@ -20,6 +18,7 @@ export const taskApi = baseApi.injectEndpoints({
           method: 'POST',
         };
       },
+      invalidatesTags: ['Task'],
     }),
     deleteTask: builder.mutation<BaseResponse, DeleteTaskArgs>({
       query: (arg) => {
@@ -29,10 +28,11 @@ export const taskApi = baseApi.injectEndpoints({
           method: 'DELETE',
         };
       },
+      invalidatesTags: ['Task'],
     }),
     updateTask: builder.mutation<
       BaseResponse<{ item: Task }>,
-      { todolistId: string; taskId: string; model: Partial<UpdateTaskModelType> }
+      { todolistId: string; taskId: string; model: UpdateTaskModelType }
     >({
       query: (arg) => {
         const { taskId, model, todolistId } = arg;
@@ -42,6 +42,7 @@ export const taskApi = baseApi.injectEndpoints({
           body: model,
         };
       },
+      invalidatesTags: ['Task'],
     }),
   }),
 });
