@@ -7,6 +7,7 @@ import { filterButtonsContainerSx } from 'features/todolistList/ui/todolist/ui/T
 import { useAppDispatch } from 'app/store';
 import { changedTodolistFilter } from 'features/todolistList/model/todolistsSlice';
 import { todolistApi } from 'features/todolistList/api/todolistAPI';
+import { current } from '@reduxjs/toolkit';
 
 type FiltersForTasksProps = {
   id: string;
@@ -17,10 +18,12 @@ export const FilterTasksButtons = ({ id, filter }: FiltersForTasksProps) => {
 
   const changeFilterHandler = (filter: FilterValues) => {
     // dispatch(changedTodolistFilter({ id: id, filter: filter }));
+
     dispatch(
       todolistApi.util.updateQueryData('getTodolist', undefined, (state) => {
         const index = state.findIndex((td) => td.id === id);
         if (index !== -1) {
+          console.log('click');
           state[index].filter = filter;
         }
       })

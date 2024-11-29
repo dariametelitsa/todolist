@@ -20,11 +20,11 @@ type Props = {
 const Todolist = React.memo(({ todolist }: Props) => {
   const { id, title, filter, coverImage, entityStatus } = todolist;
 
-  const { sorterTasks, deleteAllTasksHandler, addItemHandler, changeCoverHandler } = useTodolist(id, filter);
+  const { filterTasks, deleteAllTasksHandler, addItemHandler, changeCoverHandler } = useTodolist(id, filter);
 
-  const deferredTasks = useDeferredValue(sorterTasks);
+  // const deferredTasks = useDeferredValue(sorterTasks);
 
-  const tasksForTodolist = sorterTasks.map((task) => {
+  const tasksForTodolist = filterTasks.map((task) => {
     return <Task key={task.id} todolistId={id} task={task} entityStatus={entityStatus} />;
   });
 
@@ -38,7 +38,7 @@ const Todolist = React.memo(({ todolist }: Props) => {
 
           <Suspense fallback={<CircularProgress />}>
             <List sx={{ width: '100%', height: 200, overflow: 'auto' }}>
-              {deferredTasks.length === 0 ? <p>Задач нет</p> : tasksForTodolist}
+              {tasksForTodolist.length === 0 ? <p>Задач нет</p> : tasksForTodolist}
             </List>
           </Suspense>
 

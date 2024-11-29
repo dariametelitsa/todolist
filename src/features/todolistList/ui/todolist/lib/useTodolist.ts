@@ -5,27 +5,40 @@ import { changedTodolistCover } from 'features/todolistList/model/todolistsSlice
 import { cleanTasksList } from 'features/todolistList/model/tasksSlice';
 import { TaskStatuses } from 'common/enums';
 import { useAddTaskMutation, useGetTaskQuery } from 'features/todolistList/api/taskAPI';
+import { useSelector } from 'react-redux';
+import { todolistApi } from 'features/todolistList/api/todolistAPI';
 
 export const useTodolist = (id: string, filter: FilterValues) => {
-  //const tasks = useAppSelector((state) => selectTasksByTd(state, id));
-  //const tasks = useSelector((state) => selectTasksForTodolist(state, id));
+  const dispatch = useAppDispatch();
   const { tasks } = useGetTaskQuery(id, {
     selectFromResult: (res) => ({
       tasks: res.data?.items,
     }),
   });
   const [addTask] = useAddTaskMutation();
-  // const filteredTasks = useAppSelector((state) => makeSelectFilteredTasks(state, id, filter));
-  const filteredTasks = tasks ?? [];
-  const dispatch = useAppDispatch();
 
   const sorterTasks = useMemo(() => {
-    return [...filteredTasks].sort((prev, next) => {
+    const tasksForTodolist = tasks ?? [];
+    return [...tasksForTodolist].sort((prev, next) => {
       if (next.status === TaskStatuses.Completed && prev.status !== TaskStatuses.Completed) return -1;
       if (next.status !== TaskStatuses.Completed && prev.status === TaskStatuses.Completed) return 1;
       return 0;
     });
-  }, [filteredTasks]);
+  }, [tasks]);
+
+  const todolists = useSelector(todolistApi.endpoints.getTodolist.select());
+  const todo = todolists.data?.find((td) => td.id === id);
+  let filterTasks = sorterTasks;
+
+  if (todo) {
+    if (todo.filter === 'active') {
+      filterTasks = sorterTasks.filter((task) => task.status === TaskStatuses.New);
+    }
+
+    if (todo.filter === 'completed') {
+      filterTasks = sorterTasks.filter((task) => task.status === TaskStatuses.Completed);
+    }
+  }
 
   const deleteAllTasksHandler = useCallback(() => {
     dispatch(cleanTasksList(id));
@@ -47,7 +60,7 @@ export const useTodolist = (id: string, filter: FilterValues) => {
 
   return {
     dispatch,
-    sorterTasks,
+    filterTasks,
     deleteAllTasksHandler,
     addItemHandler,
     changeCoverHandler,

@@ -12,6 +12,7 @@ import { useSelector } from 'react-redux';
 import { useLogoutMutation } from 'features/auth/api/authAPI';
 import { selectAppIsLogin, setIsLoggedIn } from 'app/model/appSlice';
 import { StatusCode } from 'common/enums';
+import { baseApi } from 'app/baseApi';
 
 type Props = {
   changeModeHandler: () => void;
@@ -29,10 +30,10 @@ export const HeaderMenu = ({ changeModeHandler }: Props) => {
         if (res.resultCode === StatusCode.SUCCESS) {
           dispatch(setIsLoggedIn({ isLoggedIn: false }));
           localStorage.removeItem('sn-token');
-          //todo
-          // dispatch(clearTasks())
-          // dispatch(clearTodolists())
         }
+      })
+      .then(() => {
+        dispatch(baseApi.util.invalidateTags(['Todolist', 'Task']));
       });
   };
 
