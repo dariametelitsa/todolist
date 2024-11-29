@@ -8,7 +8,8 @@ import {
   useUpdateTodolistMutation,
 } from 'features/todolistList/api/todolistAPI';
 import { AppStatus } from 'app/model/appSlice';
-import { useAppDispatch } from 'app/store';
+import { AppDispatch, useAppDispatch } from 'app/store';
+import { updateQueryData } from 'features/todolistList/model/updateQueryData';
 
 type Props = {
   title: string;
@@ -19,32 +20,21 @@ type Props = {
 export const TodolistTitle = ({ id, title, entityStatus }: Props) => {
   const [deleteTodolist] = useDeleteTodolistMutation();
   const [changeTodolistTitle] = useUpdateTodolistMutation();
+
   const dispatch = useAppDispatch();
 
-  const updateQueryData = (status: AppStatus) => {
-    dispatch(
-      todolistApi.util.updateQueryData('getTodolist', undefined, (state) => {
-        const index = state.findIndex((td) => td.id === id);
-        if (index !== -1) {
-          console.log('click');
-          state[index].entityStatus = status;
-        }
-      })
-    );
-  };
-
   const changeTodolistTitleHandler = (todolistId: string, title: string) => {
-    updateQueryData('loading');
+    updateQueryData(dispatch, id, 'loading');
     changeTodolistTitle({ todolistId, title })
       .unwrap()
-      .finally(() => updateQueryData('idle'));
+      .finally(() => updateQueryData(dispatch, id, 'idle'));
   };
 
   const deleteTodolistHandler = () => {
-    updateQueryData('loading');
+    updateQueryData(dispatch, id, 'loading');
     deleteTodolist(id)
       .unwrap()
-      .finally(() => updateQueryData('idle'));
+      .finally(() => updateQueryData(dispatch, id, 'idle'));
   };
 
   return (

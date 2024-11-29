@@ -29,7 +29,6 @@ const slice = createSlice({
   }),
 
   extraReducers: (builder) => {
-    // @ts-ignore
     builder
       .addMatcher(isPending, (state) => {
         state.status = 'loading';

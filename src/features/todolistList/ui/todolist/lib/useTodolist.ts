@@ -2,11 +2,11 @@ import { useAppDispatch } from 'app/store';
 import { useCallback, useMemo } from 'react';
 import { FilterValues } from 'common/data/dataPropsTypes';
 import { changedTodolistCover } from 'features/todolistList/model/todolistsSlice';
-import { cleanTasksList } from 'features/todolistList/model/tasksSlice';
 import { TaskStatuses } from 'common/enums';
-import { useAddTaskMutation, useGetTaskQuery } from 'features/todolistList/api/taskAPI';
+import { useAddTaskMutation, useDeleteTaskMutation, useGetTaskQuery } from 'features/todolistList/api/taskAPI';
 import { useSelector } from 'react-redux';
 import { todolistApi } from 'features/todolistList/api/todolistAPI';
+import { updateQueryData } from 'features/todolistList/model/updateQueryData';
 
 export const useTodolist = (id: string, filter: FilterValues) => {
   const dispatch = useAppDispatch();
@@ -16,6 +16,7 @@ export const useTodolist = (id: string, filter: FilterValues) => {
     }),
   });
   const [addTask] = useAddTaskMutation();
+  const [deleteTask] = useDeleteTaskMutation();
 
   const sorterTasks = useMemo(() => {
     const tasksForTodolist = tasks ?? [];
@@ -40,9 +41,14 @@ export const useTodolist = (id: string, filter: FilterValues) => {
     }
   }
 
-  const deleteAllTasksHandler = useCallback(() => {
-    dispatch(cleanTasksList(id));
-  }, [dispatch, id]);
+  const deleteAllTasksHandler = useCallback(async () => {
+    if (tasks) {
+      updateQueryData(dispatch, id, 'loading');
+      const requests = tasks?.map((t) => deleteTask({ todolistId: id, taskId: t.id }));
+      await Promise.all(requests);
+      updateQueryData(dispatch, id, 'idle');
+    }
+  }, [deleteTask, id, tasks, updateQueryData, dispatch]);
 
   const addItemHandler = useCallback(
     (title: string) => {

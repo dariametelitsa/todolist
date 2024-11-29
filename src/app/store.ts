@@ -1,5 +1,3 @@
-import { todolistsReducer } from 'features/todolistList/model/todolistsSlice';
-import { tasksReducer } from 'features/todolistList/model/tasksSlice';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { appReducer } from 'app/model/appSlice';
 import { configureStore } from '@reduxjs/toolkit';
@@ -8,8 +6,8 @@ import { baseApi } from 'app/baseApi';
 
 export const store = configureStore({
   reducer: {
-    todolists: todolistsReducer,
-    tasks: tasksReducer,
+    // todolists: todolistsReducer,
+    // tasks: tasksReducer,
     app: appReducer,
     [baseApi.reducerPath]: baseApi.reducer,
   },
