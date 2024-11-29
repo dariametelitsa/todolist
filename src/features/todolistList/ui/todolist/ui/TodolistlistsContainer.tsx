@@ -7,11 +7,12 @@ import { AddItem } from 'common/components/addItem/ui/AddItem';
 import { TodolistContainerSkeleton } from 'features/todolistList/ui/todolist/ui/TodolistContainerSkeleton';
 import { useAddTodolistMutation, useGetTodolistQuery } from 'features/todolistList/api/todolistAPI';
 import { selectAppIsLogin } from 'app/model/appSlice';
+import { TodolistSkeleton } from 'features/todolistList/ui/todolist/ui/todolistSkeleton/TodolistSkeleton';
 
 const Todolist = lazy(() => import('features/todolistList/ui/todolist/ui/Todolist'));
 
 export const TodolistlistsContainer: React.FC = () => {
-  const { data: todoLists } = useGetTodolistQuery();
+  const { data: todoLists, isLoading } = useGetTodolistQuery();
   const [addTodolist] = useAddTodolistMutation();
   const isLoggedIn = useSelector(selectAppIsLogin);
 
@@ -24,6 +25,18 @@ export const TodolistlistsContainer: React.FC = () => {
 
   if (!isLoggedIn) {
     return <Navigate to={PATH.LOGIN} />;
+  }
+
+  if (isLoading) {
+    return (
+      <div style={{ display: 'flex', justifyContent: 'space-between', gap: '32px' }}>
+        {Array(3)
+          .fill(null)
+          .map((_, id) => (
+            <TodolistSkeleton key={id} />
+          ))}
+      </div>
+    );
   }
 
   return (

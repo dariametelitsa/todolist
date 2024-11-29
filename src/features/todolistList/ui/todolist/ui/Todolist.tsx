@@ -10,6 +10,7 @@ import { FilterTasksButtons } from 'features/todolistList/ui/todolist/filtersTas
 import { CoverImage } from 'common/components/coverImage/CoverImage';
 import CircularProgress from '@mui/material/CircularProgress';
 import { TodolistTitle } from 'features/todolistList/ui/todolist/todolistTitle/TodolistTitle';
+import { TasksSkeleton } from 'features/todolistList/ui/todolist/ui/task/ui/TasksSkeleton';
 
 const Task = lazy(() => import('features/todolistList/ui/todolist/ui/task/ui/Task'));
 
@@ -20,7 +21,7 @@ type Props = {
 const Todolist = React.memo(({ todolist }: Props) => {
   const { id, title, filter, coverImage, entityStatus } = todolist;
 
-  const { filterTasks, deleteAllTasksHandler, addItemHandler, changeCoverHandler } = useTodolist(id, filter);
+  const { filterTasks, deleteAllTasksHandler, addItemHandler, changeCoverHandler, isLoading } = useTodolist(id, filter);
 
   // const deferredTasks = useDeferredValue(sorterTasks);
 

@@ -10,13 +10,14 @@ import { updateQueryData } from 'features/todolistList/model/updateQueryData';
 
 export const useTodolist = (id: string, filter: FilterValues) => {
   const dispatch = useAppDispatch();
-  const { tasks } = useGetTaskQuery(id, {
-    selectFromResult: (res) => ({
-      tasks: res.data?.items,
-    }),
+  const { data, isLoading } = useGetTaskQuery(id, {
+    // selectFromResult: (res) => ({
+    //     //   tasks: res.data?.items,
+    //     // }),
   });
+  const tasks = data?.items;
   const [addTask] = useAddTaskMutation();
-  const [deleteTask] = useDeleteTaskMutation();
+  const [deleteTask, { isLoading: isLoadingDelete }] = useDeleteTaskMutation();
 
   const sorterTasks = useMemo(() => {
     const tasksForTodolist = tasks ?? [];
@@ -48,7 +49,7 @@ export const useTodolist = (id: string, filter: FilterValues) => {
       await Promise.all(requests);
       updateQueryData(dispatch, id, 'idle');
     }
-  }, [deleteTask, id, tasks, updateQueryData, dispatch]);
+  }, [deleteTask, id, tasks, dispatch]);
 
   const addItemHandler = useCallback(
     (title: string) => {
@@ -65,6 +66,8 @@ export const useTodolist = (id: string, filter: FilterValues) => {
   );
 
   return {
+    isLoadingDelete,
+    isLoading,
     dispatch,
     filterTasks,
     deleteAllTasksHandler,

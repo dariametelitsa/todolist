@@ -54,5 +54,6 @@ export const useAppWithRedux = () => {
     isLoading,
     isLoggedIn,
     isInitialized,
+    status,
   };
 };

@@ -1,6 +1,9 @@
 import { createSlice, isFulfilled, isPending, isRejected, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { RejectActionError } from 'common/types/types';
+import todolist from 'features/todolistList/ui/todolist/ui/Todolist';
+import { todolistApi } from 'features/todolistList/api/todolistAPI';
+import { taskApi } from 'features/todolistList/api/taskAPI';
 // import { initializeApp } from 'features/auth/model/authSlice';
 
 export type AppStatus = 'idle' | 'loading' | 'succeeded' | 'failed';
@@ -30,7 +33,10 @@ const slice = createSlice({
 
   extraReducers: (builder) => {
     builder
-      .addMatcher(isPending, (state) => {
+      .addMatcher(isPending, (state, action) => {
+        if (todolistApi.endpoints.getTodolist.matchPending(action) || taskApi.endpoints.getTask.matchPending(action)) {
+          return;
+        }
         state.status = 'loading';
       })
       .addMatcher(isFulfilled, (state) => {
