@@ -10,11 +10,14 @@ import { updateQueryData } from 'features/todolistList/model/updateQueryData';
 
 export const useTodolist = (id: string, filter: FilterValues) => {
   const dispatch = useAppDispatch();
-  const { data, isLoading } = useGetTaskQuery(id, {
-    // selectFromResult: (res) => ({
-    //     //   tasks: res.data?.items,
-    //     // }),
-  });
+  const { data, isLoading } = useGetTaskQuery(
+    { todolistId: id, args: { page: 1, count: 4 } },
+    {
+      // selectFromResult: (res) => ({
+      //   tasks: res.data?.items,
+      // }),
+    }
+  );
   const tasks = data?.items;
   const [addTask] = useAddTaskMutation();
   const [deleteTask, { isLoading: isLoadingDelete }] = useDeleteTaskMutation();

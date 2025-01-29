@@ -3,11 +3,19 @@ import { AddTaskArgs, DeleteTaskArgs, ResponseTypeGetTask, Task, UpdateTaskModel
 import { baseApi } from 'app/baseApi';
 import { Paths } from 'common/Paths';
 
+export const PageSize = 5;
+
 export const taskApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getTask: builder.query<ResponseTypeGetTask, string>({
-      query: (todolistId) => ({ url: `${Paths.todolists}/${todolistId}/tasks` }),
-      providesTags: (result, error, todolistId) =>
+    getTask: builder.query<ResponseTypeGetTask, { todolistId: string; args: { page: number; count?: number } }>({
+      query: ({ todolistId, args }) => {
+        //   ({url: `${Paths.todolists}/${todolistId}/tasks?count=${args.count}&page=${args.page}`,}),
+        return {
+          url: `${Paths.todolists}/${todolistId}/tasks`,
+          params: { ...args, count: args.count ?? PageSize },
+        };
+      },
+      providesTags: (result, error, { todolistId }) =>
         result
           ? [...result.items.map(({ id }) => ({ type: 'Task', id }) as const), { type: 'Task', id: todolistId }]
           : [{ type: 'Task' }],
