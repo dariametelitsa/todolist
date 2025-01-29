@@ -7,7 +7,10 @@ export const taskApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getTask: builder.query<ResponseTypeGetTask, string>({
       query: (todolistId) => ({ url: `${Paths.todolists}/${todolistId}/tasks` }),
-      providesTags: ['Task'],
+      providesTags: (result, error, todolistId) =>
+        result
+          ? [...result.items.map(({ id }) => ({ type: 'Task', id }) as const), { type: 'Task', id: todolistId }]
+          : [{ type: 'Task' }],
     }),
     addTask: builder.mutation<BaseResponse<{ item: Task }>, AddTaskArgs>({
       query: (arg) => {
@@ -18,7 +21,7 @@ export const taskApi = baseApi.injectEndpoints({
           method: 'POST',
         };
       },
-      invalidatesTags: ['Task'],
+      invalidatesTags: (result, error, arg) => [{ type: 'Task', id: arg.todolistId }],
     }),
     deleteTask: builder.mutation<BaseResponse, DeleteTaskArgs>({
       query: (arg) => {
@@ -28,7 +31,7 @@ export const taskApi = baseApi.injectEndpoints({
           method: 'DELETE',
         };
       },
-      invalidatesTags: ['Task'],
+      invalidatesTags: (result, error, arg) => [{ type: 'Task', id: arg.taskId }],
     }),
     updateTask: builder.mutation<
       BaseResponse<{ item: Task }>,
@@ -42,7 +45,8 @@ export const taskApi = baseApi.injectEndpoints({
           body: model,
         };
       },
-      invalidatesTags: ['Task'],
+      // invalidatesTags: ['Task'],
+      invalidatesTags: (result, error, arg) => [{ type: 'Task', id: arg.taskId }],
     }),
   }),
 });
