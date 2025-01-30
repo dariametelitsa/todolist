@@ -1,9 +1,14 @@
 import { useAppDispatch } from 'app/store';
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { FilterValues } from 'common/data/dataPropsTypes';
 import { changedTodolistCover } from 'features/todolistList/model/todolistsSlice';
 import { TaskStatuses } from 'common/enums';
-import { useAddTaskMutation, useDeleteTaskMutation, useGetTaskQuery } from 'features/todolistList/api/taskAPI';
+import {
+  PageSize,
+  useAddTaskMutation,
+  useDeleteTaskMutation,
+  useGetTaskQuery,
+} from 'features/todolistList/api/taskAPI';
 import { useSelector } from 'react-redux';
 import { todolistApi } from 'features/todolistList/api/todolistAPI';
 import { updateQueryData } from 'features/todolistList/model/updateQueryData';
@@ -21,6 +26,7 @@ export const useTodolist = (id: string, filter: FilterValues) => {
   const tasks = data?.items;
   const [addTask] = useAddTaskMutation();
   const [deleteTask, { isLoading: isLoadingDelete }] = useDeleteTaskMutation();
+  const [page, setPage] = useState(1);
 
   const sorterTasks = useMemo(() => {
     const tasksForTodolist = tasks ?? [];
@@ -34,6 +40,8 @@ export const useTodolist = (id: string, filter: FilterValues) => {
   const todolists = useSelector(todolistApi.endpoints.getTodolist.select());
   const todo = todolists.data?.find((td) => td.id === id);
   let filterTasks = sorterTasks;
+  const totalCount = data?.totalCount || 0;
+  const isPaginationShown = totalCount / PageSize > 1;
 
   if (todo) {
     if (todo.filter === 'active') {
@@ -76,5 +84,9 @@ export const useTodolist = (id: string, filter: FilterValues) => {
     deleteAllTasksHandler,
     addItemHandler,
     changeCoverHandler,
+    totalCount,
+    page,
+    setPage,
+    isPaginationShown,
   };
 };

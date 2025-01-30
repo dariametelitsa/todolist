@@ -1,4 +1,4 @@
-import React, { lazy, Suspense, useDeferredValue } from 'react';
+import React, { lazy, Suspense } from 'react';
 import { TodoListDomain } from 'common/data/dataPropsTypes';
 import Button from '@mui/material/Button';
 import List from '@mui/material/List';
@@ -10,7 +10,7 @@ import { FilterTasksButtons } from 'features/todolistList/ui/todolist/filtersTas
 import { CoverImage } from 'common/components/coverImage/CoverImage';
 import CircularProgress from '@mui/material/CircularProgress';
 import { TodolistTitle } from 'features/todolistList/ui/todolist/todolistTitle/TodolistTitle';
-import { TasksSkeleton } from 'features/todolistList/ui/todolist/ui/task/ui/TasksSkeleton';
+import { TaskPagination } from 'common/components/taskPagination/TaskPagination';
 
 const Task = lazy(() => import('features/todolistList/ui/todolist/ui/task/ui/Task'));
 
@@ -21,7 +21,16 @@ type Props = {
 const Todolist = React.memo(({ todolist }: Props) => {
   const { id, title, filter, coverImage, entityStatus } = todolist;
 
-  const { filterTasks, deleteAllTasksHandler, addItemHandler, changeCoverHandler, isLoading } = useTodolist(id, filter);
+  const {
+    filterTasks,
+    deleteAllTasksHandler,
+    addItemHandler,
+    changeCoverHandler,
+    totalCount,
+    page,
+    setPage,
+    isPaginationShown,
+  } = useTodolist(id, filter);
 
   // const deferredTasks = useDeferredValue(sorterTasks);
 
@@ -41,6 +50,7 @@ const Todolist = React.memo(({ todolist }: Props) => {
             <List sx={{ width: '100%', height: 200, overflow: 'auto' }}>
               {tasksForTodolist.length === 0 ? <p>Задач нет</p> : tasksForTodolist}
             </List>
+            {isPaginationShown && <TaskPagination totalCount={totalCount} page={page} setPage={setPage} />}
           </Suspense>
 
           <Grid container justifyContent="center">

@@ -2,13 +2,9 @@ import * as React from 'react';
 import { EditableSpan } from 'common/components/editableSpan/EditableSpan';
 import IconButton from '@mui/material/IconButton';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import {
-  todolistApi,
-  useDeleteTodolistMutation,
-  useUpdateTodolistMutation,
-} from 'features/todolistList/api/todolistAPI';
+import { useDeleteTodolistMutation, useUpdateTodolistMutation } from 'features/todolistList/api/todolistAPI';
 import { AppStatus } from 'app/model/appSlice';
-import { AppDispatch, useAppDispatch } from 'app/store';
+import { useAppDispatch } from 'app/store';
 import { updateQueryData } from 'features/todolistList/model/updateQueryData';
 
 type Props = {
