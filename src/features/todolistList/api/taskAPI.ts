@@ -3,7 +3,7 @@ import { AddTaskArgs, DeleteTaskArgs, ResponseTypeGetTask, Task, UpdateTaskModel
 import { baseApi } from 'app/baseApi';
 import { Paths } from 'common/Paths';
 
-export const PageSize = 5;
+export const PageSize = 4;
 
 export const taskApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({

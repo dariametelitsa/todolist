@@ -15,8 +15,11 @@ import { updateQueryData } from 'features/todolistList/model/updateQueryData';
 
 export const useTodolist = (id: string, filter: FilterValues) => {
   const dispatch = useAppDispatch();
+  const [addTask] = useAddTaskMutation();
+  const [deleteTask, { isLoading: isLoadingDelete }] = useDeleteTaskMutation();
+  const [page, setPage] = useState(1);
   const { data, isLoading } = useGetTaskQuery(
-    { todolistId: id, args: { page: 1, count: 4 } },
+    { todolistId: id, args: { page: page, count: PageSize } },
     {
       // selectFromResult: (res) => ({
       //   tasks: res.data?.items,
@@ -24,9 +27,6 @@ export const useTodolist = (id: string, filter: FilterValues) => {
     }
   );
   const tasks = data?.items;
-  const [addTask] = useAddTaskMutation();
-  const [deleteTask, { isLoading: isLoadingDelete }] = useDeleteTaskMutation();
-  const [page, setPage] = useState(1);
 
   const sorterTasks = useMemo(() => {
     const tasksForTodolist = tasks ?? [];

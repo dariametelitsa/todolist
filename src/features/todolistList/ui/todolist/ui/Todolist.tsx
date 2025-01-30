@@ -51,6 +51,7 @@ const Todolist = React.memo(({ todolist }: Props) => {
               {tasksForTodolist.length === 0 ? <p>Задач нет</p> : tasksForTodolist}
             </List>
             {isPaginationShown && <TaskPagination totalCount={totalCount} page={page} setPage={setPage} />}
+            <span>Total: {totalCount}</span>
           </Suspense>
 
           <Grid container justifyContent="center">
