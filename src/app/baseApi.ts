@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const baseApi = createApi({
   reducerPath: 'todolistApi',
-  refetchOnFocus: true,
+  //refetchOnFocus: true,
   baseQuery: fetchBaseQuery({
     baseUrl: 'https://social-network.samuraijs.com/api/1.1'.toString(),
     credentials: 'include',

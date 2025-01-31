@@ -30,24 +30,28 @@ export const TodolistTitle = ({ id, title, entityStatus }: Props) => {
       .finally(() => updateQueryData(dispatch, id, 'idle'));
   };
 
-  const deleteTodolistHandler = async () => {
+  const deleteTodolistHandler = () => {
+    deleteTodolist(id);
     // const patchResult = updateQueryData(dispatch, id, 'loading');
-    const patchResult = dispatch(
-      todolistApi.util.updateQueryData('getTodolist', undefined, (state) => {
-        const index = state.findIndex((td) => td.id === id);
-        if (index !== -1) {
-          state[index].entityStatus = 'loading';
-        }
-      })
-    );
-    try {
-      await deleteTodolist(id);
-      // .unwrap()
-      // .finally(() => updateQueryData(dispatch, id, 'idle'));
-      //dispatch(addDeletedTodo({ id }));
-    } catch (e) {
-      patchResult.undo();
-    }
+    // const patchResult = dispatch(
+    //   todolistApi.util.updateQueryData('getTodolist', undefined, (state) => {
+    //     const index = state.findIndex((td) => td.id === id);
+    //     if (index !== -1) {
+    //       state[index].entityStatus = 'loading';
+    //     }
+    //   })
+    // );
+    // try {
+    //   const res = await deleteTodolist(id);
+    //   if (res.error) {
+    //     patchResult.undo();
+    //   }
+    //   // .unwrap()
+    //   // .finally(() => updateQueryData(dispatch, id, 'idle'));
+    //   //dispatch(addDeletedTodo({ id }));
+    // } catch (e) {
+    //   patchResult.undo();
+    // }
   };
 
   return (
