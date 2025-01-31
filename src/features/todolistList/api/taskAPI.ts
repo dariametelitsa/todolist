@@ -53,6 +53,21 @@ export const taskApi = baseApi.injectEndpoints({
           body: model,
         };
       },
+      async onQueryStarted({ todolistId, taskId, model }, api) {
+        const patchResult = api.dispatch(
+          taskApi.util.updateQueryData('getTask', { todolistId, args: { page: 1, count: PageSize } }, (state) => {
+            const index = state.items.findIndex((t) => t.id === taskId);
+            if (index !== -1) {
+              state.items[index] = { ...state.items[index], ...model };
+            }
+          })
+        );
+        try {
+          await api.queryFulfilled;
+        } catch (e) {
+          patchResult.undo();
+        }
+      },
       // invalidatesTags: ['Task'],
       invalidatesTags: (result, error, arg) => [{ type: 'Task', id: arg.taskId }],
     }),

@@ -21,7 +21,6 @@ export const useTodolist = (id: string, filter: FilterValues) => {
   const [addTask] = useAddTaskMutation();
   const [deleteTask, { isLoading: isLoadingDelete }] = useDeleteTaskMutation();
   const [page, setPage] = useState(1);
-  console.log(deletedTodo);
   const { data, isLoading } = useGetTaskQuery(
     { todolistId: id, args: { page: page, count: PageSize } },
     {

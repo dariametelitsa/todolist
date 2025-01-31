@@ -23,7 +23,6 @@ export const FilterTasksButtons = ({ id, filter }: FiltersForTasksProps) => {
       todolistApi.util.updateQueryData('getTodolist', undefined, (state) => {
         const index = state.findIndex((td) => td.id === id);
         if (index !== -1) {
-          console.log('click');
           state[index].filter = filter;
         }
       })

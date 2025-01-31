@@ -17,7 +17,6 @@ export const useItemForm = (addItem: (name: string) => Promise<any>) => {
         setNewItemTitle('');
       })
       .catch((err) => {
-        console.log(err.error.messages[0]);
         setItemInputError(err.error.messages[0]);
       });
   };
