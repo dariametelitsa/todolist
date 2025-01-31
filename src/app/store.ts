@@ -6,8 +6,6 @@ import { baseApi } from 'app/baseApi';
 
 export const store = configureStore({
   reducer: {
-    // todolists: todolistsReducer,
-    // tasks: tasksReducer,
     app: appReducer,
     [baseApi.reducerPath]: baseApi.reducer,
   },

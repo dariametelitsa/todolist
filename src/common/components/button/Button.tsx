@@ -19,7 +19,6 @@ export const Button = ({ title, callBack, isDisabled, active, accent, ...restPro
     callBack();
   };
   return (
-    // <button className={styles.button} onClick={onClickHandler}>
     <button onClick={onClickHandler} disabled={isDisabled} {...restProps} className={finalClassName}>
       {title}
     </button>

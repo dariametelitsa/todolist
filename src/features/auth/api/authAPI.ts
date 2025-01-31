@@ -3,18 +3,6 @@ import { LoginParams } from './authAPI.types';
 import { baseApi } from 'app/baseApi';
 import { Paths } from 'common/Paths';
 
-// export const authAPI = {
-//   login(data: LoginParams) {
-//     return instance.post<BaseResponse<{ userId: number }>>('auth/login', data);
-//   },
-//   me() {
-//     return instance.get<BaseResponse<{ id: number; login: string; email: string }>>('auth/me');
-//   },
-//   logOut() {
-//     return instance.delete<BaseResponse>('auth/login');
-//   },
-// };
-
 export const authApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     me: builder.query<BaseResponse<{ id: number; login: string; email: string }>, void>({

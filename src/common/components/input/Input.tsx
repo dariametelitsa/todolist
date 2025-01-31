@@ -30,11 +30,5 @@ export const Input = ({ changeTitle, title, onKeyDown, ...restProps }: Props) =>
       helperText={restProps.error ? "Title can't be empty" : ''}
       size="small"
     />
-
-    // <input value={todolistTitle}
-    //        onChange={onChangeInputHandler}
-    //        onKeyDown={onKeyDownHandler}
-    //        type="text"
-    //        {...restProps}/>
   );
 };

@@ -37,7 +37,6 @@ export const useLogin = () => {
     },
 
     onSubmit: (values: LoginParams, formikHelpers: FormikHelpers<LoginParams>) => {
-      // dispatch(login(values))
       login(values)
         .unwrap()
         .then((res) => {

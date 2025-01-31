@@ -12,7 +12,7 @@ import {
 import { useSelector } from 'react-redux';
 import { todolistApi } from 'features/todolistList/api/todolistAPI';
 import { updateQueryData } from 'features/todolistList/model/updateQueryData';
-import { selectAppIsLogin, selectDeletedTodo } from 'app/model/appSlice';
+import { selectDeletedTodo } from 'app/model/appSlice';
 
 export const useTodolist = (id: string, filter: FilterValues) => {
   const dispatch = useAppDispatch();
@@ -26,9 +26,6 @@ export const useTodolist = (id: string, filter: FilterValues) => {
     {
       skip: isDeleted,
       refetchOnFocus: !isDeleted,
-      // selectFromResult: (res) => ({
-      //   tasks: res.data?.items,
-      // }),
     }
   );
   const tasks = data?.items;

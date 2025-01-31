@@ -32,8 +32,6 @@ const Todolist = React.memo(({ todolist }: Props) => {
     isPaginationShown,
   } = useTodolist(id, filter);
 
-  // const deferredTasks = useDeferredValue(sorterTasks);
-
   const tasksForTodolist = filterTasks.map((task) => {
     return <Task key={task.id} todolistId={id} task={task} entityStatus={entityStatus} />;
   });

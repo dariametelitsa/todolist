@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
@@ -7,7 +6,6 @@ import Typography from '@mui/material/Typography';
 import Switch from '@mui/material/Switch';
 import { MenuButton } from '../menuButton/MenuButton';
 import { useAppDispatch } from 'app/store';
-// import { logOut, selectIsLoggedIn } from 'features/auth/model/authSlice';
 import { useSelector } from 'react-redux';
 import { useLogoutMutation } from 'features/auth/api/authAPI';
 import { selectAppIsLogin, setIsLoggedIn } from 'app/model/appSlice';

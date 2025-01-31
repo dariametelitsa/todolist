@@ -3,7 +3,6 @@ import * as React from 'react';
 import { unwrapResult } from '@reduxjs/toolkit';
 
 export const useItemForm = (addItem: (name: string) => Promise<any>) => {
-  //local state - not business tasks
   let [itemTitle, setNewItemTitle] = useState('');
   let [itemInputError, setItemInputError] = useState<string | null>(null);
 

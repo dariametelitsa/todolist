@@ -25,12 +25,6 @@ export const useAppWithRedux = () => {
     }
   }, [dispatch, data?.resultCode, isLoading]);
 
-  useEffect(() => {
-    if (isLoggedIn) {
-      // dispatch(fetchTodolists());
-    }
-  }, [isLoggedIn, dispatch]);
-
   const [themeMode, setThemeMode] = useState<ThemeMode>('dark');
   const changeModeHandler = () => {
     setThemeMode(themeMode === 'light' ? 'dark' : 'light');

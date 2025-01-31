@@ -5,9 +5,7 @@ import Box from '@mui/material/Box';
 import { FilterValues } from 'common/data/dataPropsTypes';
 import { filterButtonsContainerSx } from 'features/todolistList/ui/todolist/ui/Todolist.styles';
 import { useAppDispatch } from 'app/store';
-import { changedTodolistFilter } from 'features/todolistList/model/todolistsSlice';
 import { todolistApi } from 'features/todolistList/api/todolistAPI';
-import { current } from '@reduxjs/toolkit';
 
 type FiltersForTasksProps = {
   id: string;

@@ -36,7 +36,6 @@ export function ErrorSnackbar() {
       open={isOpen}
       autoHideDuration={5000}
       onClose={handleClose}
-      //message=""
       action={action}
       anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}>
       <Alert onClose={handleClose} severity="error" variant="filled" sx={{ width: '100%' }}>
