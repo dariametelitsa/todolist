@@ -2,12 +2,10 @@ import { useAppDispatch } from 'app/store';
 import { useEffect, useState } from 'react';
 import createTheme from '@mui/material/styles/createTheme';
 import cyan from '@mui/material/colors/cyan';
-import { selectAppIsInitialized, selectAppIsLogin, selectAppStatus, setIsLoggedIn } from 'app/model/appSlice';
+import { selectAppIsLogin, selectAppStatus, setIsLoggedIn } from 'app/model/appSlice';
 import { useSelector } from 'react-redux';
 import { useMeQuery } from 'features/auth/api/authAPI';
 import { StatusCode } from 'common/enums';
-// import { initializeApp, selectIsLoggedIn } from 'features/auth/model/authSlice';
-// import { fetchTodolists } from 'features/todolistList/model/todolistsSlice';
 
 type ThemeMode = 'dark' | 'light';
 

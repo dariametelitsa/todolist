@@ -2,8 +2,12 @@ import * as React from 'react';
 import { EditableSpan } from 'common/components/editableSpan/EditableSpan';
 import IconButton from '@mui/material/IconButton';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import { useDeleteTodolistMutation, useUpdateTodolistMutation } from 'features/todolistList/api/todolistAPI';
-import { AppStatus } from 'app/model/appSlice';
+import {
+  todolistApi,
+  useDeleteTodolistMutation,
+  useUpdateTodolistMutation,
+} from 'features/todolistList/api/todolistAPI';
+import { addDeletedTodo, AppStatus } from 'app/model/appSlice';
 import { useAppDispatch } from 'app/store';
 import { updateQueryData } from 'features/todolistList/model/updateQueryData';
 
@@ -26,11 +30,24 @@ export const TodolistTitle = ({ id, title, entityStatus }: Props) => {
       .finally(() => updateQueryData(dispatch, id, 'idle'));
   };
 
-  const deleteTodolistHandler = () => {
-    updateQueryData(dispatch, id, 'loading');
-    deleteTodolist(id)
-      .unwrap()
-      .finally(() => updateQueryData(dispatch, id, 'idle'));
+  const deleteTodolistHandler = async () => {
+    // const patchResult = updateQueryData(dispatch, id, 'loading');
+    const patchResult = dispatch(
+      todolistApi.util.updateQueryData('getTodolist', undefined, (state) => {
+        const index = state.findIndex((td) => td.id === id);
+        if (index !== -1) {
+          state[index].entityStatus = 'loading';
+        }
+      })
+    );
+    try {
+      await deleteTodolist(id);
+      // .unwrap()
+      // .finally(() => updateQueryData(dispatch, id, 'idle'));
+      //dispatch(addDeletedTodo({ id }));
+    } catch (e) {
+      patchResult.undo();
+    }
   };
 
   return (

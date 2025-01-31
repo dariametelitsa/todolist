@@ -1,7 +1,6 @@
 import { createSlice, isFulfilled, isPending, isRejected, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { RejectActionError } from 'common/types/types';
-import todolist from 'features/todolistList/ui/todolist/ui/Todolist';
 import { todolistApi } from 'features/todolistList/api/todolistAPI';
 import { taskApi } from 'features/todolistList/api/taskAPI';
 // import { initializeApp } from 'features/auth/model/authSlice';
@@ -15,6 +14,7 @@ const slice = createSlice({
     error: null as string | null,
     isInitialized: false,
     isLoggedIn: false,
+    deletedTodos: [] as string[],
   },
   reducers: (create) => ({
     setAppStatus: create.reducer<{ status: AppStatus }>((state, action) => {
@@ -28,6 +28,9 @@ const slice = createSlice({
     }),
     setIsLoggedIn: create.reducer<{ isLoggedIn: boolean }>((state, action) => {
       state.isLoggedIn = action.payload.isLoggedIn;
+    }),
+    addDeletedTodo: create.reducer<{ id: string }>((state, action) => {
+      state.deletedTodos.push(action.payload.id);
     }),
   }),
 
@@ -87,11 +90,13 @@ const slice = createSlice({
     selectAppIsLogin: (state) => state.isLoggedIn,
     selectAppError: (state) => state.error,
     selectAppIsInitialized: (state) => state.isInitialized,
+    selectDeletedTodo: (state) => state.deletedTodos,
   },
 });
 
 export type AppInitialState = ReturnType<typeof slice.getInitialState>;
 
-export const { setAppStatus, setAppError, setIsInitialized, setIsLoggedIn } = slice.actions;
+export const { setAppStatus, setAppError, setIsInitialized, setIsLoggedIn, addDeletedTodo } = slice.actions;
 export const appReducer = slice.reducer;
-export const { selectAppStatus, selectAppError, selectAppIsInitialized, selectAppIsLogin } = slice.selectors;
+export const { selectAppStatus, selectAppError, selectAppIsInitialized, selectAppIsLogin, selectDeletedTodo } =
+  slice.selectors;

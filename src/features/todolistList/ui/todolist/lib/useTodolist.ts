@@ -12,15 +12,21 @@ import {
 import { useSelector } from 'react-redux';
 import { todolistApi } from 'features/todolistList/api/todolistAPI';
 import { updateQueryData } from 'features/todolistList/model/updateQueryData';
+import { selectAppIsLogin, selectDeletedTodo } from 'app/model/appSlice';
 
 export const useTodolist = (id: string, filter: FilterValues) => {
   const dispatch = useAppDispatch();
+  const deletedTodo = useSelector(selectDeletedTodo);
+  const isDeleted = deletedTodo.includes(id);
   const [addTask] = useAddTaskMutation();
   const [deleteTask, { isLoading: isLoadingDelete }] = useDeleteTaskMutation();
   const [page, setPage] = useState(1);
+  console.log(deletedTodo);
   const { data, isLoading } = useGetTaskQuery(
     { todolistId: id, args: { page: page, count: PageSize } },
     {
+      skip: isDeleted,
+      refetchOnFocus: !isDeleted,
       // selectFromResult: (res) => ({
       //   tasks: res.data?.items,
       // }),
